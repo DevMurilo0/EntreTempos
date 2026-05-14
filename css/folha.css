@@ -102,3 +102,29 @@ nav a {
 
 
 
+
+
+
+
+
+
+
+.mural-imagem {
+  position: absolute;
+  top: 45%;
+  left: 45%;
+  transform: translate(-50%, -50%) rotate(-3deg);
+  z-index: 0;
+}
+
+.mural-imagem img {
+  width: 220px;
+  height: auto;
+  filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3));
+  opacity: 0.95;
+  transition: 0.3s;
+}
+
+.mural-imagem img:hover {
+  transform: scale(1.05) rotate(0deg);
+}

@@ -303,3 +303,26 @@ header {
   }
 
 }
+
+
+
+
+
+.titulo-revista {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.titulo-revista h1 {
+  font-size: 60px;
+  letter-spacing: 4px;
+  color: #1a1a1a;
+}
+
+.titulo-revista img {
+  width: 120px;   /* ajuste aqui */
+  height: auto;
+  filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+}
