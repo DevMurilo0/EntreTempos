@@ -61,8 +61,8 @@ img.cortina-esquerda {
   left: 0px;
   width: clamp(540px, 56vw, 740px);
   height: auto;
-  transform: translateX(-30%);
-  z-index: 1;
+  transform: translateX(-27%);
+  z-index: 3;
 }
 
 img.cortina-direita {
@@ -70,8 +70,8 @@ img.cortina-direita {
   right: 0px;
   width: clamp(540px, 56vw, 740px);
   height: auto;
-  transform: translateX(30%);
-  z-index: 1;
+  transform: translateX(27%);
+  z-index: 3;
 }
 
 /* =====================
@@ -128,12 +128,12 @@ img.deco-homem {
    MÃOS
 ===================== */
 img.deco-maos {
-  top: 160px;
+  top: 280px;
   left: 0;
   width: 100%;
   height: auto;
   opacity: 0.55;
-  z-index: 2;
+  z-index: 0;
 }
 
 /* =====================
@@ -482,7 +482,13 @@ img.deco-maos {
   img.deco-nuvem    { width: 42vw; }
   img.deco-rasagado { width: 40vw; }
 
-  img.deco-relogio  { display: none; }
+  img.deco-relogio {
+    display: block;
+    width: 45vw;
+    left: -15px;
+    right: auto;
+    top: 68%;
+  }
 
   img.deco-homem {
     width: 28vw;
