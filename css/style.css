@@ -58,17 +58,19 @@ body::before {
 
 img.cortina-esquerda {
   top: -30px;
-  left: -140px;
-  width: clamp(420px, 44vw, 600px);
+  left: 0px;
+  width: clamp(540px, 56vw, 740px);
   height: auto;
+  transform: translateX(-30%);
   z-index: 1;
 }
 
 img.cortina-direita {
   top: -30px;
-  right: -140px;
-  width: clamp(420px, 44vw, 600px);
+  right: 0px;
+  width: clamp(540px, 56vw, 740px);
   height: auto;
+  transform: translateX(30%);
   z-index: 1;
 }
 
@@ -141,14 +143,14 @@ img.deco-maos {
 .hero-text {
   position: relative;
   z-index: 5;
-  padding: 120px 30px 40px;
+  padding: 220px 30px 40px;
   text-align: center;
 }
 
 .hero-text h2 {
   font-size: clamp(12px, 1.6vw, 18px);
   color: #6d5c4d;
-  margin-top: 130px;
+  margin-top: 60px;
   margin-bottom: 18px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -366,13 +368,13 @@ img.deco-maos {
 @media (max-width: 1024px) {
 
   img.cortina-esquerda {
-    left: -160px;
-    width: 42vw;
+    left: -80px;
+    width: 46vw;
   }
 
   img.cortina-direita {
-    right: -160px;
-    width: 42vw;
+    right: -80px;
+    width: 46vw;
   }
 
   img.deco-nuvem  { width: 28vw; }
@@ -398,23 +400,23 @@ img.deco-maos {
 @media (max-width: 768px) {
 
   .hero-text {
-    padding: 80px 20px 30px;
+    padding: 160px 20px 30px;
   }
 
   .hero-text h2 {
-    margin-top: 80px;
+    margin-top: 40px;
     font-size: 11px;
   }
 
   img.cortina-esquerda {
-    width: 52vw;
-    left: -100px;
+    width: 62vw;
+    left: -60px;
     top: -20px;
   }
 
   img.cortina-direita {
-    width: 52vw;
-    right: -100px;
+    width: 62vw;
+    right: -60px;
     top: -20px;
   }
 
@@ -448,11 +450,11 @@ img.deco-maos {
 @media (max-width: 480px) {
 
   .hero-text {
-    padding: 20px 15px 20px;
+    padding: 130px 15px 20px;
   }
 
   .hero-text h2 {
-    margin-top: 20px;
+    margin-top: 10px;
     font-size: 9px;
     letter-spacing: 0.08em;
   }
@@ -461,16 +463,15 @@ img.deco-maos {
     font-size: 13px;
   }
 
-  /* Cortinas grandes no mobile, bem puxadas pra borda */
   img.cortina-esquerda {
-    width: 58vw;
-    left: -60px;
+    width: 68vw;
+    left: -30px;
     top: -10px;
   }
 
   img.cortina-direita {
-    width: 58vw;
-    right: -60px;
+    width: 68vw;
+    right: -30px;
     top: -10px;
   }
 
@@ -485,7 +486,7 @@ img.deco-maos {
   }
 
   img.deco-maos {
-    top: 60px;
+    top: 80px;
     opacity: 0.4;
   }
 
@@ -513,7 +514,7 @@ img.deco-maos {
 
   img.cortina-esquerda,
   img.cortina-direita {
-    width: 64vw;
+    width: 74vw;
   }
 
   img.deco-nuvem,
