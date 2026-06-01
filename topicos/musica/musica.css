@@ -394,3 +394,108 @@ header a:hover { color: #c0392b; }
 .stickers-mobile {
   display: none;
 }
+
+/* ─── MOBILE (≤ 600px) ─── */
+@media (max-width: 600px) {
+
+  .page-titulo h1 {
+    font-size: clamp(44px, 16vw, 72px);
+    letter-spacing: 4px;
+  }
+
+  /* Esconde decorações absolutas do desktop */
+  .deco-desktop {
+    display: none !important;
+  }
+
+  /* Container principal com margem para as imagens laterais */
+  .mural-musica {
+    padding: 10px 0 60px;
+    overflow: visible;
+  }
+
+  /* A faixa de stickers vira as laterais */
+  .stickers-mobile {
+    display: block;
+    position: relative;
+  }
+
+  /* Coluna lateral esquerda */
+  .stickers-mobile .lado-esq {
+    position: fixed;
+    left: 0;
+    top: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    z-index: 4;
+    pointer-events: none;
+  }
+
+  /* Coluna lateral direita */
+  .stickers-mobile .lado-dir {
+    position: fixed;
+    right: 0;
+    top: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 16px;
+    z-index: 4;
+    pointer-events: none;
+  }
+
+  /* Imagens saindo um pouco pra fora da borda */
+  .stickers-mobile .lado-esq img {
+    position: static;
+    margin-left: -18px;
+  }
+
+  .stickers-mobile .lado-dir img {
+    position: static;
+    margin-right: -18px;
+  }
+
+  .img-notas    { width: 95px;  transform: rotate(-6deg) !important; opacity: 0.9; }
+  .img-mulher   { width: 80px;  transform: rotate(3deg) !important;  filter: drop-shadow(2px 2px 6px rgba(0,0,0,0.3)) !important; }
+  .img-caixasom { width: 78px;  transform: rotate(5deg) !important; }
+  .img-nirvana  { width: 70px;  transform: rotate(-5deg) !important; filter: drop-shadow(0 0 6px rgba(255,238,0,0.5)) !important; }
+  .img-queen    { width: 85px;  transform: rotate(4deg) !important; }
+  .img-bad      { width: 78px;  transform: rotate(-6deg) !important; }
+
+  /* Lista centralizada com espaço para as laterais */
+  .top10-wrapper {
+    flex-direction: column;
+    gap: 16px;
+    padding: 0 90px; /* espaço para imagens laterais */
+  }
+
+  .top10-lista {
+    padding-left: 0;
+    width: 100%;
+  }
+
+  .nav-mes { gap: 8px; }
+  .seta-mes { width: 30px; height: 30px; font-size: 14px; }
+  .top10-titulo { font-size: 32px; }
+  .top10-titulo .mes-label { font-size: 15px; }
+
+  .musica-num  { font-size: 26px; min-width: 36px; }
+  .musica-nome { font-size: 14px; }
+  .musica-artista { font-size: 11px; }
+
+  /* Coluna direita (cd + foto) fica abaixo */
+  .decoracao-direita {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    width: 100%;
+    gap: 20px;
+    padding: 0 90px;
+  }
+
+  .cd-destaque { width: 110px; }
+  .foto-homem  { width: 85px; }
+}
