@@ -32,32 +32,27 @@
 </div>
 <div class="divisor"></div>
 
-<!-- Faixa de stickers só visível no mobile -->
-<div class="stickers-mobile">
-  <img src="img/notas_musicais.png" alt="Notas"       class="img-deco img-notas">
-  <img src="img/logo_nirvana.png"   alt="Nirvana"     class="img-deco img-nirvana">
-  <img src="img/queen_texto.png"    alt="Queen"        class="img-deco img-queen">
-  <img src="img/bad_logo.png"       alt="Bad"          class="img-deco img-bad">
-  <img src="img/mulher_foto.png"    alt="Artista"      class="img-deco img-mulher">
-  <img src="img/caixa_som.png"      alt="Caixa de som" class="img-deco img-caixasom">
-</div>
-
 <div class="mural-musica">
 
-  <!-- Decorações absolutas — só visíveis no desktop -->
-  <img src="img/notas_musicais.png"  alt="Notas"         class="img-deco img-notas deco-desktop">
-  <img src="img/mulher_foto.png"     alt="Artista"        class="img-deco img-mulher deco-desktop">
-  <img src="img/caixa_som.png"       alt="Caixa de som"   class="img-deco img-caixasom deco-desktop">
-  <img src="img/logo_nirvana.png"    alt="Nirvana"        class="img-deco img-nirvana deco-desktop">
-  <img src="img/queen_texto.png"     alt="Queen"          class="img-deco img-queen deco-desktop">
-  <img src="img/bad_logo.png"        alt="Bad"            class="img-deco img-bad deco-desktop">
-  <img src="img/rita_silhueta.png"   alt="Rita Lee"       class="img-deco img-rita-silhueta deco-desktop">
-  <img src="img/gal_logo.png"        alt="GAL"            class="img-deco img-gal deco-desktop">
-  <img src="img/monstro_verde.png"   alt="Mascote"        class="img-deco img-monstro deco-desktop">
+  <!-- ── Decorações espalhadas ── -->
+  <img src="img/notas_musicais.png"  alt="Notas"         class="img-deco img-notas">
+  <img src="img/mulher_foto.png"     alt="Artista"        class="img-deco img-mulher">
+  <img src="img/caixa_som.png"       alt="Caixa de som"   class="img-deco img-caixasom">
+  <img src="img/logo_nirvana.png"    alt="Nirvana"        class="img-deco img-nirvana">
+  <img src="img/queen_texto.png"     alt="Queen"          class="img-deco img-queen">
+  <img src="img/bad_logo.png"        alt="Bad"            class="img-deco img-bad">
+
+  <!-- Imagens antigas mantidas -->
+  <img src="img/rita_silhueta.png"   alt="Rita Lee"       class="img-deco img-rita-silhueta">
+  <img src="img/gal_logo.png"        alt="GAL"            class="img-deco img-gal">
+  <img src="img/monstro_verde.png"   alt="Mascote"        class="img-deco img-monstro">
 
   <div class="top10-wrapper">
 
+    <!-- LISTA TOP 10 -->
     <div class="top10-lista">
+
+      <!-- Navegação de mês -->
       <div class="nav-mes">
         <button class="seta-mes" id="seta-esq" aria-label="Mês anterior">&#8592;</button>
         <div class="top10-titulo">
@@ -66,9 +61,13 @@
         </div>
         <button class="seta-mes" id="seta-dir" aria-label="Próximo mês">&#8594;</button>
       </div>
+
+      <!-- Lista gerada pelo JS -->
       <ul class="lista-musicas" id="lista-musicas"></ul>
+
     </div>
 
+    <!-- COLUNA DIREITA -->
     <div class="decoracao-direita">
       <img src="img/rita_cd.png"      alt="CD Rita Lee" class="cd-destaque">
       <img src="img/homem_oculos.png" alt="Artista"     class="foto-homem">
