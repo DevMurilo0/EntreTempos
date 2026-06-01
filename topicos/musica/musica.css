@@ -418,13 +418,14 @@ header a:hover { color: #c0392b; }
   .stickers-mobile {
     display: block;
     position: relative;
+    height: 0; /* não ocupa espaço vertical */
   }
 
   /* Coluna lateral esquerda */
   .stickers-mobile .lado-esq {
-    position: fixed;
-    left: 0;
-    top: 30%;
+    position: absolute;
+    left: -18px;
+    top: 0;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -435,9 +436,9 @@ header a:hover { color: #c0392b; }
 
   /* Coluna lateral direita */
   .stickers-mobile .lado-dir {
-    position: fixed;
-    right: 0;
-    top: 30%;
+    position: absolute;
+    right: -18px;
+    top: 0;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -446,15 +447,10 @@ header a:hover { color: #c0392b; }
     pointer-events: none;
   }
 
-  /* Imagens saindo um pouco pra fora da borda */
-  .stickers-mobile .lado-esq img {
-    position: static;
-    margin-left: -18px;
-  }
-
+  .stickers-mobile .lado-esq img,
   .stickers-mobile .lado-dir img {
     position: static;
-    margin-right: -18px;
+    display: block;
   }
 
   .img-notas    { width: 95px;  transform: rotate(-6deg) !important; opacity: 0.9; }
