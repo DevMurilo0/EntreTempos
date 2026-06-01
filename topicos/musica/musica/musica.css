@@ -1,0 +1,401 @@
+/* =============================================
+   MUSICA.CSS — Entre Tempos · Página de Músicas
+   ============================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #f2e8d5;
+  font-family: 'Special Elite', serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Textura papel */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url('https://www.transparenttextures.com/patterns/aged-paper.png');
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── HEADER ─── */
+header {
+  position: relative;
+  z-index: 10;
+  padding: 18px 30px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border-bottom: 2px solid #c4a96b;
+}
+
+header a {
+  text-decoration: none;
+  color: #3e4a59;
+  font-weight: bold;
+  font-family: 'Special Elite', serif;
+  font-size: 14px;
+  letter-spacing: 1px;
+  transition: color 0.2s;
+}
+
+header a:hover { color: #c0392b; }
+
+/* ─── TÍTULO PRINCIPAL ─── */
+.page-titulo {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  padding: 30px 20px 10px;
+}
+
+.page-titulo h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(60px, 12vw, 130px);
+  color: #1a1a1a;
+  letter-spacing: 8px;
+  line-height: 1;
+  text-shadow: 4px 4px 0 #c4a96b;
+}
+
+.page-titulo .subtitulo {
+  font-family: 'Special Elite', serif;
+  font-size: 14px;
+  color: #7a6a50;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+
+/* ─── DIVISOR ─── */
+.divisor {
+  position: relative;
+  z-index: 5;
+  width: 80%;
+  margin: 10px auto 30px;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #c0392b, #c4a96b, #c0392b, transparent);
+}
+
+/* ─── MURAL CONTAINER ─── */
+.mural-musica {
+  position: relative;
+  z-index: 5;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px 30px 120px;
+}
+
+/* ─── NAVEGAÇÃO DE MÊS ─── */
+.nav-mes {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.top10-titulo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 48px;
+  color: #1a1a1a;
+  letter-spacing: 4px;
+  border-left: 5px solid #c0392b;
+  padding-left: 15px;
+  line-height: 1;
+}
+
+.top10-titulo .mes-label {
+  font-family: 'Special Elite', serif;
+  font-size: 18px;
+  color: #8c3b3b;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: capitalize;
+  display: block;
+  margin-top: 4px;
+}
+
+.seta-mes {
+  background: #c0392b;
+  color: #fff;
+  border: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s, transform 0.15s;
+  box-shadow: 0 4px 12px rgba(192, 57, 43, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.seta-mes:hover {
+  background: #922b21;
+  transform: scale(1.1);
+}
+
+.seta-mes:active {
+  transform: scale(0.93);
+}
+
+/* ─── LAYOUT WRAPPER ─── */
+.top10-wrapper {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.top10-lista {
+  flex: 1;
+  min-width: 280px;
+  padding-left: 120px;
+}
+
+/* ─── ITENS DA LISTA ─── */
+.lista-musicas {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.musica-item {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px dashed #c4a96b;
+  transition: transform 0.2s;
+  animation: entrar 0.35s ease both;
+}
+
+.musica-item:hover { transform: translateX(6px); }
+
+@keyframes entrar {
+  from { opacity: 0; transform: translateX(-18px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.musica-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  color: #c0392b;
+  min-width: 45px;
+  line-height: 1;
+}
+
+.musica-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.musica-nome {
+  font-family: 'Special Elite', serif;
+  font-size: 17px;
+  color: #1a1a1a;
+  font-weight: bold;
+}
+
+.musica-artista {
+  font-family: 'Special Elite', serif;
+  font-size: 13px;
+  color: #7a6a50;
+  font-style: italic;
+  margin-top: 1px;
+}
+
+.vazio {
+  text-align: center;
+  color: #b0a090;
+  font-style: italic;
+  padding: 40px 0;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+/* ─── COLUNA DIREITA (DECORAÇÃO) ─── */
+.decoracao-direita {
+  width: 280px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* ─── IMAGENS DECORATIVAS ─── */
+.img-deco {
+  position: absolute;
+  pointer-events: none;
+}
+
+/* Notas musicais — canto superior esquerdo, grande e suave */
+.img-notas {
+  top: -60px;
+  left: -80px;
+  width: 220px;
+  transform: rotate(-8deg);
+  opacity: 0.85;
+  filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.18));
+}
+
+/* Mulher P&B — lado esquerdo, como "artista destaque" */
+.img-mulher {
+  top: 200px;
+  left: -50px;
+  width: 170px;
+  transform: rotate(3deg);
+  filter: drop-shadow(3px 3px 10px rgba(0,0,0,0.35)) grayscale(20%);
+}
+
+/* Caixa de som — canto inferior esquerdo, grande */
+.img-caixasom {
+  bottom: -20px;
+  left: -90px;
+  width: 180px;
+  transform: rotate(5deg);
+  filter: drop-shadow(4px 4px 12px rgba(0,0,0,0.3));
+  opacity: 0.9;
+}
+
+/* Logo Nirvana — amarelo, flutua à direita no topo */
+.img-nirvana {
+  top: -40px;
+  right: -60px;
+  width: 140px;
+  transform: rotate(6deg);
+  filter: drop-shadow(0 0 8px rgba(255, 238, 0, 0.5));
+}
+
+/* Queen — canto superior direito */
+.img-queen {
+  top: 500px;
+  right: -20px;
+  width: 200px;
+  transform: rotate(-7deg);
+  filter: drop-shadow(2px 2px 6px rgba(0,0,0,0.2));
+}
+
+/* BAD (Michael Jackson) — inferior direito */
+.img-bad {
+  bottom: 80px;
+  right: -40px;
+  width: 160px;
+  transform: rotate(8deg);
+  filter: drop-shadow(3px 3px 8px rgba(0,0,0,0.25));
+}
+
+/* Imagens originais */
+.img-rita-silhueta {
+  bottom: -30px;
+  right: -30px;
+  width: 130px;
+  transform: rotate(-4deg);
+  filter: drop-shadow(3px 3px 6px rgba(0,0,0,0.2));
+  opacity: 0.7;
+}
+
+.img-gal {
+  top: 200px;
+  right: -20px;
+  width: 100px;
+  transform: rotate(4deg);
+  filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.15));
+}
+
+.img-monstro {
+  bottom: 400px;
+  left: -60px;
+  width: 170px;
+  transform: rotate(-6deg);
+  opacity: 0.8;
+}
+
+/* ─── COLUNA DIREITA ─── */
+.cd-destaque {
+  width: 200px;
+  margin: 0 auto;
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.4));
+  transform: rotate(-4deg);
+  transition: transform 0.3s;
+}
+
+.cd-destaque:hover { transform: rotate(0deg) scale(1.05); }
+
+.foto-homem {
+  width: 150px;
+  filter: drop-shadow(3px 3px 10px rgba(0,0,0,0.4));
+  transform: rotate(5deg);
+}
+
+/* ─── NOTAS MUSICAIS DE FUNDO ─── */
+.notas-musicais {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.nota {
+  position: absolute;
+  font-size: 24px;
+  opacity: 0.06;
+  color: #1a1a1a;
+  animation: flutuar 8s infinite ease-in-out;
+}
+
+@keyframes flutuar {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%       { transform: translateY(-20px) rotate(10deg); }
+}
+
+/* ─── RODAPÉ ─── */
+.rodape-musica {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  padding: 20px;
+  font-family: 'Special Elite', serif;
+  font-size: 12px;
+  color: #b0a090;
+  letter-spacing: 2px;
+  border-top: 1px solid #c4a96b;
+}
+
+.carimbo {
+  display: inline-block;
+  border: 3px solid #c0392b;
+  color: #c0392b;
+  padding: 4px 14px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 3px;
+  transform: rotate(-3deg);
+  opacity: 0.6;
+  margin-top: 10px;
+}
+
+/* ─── RESPONSIVO ─── */
+@media (max-width: 600px) {
+  .nav-mes { gap: 10px; }
+  .seta-mes { width: 32px; height: 32px; font-size: 15px; }
+  .top10-titulo { font-size: 36px; }
+  .decoracao-direita { display: none; }
+  .img-deco { display: none; }
+  .top10-lista { padding-left: 0; }
+}
