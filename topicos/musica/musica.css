@@ -218,7 +218,7 @@ header a:hover { color: #c0392b; }
   gap: 20px;
 }
 
-/* ─── IMAGENS DECORATIVAS ─── */
+/* ─── IMAGENS DECORATIVAS (desktop) ─── */
 .img-deco {
   position: absolute;
   pointer-events: none;
@@ -234,8 +234,8 @@ header a:hover { color: #c0392b; }
 }
 
 .img-mulher {
-  top: 80px;
-  left: -110px;
+  top: 200px;
+  left: -70px;
   width: 170px;
   transform: rotate(3deg);
   filter: drop-shadow(3px 3px 10px rgba(0,0,0,0.35)) grayscale(20%);
@@ -378,12 +378,14 @@ header a:hover { color: #c0392b; }
   margin-top: 10px;
 }
 
-/* ─── DESKTOP: esconde faixa mobile ─── */
+/* ─── DESKTOP: esconde bloco mobile ─── */
 .stickers-mobile {
   display: none;
 }
 
-/* ─── MOBILE (≤ 600px) ─── */
+/* ══════════════════════════════════════════
+   MOBILE (≤ 600px)
+   ══════════════════════════════════════════ */
 @media (max-width: 600px) {
 
   .page-titulo h1 {
@@ -404,55 +406,112 @@ header a:hover { color: #c0392b; }
     display: block;
     position: relative;
     height: 0;
+    overflow: visible;
   }
 
   .stickers-mobile .lado-esq {
     position: absolute;
-    left: -18px;
+    left: 0;
     top: 0;
+    width: 75px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 14px;
+    align-items: center;
+    gap: 0;
     z-index: 4;
     pointer-events: none;
   }
 
   .stickers-mobile .lado-dir {
     position: absolute;
-    right: -18px;
+    right: 0;
     top: 0;
+    width: 75px;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    gap: 14px;
+    align-items: center;
+    gap: 0;
     z-index: 4;
     pointer-events: none;
   }
 
+  /* anula position:absolute herdado do .img-deco */
   .stickers-mobile .lado-esq img,
   .stickers-mobile .lado-dir img {
-    position: static;
-    display: block;
+    position: relative !important;
+    display: block !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    margin-bottom: 70px !important;
   }
 
-  /* Tamanhos mobile — espelhando proporções do desktop */
-  .img-notas         { width: 90px;  transform: rotate(-8deg) !important; opacity: 0.85; }
-  .img-mulher        { width: 78px;  transform: rotate(3deg) !important;  filter: drop-shadow(3px 3px 10px rgba(0,0,0,0.35)) grayscale(20%) !important; }
-  .img-caixasom      { width: 75px;  transform: rotate(5deg) !important;  opacity: 0.9; }
-  .img-monstro       { width: 80px;  transform: rotate(-6deg) !important; opacity: 0.8; }
-  .img-preta-gil     { width: 80px;  transform: rotate(-90deg) !important; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3)) !important; }
-  .img-nirvana       { width: 68px;  transform: rotate(6deg) !important;  filter: drop-shadow(0 0 8px rgba(255,238,0,0.5)) !important; }
-  .img-queen         { width: 78px;  transform: rotate(-5deg) !important; }
-  .img-bad           { width: 75px;  transform: rotate(8deg) !important; }
-  .img-rita-silhueta { width: 68px;  transform: rotate(-4deg) !important; opacity: 0.7; }
-  .img-mascara       { width: 66px;  transform: rotate(5deg) !important;  filter: drop-shadow(2px 2px 8px rgba(0,0,0,0.3)) !important; }
-  .img-gal           { width: 60px;  transform: rotate(4deg) !important; }
+  /* preta-gil some no mobile — vem DEPOIS do display:block para sobrescrever */
+  .stickers-mobile .lado-esq .img-preta-gil,
+  .stickers-mobile .lado-dir .img-preta-gil,
+  .img-preta-gil {
+    display: none !important;
+    margin-bottom: 0 !important;
+  }
+
+  .img-notas {
+    width: 72px !important;
+    transform: rotate(-8deg) !important;
+    opacity: 0.85;
+    filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.18)) !important;
+  }
+  .img-mulher {
+    width: 68px !important;
+    transform: rotate(3deg) !important;
+    filter: drop-shadow(2px 2px 8px rgba(0,0,0,0.35)) grayscale(20%) !important;
+  }
+  .img-caixasom {
+    width: 66px !important;
+    transform: rotate(5deg) !important;
+    opacity: 0.9;
+    filter: drop-shadow(3px 3px 10px rgba(0,0,0,0.3)) !important;
+  }
+  .img-monstro {
+    width: 68px !important;
+    transform: rotate(-6deg) !important;
+    opacity: 0.8;
+  }
+  .img-nirvana {
+    width: 64px !important;
+    transform: rotate(6deg) !important;
+    filter: drop-shadow(0 0 8px rgba(255,238,0,0.5)) !important;
+  }
+  .img-queen {
+    width: 70px !important;
+    transform: rotate(-5deg) !important;
+    filter: drop-shadow(2px 2px 6px rgba(0,0,0,0.2)) !important;
+  }
+  .img-bad {
+    width: 68px !important;
+    transform: rotate(8deg) !important;
+    filter: drop-shadow(3px 3px 8px rgba(0,0,0,0.25)) !important;
+  }
+  .img-mascara {
+    width: 62px !important;
+    transform: rotate(5deg) !important;
+    filter: drop-shadow(2px 2px 8px rgba(0,0,0,0.3)) !important;
+  }
+  .img-gal {
+    width: 58px !important;
+    transform: rotate(4deg) !important;
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.15)) !important;
+  }
+  .img-rita-silhueta {
+    width: 62px !important;
+    transform: rotate(-4deg) !important;
+    opacity: 0.7;
+  }
 
   .top10-wrapper {
     flex-direction: column;
     gap: 16px;
-    padding: 0 90px;
+    padding: 0 80px;
   }
 
   .top10-lista {
@@ -460,9 +519,9 @@ header a:hover { color: #c0392b; }
     width: 100%;
   }
 
-  .nav-mes { gap: 8px; }
-  .seta-mes { width: 30px; height: 30px; font-size: 14px; }
-  .top10-titulo { font-size: 32px; }
+  .nav-mes        { gap: 8px; margin-bottom: 16px; }
+  .seta-mes       { width: 30px; height: 30px; font-size: 14px; }
+  .top10-titulo   { font-size: 32px; }
   .top10-titulo .mes-label { font-size: 15px; }
 
   .musica-num     { font-size: 26px; min-width: 36px; }
@@ -475,10 +534,10 @@ header a:hover { color: #c0392b; }
     justify-content: center;
     align-items: flex-end;
     width: 100%;
-    gap: 20px;
-    padding: 0 90px;
+    gap: 14px;
+    padding: 0 8px;
   }
 
-  .cd-destaque { width: 110px; }
-  .foto-homem  { width: 85px; }
+  .cd-destaque { width: 100px; }
+  .foto-homem  { width: 80px; }
 }
