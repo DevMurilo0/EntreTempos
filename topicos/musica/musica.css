@@ -315,15 +315,23 @@ header a:hover { color: #c0392b; }
   filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
 }
 
+/* ─── CD RITA LEE ─── */
 .cd-destaque {
   width: 200px;
   margin: 0 auto;
   filter: drop-shadow(0 8px 20px rgba(0,0,0,0.4));
-  transform: rotate(-4deg);
-  transition: transform 0.3s;
+  cursor: pointer;
+  /* sem transform fixo e sem transition para não brigar com a animação */
 }
 
-.cd-destaque:hover { transform: rotate(0deg) scale(1.05); }
+@keyframes girar-cd {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(1080deg); }
+}
+
+.cd-destaque.girando {
+  animation: girar-cd 1.5s ease-in-out forwards;
+}
 
 .foto-homem {
   width: 150px;
@@ -435,7 +443,6 @@ header a:hover { color: #c0392b; }
     pointer-events: none;
   }
 
-  /* anula position:absolute herdado do .img-deco */
   .stickers-mobile .lado-esq img,
   .stickers-mobile .lado-dir img {
     position: relative !important;
@@ -447,7 +454,6 @@ header a:hover { color: #c0392b; }
     margin-bottom: 70px !important;
   }
 
-  /* preta-gil some no mobile — vem DEPOIS do display:block para sobrescrever */
   .stickers-mobile .lado-esq .img-preta-gil,
   .stickers-mobile .lado-dir .img-preta-gil,
   .img-preta-gil {
@@ -581,7 +587,7 @@ header a:hover { color: #c0392b; }
 .musica-video {
   position: relative;
   width: 100%;
-  padding-bottom: 56.25%; /* 16:9 */
+  padding-bottom: 56.25%;
   height: 0;
   border-radius: 4px;
   overflow: hidden;
