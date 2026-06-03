@@ -1,0 +1,505 @@
+/* =============================================
+   FILMES.CSS — Entre Tempos · Página de Filmes
+   ============================================= */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #f2e8d5;
+  font-family: 'Special Elite', serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url('https://www.transparenttextures.com/patterns/aged-paper.png');
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+}
+
+header {
+  position: relative;
+  z-index: 10;
+  padding: 18px 30px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border-bottom: 2px solid #c4a96b;
+}
+
+header a {
+  text-decoration: none;
+  color: #3e4a59;
+  font-weight: bold;
+  font-family: 'Special Elite', serif;
+  font-size: 14px;
+  letter-spacing: 1px;
+  transition: color 0.2s;
+}
+
+header a:hover { color: #c0392b; }
+
+.page-titulo {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  padding: 30px 20px 10px;
+}
+
+.page-titulo h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(60px, 12vw, 130px);
+  color: #1a1a1a;
+  letter-spacing: 8px;
+  line-height: 1;
+  text-shadow: 4px 4px 0 #c4a96b;
+}
+
+.page-titulo .subtitulo {
+  font-family: 'Special Elite', serif;
+  font-size: 14px;
+  color: #7a6a50;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+
+.divisor {
+  position: relative;
+  z-index: 5;
+  width: 80%;
+  margin: 10px auto 30px;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #c0392b, #c4a96b, #c0392b, transparent);
+}
+
+.mural-filmes {
+  position: relative;
+  z-index: 5;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px 30px 120px;
+}
+
+.nav-mes {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.top5-titulo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 48px;
+  color: #1a1a1a;
+  letter-spacing: 4px;
+  border-left: 5px solid #c0392b;
+  padding-left: 15px;
+  line-height: 1;
+}
+
+.top5-titulo .mes-label {
+  font-family: 'Special Elite', serif;
+  font-size: 18px;
+  color: #8c3b3b;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: capitalize;
+  display: block;
+  margin-top: 4px;
+}
+
+.seta-mes {
+  background: #c0392b;
+  color: #fff;
+  border: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s, transform 0.15s;
+  box-shadow: 0 4px 12px rgba(192, 57, 43, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seta-mes:hover { background: #922b21; transform: scale(1.1); }
+.seta-mes:active { transform: scale(0.93); }
+
+.top5-wrapper {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.top5-lista {
+  flex: 1;
+  min-width: 280px;
+  padding-left: 120px;
+}
+
+.lista-filmes {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.filme-item {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px dashed #c4a96b;
+  transition: transform 0.2s;
+  animation: entrar 0.35s ease both;
+  cursor: pointer;
+}
+
+.filme-item.clicavel:hover { transform: translateX(6px); }
+
+@keyframes entrar {
+  from { opacity: 0; transform: translateX(-18px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.filme-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  color: #c0392b;
+  min-width: 45px;
+  line-height: 1;
+}
+
+.filme-info { display: flex; flex-direction: column; }
+
+.filme-nome {
+  font-family: 'Special Elite', serif;
+  font-size: 17px;
+  color: #1a1a1a;
+  font-weight: bold;
+}
+
+.filme-dir {
+  font-family: 'Special Elite', serif;
+  font-size: 13px;
+  color: #7a6a50;
+  font-style: italic;
+  margin-top: 1px;
+}
+
+.filme-toggle-icone {
+  margin-left: auto;
+  font-size: 13px;
+  color: #c0392b;
+  opacity: 0.7;
+}
+
+.vazio {
+  text-align: center;
+  color: #b0a090;
+  font-style: italic;
+  padding: 40px 0;
+  font-size: 16px;
+}
+
+/* ─── COLUNA DIREITA ─── */
+.decoracao-direita {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.poster-destaque {
+  width: 200px;
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.4));
+  transform: rotate(-4deg);
+  transition: transform 0.3s;
+}
+
+.poster-destaque:hover { transform: rotate(0deg) scale(1.05); }
+
+/* ─── IMAGENS DECORATIVAS DESKTOP ─── */
+.img-deco {
+  position: absolute;
+  pointer-events: none;
+}
+
+.img-claquete {
+  top: -50px;
+  left: -80px;
+  width: 200px;
+  transform: rotate(-8deg);
+  opacity: 0.85;
+  filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
+}
+
+.img-camera {
+  top: 100px;
+  left: -100px;
+  width: 160px;
+  transform: rotate(4deg);
+  filter: drop-shadow(3px 3px 10px rgba(0,0,0,0.3));
+}
+
+.img-pipoca {
+  bottom: 50px;
+  left: -80px;
+  width: 150px;
+  transform: rotate(-5deg);
+  filter: drop-shadow(3px 3px 8px rgba(0,0,0,0.25));
+  opacity: 0.9;
+}
+
+.img-rolo {
+  top: -30px;
+  right: -60px;
+  width: 130px;
+  transform: rotate(6deg);
+  filter: drop-shadow(2px 2px 8px rgba(0,0,0,0.25));
+}
+
+.img-oscar {
+  top: 300px;
+  right: -40px;
+  width: 110px;
+  transform: rotate(-5deg);
+  filter: drop-shadow(3px 3px 10px rgba(0,0,0,0.3));
+}
+
+.img-oculos {
+  bottom: 100px;
+  right: -50px;
+  width: 140px;
+  transform: rotate(7deg);
+  filter: drop-shadow(2px 2px 6px rgba(0,0,0,0.2));
+}
+
+/* ─── FUNDO FLOTANTE ─── */
+.notas-musicais {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.nota {
+  position: absolute;
+  font-size: 22px;
+  opacity: 0.05;
+  animation: flutuar 8s infinite ease-in-out;
+}
+
+@keyframes flutuar {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%       { transform: translateY(-20px) rotate(10deg); }
+}
+
+/* ─── MODAL ─── */
+#filme-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+#filme-modal.modal-visivel {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+}
+
+.modal-caixa {
+  position: relative;
+  background: #f2e8d5;
+  border: 2px solid #c4a96b;
+  border-radius: 4px;
+  padding: 30px;
+  max-width: 520px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  font-family: 'Special Elite', serif;
+}
+
+.modal-fechar {
+  position: absolute;
+  top: 12px; right: 16px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #7a6a50;
+}
+
+.modal-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+  border-bottom: 1px dashed #c4a96b;
+  padding-bottom: 14px;
+}
+
+.modal-num {
+  font-size: 28px;
+  color: #c0392b;
+}
+
+.modal-nome {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 26px;
+  color: #1a1a1a;
+  letter-spacing: 2px;
+}
+
+.modal-dir {
+  font-size: 13px;
+  color: #7a6a50;
+  font-style: italic;
+}
+
+.modal-desc {
+  font-size: 15px;
+  color: #3e3228;
+  line-height: 1.8;
+  margin-top: 14px;
+}
+
+/* ─── RODAPÉ ─── */
+.rodape-filmes {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  padding: 20px;
+  font-family: 'Special Elite', serif;
+  font-size: 12px;
+  color: #b0a090;
+  letter-spacing: 2px;
+  border-top: 1px solid #c4a96b;
+}
+
+.carimbo {
+  display: inline-block;
+  border: 3px solid #c0392b;
+  color: #c0392b;
+  padding: 4px 14px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 3px;
+  transform: rotate(-3deg);
+  opacity: 0.6;
+  margin-top: 10px;
+}
+
+/* ─── DESKTOP: esconde mobile ─── */
+.stickers-mobile { display: none; }
+
+/* ─── MOBILE ─── */
+@media (max-width: 600px) {
+
+  .page-titulo h1 {
+    font-size: clamp(44px, 16vw, 72px);
+    letter-spacing: 4px;
+  }
+
+  .deco-desktop { display: none !important; }
+
+  .mural-filmes {
+    padding: 10px 0 60px;
+    overflow: visible;
+  }
+
+  .stickers-mobile {
+    display: block;
+    position: relative;
+    height: 0;
+  }
+
+  .stickers-mobile .lado-esq {
+    position: absolute;
+    left: -18px;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    z-index: 4;
+    pointer-events: none;
+  }
+
+  .stickers-mobile .lado-dir {
+    position: absolute;
+    right: -18px;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 14px;
+    z-index: 4;
+    pointer-events: none;
+  }
+
+  .stickers-mobile .lado-esq img,
+  .stickers-mobile .lado-dir img {
+    position: static;
+    display: block;
+  }
+
+  .img-claquete { width: 90px;  transform: rotate(-8deg) !important; opacity: 0.85; }
+  .img-camera   { width: 80px;  transform: rotate(4deg) !important; }
+  .img-pipoca   { width: 75px;  transform: rotate(-5deg) !important; opacity: 0.9; }
+  .img-rolo     { width: 70px;  transform: rotate(6deg) !important; }
+  .img-oscar    { width: 65px;  transform: rotate(-5deg) !important; }
+  .img-oculos   { width: 75px;  transform: rotate(7deg) !important; }
+
+  .top5-wrapper {
+    flex-direction: column;
+    gap: 16px;
+    padding: 0 95px;
+  }
+
+  .top5-lista { padding-left: 0; width: 100%; }
+
+  .nav-mes { gap: 8px; }
+  .seta-mes { width: 30px; height: 30px; font-size: 14px; }
+  .top5-titulo { font-size: 32px; }
+  .top5-titulo .mes-label { font-size: 15px; }
+
+  .filme-num  { font-size: 26px; min-width: 36px; }
+  .filme-nome { font-size: 14px; }
+  .filme-dir  { font-size: 11px; }
+
+  .decoracao-direita {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    padding: 0 95px;
+  }
+
+  .poster-destaque { width: 120px; }
+}
