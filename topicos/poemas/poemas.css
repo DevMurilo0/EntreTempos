@@ -142,22 +142,52 @@ header a:hover { color: #c0392b; }
   margin-top: 6px;
 }
 
-/* ── LISTA DE POEMAS ── */
-.poemas-lista {
+/* ══════════════════════════════════════════
+   CARDS — layout escalonado
+   ══════════════════════════════════════════ */
+
+.cards-navegacao {
   position: relative;
   z-index: 5;
-  max-width: 700px;
-  margin: 0 auto 60px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  height: clamp(420px, 60vw, 580px);
   padding: 0 40px;
+  margin-bottom: 80px;
 }
 
-.em-breve {
-  text-align: center;
-  color: #b0a090;
-  font-style: italic;
-  font-size: 16px;
-  letter-spacing: 2px;
-  padding: 40px 0;
+.card-img {
+  position: absolute;
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+  /* sem sombra, sem borda, sem overflow — integra ao fundo */
+}
+
+.card-img img {
+  width: clamp(200px, 28vw, 300px);
+  height: auto;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.card-img:hover img {
+  transform: scale(1.04) rotate(-1deg);
+}
+
+.card-img:active img {
+  transform: scale(0.97);
+}
+
+.card-esquerda {
+  top: 40px;
+  left: 40px;
+}
+
+.card-direita {
+  bottom: 0;
+  right: 40px;
 }
 
 /* ── RODAPÉ ── */
@@ -221,7 +251,22 @@ header a:hover { color: #c0392b; }
     text-align: left;
   }
 
-  .poemas-lista {
-    padding: 0 20px;
+  .cards-navegacao {
+    height: clamp(400px, 140vw, 520px);
+    padding: 0 16px;
+  }
+
+  .card-img img {
+    width: clamp(160px, 55vw, 230px);
+  }
+
+  .card-esquerda {
+    top: 20px;
+    left: 10px;
+  }
+
+  .card-direita {
+    right: 10px;
+    bottom: 0;
   }
 }
