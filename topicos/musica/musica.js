@@ -11,18 +11,42 @@ const musicasPorMes = {
     {
       nome: "Tempo Perdido",
       artista: "Legião Urbana",
-      video: "mp4/Tempo perdido.mp4",
+      video: "mp4/Tempo Perdido.mp4",
       descricao: "Uma das músicas mais emblemáticas do rock brasileiro, Tempo Perdido fala sobre a busca por sentido e identidade num mundo em constante mudança. Renato Russo canta sobre o medo de perder o tempo e a necessidade de viver com propósito, num chamado existencial que ecoa em gerações."
     },
-    { nome: "Menino Bonito",  artista: "Chico Chico" },
-    { nome: "Segundo Sol",    artista: "Cássia Eller" },
-    { nome: "Erva Venenosa",  artista: "Rita Lee" },
-    { nome: "Pais e Filhos",  artista: "Legião Urbana" },
-    { nome: "Aliança",        artista: "Tribalistas" },
-    { nome: "—",              artista: "" },
-    { nome: "—",              artista: "" },
-    { nome: "—",              artista: "" },
-    { nome: "Árvore",         artista: "Edson Gomes" },
+    {
+      nome: "Menino Bonito",
+      artista: "Chico Chico",
+      video: "mp4/Menino Bonito.mp4"
+    },
+    {
+      nome: "Segundo Sol",
+      artista: "Cássia Eller",
+      video: "mp4/Segundo Sol.mp4"
+    },
+    {
+      nome: "Erva Venenosa",
+      artista: "Rita Lee",
+      video: "mp4/Erva Venenosa.mp4"
+    },
+    {
+      nome: "Pais e Filhos",
+      artista: "Legião Urbana",
+      video: "mp4/Pais e Filhos.mp4"
+    },
+    {
+      nome: "Aliança",
+      artista: "Tribalistas",
+      video: "mp4/Aliança.mp4"
+    },
+    { nome: "—", artista: "" },
+    { nome: "—", artista: "" },
+    { nome: "—", artista: "" },
+    {
+      nome: "Árvore",
+      artista: "Edson Gomes",
+      video: "mp4/Árvore.mp4"
+    },
   ],
 };
 
@@ -69,7 +93,6 @@ function abrirModal(musica) {
 function fecharModal() {
   const modal = document.getElementById('musica-modal');
   if (!modal) return;
-  // pausa o vídeo antes de fechar
   const video = modal.querySelector('video');
   if (video) video.pause();
   modal.classList.remove('modal-visivel');
