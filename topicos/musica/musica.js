@@ -11,7 +11,7 @@ const musicasPorMes = {
     {
       nome: "Tempo Perdido",
       artista: "Legião Urbana",
-      youtube: "r53NJwUkDso",
+      video: "mp4/Tempo perdido.mp4",
       descricao: "Uma das músicas mais emblemáticas do rock brasileiro, Tempo Perdido fala sobre a busca por sentido e identidade num mundo em constante mudança. Renato Russo canta sobre o medo de perder o tempo e a necessidade de viver com propósito, num chamado existencial que ecoa em gerações."
     },
     { nome: "Menino Bonito",  artista: "Chico Chico" },
@@ -47,16 +47,21 @@ function abrirModal(musica) {
           <div class="modal-artista">${musica.artista}</div>
         </div>
       </div>
-      <a class="modal-botao-yt" href="https://www.youtube.com/watch?v=${musica.youtube}" target="_blank" rel="noopener">
-        <span class="modal-play-icone">▶</span>
-        Assistir clipe no YouTube
-      </a>
+      ${musica.video ? `
+        <div class="musica-video">
+          <video controls width="100%">
+            <source src="${musica.video}" type="video/mp4">
+            Seu navegador não suporta vídeo.
+          </video>
+        </div>
+      ` : ''}
       ${musica.descricao ? `<p class="modal-desc">${musica.descricao}</p>` : ''}
     </div>
   `;
 
   document.body.appendChild(modal);
   requestAnimationFrame(() => modal.classList.add('modal-visivel'));
+
   modal.querySelector('.modal-fechar').addEventListener('click', fecharModal);
   modal.querySelector('.modal-overlay').addEventListener('click', fecharModal);
 }
@@ -64,6 +69,9 @@ function abrirModal(musica) {
 function fecharModal() {
   const modal = document.getElementById('musica-modal');
   if (!modal) return;
+  // pausa o vídeo antes de fechar
+  const video = modal.querySelector('video');
+  if (video) video.pause();
   modal.classList.remove('modal-visivel');
   setTimeout(() => modal.remove(), 300);
 }
@@ -93,7 +101,7 @@ function renderizar() {
     li.classList.add('musica-item');
     li.style.animationDelay = `${i * 0.05}s`;
 
-    const clicavel = (m.youtube || m.descricao) && m.nome !== '—';
+    const clicavel = (m.video || m.descricao) && m.nome !== '—';
 
     li.innerHTML = `
       <span class="musica-num">${num}</span>
@@ -128,9 +136,8 @@ renderizar();
 /* ── CD RITA LEE: clique para girar 3 voltas e parar ── */
 const cd = document.querySelector('.cd-destaque');
 cd.addEventListener('click', () => {
-  // remove a classe para reiniciar a animação caso clique de novo
   cd.classList.remove('girando');
-  void cd.offsetWidth; // força o browser a resetar a animação
+  void cd.offsetWidth;
   cd.classList.add('girando');
 });
 
