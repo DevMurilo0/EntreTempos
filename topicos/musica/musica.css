@@ -309,7 +309,7 @@ header a:hover { color: #c0392b; }
 
 .img-preta-gil {
   bottom: 800px;
-  left: -70px;
+  left: -190px;
   width: 310px;
   transform: rotate(-90deg);
   filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
