@@ -11,7 +11,7 @@ const musicasPorMes = {
     {
       nome: "Tempo Perdido",
       artista: "Legião Urbana",
-      video: "mp4/Tempo Perdido.mp4",
+      video: "mp4/Tempo perdido.mp4",
       descricao: "Uma das músicas mais emblemáticas do rock brasileiro, Tempo Perdido fala sobre a busca por sentido e identidade num mundo em constante mudança. Renato Russo canta sobre o medo de perder o tempo e a necessidade de viver com propósito, num chamado existencial que ecoa em gerações."
     },
     {
@@ -39,9 +39,16 @@ const musicasPorMes = {
       artista: "Tribalistas",
       video: "mp4/Aliança.mp4"
     },
-    { nome: "—", artista: "" },
-    { nome: "—", artista: "" },
-    { nome: "—", artista: "" },
+    { nome: "Preciso me encontrar",
+      artista: "Cartola" 
+    },
+    { nome: "Velha Infancia",
+      artista: "Tribalistas" 
+
+    },
+    { nome: "Era Uma Vez",
+      artista: "Kell Smith" },
+
     {
       nome: "Árvore",
       artista: "Edson Gomes",

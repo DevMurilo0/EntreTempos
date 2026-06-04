@@ -35,21 +35,19 @@ header a {
   text-decoration: none;
   color: #3e4a59;
   font-weight: bold;
-  font-family: 'Special Elite', serif;
   font-size: 14px;
   letter-spacing: 1px;
   transition: color 0.2s;
 }
-
 header a:hover { color: #c0392b; }
 
+/* ── TÍTULO ── */
 .page-titulo {
   position: relative;
   z-index: 5;
   text-align: center;
   padding: 30px 20px 10px;
 }
-
 .page-titulo h1 {
   font-family: 'Bebas Neue', sans-serif;
   font-size: clamp(60px, 12vw, 130px);
@@ -58,9 +56,7 @@ header a:hover { color: #c0392b; }
   line-height: 1;
   text-shadow: 4px 4px 0 #c4a96b;
 }
-
 .page-titulo .subtitulo {
-  font-family: 'Special Elite', serif;
   font-size: 14px;
   color: #7a6a50;
   letter-spacing: 4px;
@@ -77,6 +73,7 @@ header a:hover { color: #c0392b; }
   background: linear-gradient(to right, transparent, #c0392b, #c4a96b, #c0392b, transparent);
 }
 
+/* ── MURAL ── */
 .mural-filmes {
   position: relative;
   z-index: 5;
@@ -85,10 +82,125 @@ header a:hover { color: #c0392b; }
   padding: 20px 30px 120px;
 }
 
+/* ── IMAGENS DECORATIVAS DESKTOP ── */
+.img-deco {
+  position: absolute;
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────
+   LADO ESQUERDO
+   ───────────────────────────────────── */
+
+/* Chaplin pulando: topo esquerdo, destaque principal */
+.img-chaplin {
+  top: -250px;
+  left: 700px;
+  width: clamp(150px, 22vw, 230px);
+  opacity: 0.92;
+  filter: drop-shadow(3px 5px 10px rgba(0,0,0,0.18));
+  /* sem espelhamento — figura já olha para o conteúdo */
+  transform: rotate(-4deg);
+}
+
+/* Relógio: logo abaixo do Chaplin */
+.img-escalada {
+  bottom: 240px;
+  left: -200px;
+  width: 420px;
+  filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
+  transform: rotate(90deg);
+  z-index: 1;  /* fica atrás */
+}
+
+.img-relogio {
+  top: -400px;
+  left: -70px;
+  width: clamp(220px, 24vw, 340px);
+  opacity: 0.88;
+  filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.15));
+  z-index: 2;  /* fica na frente */
+}
+
+
+.img-oculos {
+  bottom: -80px;
+  left: -55px;
+  width: clamp(120px, 11vw, 165px);
+  transform: rotate(-4deg);
+  filter: drop-shadow(2px 2px 6px rgba(0,0,0,0.2));
+}
+
+/* ─────────────────────────────────────
+   LADO DIREITO
+   ───────────────────────────────────── */
+
+/* Câmera: topo direito */
+.img-camera {
+  top: -30px;
+  right: -120px;
+  width: clamp(110px, 13vw, 165px);
+  transform: rotate(5deg);
+  filter: drop-shadow(3px 3px 10px rgba(0,0,0,0.3));
+  opacity: 0.88;
+}
+
+
+
+.img-bond {
+  bottom: 230px;
+  right: -125px;
+  width: clamp(55px, 7vw, 90px);
+  filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.25));
+}
+
+
+
+/* Padrinho: meio esquerdo */
+.img-godfather {
+  top: -30px;
+  right: 15px;
+  width: clamp(180px, 10vw, 280px);
+  filter: drop-shadow(3px 3px 8px rgba(0,0,0,0.25));
+}
+
+/* TV: meio direito */
+.img-tv {
+  top: 300px;
+  right: -65px;
+  width: clamp(100px, 12vw, 155px);
+  filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.2));
+}
+
+/* Óculos: abaixo da TV */
+
+
+/* Fight Club: canto inferior direito */
+.img-fight {
+  bottom: -80px;
+  right: 150px;
+  width: clamp(100px, 12vw, 155px);
+  filter: drop-shadow(3px 3px 10px rgba(0,0,0,0.35));
+  opacity: 0.9;
+}
+
+/* ── TOP 5 WRAPPER ── */
+.top5-wrapper {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.top5-lista {
+  flex: 1;
+  min-width: 280px;
+  padding-left: 120px;
+}
+
+/* ── NAVEGAÇÃO MÊS ── */
 .nav-mes {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
   gap: 16px;
   margin-bottom: 24px;
 }
@@ -102,7 +214,6 @@ header a:hover { color: #c0392b; }
   padding-left: 15px;
   line-height: 1;
 }
-
 .top5-titulo .mes-label {
   font-family: 'Special Elite', serif;
   font-size: 18px;
@@ -125,33 +236,17 @@ header a:hover { color: #c0392b; }
   cursor: pointer;
   flex-shrink: 0;
   transition: background 0.2s, transform 0.15s;
-  box-shadow: 0 4px 12px rgba(192, 57, 43, 0.35);
+  box-shadow: 0 4px 12px rgba(192,57,43,0.35);
   display: flex;
   align-items: center;
   justify-content: center;
+  line-height: 1;
 }
-
-.seta-mes:hover { background: #922b21; transform: scale(1.1); }
+.seta-mes:hover  { background: #922b21; transform: scale(1.1); }
 .seta-mes:active { transform: scale(0.93); }
 
-.top5-wrapper {
-  display: flex;
-  gap: 40px;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
-
-.top5-lista {
-  flex: 1;
-  min-width: 280px;
-  padding-left: 120px;
-}
-
-.lista-filmes {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-}
+/* ── LISTA ── */
+.lista-filmes { list-style: none; display: flex; flex-direction: column; }
 
 .filme-item {
   display: flex;
@@ -161,10 +256,18 @@ header a:hover { color: #c0392b; }
   border-bottom: 1px dashed #c4a96b;
   transition: transform 0.2s;
   animation: entrar 0.35s ease both;
+  cursor: default;
+}
+.filme-item.clicavel {
   cursor: pointer;
 }
-
-.filme-item.clicavel:hover { transform: translateX(6px); }
+.filme-item.clicavel:hover {
+  transform: translateX(6px);
+  background: rgba(192,57,43,0.05);
+  padding: 12px 8px;
+  margin-left: -8px;
+  border-radius: 4px;
+}
 
 @keyframes entrar {
   from { opacity: 0; transform: translateX(-18px); }
@@ -178,16 +281,13 @@ header a:hover { color: #c0392b; }
   min-width: 45px;
   line-height: 1;
 }
-
 .filme-info { display: flex; flex-direction: column; }
-
 .filme-nome {
   font-family: 'Special Elite', serif;
   font-size: 17px;
   color: #1a1a1a;
   font-weight: bold;
 }
-
 .filme-dir {
   font-family: 'Special Elite', serif;
   font-size: 13px;
@@ -195,98 +295,17 @@ header a:hover { color: #c0392b; }
   font-style: italic;
   margin-top: 1px;
 }
-
-.filme-toggle-icone {
-  margin-left: auto;
-  font-size: 13px;
-  color: #c0392b;
-  opacity: 0.7;
-}
-
 .vazio {
   text-align: center;
   color: #b0a090;
   font-style: italic;
   padding: 40px 0;
   font-size: 16px;
+  letter-spacing: 1px;
 }
 
-/* ─── COLUNA DIREITA ─── */
-.decoracao-direita {
-  width: 280px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-}
-
-.poster-destaque {
-  width: 200px;
-  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.4));
-  transform: rotate(-4deg);
-  transition: transform 0.3s;
-}
-
-.poster-destaque:hover { transform: rotate(0deg) scale(1.05); }
-
-/* ─── IMAGENS DECORATIVAS DESKTOP ─── */
-.img-deco {
-  position: absolute;
-  pointer-events: none;
-}
-
-.img-claquete {
-  top: -50px;
-  left: -80px;
-  width: 200px;
-  transform: rotate(-8deg);
-  opacity: 0.85;
-  filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
-}
-
-.img-camera {
-  top: 100px;
-  left: -100px;
-  width: 160px;
-  transform: rotate(4deg);
-  filter: drop-shadow(3px 3px 10px rgba(0,0,0,0.3));
-}
-
-.img-pipoca {
-  bottom: 50px;
-  left: -80px;
-  width: 150px;
-  transform: rotate(-5deg);
-  filter: drop-shadow(3px 3px 8px rgba(0,0,0,0.25));
-  opacity: 0.9;
-}
-
-.img-rolo {
-  top: -30px;
-  right: -60px;
-  width: 130px;
-  transform: rotate(6deg);
-  filter: drop-shadow(2px 2px 8px rgba(0,0,0,0.25));
-}
-
-.img-oscar {
-  top: 300px;
-  right: -40px;
-  width: 110px;
-  transform: rotate(-5deg);
-  filter: drop-shadow(3px 3px 10px rgba(0,0,0,0.3));
-}
-
-.img-oculos {
-  bottom: 100px;
-  right: -50px;
-  width: 140px;
-  transform: rotate(7deg);
-  filter: drop-shadow(2px 2px 6px rgba(0,0,0,0.2));
-}
-
-/* ─── FUNDO FLOTANTE ─── */
-.notas-musicais {
+/* ── NOTAS FILMICAS ── */
+.notas-filmicas {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
@@ -294,114 +313,28 @@ header a:hover { color: #c0392b; }
   z-index: 1;
   overflow: hidden;
 }
-
 .nota {
   position: absolute;
-  font-size: 22px;
-  opacity: 0.05;
+  font-size: 24px;
+  opacity: 0.06;
   animation: flutuar 8s infinite ease-in-out;
 }
-
 @keyframes flutuar {
   0%, 100% { transform: translateY(0) rotate(0deg); }
   50%       { transform: translateY(-20px) rotate(10deg); }
 }
 
-/* ─── MODAL ─── */
-#filme-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s;
-}
-
-#filme-modal.modal-visivel {
-  opacity: 1;
-  pointer-events: all;
-}
-
-.modal-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.65);
-}
-
-.modal-caixa {
-  position: relative;
-  background: #f2e8d5;
-  border: 2px solid #c4a96b;
-  border-radius: 4px;
-  padding: 30px;
-  max-width: 520px;
-  width: 90%;
-  max-height: 80vh;
-  overflow-y: auto;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-  font-family: 'Special Elite', serif;
-}
-
-.modal-fechar {
-  position: absolute;
-  top: 12px; right: 16px;
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  color: #7a6a50;
-}
-
-.modal-cabecalho {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 16px;
-  border-bottom: 1px dashed #c4a96b;
-  padding-bottom: 14px;
-}
-
-.modal-num {
-  font-size: 28px;
-  color: #c0392b;
-}
-
-.modal-nome {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 26px;
-  color: #1a1a1a;
-  letter-spacing: 2px;
-}
-
-.modal-dir {
-  font-size: 13px;
-  color: #7a6a50;
-  font-style: italic;
-}
-
-.modal-desc {
-  font-size: 15px;
-  color: #3e3228;
-  line-height: 1.8;
-  margin-top: 14px;
-}
-
-/* ─── RODAPÉ ─── */
+/* ── RODAPÉ ── */
 .rodape-filmes {
   position: relative;
   z-index: 5;
   text-align: center;
   padding: 20px;
-  font-family: 'Special Elite', serif;
   font-size: 12px;
   color: #b0a090;
   letter-spacing: 2px;
   border-top: 1px solid #c4a96b;
 }
-
 .carimbo {
   display: inline-block;
   border: 3px solid #c0392b;
@@ -415,10 +348,99 @@ header a:hover { color: #c0392b; }
   margin-top: 10px;
 }
 
-/* ─── DESKTOP: esconde mobile ─── */
+/* ══════════════════════════════
+   MODAL
+   ══════════════════════════════ */
+.modal-filme {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+}
+.modal-filme.ativo { display: flex; }
+
+.modal-conteudo {
+  background: #f2e8d5;
+  border-radius: 12px;
+  padding: 40px;
+  max-width: 660px;
+  width: 90%;
+  position: relative;
+  animation: slideUp 0.3s ease;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  border: 3px solid #c0392b;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.modal-fechar {
+  position: absolute;
+  top: 16px; right: 16px;
+  background: #c0392b;
+  color: white;
+  border: none;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.2s;
+}
+.modal-fechar:hover  { background: #922b21; transform: scale(1.1); }
+.modal-fechar:active { transform: scale(0.95); }
+
+.modal-titulo {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.modal-titulo h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(28px, 5vw, 44px);
+  color: #1a1a1a;
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+.modal-titulo p {
+  font-size: 16px;
+  color: #7a6a50;
+  font-style: italic;
+}
+
+.modal-descricao {
+  background: rgba(192,57,43,0.08);
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid #c0392b;
+}
+.modal-descricao h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  color: #1a1a1a;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+.modal-descricao p {
+  font-size: 15px;
+  color: #3e3e3e;
+  line-height: 1.7;
+}
+
+/* ══════════════════════════════
+   DESKTOP: esconde stickers mobile
+   ══════════════════════════════ */
 .stickers-mobile { display: none; }
 
-/* ─── MOBILE ─── */
+/* ══════════════════════════════
+   MOBILE (≤ 600px)
+   ══════════════════════════════ */
 @media (max-width: 600px) {
 
   .page-titulo h1 {
@@ -433,59 +455,52 @@ header a:hover { color: #c0392b; }
     overflow: visible;
   }
 
+  /* stickers laterais mobile */
   .stickers-mobile {
     display: block;
     position: relative;
     height: 0;
+    overflow: visible;
   }
-
-  .stickers-mobile .lado-esq {
-    position: absolute;
-    left: -18px;
-    top: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 14px;
-    z-index: 4;
-    pointer-events: none;
-  }
-
+  .stickers-mobile .lado-esq,
   .stickers-mobile .lado-dir {
     position: absolute;
-    right: -18px;
     top: 0;
+    width: 75px;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    gap: 14px;
+    align-items: center;
     z-index: 4;
     pointer-events: none;
   }
+  .stickers-mobile .lado-esq { left: 0; }
+  .stickers-mobile .lado-dir { right: 0; }
 
   .stickers-mobile .lado-esq img,
   .stickers-mobile .lado-dir img {
-    position: static;
-    display: block;
+    position: relative !important;
+    display: block !important;
+    top: auto !important; left: auto !important;
+    right: auto !important; bottom: auto !important;
+    margin-bottom: 70px !important;
   }
 
-  .img-claquete { width: 90px;  transform: rotate(-8deg) !important; opacity: 0.85; }
-  .img-camera   { width: 80px;  transform: rotate(4deg) !important; }
-  .img-pipoca   { width: 75px;  transform: rotate(-5deg) !important; opacity: 0.9; }
-  .img-rolo     { width: 70px;  transform: rotate(6deg) !important; }
-  .img-oscar    { width: 65px;  transform: rotate(-5deg) !important; }
-  .img-oculos   { width: 75px;  transform: rotate(7deg) !important; }
+  /* tamanhos mobile */
+  .img-chaplin    { width: 90px !important; transform: rotate(-4deg) !important; }
+  .img-relogio    { width: 72px !important; }
+  .img-godfather  { width: 58px !important; }
+  .img-escalada   { width: 44px !important; }
+  .img-bond       { width: 46px !important; }
+  .img-camera     { width: 72px !important; }
+  .img-tv         { width: 68px !important; }
+  .img-oculos     { width: 62px !important; }
+  .img-fight      { width: 68px !important; }
 
-  .top5-wrapper {
-    flex-direction: column;
-    gap: 16px;
-    padding: 0 95px;
-  }
+  .top5-wrapper { flex-direction: column; gap: 16px; padding: 0 80px; }
+  .top5-lista   { padding-left: 0; width: 100%; }
 
-  .top5-lista { padding-left: 0; width: 100%; }
-
-  .nav-mes { gap: 8px; }
-  .seta-mes { width: 30px; height: 30px; font-size: 14px; }
+  .nav-mes   { gap: 8px; margin-bottom: 16px; }
+  .seta-mes  { width: 30px; height: 30px; font-size: 14px; }
   .top5-titulo { font-size: 32px; }
   .top5-titulo .mes-label { font-size: 15px; }
 
@@ -493,13 +508,7 @@ header a:hover { color: #c0392b; }
   .filme-nome { font-size: 14px; }
   .filme-dir  { font-size: 11px; }
 
-  .decoracao-direita {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 100%;
-    padding: 0 95px;
-  }
-
-  .poster-destaque { width: 120px; }
+  .modal-conteudo { padding: 30px 20px; }
+  .modal-titulo h2 { font-size: clamp(20px, 6vw, 32px); }
+  .modal-descricao p { font-size: 13px; }
 }

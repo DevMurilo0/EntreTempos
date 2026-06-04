@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<div class="notas-musicais">
+<div class="notas-filmicas">
   <span class="nota" style="top:10%;left:5%;animation-delay:0s">🎬</span>
   <span class="nota" style="top:25%;left:90%;animation-delay:1s">🎥</span>
   <span class="nota" style="top:50%;left:15%;animation-delay:2s">🎞</span>
@@ -31,29 +31,49 @@
 </div>
 <div class="divisor"></div>
 
-<!-- LATERAIS MOBILE -->
+<!-- ══ LATERAIS MOBILE ══ -->
 <div class="stickers-mobile">
   <div class="lado-esq">
-    <img src="img/claquete.png"    alt="Claquete"    class="img-deco img-claquete">
-    <img src="img/camera.png"      alt="Câmera"       class="img-deco img-camera">
-    <img src="img/pipoca.png"      alt="Pipoca"       class="img-deco img-pipoca">
+    <!-- Chaplin pulando: destaque no topo -->
+    <img src="img/108_Sem_Titulo.png"               alt="Chaplin"   class="img-deco img-chaplin">
+    <!-- Relógio quebrado -->
+    <img src="img/128_Sem_Titulo.png"               alt="Relógio"   class="img-deco img-relogio">
+    <!-- Padrinho -->
+    <img src="img/83_Sem_Titulo_20260603141942.png"  alt="Padrinho"  class="img-deco img-godfather">
+    <!-- Escalada na corda (ficou no meio-baixo esquerdo) -->
+    <img src="img/131_Sem_Titulo.png"               alt="Escalada"  class="img-deco img-escalada">
+    <!-- Bond -->
+    <img src="img/82_Sem_Titulo_20260603141923.png"  alt="Bond"      class="img-deco img-bond">
   </div>
   <div class="lado-dir">
-    <img src="img/rolo_filme.png"  alt="Rolo de filme" class="img-deco img-rolo">
-    <img src="img/oscar.png"       alt="Oscar"         class="img-deco img-oscar">
-    <img src="img/oculos3d.png"    alt="Óculos 3D"    class="img-deco img-oculos">
+    <img src="img/77_Sem_Titulo_20260603141647.png"  alt="Câmera"   class="img-deco img-camera">
+    <img src="img/78_Sem_Titulo_20260603141739.png"  alt="TV"       class="img-deco img-tv">
+    <img src="img/80_Sem_Titulo_20260603141820.png"  alt="Óculos"   class="img-deco img-oculos">
+    <img src="img/81_Sem_Titulo_20260603141857.png"  alt="Fight"    class="img-deco img-fight">
   </div>
 </div>
 
+<!-- ══ MURAL PRINCIPAL ══ -->
 <div class="mural-filmes">
 
   <!-- DECORAÇÕES DESKTOP -->
-  <img src="img/claquete.png"   alt="Claquete"     class="img-deco img-claquete deco-desktop">
-  <img src="img/camera.png"     alt="Câmera"        class="img-deco img-camera deco-desktop">
-  <img src="img/pipoca.png"     alt="Pipoca"        class="img-deco img-pipoca deco-desktop">
-  <img src="img/rolo_filme.png" alt="Rolo de filme" class="img-deco img-rolo deco-desktop">
-  <img src="img/oscar.png"      alt="Oscar"         class="img-deco img-oscar deco-desktop">
-  <img src="img/oculos3d.png"   alt="Óculos 3D"    class="img-deco img-oculos deco-desktop">
+  <!-- LADO ESQUERDO -->
+  <!-- Chaplin pulando: posição topo-esquerdo, bem visível -->
+  <img src="img/108_Sem_Titulo.png"               alt="Chaplin"   class="img-deco img-chaplin   deco-desktop">
+  <!-- Relógio: logo abaixo do Chaplin -->
+  <img src="img/128_Sem_Titulo.png"               alt="Relógio"   class="img-deco img-relogio   deco-desktop">
+  <!-- Padrinho -->
+  <img src="img/83_Sem_Titulo_20260603141942.png"  alt="Padrinho"  class="img-deco img-godfather deco-desktop">
+  <!-- Escalada na corda: meio-baixo esquerdo -->
+  <img src="img/131_Sem_Titulo.png"               alt="Escalada"  class="img-deco img-escalada  deco-desktop">
+  <!-- Bond: canto inferior esquerdo -->
+  <img src="img/82_Sem_Titulo_20260603141923.png"  alt="Bond"      class="img-deco img-bond      deco-desktop">
+
+  <!-- LADO DIREITO -->
+  <img src="img/77_Sem_Titulo_20260603141647.png"  alt="Câmera"   class="img-deco img-camera    deco-desktop">
+  <img src="img/78_Sem_Titulo_20260603141739.png"  alt="TV"       class="img-deco img-tv        deco-desktop">
+  <img src="img/80_Sem_Titulo_20260603141820.png"  alt="Óculos"   class="img-deco img-oculos    deco-desktop">
+  <img src="img/81_Sem_Titulo_20260603141857.png"  alt="Fight"    class="img-deco img-fight     deco-desktop">
 
   <div class="top5-wrapper">
     <div class="top5-lista">
@@ -67,9 +87,20 @@
       </div>
       <ul class="lista-filmes" id="lista-filmes"></ul>
     </div>
+  </div>
+</div>
 
-    <div class="decoracao-direita">
-      <img src="img/poster_destaque.png" alt="Poster destaque" class="poster-destaque">
+<!-- ══ MODAL ══ -->
+<div class="modal-filme" id="modalFilme">
+  <div class="modal-conteudo">
+    <button class="modal-fechar" id="btnFechar">✕</button>
+    <div class="modal-titulo">
+      <h2 id="filmeTitulo"></h2>
+      <p id="filmeDiretor"></p>
+    </div>
+    <div class="modal-descricao">
+      <h3>Sobre o Filme</h3>
+      <p id="filmeDescricao"></p>
     </div>
   </div>
 </div>
