@@ -1,16 +1,46 @@
 let index = 0;
+
 const slides = document.querySelector('.slides');
 const totalSlides = document.querySelectorAll('.slide').length;
 
-function nextSlide() {
-  index++;
-  if (index >= totalSlides) {
-    index = 0;
-  }
+let autoplay = setInterval(nextSlide, 4000);
+let autoplayAtivo = true;
+let pauseTimeout;
+
+function goToSlide(n) {
+  index = (n + totalSlides) % totalSlides;
   slides.style.transform = `translateX(-${index * 100}%)`;
 }
 
-setInterval(nextSlide, 4000);
+function nextSlide() {
+  goToSlide(index + 1);
+}
+
+function prevSlide() {
+  goToSlide(index - 1);
+}
+
+function pausarAutoplay() {
+  clearInterval(autoplay);
+  autoplayAtivo = false;
+
+  clearTimeout(pauseTimeout);
+
+  pauseTimeout = setTimeout(() => {
+    autoplay = setInterval(nextSlide, 4000);
+    autoplayAtivo = true;
+  }, 7000);
+}
+
+document.querySelector('.next').addEventListener('click', () => {
+  nextSlide();
+  pausarAutoplay();
+});
+
+document.querySelector('.prev').addEventListener('click', () => {
+  prevSlide();
+  pausarAutoplay();
+});
 
 window.addEventListener('load', function() {
   const limitarScroll = () => {
