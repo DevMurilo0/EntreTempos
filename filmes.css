@@ -99,41 +99,36 @@ header a:hover { color: #c0392b; }
   width: clamp(150px, 22vw, 230px);
   opacity: 0.92;
   filter: drop-shadow(3px 5px 10px rgba(0,0,0,0.18));
+  /* sem espelhamento — figura já olha para o conteúdo */
   transform: rotate(-4deg);
 }
 
 /* Relógio: logo abaixo do Chaplin */
-.img-relogio {
-  top: -400px;
-  left: -70px;
-  width: clamp(220px, 24vw, 340px);
-  opacity: 0.88;
-  filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.15));
-}
-
-/* Padrinho: meio esquerdo */
-.img-godfather {
-  top: -30px;
-  right: 15px;
-  width: clamp(180px, 10vw, 280px);
-  filter: drop-shadow(3px 3px 8px rgba(0,0,0,0.25));
-}
-
-/* Escalada na corda: mais abaixo, silhueta vertical funciona bem */
 .img-escalada {
   bottom: 240px;
   left: -200px;
   width: 420px;
   filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
   transform: rotate(90deg);
+  z-index: 1;  /* fica atrás */
 }
 
-/* Bond: canto inferior esquerdo */
-.img-bond {
-  bottom: 230px;
-  right: -125px;
-  width: clamp(55px, 7vw, 90px);
-  filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.25));
+.img-relogio {
+  top: -400px;
+  left: -70px;
+  width: clamp(220px, 24vw, 340px);
+  opacity: 0.88;
+  filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.15));
+  z-index: 2;  /* fica na frente */
+}
+
+
+.img-oculos {
+  bottom: -80px;
+  left: -55px;
+  width: clamp(120px, 11vw, 165px);
+  transform: rotate(-4deg);
+  filter: drop-shadow(2px 2px 6px rgba(0,0,0,0.2));
 }
 
 /* ─────────────────────────────────────
@@ -150,6 +145,25 @@ header a:hover { color: #c0392b; }
   opacity: 0.88;
 }
 
+
+
+.img-bond {
+  bottom: 230px;
+  right: -125px;
+  width: clamp(55px, 7vw, 90px);
+  filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.25));
+}
+
+
+
+/* Padrinho: meio esquerdo */
+.img-godfather {
+  top: -30px;
+  right: 15px;
+  width: clamp(180px, 10vw, 280px);
+  filter: drop-shadow(3px 3px 8px rgba(0,0,0,0.25));
+}
+
 /* TV: meio direito */
 .img-tv {
   top: 300px;
@@ -159,13 +173,7 @@ header a:hover { color: #c0392b; }
 }
 
 /* Óculos: abaixo da TV */
-.img-oculos {
-  bottom: -80px;
-  left: -55px;
-  width: clamp(120px, 11vw, 165px);
-  transform: rotate(-4deg);
-  filter: drop-shadow(2px 2px 6px rgba(0,0,0,0.2));
-}
+
 
 /* Fight Club: canto inferior direito */
 .img-fight {
@@ -447,105 +455,46 @@ header a:hover { color: #c0392b; }
     overflow: visible;
   }
 
-  /* container mobile */
+  /* stickers laterais mobile */
   .stickers-mobile {
     display: block;
     position: relative;
     height: 0;
     overflow: visible;
-    z-index: 4;
-    pointer-events: none;
   }
   .stickers-mobile .lado-esq,
   .stickers-mobile .lado-dir {
-    position: static;
-    width: auto;
-    display: block;
+    position: absolute;
+    top: 0;
+    width: 75px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 4;
+    pointer-events: none;
+  }
+  .stickers-mobile .lado-esq { left: 0; }
+  .stickers-mobile .lado-dir { right: 0; }
+
+  .stickers-mobile .lado-esq img,
+  .stickers-mobile .lado-dir img {
+    position: relative !important;
+    display: block !important;
+    top: auto !important; left: auto !important;
+    right: auto !important; bottom: auto !important;
+    margin-bottom: 70px !important;
   }
 
-  /* todas as imagens mobile: posição absoluta livre */
-  .stickers-mobile img {
-    position: absolute !important;
-    margin: 0 !important;
-  }
-
-  /* ESCALADA: topo esquerdo, grande */
-  .img-escalada {
-    top: -180px !important;
-    left: -130px !important;
-    width: 340px !important;
-    transform: rotate(90deg) !important;
-    z-index: 2 !important;
-  }
-
-  /* RELÓGIO: embaixo da escalada, sobreposto */
-  .img-relogio {
-    bottom: 10px !important;
-    left: -30px !important;
-    width: 130px !important;
-    transform: none !important;
-    z-index: 3 !important;
-  }
-
-  /* CHAPLIN: topo direito */
-  .img-chaplin {
-    top: -150px !important;
-    right: -10px !important;
-    left: auto !important;
-    width: 110px !important;
-    transform: rotate(-4deg) !important;
-    z-index: 4 !important;
-  }
-
-  /* PADRINHO: direita, abaixo do Chaplin */
-  .img-godfather {
-    top: 30px !important;
-    right: 40px !important;
-    left: auto !important;
-    width: 70px !important;
-    z-index: 4 !important;
-  }
-
-  /* CÂMERA: direita, ao lado do Padrinho */
-  .img-camera {
-    top: 20px !important;
-    right: -15px !important;
-    left: auto !important;
-    width: 90px !important;
-    transform: rotate(5deg) !important;
-    z-index: 4 !important;
-  }
-
-  /* TV: direita, meio da página */
-  .img-tv {
-    top: 280px !important;
-    right: -20px !important;
-    left: auto !important;
-    width: 130px !important;
-    z-index: 4 !important;
-  }
-
-  /* ÓCULOS: rodapé esquerdo */
-  .img-oculos {
-    top: 580px !important;
-    left: -10px !important;
-    right: auto !important;
-    width: 95px !important;
-    transform: rotate(-4deg) !important;
-    z-index: 4 !important;
-  }
-
-  /* FIGHT CLUB: rodapé direito */
-  .img-fight {
-    top: 560px !important;
-    right: -10px !important;
-    left: auto !important;
-    width: 90px !important;
-    z-index: 4 !important;
-  }
-
-  /* BOND: oculto no mobile */
-  .img-bond { display: none !important; }
+  /* tamanhos mobile */
+  .img-chaplin    { width: 90px !important; transform: rotate(-4deg) !important; }
+  .img-relogio    { width: 72px !important; }
+  .img-godfather  { width: 58px !important; }
+  .img-escalada   { width: 44px !important; }
+  .img-bond       { width: 46px !important; }
+  .img-camera     { width: 72px !important; }
+  .img-tv         { width: 68px !important; }
+  .img-oculos     { width: 62px !important; }
+  .img-fight      { width: 68px !important; }
 
   .top5-wrapper { flex-direction: column; gap: 16px; padding: 0 80px; }
   .top5-lista   { padding-left: 0; width: 100%; }
