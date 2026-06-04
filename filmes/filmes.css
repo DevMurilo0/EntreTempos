@@ -109,7 +109,6 @@ header a:hover { color: #c0392b; }
   width: clamp(220px, 24vw, 340px);
   opacity: 0.88;
   filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.15));
-  z-index: 3;
 }
 
 /* Padrinho: meio esquerdo */
@@ -127,7 +126,6 @@ header a:hover { color: #c0392b; }
   width: 420px;
   filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
   transform: rotate(90deg);
-  z-index: 1;
 }
 
 /* Bond: canto inferior esquerdo */
@@ -471,28 +469,27 @@ header a:hover { color: #c0392b; }
     margin: 0 !important;
   }
 
-  /* RELÓGIO: abaixo da escalada no mobile */
-.img-escalada {
-  top: 20px !important;       /* era -180px */
-  left: -130px !important;     /* era -130px */
-  width: 340px !important;
-  transform: rotate(90deg) !important;
-  z-index: 2 !important;
-}
+  /* ESCALADA: topo esquerdo, grande */
+  .img-escalada {
+    top: -180px !important;
+    left: -130px !important;
+    width: 340px !important;
+    transform: rotate(90deg) !important;
+    z-index: 2 !important;
+  }
 
-.img-relogio {
-  top: -300px !important;      /* era bottom: -80px */
-  left: -80px !important;
-  bottom: auto !important;
-  width: 230px !important;
-  transform: none !important;
-  z-index: 3 !important;
-}
-
+  /* RELÓGIO: movido para baixo no mobile */
+  .img-relogio {
+    bottom: -80px !important;
+    left: -30px !important;
+    width: 130px !important;
+    transform: none !important;
+    z-index: 3 !important;
+  }
 
   /* CHAPLIN: topo direito */
   .img-chaplin {
-    top: -170px !important;
+    top: -150px !important;
     right: -10px !important;
     left: auto !important;
     width: 110px !important;
@@ -530,7 +527,7 @@ header a:hover { color: #c0392b; }
 
   /* ÓCULOS: movido para cima no mobile */
   .img-oculos {
-    top: 460px !important;
+    top: 520px !important;
     left: -10px !important;
     right: auto !important;
     width: 95px !important;
@@ -540,7 +537,7 @@ header a:hover { color: #c0392b; }
 
   /* FIGHT CLUB: movido para cima no mobile */
   .img-fight {
-    top: 440px !important;
+    top: 500px !important;
     right: -10px !important;
     left: auto !important;
     width: 90px !important;
