@@ -30,12 +30,12 @@
 
 <script>
   const categories = [
-    { label: "Poemas",       href: "/topicos/poemas/poemas.html",      cls: "fp--1", rotate: 160 },
-    { label: "Filmes",       href: "/topicos/filmes/filmes.html",      cls: "fp--2", rotate:   170 },
-    { label: "Livros",       href: "/topicos/livros/livros.html",      cls: "fp--3", rotate:  90 },
-    { label: "Desenhos",     href: "/topicos/desenhos/desenhos.html",    cls: "fp--4", rotate:  -120 },
-    { label: "Música",       href: "/topicos/musica/musica.html",      cls: "fp--5", rotate: 30 },
-    { label: "Curiosidades", href: "/topicos/curiosidades/curiosidades.html",cls: "fp--6", rotate:   -10 },
+    { label: "Poemas",       href: "/topicos/poemas/poemas.html",      cls: "fp--1", rotate: -16 },
+    { label: "Filmes",       href: "/topicos/filmes/filmes.html",      cls: "fp--2", rotate:   5 },
+    { label: "Livros",       href: "/topicos/livros/livros.html",      cls: "fp--3", rotate:  -7 },
+    { label: "Desenhos",     href: "/topicos/desenhos/desenhos.html",    cls: "fp--4", rotate:  10 },
+    { label: "Música",       href: "/topicos/musica/musica.html",      cls: "fp--5", rotate: -10 },
+    { label: "Curiosidades", href: "/topicos/curiosidades/curiosidades.html",cls: "fp--6", rotate:   7 },
   ];
 
   const scene = document.querySelector('.scene');
@@ -50,7 +50,9 @@
     feet.innerHTML = `<img src="img/pegadas.png" alt="pegadas">`;
 
 
+
     wrap.appendChild(feet);
+
     scene.appendChild(wrap);
   });
 </script>
