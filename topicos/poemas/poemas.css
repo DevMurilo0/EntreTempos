@@ -232,9 +232,10 @@ header a:hover { color: #c0392b; }
     text-align: center;
   }
 
-.foto-autora {
-  width: clamp(500px, 100vw, 900px);
-}
+  .foto-autora {
+    width: clamp(140px, 55vw, 200px);
+  }
+
   .autora-nome {
     border-left: none;
     padding-left: 0;
