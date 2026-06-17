@@ -2,34 +2,69 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Revista - Entre Tempos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entre Tempos</title>
+
   <link rel="stylesheet" href="css/folha.css">
 </head>
 <body>
 
-<header>
-  <nav>
-    <a href="index.html">Voltar</a>
-  </nav>
-</header>
+<div class="scene">
 
-
-
-<section class="mural">
-
-  <a href="topicos/poemas/poemas.html" class="card poemas">Poemas</a>
-  <a href="topicos/desenhos/desenhos.html" class="card desenhos">Desenhos</a>
-
-  <!-- IMAGEM CENTRAL -->
-  <div class="mural-imagem">
-    <img src="img/dedo.png" alt="Revista">
+  <!-- LUA -->
+  <div class="moon">
+    <img src="img/lua.png" alt="Lua">
   </div>
 
+  <!-- LIVROS -->
+  <div class="books">
+    <img src="img/livros.png" alt="Pilha de livros">
+  </div>
 
-  <a href="topicos/musica/musica.html" class="card musicas">Músicas</a>
-  <a href="topicos/filmes/filmes.html" class="card filmes">Filmes</a>
-  <a href="topicos/livros/livros.html" class="card livros">Livros</a>
-  <a href="topicos/curiosidades/curiosidades.html" class="card curiosidades">curiosidades</a>
-</section>
+  <!-- BILHETE -->
+  <div class="note">
+    <img src="img/bilhete.png" alt="Bilhete">
+  </div>
+
+</div>
+
+<script>
+  const categories = [
+    { label: "Poemas",       href: "/poemas",      cls: "fp--1", rotate: -14 },
+    { label: "Filmes",       href: "/filmes",      cls: "fp--2", rotate:   5 },
+    { label: "Livros",       href: "/livros",      cls: "fp--3", rotate:  -7 },
+    { label: "Desenhos",     href: "/desenhos",    cls: "fp--4", rotate:  10 },
+    { label: "Música",       href: "/musica",      cls: "fp--5", rotate: -10 },
+    { label: "Curiosidades", href: "/curiosidades",cls: "fp--6", rotate:   7 },
+  ];
+
+  const scene = document.querySelector('.scene');
+
+  categories.forEach(cat => {
+    const wrap = document.createElement('div');
+    wrap.className = `footprint-group ${cat.cls}`;
+    wrap.style.transform = `rotate(${cat.rotate}deg)`;
+
+    const feet = document.createElement('div');
+    feet.className = 'feet';
+    feet.innerHTML = `<img src="img/pegadas.png" alt="pegadas">`;
+
+    const tagLink = document.createElement('a');
+    tagLink.href = cat.href;
+    tagLink.className = 'tag-link';
+    tagLink.setAttribute('aria-label', cat.label);
+    tagLink.innerHTML = `
+      <div class="tag-img-wrap">
+        <img src="img/etiqueta.png" alt="etiqueta">
+        <span class="tag-label">${cat.label}</span>
+      </div>
+    `;
+
+    wrap.appendChild(feet);
+    wrap.appendChild(tagLink);
+    scene.appendChild(wrap);
+  });
+</script>
 
 </body>
+</html>
