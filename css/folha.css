@@ -140,8 +140,9 @@ body {
 }
 
 .fp--2 {
-  top: 4%;
+  top: 20%;
   left: 40%;
+  transform: rotate(50px);
 }
 
 .fp--3 {
@@ -150,7 +151,7 @@ body {
 }
 
 .fp--4 {
-  top: 27%;
+  top: 37%;
   left: 63%;
 }
 
@@ -160,8 +161,8 @@ body {
 }
 
 .fp--6 {
-  top: 57%;
-  left: 40%;
+  top: 77%;
+  left: 26%;
 }
 
 /* ── RESPONSIVO ── */
