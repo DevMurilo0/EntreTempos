@@ -150,10 +150,10 @@ body {
 /* ── POSIÇÕES (DESKTOP) ── */
 .fp--1 { top: 9%;  left: 13%; }
 .fp--2 { top: 7%;  left: 46%; }
-.fp--3 { top: 42%; left: 11%; }
+.fp--3 { top: 42%; left: 7%; }
 .fp--4 { top: 41%; left: 67%; }
 .fp--5 { top: 70%; left: 13%; }
-.fp--6 { top: 77%; left: 44%; }
+.fp--6 { top: 65%; left: 44%; }
 
 /* ════════════════════════════════════════════ */
 /* ROTAÇÃO DAS ETIQUETAS — DESKTOP               */
@@ -195,15 +195,15 @@ body {
 
 /*Musica*/
 .tag-group.fp--5 {
-  transform: translate(-50px, 45px) rotate(-8deg);
+  transform: translate(-90px, -15px) rotate(40deg);
 }
 .tag-group.fp--5:hover {
-  transform: translate(-100px, 35px) rotate(15deg) scale(1.15);
+  transform: translate(-100px, 15px) rotate(25deg) scale(1.15);
 }
 
 /*Curiosidades*/
 .tag-group.fp--6 {
-  transform: translate(-80px, 20px) rotate(10deg);
+  transform: translate(-90px, 40px) rotate(10deg);
 }
 .tag-group.fp--6:hover {
   transform: translate(-100px, 12px) rotate(25deg) scale(1.15);
@@ -228,10 +228,10 @@ body {
 .polaroid:active {
   cursor: grabbing;
 }
-.polaroid--1 { top: 9%;  left: 70%; z-index: 0; transform: rotate(16deg); }
-.polaroid--2 { top: 65%; left: 25%; z-index: 0; transform: rotate(-16deg); }
-.polaroid--3 { top: 66%; left: 78%; z-index: 0; transform: rotate(16deg); }
-.polaroid--4 { top: 2%;  right: 86%; z-index: 0; transform: rotate(-16deg); }
+.polaroid--1 { top:10%;  left: 74%; z-index: 0; transform: rotate(16deg); }
+.polaroid--2 { top: 70%; left: 25%; z-index: 0; transform: rotate(-26deg); }
+.polaroid--3 { top: 67%; left: 78%; z-index: 0; transform: rotate(16deg); }
+.polaroid--4 { top: 11%;  right: 86%; z-index: 0; transform: rotate(-16deg); }
 
 
 /* ╔════════════════════════════════════════════════╗ */
