@@ -244,8 +244,9 @@ body {
 
   .scene {
     height: auto;
-    min-height: 100vh;
+    min-height: 768px;
     padding-bottom: 60px;
+    overflow-x: hidden;
   }
 
   .moon {

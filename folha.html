@@ -1,43 +1,44 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Entre Tempos</title>
-  <link rel="stylesheet" href="css/folha.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entre Tempos</title>
+<link rel="stylesheet" href="css/folha.css">
 </head>
 <body>
 <header class="header-voltar">
-  <a href="index.html">&#8592; Voltar</a>
+<a href="index.html">&#8592; Voltar</a>
 </header>
-
 <div class="scene">
 <!-- LUA -->
-  <div class="moon">
-    <img src="img/lua.png" alt="Lua">
-  </div>
-<!-- LIVROS -->
-  <div class="books">
-    <img src="img/livros.png" alt="Pilha de livros">
-  </div>
-<!-- BILHETE -->
-  <div class="note">
-    <img src="img/bilhete.png" alt="Bilhete">
-  </div>
+<div class="moon">
+<img src="img/lua.png" alt="Lua">
 </div>
-<!-- POLAROIDS -->
+<!-- LIVROS -->
+<div class="books">
+<img src="img/livros.png" alt="Pilha de livros">
+</div>
+<!-- BILHETE -->
+<div class="note">
+<img src="img/bilhete.png" alt="Bilhete">
+</div>
+
+<!-- POLAROIDS (movidos para dentro de .scene para acompanhar o scroll/altura no mobile) -->
 <div class="polaroid polaroid--1" data-rotate="-8">
-  <img src="img/polaroid1.png" alt="Polaroid 1">
+<img src="img/polaroid1.png" alt="Polaroid 1">
 </div>
 <div class="polaroid polaroid--2" data-rotate="6">
-  <img src="img/polaroid2.png" alt="Polaroid 2">
+<img src="img/polaroid2.png" alt="Polaroid 2">
 </div>
 <div class="polaroid polaroid--3" data-rotate="-4">
-  <img src="img/polaroid3.png" alt="Polaroid 3">
+<img src="img/polaroid3.png" alt="Polaroid 3">
 </div>
 <div class="polaroid polaroid--4" data-rotate="-2">
-  <img src="img/polaroid4.png" alt="Polaroid 4">
+<img src="img/polaroid4.png" alt="Polaroid 4">
 </div>
+</div>
+
 <script>
 const categories = [
     { label: "",       href: "/topicos/poemas/poemas.html",            cls: "fp--1", rotate: 160, tagImg: "Etiqueta-poemas.png" },
