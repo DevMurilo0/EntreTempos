@@ -242,8 +242,25 @@ body {
 /* ╚════════════════════════════════════════════════╝ */
 @media (max-width: 768px) {
 
+  body {
+    /* a lua tem "right: -175px", ou seja, ela é
+       posicionada parcialmente FORA da tela pela direita.
+       Isso cria overflow horizontal no body, e o navegador
+       passa a mostrar uma faixa de scroll/espaço vazio à
+       direita (sem o fundo bege). overflow-x: hidden
+       corta esse excesso sem precisar mudar a posição da lua. */
+    overflow-x: hidden;
+  }
+
   .scene {
     height: auto;
+    /* altura mínima explícita: evita que % de top/left
+       dos elementos filhos (lua, livros, polaroids etc.)
+       "escorreguem" enquanto as imagens carregam e o
+       navegador recalcula a altura real do conteúdo.
+       1300px dá espaço suficiente pros 6 blocos de
+       pegada+etiqueta ficarem espalhados sem se tocar.
+       Ajuste este valor se acrescentar elementos novos. */
     min-height: 768px;
     padding-bottom: 60px;
     overflow-x: hidden;
@@ -266,13 +283,16 @@ body {
     width: 65vw;
   }
 
-  /* -- posições das pegadas no mobile -- */
-  .fp--1 { top: 2%;  left: 20%; }
-  .fp--2 { top: 32%; left: 62%; }
-  .fp--3 { top: 13%; left: 45%; }
-  .fp--4 { top: 48%; left: 62%; }
-  .fp--5 { top: 80%; left: 33%; }
-  .fp--6 { top: 66%; left: 50%; }
+  /* -- posições das pegadas no mobile --
+     redistribuídas em faixas verticais bem separadas
+     (cada par pegada+etiqueta tem ~17-18% de "fatia"
+     própria, alternando esquerda/direita) */
+  .fp--1 { top: 3%;  left: 18%; }
+  .fp--2 { top: 22%; left: 60%; }
+  .fp--3 { top: 40%; left: 22%; }
+  .fp--4 { top: 56%; left: 58%; }
+  .fp--5 { top: 74%; left: 20%; }
+  .fp--6 { top: 90%; left: 55%; }
 
   /* ────────────────────────────────────────────
      ROTAÇÃO DAS PEGADAS — MOBILE
@@ -334,10 +354,12 @@ body {
     transform: translate(-110px, -10px) rotate(70deg) scale(1.1);
   }
 
-  .polaroid--1 { top: 16%;  left: 75%; z-index: 0; transform: rotate(16deg); }
-.polaroid--2 { top: 73%; left: 8%; z-index: 0; transform: rotate(-30deg); }
-.polaroid--3 { top: 76%; left: 70%; z-index: 0; transform: rotate(16deg); }
-.polaroid--4 { top: 8%;  right: 74%; z-index: 0; transform: rotate(-16deg); }
+  /* polaroids redistribuídos para encaixar nos vãos
+     entre os blocos de pegada+etiqueta, sem colidir */
+  .polaroid--1 { top: 4%;  left: 68%; z-index: 0; transform: rotate(16deg); }
+  .polaroid--2 { top: 48%; left: 6%;  z-index: 0; transform: rotate(-22deg); }
+  .polaroid--3 { top: 84%; left: 62%; z-index: 0; transform: rotate(12deg); }
+  .polaroid--4 { top: 30%; right: 78%; z-index: 0; transform: rotate(-14deg); }
 
 
 }
