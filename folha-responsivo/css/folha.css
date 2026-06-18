@@ -1,0 +1,314 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #E8D5BC;
+  --ink: #3a2010;
+}
+
+html, body {
+  background-color: var(--bg);
+  font-family: Georgia, serif;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+body {
+  position: relative;
+}
+
+.scene {
+  position: relative;
+  width: 100%;
+}
+
+img {
+  max-width: 100%;
+}
+
+/* ─────────────────────────────────────────
+   DESKTOP / TABLET (padrão)
+   A "cena" ocupa a tela toda, sem rolagem.
+───────────────────────────────────────────*/
+body {
+  height: 100vh;
+  overflow-y: hidden;
+}
+
+.scene {
+  height: 100%;
+}
+
+/* ── LUA ── */
+.moon {
+  position: absolute;
+  top: -9%;
+  right: -7%;
+  width: clamp(200px, 20vw, 340px);
+  pointer-events: none;
+}
+
+.moon img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ── LIVROS ── */
+.books {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: clamp(170px, 16vw, 260px);
+  pointer-events: none;
+  transform: scaleX(-1);
+  z-index: 2;
+}
+
+.books img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ── BILHETE ── */
+.note {
+  position: absolute;
+  top: 50%;
+  left: 38%;
+  transform: translate(-50%, -50%) rotate(-4deg);
+  width: clamp(220px, 26vw, 380px);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.note img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ── POLAROIDS (acentos decorativos) ── */
+.polaroid {
+  position: absolute;
+  width: clamp(70px, 7vw, 120px);
+  z-index: 1;
+  opacity: 0.7;
+  pointer-events: none;
+  filter: drop-shadow(2px 6px 10px rgba(0,0,0,0.18));
+}
+
+.polaroid img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.polaroid--1 { top: 3%;  left: 27%; transform: rotate(-8deg); }
+.polaroid--2 { top: 58%; left: 84%; transform: rotate(6deg); }
+.polaroid--3 { top: 84%; left: 30%; transform: rotate(-4deg); }
+.polaroid--4 { top: 18%; left: 2%;  transform: rotate(-2deg); }
+
+/* ── COMPONENTE DE PEGADA ── */
+.footprint-group {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  z-index: 3;
+}
+
+.feet {
+  width: clamp(95px, 9vw, 125px);
+  pointer-events: none;
+}
+
+.feet img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transform: rotate(90deg);
+}
+
+/* ── ETIQUETA (fica sobre a pegada, sem girar) ── */
+.tag-group {
+  position: absolute;
+  display: block;
+  text-decoration: none;
+  z-index: 4;
+  transition: transform 0.35s cubic-bezier(.22,.68,0,1.4);
+  border-radius: 8px;
+}
+
+.tag-group:hover,
+.tag-group:focus-visible {
+  transform: translateY(-10px) scale(1.15);
+}
+
+.tag-group:focus-visible {
+  outline: 2px dashed var(--ink);
+  outline-offset: 4px;
+}
+
+.tag-img-wrap {
+  position: relative;
+  width: clamp(52px, 5.5vw, 72px);
+}
+
+.tag-img-wrap img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(1px 3px 5px rgba(0,0,0,0.22));
+}
+
+/* ── POSIÇÕES DAS 6 CATEGORIAS ── */
+.fp--1 { top: 9%;  left: 13%; }
+.fp--2 { top: 7%;  left: 46%; }
+.fp--3 { top: 42%; left: 11%; }
+.fp--4 { top: 41%; left: 67%; }
+.fp--5 { top: 70%; left: 13%; }
+.fp--6 { top: 77%; left: 44%; }
+
+/* ─────────────────────────────────────────
+   TELAS BAIXAS (celular na horizontal / laptops baixos)
+───────────────────────────────────────────*/
+@media (max-height: 480px) and (min-width: 769px) {
+  .moon { width: clamp(130px, 15vw, 200px); top: -10%; }
+  .note { width: clamp(170px, 20vw, 260px); }
+  .feet { width: clamp(65px, 7vw, 85px); }
+  .tag-img-wrap { width: clamp(38px, 4.2vw, 54px); }
+  .books { width: clamp(120px, 12vw, 180px); }
+  .polaroid { width: clamp(50px, 5vw, 80px); }
+}
+
+/* ─────────────────────────────────────────
+   TABLET PEQUENO / LAPTOP ESTREITO
+   Pequenos ajustes para não espremer demais
+───────────────────────────────────────────*/
+@media (max-width: 1024px) and (min-width: 769px) {
+  .fp--2 { left: 44%; }
+  .fp--4 { left: 65%; }
+  .fp--6 { left: 42%; }
+  .note  { left: 40%; }
+}
+
+/* ─────────────────────────────────────────
+   MOBILE
+   Layout vertical, com rolagem natural.
+───────────────────────────────────────────*/
+@media (max-width: 768px) {
+
+  body {
+    height: auto;
+    overflow-y: auto;
+  }
+
+  .scene {
+    height: auto;
+    min-height: 1430px;
+    padding-bottom: 40px;
+  }
+
+  /* LUA */
+  .moon {
+    width: clamp(150px, 42vw, 210px);
+    top: -40px;
+    right: -45px;
+    opacity: 0.9;
+  }
+
+  /* BILHETE */
+  .note {
+    top: 120px;
+    left: 50%;
+    width: min(74vw, 310px);
+    transform: translateX(-50%) rotate(-4deg);
+  }
+
+  /* LIVROS */
+  .books {
+    width: clamp(150px, 46vw, 210px);
+    bottom: auto;
+    top: 1040px;
+    right: -20px;
+    z-index: 2;
+  }
+
+  /* PEGADAS */
+  .feet {
+    width: 78px;
+  }
+
+  /* ETIQUETAS */
+  .tag-img-wrap {
+    width: 108px;
+  }
+
+  /* GRADE 2 COLUNAS x 3 LINHAS */
+  .fp--1, .fp--2, .fp--3, .fp--4, .fp--5, .fp--6 {
+    top: auto;
+    left: 26%;
+  }
+
+  .fp--1 { top: 460px; }
+  .fp--3 { top: 650px; }
+  .fp--5 { top: 840px; }
+
+  .fp--2, .fp--4, .fp--6 { left: 74%; }
+  .fp--2 { top: 460px; }
+  .fp--4 { top: 650px; }
+  .fp--6 { top: 840px; }
+
+  /* a etiqueta fica centrada sobre a pegada */
+  .tag-group.fp--1,
+  .tag-group.fp--2,
+  .tag-group.fp--3,
+  .tag-group.fp--4,
+  .tag-group.fp--5,
+  .tag-group.fp--6 {
+    transform: translate(-50%, 18px);
+  }
+
+  .tag-group:hover,
+  .tag-group:focus-visible,
+  .tag-group:active {
+    transform: translate(-50%, 8px) scale(1.1);
+  }
+
+  /* POLAROIDS — pequenos acentos nas margens, sem competir com as etiquetas */
+  .polaroid {
+    width: 58px;
+    opacity: 0.55;
+  }
+
+  .polaroid--1 { top: 195px; left: 3%;  transform: rotate(-8deg); }
+  .polaroid--2 { top: 35px;  left: 80%; transform: rotate(6deg); }
+  .polaroid--3 { top: 660px; left: 90%; transform: rotate(-4deg); }
+  .polaroid--4 { top: 1090px; left: 55%; transform: rotate(-2deg); }
+}
+
+/* Tablet retrato — colunas um pouco mais próximas e ícones maiores,
+   já que há mais espaço horizontal disponível */
+@media (min-width: 481px) and (max-width: 768px) {
+  .feet { width: 92px; }
+  .tag-img-wrap { width: 128px; }
+
+  .fp--1, .fp--3, .fp--5 { left: 32%; }
+  .fp--2, .fp--4, .fp--6 { left: 68%; }
+}
+
+/* ─────────────────────────────────────────
+   TELAS MUITO PEQUENAS
+───────────────────────────────────────────*/
+@media (max-width: 360px) {
+  .feet { width: 68px; }
+  .tag-img-wrap { width: 96px; }
+
+  .fp--1, .fp--3, .fp--5 { left: 25%; }
+  .fp--2, .fp--4, .fp--6 { left: 75%; }
+}
