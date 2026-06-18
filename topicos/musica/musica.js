@@ -37,22 +37,32 @@ const musicasPorMes = {
     {
       nome: "Aliança",
       artista: "Tribalistas",
-      video: "mp4/Aliança.mp4"
+      video: "mp4/Alianca.mp4"
     },
-    { nome: "Preciso me encontrar",
-      artista: "Cartola" 
-    },
-    { nome: "Velha Infancia",
-      artista: "Tribalistas" 
-
-    },
-    { nome: "Era Uma Vez",
-      artista: "Kell Smith" },
-
     {
-      nome: "Árvore",
-      artista: "Edson Gomes",
-      video: "mp4/Árvore.mp4"
+      nome: "Poema",
+      artista: "Ney Matogrosso",
+      video: "mp4/Poema.mp4"
+    },
+    {
+      nome: "Epitáfio",
+      artista: "Titãs",
+      video: "mp4/Epitafio.mp4"
+    },
+    {
+      nome: "Por Onde Andei",
+      artista: "Nando Reis",
+      video: "mp4/Por Onde Andei.mp4"
+    },
+    {
+      nome: "Tempos Modernos",
+      artista: "Lulu Santos",
+      video: "mp4/Tempos Modernos.mp4"
+    },
+    {
+      nome: "Terra de Gigantes",
+      artista: "Engenheiros do Hawaii",
+      video: "mp4/Terra de Gigantes.mp4"
     },
   ],
 };
