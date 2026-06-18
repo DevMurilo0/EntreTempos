@@ -249,19 +249,20 @@ body {
   }
 
   .moon {
-    width: 480px;
+    width: 510px;
     top: -140px;
-    right: -120px;
+    right: -165px;
   }
 
   .books {
     width: 95px;
+    right: -30px;
   }
 
   .note {
     left: 28%;
-    top: 56%;
-    width: 60vw;
+    top: 53%;
+    width: 65vw;
   }
 
   /* -- posições das pegadas no mobile -- */
