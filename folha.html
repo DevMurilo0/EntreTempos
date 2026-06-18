@@ -7,6 +7,9 @@
   <link rel="stylesheet" href="css/folha.css">
 </head>
 <body>
+<header class="header-voltar">
+  <a href="index.html">&#8592; Voltar</a>
+</header>
 
 <div class="scene">
 <!-- LUA -->
@@ -21,9 +24,7 @@
   <div class="note">
     <img src="img/bilhete.png" alt="Bilhete">
   </div>
-
 </div>
-
 <!-- POLAROIDS -->
 <div class="polaroid polaroid--1" data-rotate="-8">
   <img src="img/polaroid1.png" alt="Polaroid 1">
@@ -37,8 +38,6 @@
 <div class="polaroid polaroid--4" data-rotate="-2">
   <img src="img/polaroid4.png" alt="Polaroid 4">
 </div>
-
-
 <script>
 const categories = [
     { label: "",       href: "/topicos/poemas/poemas.html",            cls: "fp--1", rotate: 160, tagImg: "Etiqueta-poemas.png" },
@@ -48,38 +47,30 @@ const categories = [
     { label: "",       href: "/topicos/musica/musica.html",            cls: "fp--5", rotate: 55,  tagImg: "Etiqueta-musica.png" },
     { label: "",       href: "/topicos/curiosidades/curiosidades.html",cls: "fp--6", rotate: 30,  tagImg: "Etiqueta-curiosidades.png" },
 ];
-
 const scene = document.querySelector('.scene');
-
 categories.forEach(cat => {
-  // pé (gira)
-  const wrap = document.createElement('div');
-  wrap.className = `footprint-group ${cat.cls}`;
-  wrap.style.transform = `rotate(${cat.rotate}deg)`;
-
-  const feet = document.createElement('div');
-  feet.className = 'feet';
-  feet.innerHTML = `<img src="img/pegadas.png" alt="pegadas">`;
-  wrap.appendChild(feet);
-
-  // etiqueta (não gira, fica em cima do pé, na mesma posição .fp--N)
-  const tagWrap = document.createElement('a');
-  tagWrap.href = cat.href;
-  tagWrap.className = `tag-group ${cat.cls}`;
-  tagWrap.setAttribute('aria-label', cat.label);
-  tagWrap.innerHTML = `
+// pé (gira)
+const wrap = document.createElement('div');
+wrap.className = `footprint-group ${cat.cls}`;
+wrap.style.transform = `rotate(${cat.rotate}deg)`;
+const feet = document.createElement('div');
+feet.className = 'feet';
+feet.innerHTML = `<img src="img/pegadas.png" alt="pegadas">`;
+wrap.appendChild(feet);
+// etiqueta (não gira, fica em cima do pé, na mesma posição .fp--N)
+const tagWrap = document.createElement('a');
+tagWrap.href = cat.href;
+tagWrap.className = `tag-group ${cat.cls}`;
+tagWrap.setAttribute('aria-label', cat.label);
+tagWrap.innerHTML = `
     <div class="tag-img-wrap">
       <img src="img/${cat.tagImg}" alt="${cat.label}">
       <span class="tag-label">${cat.label}</span>
     </div>
   `;
-
-  scene.appendChild(wrap);
-  scene.appendChild(tagWrap);
+scene.appendChild(wrap);
+scene.appendChild(tagWrap);
 });
 </script>
-
-
 </body>
 </html>
-
