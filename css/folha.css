@@ -243,25 +243,14 @@ body {
 @media (max-width: 768px) {
 
   body {
-    /* a lua tem "right: -175px", ou seja, ela é
-       posicionada parcialmente FORA da tela pela direita.
-       Isso cria overflow horizontal no body, e o navegador
-       passa a mostrar uma faixa de scroll/espaço vazio à
-       direita (sem o fundo bege). overflow-x: hidden
-       corta esse excesso sem precisar mudar a posição da lua. */
     overflow-x: hidden;
   }
 
   .scene {
     height: auto;
-    /* altura mínima explícita: evita que % de top/left
-       dos elementos filhos (lua, livros, polaroids etc.)
-       "escorreguem" enquanto as imagens carregam e o
-       navegador recalcula a altura real do conteúdo.
-       1300px dá espaço suficiente pros 6 blocos de
-       pegada+etiqueta ficarem espalhados sem se tocar.
-       Ajuste este valor se acrescentar elementos novos. */
-    min-height: 870px;
+    /* Aumentado de 870px → 1400px para dar mais
+       espaço vertical entre as pegadas no mobile. */
+    min-height: 1400px;
     padding-bottom: 60px;
     overflow-x: hidden;
   }
@@ -275,30 +264,33 @@ body {
   .books {
     width: 95px;
     right: -38px;
+    /* Acompanha o fundo da scene maior */
+    bottom: 0;
   }
 
   .note {
     left: 30%;
-    top: 50%;
+    /* Bilhete centralizado na nova altura */
+    top: 45%;
     width: 68vw;
   }
 
-  /* -- posições das pegadas no mobile --
-     redistribuídas em faixas verticais bem separadas
-     (cada par pegada+etiqueta tem ~17-18% de "fatia"
-     própria, alternando esquerda/direita) */
-  .fp--1 { top: 5%;  left: 45%; }
-  .fp--2 { top: 20%; left: 60%; }
-  .fp--3 { top: 35%; left: 70%; }
-  .fp--4 { top: 50%; left: 70%; }
-  .fp--5 { top: 65%; left: 60%; }
-  .fp--6 { top: 80%; left: 45%; }
+  /* ── POSIÇÕES DAS PEGADAS NO MOBILE ──
+     Distribuídas em 6 fatias de ~14% cada,
+     com mais espaço entre elas.
+     left alternado (direita/esquerda) para
+     criar o efeito de trilha. */
+  .fp--1 { top: 4%;  left: 45%; }
+  .fp--2 { top: 18%; left: 60%; }
+  .fp--3 { top: 32%; left: 70%; }
+  .fp--4 { top: 47%; left: 70%; }
+  .fp--5 { top: 62%; left: 60%; }
+  .fp--6 { top: 77%; left: 45%; }
 
   /* ────────────────────────────────────────────
      ROTAÇÃO DAS PEGADAS — MOBILE
      !important necessário pois o JS aplica rotate
      inline no elemento (sem isso o CSS não vence).
-     Edite os graus AQUI para mudar só o MOBILE.
      ──────────────────────────────────────────── */
   .footprint-group.fp--1 { transform: rotate(45deg) !important; }
   .footprint-group.fp--2 { transform: rotate(70deg) !important; }
@@ -309,8 +301,6 @@ body {
 
   /* ────────────────────────────────────────────
      ROTAÇÃO DAS ETIQUETAS — MOBILE
-     Edite os graus AQUI para mudar só o MOBILE.
-     Isso NÃO afeta a versão desktop lá em cima.
      ──────────────────────────────────────────── */
   .tag-group.fp--1 {
     transform: translate(-95px, 30px) rotate(25deg);
@@ -354,13 +344,13 @@ body {
     transform: translate(-110px, -10px) rotate(45deg) scale(1.1);
   }
 
-  /* polaroids redistribuídos para encaixar nos vãos
-     entre os blocos de pegada+etiqueta, sem colidir */
-  .polaroid--1 { top: 6%;  left: 73%; z-index: 0; transform: rotate(16deg); }
-  .polaroid--2 { top: 5%; left: 2%;  z-index: 0; transform: rotate(-22deg); }
-  .polaroid--3 { top: 77%; left: 62%; z-index: 0; transform: rotate(16deg); }
-  .polaroid--4 { top: 63%; right: 78%; z-index: 0; transform: rotate(-14deg); }
-
+  /* ── POLAROIDS ──
+     Reposicionados para preencher os vãos
+     na nova altura da scene (1400px). */
+  .polaroid--1 { top: 5%;  left: 73%; z-index: 0; transform: rotate(16deg); }
+  .polaroid--2 { top: 4%;  left: 2%;  z-index: 0; transform: rotate(-22deg); }
+  .polaroid--3 { top: 84%; left: 62%; z-index: 0; transform: rotate(16deg); }
+  .polaroid--4 { top: 70%; right: 78%; z-index: 0; transform: rotate(-14deg); }
 
 }
 /* ═══════ FIM — NÃO ADICIONE NADA DEPOIS DESTA LINHA ═══════ */
