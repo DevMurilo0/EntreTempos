@@ -364,3 +364,229 @@ header a:hover { color: #c0392b; }
   .poema:nth-of-type(odd)  { transform: rotate(-1.5deg) translateX(-6px); }
   .poema:nth-of-type(even) { transform: rotate(1.3deg)  translateX(6px); }
 }
+
+/* ══════════════════════════════════════════
+   GRADE DE ENVELOPES
+   ══════════════════════════════════════════ */
+
+.grade-envelopes {
+  position: relative;
+  z-index: 5;
+  max-width: 780px;
+  margin: 0 auto 10px;
+  padding: 0 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+/* ── ENVELOPE ── */
+.envelope {
+  position: relative;
+  width: 200px;
+  height: 72px;
+  background: #e8d9b0;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  overflow: visible;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  /* sombra de papel */
+  box-shadow:
+    2px 3px 10px rgba(0,0,0,0.22),
+    inset 0 0 30px rgba(120,90,20,0.10);
+
+  /* textura de papel */
+  background-image:
+    url('https://www.transparenttextures.com/patterns/beige-paper.png');
+}
+
+/* Aba superior do envelope (triângulo) */
+.envelope .env-aba {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.envelope .env-aba::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 0; height: 0;
+  border-style: solid;
+  border-width: 26px 100px 0 100px;
+  border-color: #c9b880 transparent transparent transparent;
+}
+
+/* linha central do envelope */
+.envelope .env-aba::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0; height: 0;
+  border-style: solid;
+  border-width: 0 100px 22px 100px;
+  border-color: transparent transparent #d4c490 transparent;
+}
+
+.envelope .env-numero {
+  position: absolute;
+  bottom: 10px;
+  left: 14px;
+  font-family: 'Caveat', cursive;
+  font-size: 11px;
+  color: #9a7c50;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+.envelope .env-titulo {
+  position: absolute;
+  bottom: 10px;
+  left: 38px;
+  right: 10px;
+  font-family: 'Dancing Script', cursive;
+  font-size: 15px;
+  font-weight: 600;
+  color: #2a1c08;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  z-index: 2;
+}
+
+/* Hover */
+.envelope:hover {
+  transform: translateY(-4px) rotate(-1deg);
+  box-shadow: 3px 8px 18px rgba(0,0,0,0.28);
+}
+
+/* Ativo — envelope "aberto" */
+.envelope.ativo {
+  transform: translateY(-6px) rotate(-1.5deg);
+  box-shadow: 4px 10px 24px rgba(0,0,0,0.32);
+}
+
+.envelope.ativo .env-aba::before {
+  border-color: #a8954e transparent transparent transparent;
+}
+
+/* ══════════════════════════════════════════
+   ÁREA DA FOLHA
+   ══════════════════════════════════════════ */
+
+.area-folha {
+  position: relative;
+  z-index: 5;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 30px 100px;
+
+  /* altura 0 quando fechada */
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, padding 0.3s ease;
+}
+
+.area-folha.aberta {
+  max-height: 3000px;
+  padding-top: 50px;
+  padding-bottom: 100px;
+}
+
+/* Os poemas ficam escondidos por padrão */
+.poema {
+  display: none;
+  opacity: 0;
+  transform: rotate(-1.5deg) translateY(20px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+/* Poema saindo */
+.poema.saindo {
+  display: block;
+  opacity: 0;
+  transform: rotate(2deg) translateY(-10px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* Poema visível */
+.poema.visivel {
+  display: block;
+  opacity: 1;
+  transform: rotate(-1.8deg) translateX(-10px);
+  animation: folhaSurge 0.4s ease forwards;
+}
+
+@keyframes folhaSurge {
+  from {
+    opacity: 0;
+    transform: rotate(3deg) translateY(30px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(-1.8deg) translateX(-10px);
+  }
+}
+
+/* Variações de rotação por ID */
+#poema-1.visivel { animation-name: folhaSurge1; }
+#poema-2.visivel { animation-name: folhaSurge2; }
+#poema-3.visivel { animation-name: folhaSurge3; }
+#poema-4.visivel { animation-name: folhaSurge4; }
+#poema-5.visivel { animation-name: folhaSurge5; }
+
+@keyframes folhaSurge1 {
+  from { opacity:0; transform: rotate(4deg) translateY(30px) scale(0.97); }
+  to   { opacity:1; transform: rotate(-2.2deg) translateX(-12px); }
+}
+@keyframes folhaSurge2 {
+  from { opacity:0; transform: rotate(-3deg) translateY(30px) scale(0.97); }
+  to   { opacity:1; transform: rotate(1.8deg) translateX(14px); }
+}
+@keyframes folhaSurge3 {
+  from { opacity:0; transform: rotate(5deg) translateY(30px) scale(0.97); }
+  to   { opacity:1; transform: rotate(-1.4deg) translateX(-8px); }
+}
+@keyframes folhaSurge4 {
+  from { opacity:0; transform: rotate(-4deg) translateY(30px) scale(0.97); }
+  to   { opacity:1; transform: rotate(2.6deg) translateX(10px); }
+}
+@keyframes folhaSurge5 {
+  from { opacity:0; transform: rotate(3deg) translateY(30px) scale(0.97); }
+  to   { opacity:1; transform: rotate(-2.8deg) translateX(-16px); }
+}
+
+/* ── MOBILE ── */
+@media (max-width: 600px) {
+  .grade-envelopes {
+    padding: 0 16px;
+    gap: 14px;
+  }
+
+  .envelope {
+    width: calc(50% - 7px);
+    height: 64px;
+  }
+
+  .envelope .env-aba::before {
+    border-width: 22px 50% 0 50%;
+  }
+
+  .envelope .env-aba::after {
+    border-width: 0 50% 18px 50%;
+  }
+
+  .area-folha {
+    padding: 0 12px 70px;
+  }
+
+  .area-folha.aberta {
+    padding-top: 34px;
+  }
+}
