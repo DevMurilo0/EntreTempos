@@ -9,7 +9,6 @@
 }
 
 body {
-  position: relative;
   background: #f2e8d5;
   font-family: 'Special Elite', serif;
   min-height: 100vh;
@@ -24,57 +23,6 @@ body::before {
   opacity: 0.4;
   pointer-events: none;
   z-index: 0;
-}
-
-/* ── IMAGENS DECORATIVAS (mão, olho, paleta, pote) ──
-   Espalhadas pela página, acompanhando o conteúdo ao rolar
-   (position: absolute, relativo ao body — não fixed). */
-.deco-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.img-deco {
-  position: absolute;
-  filter: drop-shadow(3px 4px 10px rgba(0,0,0,0.3)) sepia(10%);
-  opacity: 0.9;
-}
-
-/* olho — espiando perto do título, lado direito */
-.img-deco-olho {
-  top: 4%;
-  right: -40px;
-  width: 130px;
-  transform: rotate(-8deg);
-}
-
-/* paleta — perto da seção de apresentação, lado esquerdo */
-.img-deco-paleta {
-  top: 26%;
-  left: -50px;
-  width: 170px;
-  transform: rotate(10deg);
-}
-
-/* mão — entre a apresentação e os cards, lado direito */
-.img-deco-mao {
-  top: 58%;
-  right: -30px;
-  width: 190px;
-  transform: rotate(-6deg);
-}
-
-/* pote — perto do rodapé, lado esquerdo */
-.img-deco-pote {
-  bottom: 4%;
-  left: -25px;
-  width: 120px;
-  transform: rotate(7deg);
 }
 
 /* ── HEADER ── */
@@ -324,34 +272,5 @@ header a:hover { color: #c0392b; }
   .card-direita {
     right: 10px;
     bottom: 0;
-  }
-
-  /* ── IMAGENS DECORATIVAS NO MOBILE ──
-     Continuam position: absolute (rolam com a página, igual
-     ao desktop) — só tamanho e posição são ajustados para
-     caber em telas pequenas. */
-
-  .img-deco-olho {
-    top: 2%;
-    right: -28px;
-    width: 80px;
-  }
-
-  .img-deco-paleta {
-    top: 22%;
-    left: -30px;
-    width: 95px;
-  }
-
-  .img-deco-mao {
-    top: 62%;
-    right: -18px;
-    width: 110px;
-  }
-
-  .img-deco-pote {
-    bottom: 3%;
-    left: -15px;
-    width: 75px;
   }
 }
