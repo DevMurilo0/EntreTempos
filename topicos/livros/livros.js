@@ -1,14 +1,12 @@
 /* =============================================
    LIVROS.JS — Entre Tempos · Navegação por Mês
    ============================================= */
-
 const meses = [
   "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
   "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
 ];
 
-
-/*para mudar o mes é so colocar 6 no numero */
+/* para mudar o mes é so colocar 6 no numero */
 const livrosPorMes = {
   5: [
     {
@@ -44,7 +42,6 @@ let mesIndex = mesAtual;
 
 function renderizar() {
   document.getElementById('mes-atual').textContent = meses[mesIndex];
-
   const lista = document.getElementById('lista-livros');
   lista.innerHTML = '';
 
@@ -67,8 +64,17 @@ function renderizar() {
       <div class="livro-info">
         <span class="livro-titulo">${l.titulo}</span>
         ${l.autor ? `<span class="livro-autor">${l.autor}</span>` : ''}
+        ${l.descricao ? `<span class="livro-toggle">▾</span><p class="livro-desc">${l.descricao}</p>` : ''}
       </div>
     `;
+
+    /* expandir/recolher descrição ao clicar */
+    if (l.descricao) {
+      li.addEventListener('click', () => {
+        li.classList.toggle('aberto');
+      });
+    }
+
     lista.appendChild(li);
   });
 }

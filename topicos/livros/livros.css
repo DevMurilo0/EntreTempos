@@ -11,10 +11,6 @@
 body {
   position: relative;
   background-color: #f2e8d5;
-  
-  
-  
-  
   font-family: 'Special Elite', serif;
   min-height: 100vh;
   overflow-x: hidden;
@@ -196,12 +192,13 @@ header a:hover { color: #c0392b; }
 
 .livro-item {
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
   gap: 12px;
-  padding: 12px 0;
+  padding: 14px 0;
   border-bottom: 1px dashed #c4a96b;
   transition: transform 0.2s;
   animation: entrar 0.35s ease both;
+  cursor: pointer;
 }
 
 .livro-item:hover { transform: translateX(6px); }
@@ -217,6 +214,8 @@ header a:hover { color: #c0392b; }
   color: #c0392b;
   min-width: 45px;
   line-height: 1;
+  flex-shrink: 0;
+  padding-top: 2px;
 }
 
 .livro-info {
@@ -237,6 +236,43 @@ header a:hover { color: #c0392b; }
   color: #7a6a50;
   font-style: italic;
   margin-top: 1px;
+}
+
+/* ─── DESCRIÇÃO ─── */
+.livro-desc {
+  font-family: 'Special Elite', serif;
+  font-size: 12.5px;
+  color: #5a4a38;
+  line-height: 1.6;
+  margin-top: 6px;
+  /* começa escondida */
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.35s ease, margin-top 0.3s ease;
+}
+
+/* quando o item está aberto */
+.livro-item.aberto .livro-desc {
+  max-height: 200px;
+  opacity: 1;
+  margin-top: 8px;
+}
+
+/* pequena seta indicando que é expansível */
+.livro-toggle {
+  font-size: 11px;
+  color: #c0392b;
+  margin-top: 4px;
+  letter-spacing: 1px;
+  font-style: normal;
+  display: inline-block;
+  transition: transform 0.3s;
+  user-select: none;
+}
+
+.livro-item.aberto .livro-toggle {
+  transform: rotate(180deg);
 }
 
 /* Mensagem quando não há livros */
@@ -260,7 +296,6 @@ header a:hover { color: #c0392b; }
 }
 
 /* ─── IMAGENS DECORATIVAS ─── */
-
 .deco-container {
   position: absolute;
   top: 0;
@@ -398,12 +433,70 @@ header a:hover { color: #c0392b; }
   margin-top: 10px;
 }
 
-/* ─── RESPONSIVO ─── */
+/* ╔══════════════════════════════════════════════╗ */
+/* ║  MOBILE (TELA <= 600px)                       ║ */
+/* ╚══════════════════════════════════════════════╝ */
 @media (max-width: 600px) {
+
   .nav-mes { gap: 10px; }
   .seta-mes { width: 32px; height: 32px; font-size: 15px; }
   .top10-titulo { font-size: 36px; }
-  .top10-lista { padding-left: 20px; }
+
+  /* lista ocupa toda a largura */
+  .top10-lista { padding-left: 0; }
+
+  /* coluna direita some no mobile (não tem espaço) */
   .decoracao-direita { display: none; }
-  .img-deco { display: none; }
+
+  /* ── IMAGENS DECORATIVAS NO MOBILE ──
+     Saem do deco-container (position: absolute relativo à
+     altura do body) e ficam fixas nos cantos da tela,
+     pequenas e sem atrapalhar a leitura. */
+
+  .deco-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* esconde as que ficariam amontoadas */
+  .img-deco-02,
+  .img-deco-04,
+  .img-deco-05 {
+    display: none;
+  }
+
+  /* pilha de livros — canto superior esquerdo */
+  .img-deco-01 {
+    top: auto;
+    bottom: 38%;
+    left: -18px;
+    width: 90px;
+    transform: rotate(8deg);
+    opacity: 0.55;
+  }
+
+  /* xícara — canto superior direito */
+  .img-deco-03 {
+    top: 10%;
+    right: -12px;
+    width: 80px;
+    transform: rotate(-10deg);
+    opacity: 0.5;
+  }
+
+  /* deco_06 — canto inferior esquerdo */
+  .img-deco-06 {
+    top: auto;
+    bottom: 12%;
+    left: -10px;
+    width: 75px;
+    transform: rotate(6deg);
+    opacity: 0.5;
+  }
 }
+/* ═══════ FIM — NÃO ADICIONE NADA DEPOIS DESTA LINHA ═══════ */
