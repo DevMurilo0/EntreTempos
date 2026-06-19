@@ -1,5 +1,5 @@
 /* =============================================
-   POEMAS.CSS — Entre Tempos · Página de Poemas
+   CONHECIDOS.CSS — Entre Tempos · Página de Poemas Conhecidos
    ============================================= */
 
 * {
@@ -81,7 +81,7 @@ header a:hover { color: #c0392b; }
   background: linear-gradient(to right, transparent, #c0392b, #c4a96b, #c0392b, transparent);
 }
 
-/* ── SEÇÃO AUTORA ── */
+/* ── SEÇÃO APRESENTAÇÃO ── */
 .autora-section {
   position: relative;
   z-index: 5;
@@ -143,51 +143,59 @@ header a:hover { color: #c0392b; }
 }
 
 /* ══════════════════════════════════════════
-   CARDS — layout escalonado
+   FOTOS DE NAVEGAÇÃO — uma foto por pessoa,
+   cada uma clicável, levando à página dela.
+   O layout cresce automaticamente conforme
+   mais pessoas são adicionadas.
    ══════════════════════════════════════════ */
 
-.cards-navegacao {
+.fotos-navegacao {
   position: relative;
   z-index: 5;
-  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
   max-width: 900px;
   margin: 0 auto;
-  height: clamp(420px, 60vw, 580px);
-  padding: 0 40px;
   margin-bottom: 80px;
+  padding: 0 40px;
 }
 
-.card-img {
-  position: absolute;
+.foto-nav {
   display: block;
   text-decoration: none;
   cursor: pointer;
-  /* sem sombra, sem borda, sem overflow — integra ao fundo */
+  width: clamp(180px, 24vw, 260px);
 }
 
-.card-img img {
-  width: clamp(200px, 28vw, 300px);
-  height: auto;
+.foto-nav img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
   display: block;
+  background: #e8dcc0;
+  filter: drop-shadow(4px 6px 14px rgba(0,0,0,0.35)) sepia(15%);
   transition: transform 0.35s ease;
 }
 
-.card-img:hover img {
-  transform: scale(1.04) rotate(-1deg);
+.foto-nav:hover img {
+  transform: scale(1.03) rotate(-1deg);
 }
 
-.card-img:active img {
+.foto-nav:active img {
   transform: scale(0.97);
 }
 
-.card-esquerda {
-  top: 40px;
-  left: 40px;
-}
-
-.card-direita {
-  bottom: 0;
-  right: 40px;
+.foto-nav-nome {
+  display: block;
+  text-align: center;
+  margin-top: 12px;
+  font-family: 'Special Elite', serif;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  color: #3e3228;
 }
 
 /* ── RODAPÉ ── */
@@ -251,22 +259,13 @@ header a:hover { color: #c0392b; }
     text-align: left;
   }
 
-  .cards-navegacao {
-    height: clamp(400px, 140vw, 520px);
-    padding: 0 16px;
+  .fotos-navegacao {
+    flex-direction: column;
+    gap: 24px;
+    padding: 0 20px;
   }
 
-  .card-img img {
-    width: clamp(160px, 55vw, 230px);
-  }
-
-  .card-esquerda {
-    top: 20px;
-    left: 10px;
-  }
-
-  .card-direita {
-    right: 10px;
-    bottom: 0;
+  .foto-nav {
+    width: clamp(150px, 60vw, 220px);
   }
 }
