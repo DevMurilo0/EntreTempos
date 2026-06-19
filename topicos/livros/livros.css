@@ -377,11 +377,13 @@ header a:hover { color: #c0392b; }
 
 .capa-destaque:hover { transform: rotate(0deg) scale(1.05); }
 
-/* imagem lateral */
+/* imagem lateral — é a única imagem que deve permanecer
+   semi-transparente, tanto no PC quanto no celular */
 .deco-lateral {
   width: 150px;
   filter: drop-shadow(3px 3px 10px rgba(0,0,0,0.4));
   transform: rotate(5deg);
+  opacity: 0.85;
 }
 
 /* ─── SÍMBOLOS DE FUNDO ─── */
@@ -449,25 +451,33 @@ header a:hover { color: #c0392b; }
   .decoracao-direita { display: none; }
 
   /* ── IMAGENS DECORATIVAS NO MOBILE ──
-     Saem do deco-container (position: absolute relativo à
-     altura do body) e ficam fixas nos cantos da tela,
-     pequenas e sem atrapalhar a leitura. */
+     Continuam dentro do deco-container (position: absolute,
+     relativo ao conteúdo da página, igual ao desktop) — por
+     isso rolam junto com o resto do conteúdo, sem usar
+     position: fixed. Mantidas com a MESMA opacidade do PC
+     (sem transparência extra) — só o tamanho é reduzido para
+     caber na tela. */
 
   .deco-container {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     pointer-events: none;
     z-index: 1;
   }
 
-  /* esconde as que ficariam amontoadas */
+  /* todas as imagens decorativas aparecem no mobile,
+     do mesmo jeito que aparecem no PC (sem opacity reduzida) */
+  .img-deco-01,
   .img-deco-02,
+  .img-deco-03,
   .img-deco-04,
-  .img-deco-05 {
-    display: none;
+  .img-deco-05,
+  .img-deco-06 {
+    display: block;
+    opacity: 1;
   }
 
   /* pilha de livros — canto superior esquerdo */
@@ -477,7 +487,15 @@ header a:hover { color: #c0392b; }
     left: -18px;
     width: 90px;
     transform: rotate(8deg);
-    opacity: 0.55;
+  }
+
+  /* livros abertos — canto inferior direito */
+  .img-deco-02 {
+    bottom: 4%;
+    right: -10px;
+    width: 110px;
+    transform: rotate(-6deg);
+    opacity: 0.92; /* mesma opacidade usada no PC */
   }
 
   /* xícara — canto superior direito */
@@ -486,17 +504,31 @@ header a:hover { color: #c0392b; }
     right: -12px;
     width: 80px;
     transform: rotate(-10deg);
-    opacity: 0.5;
+  }
+
+  /* balança — canto inferior esquerdo, acima do deco_06 */
+  .img-deco-04 {
+    bottom: 24%;
+    left: -8px;
+    width: 85px;
+    transform: rotate(10deg);
+  }
+
+  /* mão segurando livro — canto direito, meio */
+  .img-deco-05 {
+    top: 42%;
+    right: -8px;
+    width: 85px;
+    transform: rotate(-12deg);
   }
 
   /* deco_06 — canto inferior esquerdo */
   .img-deco-06 {
     top: auto;
-    bottom: 12%;
+    bottom: 8%;
     left: -10px;
     width: 75px;
     transform: rotate(6deg);
-    opacity: 0.5;
   }
 }
 /* ═══════ FIM — NÃO ADICIONE NADA DEPOIS DESTA LINHA ═══════ */
