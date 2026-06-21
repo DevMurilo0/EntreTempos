@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 300">
-  <rect width="240" height="300" fill="#e8dcc0"/>
-  <rect x="6" y="6" width="228" height="288" fill="none" stroke="#c4a96b" stroke-width="2" stroke-dasharray="6 5"/>
-  <circle cx="120" cy="118" r="46" fill="#d9c79f"/>
-  <path d="M50 250c0-50 31-80 70-80s70 30 70 80" fill="#d9c79f"/>
-  <text x="120" y="280" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="13" fill="#8c7c5e">foto em breve</text>
-</svg>

@@ -1,0 +1,450 @@
+/* =============================================
+   CONHECIDOS.CSS — Entre Tempos · Página de Curiosidades Gerais
+   ============================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #f2e8d5;
+  font-family: 'Special Elite', serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url('https://www.transparenttextures.com/patterns/aged-paper.png');
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── HEADER ── */
+header {
+  position: relative;
+  z-index: 10;
+  padding: 18px 30px;
+  border-bottom: 2px solid #c4a96b;
+}
+
+header a {
+  text-decoration: none;
+  color: #3e4a59;
+  font-weight: bold;
+  font-family: 'Special Elite', serif;
+  font-size: 14px;
+  letter-spacing: 1px;
+  transition: color 0.2s;
+}
+
+header a:hover { color: #c0392b; }
+
+/* ── TÍTULO ── */
+.page-titulo {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  padding: 30px 20px 10px;
+}
+
+.page-titulo h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(60px, 12vw, 130px);
+  color: #1a1a1a;
+  letter-spacing: 8px;
+  line-height: 1;
+  text-shadow: 4px 4px 0 #c4a96b;
+}
+
+.page-titulo .subtitulo {
+  font-family: 'Special Elite', serif;
+  font-size: 14px;
+  color: #7a6a50;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+
+/* ── DIVISOR ── */
+.divisor {
+  position: relative;
+  z-index: 5;
+  width: 80%;
+  margin: 10px auto 30px;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #c0392b, #c4a96b, #c0392b, transparent);
+}
+
+/* ── SEÇÃO APRESENTAÇÃO ── */
+.autora-section {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: flex-start;
+  gap: 50px;
+  max-width: 900px;
+  margin: 0 auto 40px;
+  padding: 0 40px;
+}
+
+.foto-autora {
+  width: clamp(160px, 22vw, 260px);
+  height: auto;
+  flex-shrink: 0;
+  filter: drop-shadow(4px 6px 14px rgba(0,0,0,0.35)) sepia(15%);
+  transform: rotate(-2deg);
+  transition: transform 0.3s ease;
+}
+
+.foto-autora:hover {
+  transform: rotate(0deg) scale(1.02);
+}
+
+.autora-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 10px;
+}
+
+.autora-nome {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(36px, 5vw, 58px);
+  color: #1a1a1a;
+  letter-spacing: 4px;
+  line-height: 1;
+  border-left: 5px solid #c0392b;
+  padding-left: 16px;
+}
+
+.autora-cargo {
+  font-family: 'Special Elite', serif;
+  font-size: 14px;
+  color: #8c3b3b;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding-left: 21px;
+  font-style: italic;
+}
+
+.autora-bio {
+  font-family: 'IM Fell English', serif;
+  font-size: clamp(15px, 1.6vw, 18px);
+  color: #3e3228;
+  line-height: 1.85;
+  text-align: justify;
+  margin-top: 6px;
+}
+
+/* ══════════════════════════════════════════
+   BLOCO DE AUTOR — cabeçalho (foto + nome) seguido
+   direto pelas curiosidades dele. Um bloco por autor,
+   sem precisar entrar em outra página.
+   ══════════════════════════════════════════ */
+
+.autor-bloco {
+  position: relative;
+  z-index: 5;
+  max-width: 900px;
+  margin: 0 auto 70px;
+  padding: 0 40px;
+}
+
+.autor-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-bottom: 28px;
+}
+
+.autor-cabecalho .foto-nav {
+  display: block;
+  width: clamp(70px, 8vw, 96px);
+  flex-shrink: 0;
+}
+
+.autor-cabecalho .foto-nav img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  background: transparent;
+  filter: drop-shadow(4px 6px 14px rgba(0,0,0,0.35)) sepia(15%);
+}
+
+.autor-cabecalho .foto-nav-nome {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(24px, 3vw, 34px);
+  letter-spacing: 2px;
+  color: #1a1a1a;
+  border-left: 4px solid #c0392b;
+  padding-left: 14px;
+}
+
+/* ── LISTA DE CURIOSIDADES — cada item é um card com
+   imagem de um lado e descrição + botão do outro,
+   alternando o lado a cada card. ── */
+
+.lista-curiosidades {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.card-curiosidade {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  gap: 26px;
+
+  background-color: #ede4cc;
+  background-image:
+    url('https://www.transparenttextures.com/patterns/paper-fibers.png'),
+    url('https://www.transparenttextures.com/patterns/beige-paper.png');
+
+  padding: 22px 24px;
+
+  box-shadow:
+    0 8px 28px rgba(0,0,0,0.24),
+    inset 0 0 50px rgba(120,80,10,0.12);
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-curiosidade:nth-child(odd)  { transform: rotate(-0.6deg); }
+.card-curiosidade:nth-child(even) { transform: rotate(0.6deg);  }
+
+/* alterna o lado da imagem: ímpares = imagem à esquerda,
+   pares = imagem à direita (descrição à esquerda) */
+.card-curiosidade:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+.card-curiosidade:nth-child(even) .curiosidade-conteudo,
+.card-curiosidade:nth-child(even) .curiosidade-texto {
+  text-align: right;
+}
+
+.card-curiosidade:nth-child(even) .btn-ler-curiosidade {
+  align-self: flex-end;
+}
+
+.card-curiosidade:hover {
+  transform: rotate(0deg) scale(1.015) !important;
+  box-shadow: 0 16px 44px rgba(0,0,0,0.32);
+  z-index: 10;
+}
+
+.card-curiosidade::before {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 0; height: 0;
+  border-style: solid;
+  border-width: 0 22px 22px 0;
+  border-color: transparent #f2e8d5 transparent transparent;
+}
+
+.card-curiosidade .quadro {
+  width: clamp(140px, 24vw, 220px);
+  aspect-ratio: 3 / 4;
+  flex-shrink: 0;
+  background: #fff;
+  border: 8px solid #fff;
+  box-shadow:
+    0 3px 12px rgba(0,0,0,0.22),
+    inset 0 0 0 1px rgba(0,0,0,0.05);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-curiosidade .quadro img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.card-curiosidade:hover .quadro img {
+  transform: scale(1.04);
+}
+
+.card-curiosidade .quadro.vazio {
+  background: #e8dcc0;
+  border-color: #c4a96b;
+  border-style: dashed;
+}
+
+.card-curiosidade .quadro.vazio span {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: #8c7c5e;
+  text-align: center;
+  padding: 0 12px;
+}
+
+.card-curiosidade .curiosidade-conteudo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.card-curiosidade .curiosidade-titulo {
+  font-family: 'Dancing Script', cursive;
+  font-weight: 600;
+  font-size: clamp(20px, 2.6vw, 26px);
+  color: #1a0e04;
+}
+
+.card-curiosidade .curiosidade-texto {
+  font-family: 'IM Fell English', serif;
+  font-size: clamp(14px, 1.5vw, 16px);
+  color: #3e3228;
+  line-height: 1.7;
+  text-align: justify;
+}
+
+.btn-ler-curiosidade {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  margin-top: 6px;
+  padding: 9px 20px;
+  background: #8c3b3b;
+  color: #f2e8d5;
+  text-decoration: none;
+  font-family: 'Special Elite', serif;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: 2px solid #c0392b;
+  box-shadow: 3px 4px 0 rgba(0,0,0,0.2);
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-ler-curiosidade:hover {
+  background: #c0392b;
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 6px 0 rgba(0,0,0,0.22);
+}
+
+.btn-ler-curiosidade:active {
+  transform: translate(0, 0);
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+}
+
+/* ── RODAPÉ ── */
+.rodape-curiosidade {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  padding: 20px;
+  font-family: 'Special Elite', serif;
+  font-size: 12px;
+  color: #b0a090;
+  letter-spacing: 2px;
+  border-top: 1px solid #c4a96b;
+}
+
+.carimbo {
+  display: inline-block;
+  border: 3px solid #c0392b;
+  color: #c0392b;
+  padding: 4px 14px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 3px;
+  transform: rotate(-3deg);
+  opacity: 0.6;
+  margin-top: 10px;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 600px) {
+
+  .page-titulo h1 {
+    font-size: clamp(52px, 18vw, 80px);
+    letter-spacing: 4px;
+  }
+
+  .autora-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 0 20px;
+    text-align: center;
+  }
+
+  .foto-autora {
+    width: clamp(140px, 55vw, 200px);
+  }
+
+  .autora-nome {
+    border-left: none;
+    padding-left: 0;
+    text-align: center;
+  }
+
+  .autora-cargo {
+    padding-left: 0;
+    text-align: center;
+  }
+
+  .autora-bio {
+    text-align: left;
+  }
+
+  .autor-bloco {
+    padding: 0 16px;
+  }
+
+  .autor-cabecalho {
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .lista-curiosidades {
+    gap: 22px;
+  }
+
+  .card-curiosidade {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .card-curiosidade:nth-child(odd),
+  .card-curiosidade:nth-child(even) {
+    transform: rotate(0deg);
+  }
+
+  .card-curiosidade .quadro {
+    width: 100%;
+    max-width: 240px;
+    margin: 0 auto;
+  }
+
+  .card-curiosidade .curiosidade-titulo,
+  .card-curiosidade .curiosidade-texto,
+  .card-curiosidade:nth-child(even) .curiosidade-titulo,
+  .card-curiosidade:nth-child(even) .curiosidade-texto {
+    text-align: left;
+  }
+
+  .btn-ler-curiosidade,
+  .card-curiosidade:nth-child(even) .btn-ler-curiosidade {
+    align-self: center;
+  }
+}
