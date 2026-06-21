@@ -7,6 +7,101 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Caveat:wght@400;600&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../pessoa.css">
+  <style>
+    /* ══════════════════════════════════════════
+       FRAGMENTOS DECORATIVOS — só da página da Anna
+       (mesmo padrão .decor usado em poemas.html)
+       ══════════════════════════════════════════ */
+    .decor {
+      position: absolute;
+      z-index: 3;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* papoula — espiando do alto, perto da foto */
+    .decor-papoula {
+      top: -38px;
+      left: -28px;
+      width: clamp(70px, 9vw, 110px);
+      transform: rotate(-10deg);
+      opacity: 0.9;
+      filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.2));
+    }
+
+    /* olho-fragmento — observando do canto direito da bio */
+    .decor-olho-fragmento {
+      top: -20px;
+      right: -6px;
+      width: clamp(70px, 9vw, 115px);
+      transform: rotate(6deg);
+      opacity: 0.85;
+    }
+
+    /* carpe diem — sobre o divisor, como um recorte colado */
+    .decor-carpe-diem {
+      top: -22px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-2deg);
+      width: clamp(110px, 14vw, 170px);
+      opacity: 0.95;
+    }
+
+    /* lata de lixo — figura grande, canto da grade de envelopes */
+    .decor-lata-lixo {
+      top: -30px;
+      right: -10px;
+      width: clamp(90px, 12vw, 140px);
+      opacity: 0.55;
+      filter: sepia(20%);
+      transform: rotate(4deg);
+    }
+
+    /* gato — espiando no rodapé, canto esquerdo */
+    .decor-gato {
+      position: absolute;
+      bottom: 4px;
+      left: 24px;
+      width: clamp(70px, 9vw, 110px);
+      opacity: 0.8;
+      transform: rotate(-4deg);
+    }
+
+    .pessoa-section,
+    .grade-envelopes {
+      position: relative;
+    }
+
+    .rodape-poemas {
+      position: relative;
+    }
+
+    /* ── MOBILE: simplifica para não poluir telas pequenas ── */
+    @media (max-width: 600px) {
+      .decor-papoula {
+        width: clamp(45px, 14vw, 65px);
+        top: -20px;
+        left: -10px;
+      }
+      .decor-olho-fragmento {
+        width: clamp(45px, 14vw, 70px);
+        top: -14px;
+        right: -4px;
+      }
+      .decor-carpe-diem {
+        width: clamp(80px, 30vw, 120px);
+        top: -16px;
+      }
+      .decor-lata-lixo {
+        display: none;
+      }
+      .decor-gato {
+        width: clamp(50px, 18vw, 75px);
+        left: 8px;
+        bottom: 2px;
+      }
+    }
+  </style>
 </head>
 <body>
 <header>
@@ -14,6 +109,7 @@
 </header>
 
 <section class="pessoa-section">
+  <img src="papoula.png" alt="" class="decor decor-papoula">
   <img src="../../anna.png" alt="Anna Vitoria" class="foto-pessoa">
   <div class="pessoa-info">
     <h2 class="pessoa-nome">Anna Vitoria</h2>
@@ -29,12 +125,16 @@
     </p>
     <p class="contador-poemas">2 poemas</p>
   </div>
+  <img src="olho-fragmento.png" alt="" class="decor decor-olho-fragmento">
 </section>
 
-<div class="divisor"></div>
+<div class="divisor">
+  <img src="carpe-diem.png" alt="" class="decor decor-carpe-diem">
+</div>
 
 <!-- GRID DE ENVELOPES -->
 <section class="grade-envelopes">
+  <img src="lata-lixo.png" alt="" class="decor decor-lata-lixo">
 
   <button class="envelope" data-alvo="poema-1">
     <span class="env-numero">I</span>
@@ -161,6 +261,7 @@ e me tornei uma metamorfose sem nome.<br>
 </div>
 
 <div class="rodape-poemas">
+  <img src="gato.png" alt="" class="decor decor-gato">
   <div>entre tempos · revista eletrônica</div>
   <div class="carimbo">POEMAS</div>
 </div>

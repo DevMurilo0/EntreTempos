@@ -7,12 +7,123 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="conhecidos.css">
+  <style>
+    /* ══════════════════════════════════════════
+       FRAGMENTOS DECORATIVOS — recortes espalhados
+       (mesmo padrão .decor usado em poemas.html)
+       ══════════════════════════════════════════ */
+    .decor {
+      position: absolute;
+      z-index: 3;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* girassol — cantinho do título, como um recorte colado torto */
+    .decor-girassol {
+      top: -10px;
+      right: 6%;
+      width: clamp(50px, 7vw, 85px);
+      transform: rotate(8deg);
+      opacity: 0.95;
+    }
+
+    /* relógio de bolso — pendurado no canto da seção de apresentação */
+    .decor-relogio {
+      top: -38px;
+      left: 4%;
+      width: clamp(55px, 7vw, 90px);
+      transform: rotate(-9deg);
+      opacity: 0.9;
+      filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.2));
+    }
+
+    /* lupa — investigando perto do corvo */
+    .decor-lupa {
+      top: 40px;
+      left: 230px;
+      width: clamp(55px, 7vw, 85px);
+      transform: rotate(10deg);
+      opacity: 0.85;
+      filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.2));
+    }
+
+    /* coração com flores — sobre o divisor entre apresentação e fotos */
+    .decor-coracao-flores {
+      top: -30px;
+      right: 8%;
+      width: clamp(60px, 8vw, 95px);
+      transform: rotate(-5deg);
+      opacity: 0.9;
+    }
+
+    /* sapo mago — figura grande no canto vazio, acima das fotos de navegação */
+    .decor-sapo {
+      top: -46px;
+      left: 2%;
+      width: clamp(70px, 9vw, 105px);
+      opacity: 0.85;
+      transform: rotate(6deg);
+    }
+
+    /* coração loveable — junto às fotos de navegação, no canto direito */
+    .decor-coracao-loveable {
+      top: -34px;
+      right: 4%;
+      width: clamp(65px, 8.5vw, 100px);
+      transform: rotate(4deg);
+      opacity: 0.9;
+    }
+
+    .page-titulo,
+    .autora-section,
+    .fotos-navegacao {
+      position: relative;
+    }
+
+    .divisor {
+      position: relative;
+    }
+
+    /* ── MOBILE: simplifica para não poluir telas pequenas ── */
+    @media (max-width: 600px) {
+      .decor-girassol {
+        width: clamp(35px, 12vw, 50px);
+        top: -4px;
+        right: 4%;
+      }
+      .decor-relogio {
+        width: clamp(38px, 13vw, 55px);
+        top: -22px;
+        left: 2%;
+      }
+      .decor-lupa {
+        display: none;
+      }
+      .decor-coracao-flores {
+        width: clamp(40px, 14vw, 60px);
+        top: -18px;
+        right: 6%;
+      }
+      .decor-sapo {
+        width: clamp(48px, 16vw, 68px);
+        top: -28px;
+        left: 2%;
+      }
+      .decor-coracao-loveable {
+        width: clamp(42px, 15vw, 62px);
+        top: -20px;
+        right: 4%;
+      }
+    }
+  </style>
 </head>
 <body>
 <header>
   <a href="../../poemas/poemas.html">← Voltar</a>
 </header>
 <div class="page-titulo">
+  <img src="img-decor/girassol.png" alt="" class="decor decor-girassol">
   <h1>Conhecidos</h1>
   <p class="subtitulo">palavras que habitam o tempo</p>
 </div>
@@ -20,6 +131,7 @@
 
 <!-- SEÇÃO APRESENTAÇÃO -->
 <section class="autora-section">
+  <img src="img-decor/relogio-bolso.png" alt="" class="decor decor-relogio">
   <img src="img/corvo.png" alt="" class="foto-autora" id="corvo-btn" title="clique">
   <div class="autora-info">
     <h2 class="autora-nome">Apresentação</h2>
@@ -35,9 +147,12 @@
       para quem os encontra agora.
     </p>
   </div>
+  <img src="img-decor/lupa.png" alt="" class="decor decor-lupa">
 </section>
 
-<div class="divisor"></div>
+<div class="divisor">
+  <img src="img-decor/coracao-flores.png" alt="" class="decor decor-coracao-flores">
+</div>
 
 <!-- FOTOS DE NAVEGAÇÃO
      Cada <a> leva à pasta da pessoa (nome/index.html).
@@ -45,6 +160,8 @@
      com um index.html (copie o de carlos-drummond/ como modelo) e
      adicione aqui um novo bloco <a class="foto-nav"> apontando pra ele. -->
 <section class="fotos-navegacao">
+  <img src="img-decor/sapo-mago.png" alt="" class="decor decor-sapo">
+  <img src="img-decor/coracao-loveable.png" alt="" class="decor decor-coracao-loveable">
   <a href="mario-quintana/index.html" class="foto-nav foto-nav-1">
     <img src="mario-quintana/mario.png" alt="Ver poemas de Mário Quintana">
     <span class="foto-nav-nome">Mário Quintana</span>

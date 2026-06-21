@@ -13,40 +13,40 @@
 <div class="scene">
 <!-- LUA -->
 <div class="moon">
-<img src="img/lua.png" alt="Lua">
+<img src="img/lua.webp" alt="Lua">
 </div>
 <!-- LIVROS -->
 <div class="books">
-<img src="img/livros.png" alt="Pilha de livros">
+<img src="img/livros.webp" alt="Pilha de livros">
 </div>
 <!-- BILHETE -->
 <div class="note">
-<img src="img/bilhete.png" alt="Bilhete">
+<img src="img/bilhete.webp" alt="Bilhete">
 </div>
 
 <!-- POLAROIDS (movidos para dentro de .scene para acompanhar o scroll/altura no mobile) -->
 <div class="polaroid polaroid--1" data-rotate="-8">
-<img src="img/polaroid1.png" alt="Polaroid 1">
+<img src="img/polaroid1.webp" alt="Polaroid 1">
 </div>
 <div class="polaroid polaroid--2" data-rotate="6">
-<img src="img/polaroid2.png" alt="Polaroid 2">
+<img src="img/polaroid2.webp" alt="Polaroid 2">
 </div>
 <div class="polaroid polaroid--3" data-rotate="-4">
-<img src="img/polaroid3.png" alt="Polaroid 3">
+<img src="img/polaroid3.webp" alt="Polaroid 3">
 </div>
 <div class="polaroid polaroid--4" data-rotate="-2">
-<img src="img/polaroid4.png" alt="Polaroid 4">
+<img src="img/polaroid4.webp" alt="Polaroid 4">
 </div>
 </div>
 
 <script>
 const categories = [
-    { label: "",       href: "/topicos/poemas/poemas.html",            cls: "fp--1", rotate: 160, tagImg: "Etiqueta-poemas.png" },
-    { label: "",       href: "/topicos/filmes/filmes.html",            cls: "fp--2", rotate: 199, tagImg: "Etiqueta-filmes.png" },
-    { label: "",       href: "/topicos/livros/livros.html",            cls: "fp--3", rotate: 111, tagImg: "Etiqueta-livros.png" },
-    { label: "",       href: "/topicos/desenhos/desenhos.html",        cls: "fp--4", rotate: 223, tagImg: "Etiqueta-desenhos.png" },
-    { label: "",       href: "/topicos/musica/musica.html",            cls: "fp--5", rotate: 55,  tagImg: "Etiqueta-musica.png" },
-    { label: "",       href: "/topicos/curiosidades/curiosidades.html",cls: "fp--6", rotate: 30,  tagImg: "Etiqueta-curiosidades.png" },
+    { label: "",       href: "/topicos/poemas/poemas.html",            cls: "fp--1", rotate: 160, tagImg: "Etiqueta-poemas.webp" },
+    { label: "",       href: "/topicos/filmes/filmes.html",            cls: "fp--2", rotate: 199, tagImg: "Etiqueta-filmes.webp" },
+    { label: "",       href: "/topicos/livros/livros.html",            cls: "fp--3", rotate: 111, tagImg: "Etiqueta-livros.webp" },
+    { label: "",       href: "/topicos/desenhos/desenhos.html",        cls: "fp--4", rotate: 223, tagImg: "Etiqueta-desenhos.webp" },
+    { label: "",       href: "/topicos/musica/musica.html",            cls: "fp--5", rotate: 55,  tagImg: "Etiqueta-musica.webp" },
+    { label: "",       href: "/topicos/curiosidades/curiosidades.html",cls: "fp--6", rotate: 30,  tagImg: "Etiqueta-curiosidades.webp" },
 ];
 const scene = document.querySelector('.scene');
 categories.forEach(cat => {
@@ -56,7 +56,7 @@ wrap.className = `footprint-group ${cat.cls}`;
 wrap.style.transform = `rotate(${cat.rotate}deg)`;
 const feet = document.createElement('div');
 feet.className = 'feet';
-feet.innerHTML = `<img src="img/pegadas.png" alt="pegadas">`;
+feet.innerHTML = `<img src="img/pegadas.webp" alt="pegadas">`;
 wrap.appendChild(feet);
 // etiqueta (não gira, fica em cima do pé, na mesma posição .fp--N)
 const tagWrap = document.createElement('a');
