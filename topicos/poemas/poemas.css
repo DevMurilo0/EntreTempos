@@ -286,6 +286,7 @@ header a:hover { color: #c0392b; }
 
   .stamp-decor {
     width: clamp(140px, 55vw, 200px);
+    order: -1;
   }
 
   .apresentacao-texto p {
