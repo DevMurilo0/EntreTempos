@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Desenhos - Entre Tempos</title>
+  <title>Conhecidos - Entre Tempos</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="conhecidos.css">
 </head>
 <body>
-
 <header>
   <a href="../../desenhos/desenhos.html">← Voltar</a>
 </header>
@@ -21,35 +20,39 @@
 <div class="divisor"></div>
 
 <!-- SEÇÃO APRESENTAÇÃO -->
-<section class="apresentacao-section">
-  <img src="img/foto_apresentacao.png" alt="Desenhos" class="foto-apresentacao">
-  <div class="apresentacao-info">
-    <h2 class="apresentacao-titulo">Arte Visual</h2>
-    <p class="apresentacao-cargo">ilustração & expressão</p>
-    <p class="apresentacao-texto">
-      Esta seção reúne o traço como linguagem da linha mais tímida ao gesto mais ousado.
-      Aqui o desenho é tratado como poesia visual: cada imagem carrega um tempo, uma emoção,
-      uma história que palavras sozinhas não conseguiriam contar.
+<section class="autora-section">
+  <img src="img/foto_apresentacao.png" alt="" class="foto-autora">
+  <div class="autora-info">
+    <h2 class="autora-nome">Apresentação</h2>
+    <p class="autora-cargo">artistas conhecidos</p>
+    <p class="autora-bio">
+      Aqui você encontra obras de artistas que marcaram a história da arte.
+      São traços consagrados, nascidos de visões únicas que atravessaram gerações
+      e continuam provocando admiração em quem os vê.
     </p>
-    <p class="apresentacao-texto">
-      Você encontrará dois universos distintos: as <strong>artes autorais</strong>, criadas por
-      quem faz parte desta revista, e as <strong>artes conhecidas</strong>, obras de artistas
-      que marcaram a história e que seguem inspirando olhares até hoje.
+    <p class="autora-bio">
+      Cada obra carrega o peso e a leveza de quem dedicou a vida à arte —
+      linhas e formas que resistiram ao tempo e seguem vivas até hoje.
     </p>
   </div>
 </section>
 
 <div class="divisor"></div>
 
-<!-- CARDS DE NAVEGAÇÃO -->
-<section class="cards-navegacao">
+<!-- FOTOS DE NAVEGAÇÃO
+     Para adicionar um artista: crie a pasta "conhecidos/<nome>/"
+     com um index.html (copie o de artista-1/ como modelo) e adicione
+     aqui um novo bloco <a class="foto-nav"> apontando pra ela. -->
+<section class="fotos-navegacao">
 
-  <a href="autorais.html" class="card-img card-esquerda">
-    <img src="img/card_autorais.png" alt="Artes Autorais">
+  <a href="artista-1/index.html" class="foto-nav foto-nav-1">
+    <img src="img/placeholder-retrato.svg" alt="Ver obras do Artista 1">
+    <span class="foto-nav-nome">Artista 1</span>
   </a>
 
-  <a href="conhecidas.html" class="card-img card-direita">
-    <img src="img/card_conhecidas.png" alt="Artes Conhecidas">
+  <a href="artista-2/index.html" class="foto-nav foto-nav-2">
+    <img src="img/placeholder-retrato.svg" alt="Ver obras do Artista 2">
+    <span class="foto-nav-nome">Artista 2</span>
   </a>
 
 </section>
@@ -58,6 +61,5 @@
   <div>entre tempos · revista eletrônica</div>
   <div class="carimbo">DESENHOS</div>
 </div>
-
 </body>
 </html>

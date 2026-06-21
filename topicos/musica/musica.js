@@ -9,60 +9,64 @@ const meses = [
 const musicasPorMes = {
   5: [ // Junho (índice 0–11)
     {
-      nome: "Tempo Perdido",
-      artista: "Legião Urbana",
-      video: "mp4/Tempo perdido.mp4",
-      descricao: "Uma das músicas mais emblemáticas do rock brasileiro, Tempo Perdido fala sobre a busca por sentido e identidade num mundo em constante mudança. Renato Russo canta sobre o medo de perder o tempo e a necessidade de viver com propósito, num chamado existencial que ecoa em gerações."
-    },
-    {
-      nome: "Menino Bonito",
-      artista: "Chico Chico",
-      video: "mp4/Menino Bonito.mp4"
-    },
-    {
-      nome: "Segundo Sol",
-      artista: "Cássia Eller",
-      video: "mp4/Segundo Sol.mp4"
-    },
-    {
-      nome: "Erva Venenosa",
-      artista: "Rita Lee",
-      video: "mp4/Erva Venenosa.mp4"
-    },
-    {
-      nome: "Pais e Filhos",
-      artista: "Legião Urbana",
-      video: "mp4/Pais e Filhos.mp4"
-    },
-    {
-      nome: "Aliança",
-      artista: "Tribalistas",
-      video: "mp4/Alianca.mp4"
-    },
-    {
-      nome: "Poema",
-      artista: "Ney Matogrosso",
-      video: "mp4/Poema.mp4"
+      nome: "Oração Ao Tempo",
+      artista: "Cateano Veloso",
+      video: "mp4/Caetano Veloso - Oração Ao Tempo.mp4",
+      descricao: "Uma música poética que trata o tempo como uma força viva, capaz de transformar tudo ao nosso redor. Caetano fala sobre as mudanças que acontecem com o passar dos anos, mostrando que o tempo carrega memórias, aprendizados e novas possibilidades."
     },
     {
       nome: "Epitáfio",
       artista: "Titãs",
-      video: "mp4/Epitafio.mp4"
+      video: "mp4/Epitafio.mp4",
+      descricao: "A canção apresenta uma reflexão sobre a vida, escolhas e arrependimentos. A letra imagina uma pessoa olhando para sua própria história e pensando nas coisas que poderia ter feito, trazendo uma mensagem sobre aproveitar melhor o presente."
+    },
+    {
+      nome: "Era Uma Vez",
+      artista: "Kell Smith",
+      video: "mp4/Kell Smith - Era Uma Vez.mp4",
+      descricao: "Uma música marcada pela nostalgia, que relembra a infância, os sonhos e a inocência de tempos passados. A canção fala sobre como crescemos e mudamos, mas algumas lembranças continuam fazendo parte de quem somos."
+    },
+    {
+      nome: "Poema",
+      artista: "Ney Matogrosso",
+      video: "mp4/Poema.mp4",
+      descricao: "Uma música sensível e cheia de expressão artística, que utiliza a poesia para transmitir emoções profundas. A obra traz uma atmosfera reflexiva, falando sobre sentimentos, experiências e a forma como enxergamos a vida."
     },
     {
       nome: "Por Onde Andei",
       artista: "Nando Reis",
-      video: "mp4/Por Onde Andei.mp4"
+      video: "mp4/Por Onde Andei.mp4",
+      descricao: "A música fala sobre caminhos percorridos, lembranças e a busca por respostas dentro de si mesmo. A letra transmite uma sensação de saudade e reflexão sobre momentos, pessoas e lugares que fizeram parte da trajetória de alguém."
+    },
+    {
+      nome: "Preciso Me Encontrar",
+      artista: "Cartola",
+      video: "mp4/Preciso me encontrar.mp4",
+      descricao: "Uma das grandes obras da música brasileira sobre autoconhecimento. A canção fala sobre a necessidade de se afastar, refletir e descobrir a própria identidade, mostrando sentimentos de solidão, mudança e busca por paz interior."
+    },
+    {
+      nome: "Tempo Perdido",
+      artista: "Legião Urbana",
+      video: "mp4/Tempo perdido.mp4",
+      descricao: "Uma música que aborda a passagem do tempo, a juventude e as incertezas da vida. Apesar do título, a mensagem mostra que sempre existe a oportunidade de recomeçar e valorizar os momentos que ainda temos."
     },
     {
       nome: "Tempos Modernos",
       artista: "Lulu Santos",
-      video: "mp4/Tempos Modernos.mp4"
+      video: "mp4/Tempos Modernos.mp4",
+      descricao: "Uma canção que transmite esperança e otimismo diante das mudanças do mundo. Lulu Santos fala sobre acreditar no futuro e buscar dias melhores, mesmo em meio às dificuldades da vida moderna."
     },
     {
-      nome: "Terra de Gigantes",
+      nome: "Terras De Gigantes",
       artista: "Engenheiros do Hawaii",
-      video: "mp4/Terra de Gigantes.mp4"
+      video: "mp4/Terra de Gigantes.mp4",
+      descricao: "A música apresenta uma reflexão sobre amadurecimento e sobre viver em um mundo cheio de desafios. A letra fala sobre crescimento, sonhos e a sensação de tentar encontrar seu espaço em uma realidade cada vez mais complexa."
+    },
+    {
+      nome: "Velha Infancia",
+      artista: "Tribalistas",
+      video: "mp4/Tribalistas - Velha Infancia.mp4",
+      descricao: "Uma música romântica que celebra o amor, o carinho e a conexão entre duas pessoas. A letra traz uma sensação de conforto e simplicidade, mostrando um relacionamento baseado em afeto, parceria e momentos especiais."
     },
   ],
 };
