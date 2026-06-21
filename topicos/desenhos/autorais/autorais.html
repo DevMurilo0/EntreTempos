@@ -37,58 +37,45 @@
   </div>
 </section>
 
-<!-- ÁREA DO PINCEL + ÁRVORE (aparece sob a seção acima) -->
+<!-- ÁREA DO PINCEL + FLOR — aparece um pouco abaixo de onde o usuário clicar -->
 <div id="pincel-arena" aria-hidden="true">
   <img src="img/pincel.png" id="pincel-img" alt="">
-  <svg id="arvore-svg" viewBox="0 0 340 340" xmlns="http://www.w3.org/2000/svg">
-    <!-- TRONCO — marrom, traços de pincel largos -->
-    <path id="p0" d="M155 320 Q150 290 148 265 Q145 240 150 220"/>
-    <path id="p1" d="M175 320 Q178 290 180 265 Q182 240 178 220"/>
-    <path id="p2" d="M148 265 Q130 260 115 255 Q100 250 90 260"/>
-    <path id="p3" d="M180 265 Q198 260 212 255 Q226 250 234 260"/>
-    <path id="p4" d="M150 220 Q148 210 152 200"/>
-    <path id="p5" d="M178 220 Q180 210 176 200"/>
+  <svg id="flor-svg" viewBox="0 0 220 260" xmlns="http://www.w3.org/2000/svg">
+    <!-- CAULE curvo -->
+    <path id="p0" d="M110 252 Q106 210 110 175 Q113 150 108 120"/>
+    <!-- FOLHA 1 -->
+    <path id="p1" d="M108 195 Q84 186 68 200 Q82 212 108 204"/>
+    <!-- FOLHA 2 -->
+    <path id="p2" d="M110 220 Q132 214 144 226 Q130 235 110 228"/>
 
-    <!-- COPA — contorno externo verde, pinceladas grossas arredondadas -->
-    <!-- base da copa / encontro com tronco -->
-    <path id="p6"  d="M152 205 Q130 195 112 185 Q95 175 85 158"/>
-    <path id="p7"  d="M176 205 Q198 195 214 183 Q228 170 235 155"/>
+    <!-- 8 PÉTALAS ao redor do centro (110,95) -->
+    <path id="p3" d="M110 95 Q102 68 110 38 Q119 68 110 95"/>
+    <path id="p4" d="M110 95 Q134 80 160 86 Q138 104 110 95"/>
+    <path id="p5" d="M110 95 Q136 104 146 130 Q120 124 110 95"/>
+    <path id="p6" d="M110 95 Q120 120 112 148 Q94 128 110 95"/>
+    <path id="p7" d="M110 95 Q94 122 68 122 Q78 98 110 95"/>
+    <path id="p8" d="M110 95 Q82 100 62 82 Q90 78 110 95"/>
+    <path id="p9" d="M110 95 Q86 80 80 54 Q104 64 110 95"/>
+    <path id="p10" d="M110 95 Q120 66 134 54 Q140 78 110 95"/>
 
-    <!-- lado esquerdo da copa -->
-    <path id="p8"  d="M85 158 Q70 138 68 115 Q66 92 78 75"/>
-    <path id="p9"  d="M78 75  Q88 58 105 50 Q118 44 132 48"/>
+    <!-- veias internas leves -->
+    <path id="p11" d="M110 90 Q109 70 110 44"/>
+    <path id="p12" d="M115 92 Q132 86 150 88"/>
+    <path id="p13" d="M113 99 Q124 110 132 124"/>
+    <path id="p14" d="M111 100 Q108 118 105 138"/>
+    <path id="p15" d="M105 99 Q92 110 76 114"/>
+    <path id="p16" d="M104 92 Q88 88 72 84"/>
+    <path id="p17" d="M106 91 Q96 78 90 60"/>
+    <path id="p18" d="M114 90 Q122 74 130 62"/>
 
-    <!-- topo da copa -->
-    <path id="p10" d="M132 48  Q148 38 164 36 Q178 35 190 42"/>
-    <path id="p11" d="M190 42  Q205 50 215 62 Q222 72 220 85"/>
-
-    <!-- lado direito da copa -->
-    <path id="p12" d="M220 85  Q228 102 230 122 Q232 142 225 158"/>
-    <path id="p13" d="M225 158 Q218 172 210 180"/>
-
-    <!-- saliências / gomos da copa esquerda -->
-    <path id="p14" d="M68 115  Q55 108 50 95  Q46 82 54 72 Q62 62 75 65"/>
-    <path id="p15" d="M78 75   Q68 62 72 48  Q78 36 92 32 Q106 30 112 42"/>
-
-    <!-- saliências / gomos da copa direita -->
-    <path id="p16" d="M230 122 Q242 116 248 103 Q253 88 244 76 Q235 65 222 68"/>
-    <path id="p17" d="M220 85  Q228 70 222 56 Q215 44 202 40 Q190 37 185 48"/>
-
-    <!-- pinceladas internas da copa — textura -->
-    <path id="p18" d="M100 160 Q115 130 130 105 Q145 80  160 65"/>
-    <path id="p19" d="M125 170 Q138 145 150 120 Q162 95  172 72"/>
-    <path id="p20" d="M155 168 Q164 140 172 115 Q180 90  185 68"/>
-    <path id="p21" d="M182 162 Q192 135 198 110 Q203 88  200 70"/>
-    <path id="p22" d="M88  130 Q100 108 114  88 Q126  70 136 58"/>
-    <path id="p23" d="M210 145 Q218 122 220 100 Q222  80 216 65"/>
-
-    <!-- traços de brilho / hachurado leve -->
-    <path id="p24" d="M108 148 Q118 128 130 112"/>
-    <path id="p25" d="M142 155 Q150 132 158 112"/>
-    <path id="p26" d="M170 150 Q177 128 182 108"/>
-    <path id="p27" d="M196 138 Q202 118 204 98"/>
-    <path id="p28" d="M90 108  Q98  90 108  76"/>
-    <path id="p29" d="M215 118 Q220 100 218  84"/>
+    <!-- MIOLO: anel preenchido + pontinhos de textura -->
+    <circle id="p19" cx="110" cy="95" r="16"/>
+    <circle id="pt1" class="miolo-pt" cx="103" cy="89" r="1.6"/>
+    <circle id="pt2" class="miolo-pt" cx="112" cy="86" r="1.6"/>
+    <circle id="pt3" class="miolo-pt" cx="118" cy="92" r="1.6"/>
+    <circle id="pt4" class="miolo-pt" cx="116" cy="100" r="1.6"/>
+    <circle id="pt5" class="miolo-pt" cx="106" cy="101" r="1.6"/>
+    <circle id="pt6" class="miolo-pt" cx="110" cy="94" r="1.8"/>
   </svg>
 </div>
 
@@ -129,68 +116,88 @@
     transform: rotate(0deg) scale(1.04);
   }
 
-  /* Arena: oculta por padrão, surge sob a seção */
+  /* body precisa ser o container de referência para a arena absolute cobrir
+     toda a altura real da página (incluindo o que está fora da viewport) */
+  body { position: relative; }
+
+  /* Arena: overlay absoluto cobrindo toda a altura do documento (não da viewport),
+     assim a flor desenhada acompanha o scroll da página normalmente, ficando
+     "colada" no ponto exato onde o usuário clicou. */
   #pincel-arena {
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    max-width: 420px;
-    margin: 0 auto;
-    height: 0;
+    height: 100%;
     overflow: visible;
     pointer-events: none;
     opacity: 0;
-    z-index: 6;
+    z-index: 999;
+    transition: opacity 0.4s ease;
   }
 
   #pincel-img {
     position: absolute;
-    width: 80px;
+    width: 220px;
     top: 0;
-    left: 50%;
-    transform: translateX(-50%) rotate(40deg);
-    transform-origin: 50% 90%;
+    left: 0;
+    transform: translate(-12%, -88%) scaleY(-1) rotate(40deg);
+    transform-origin: 20% 90%;
     filter: drop-shadow(3px 4px 8px rgba(0,0,0,0.3));
     pointer-events: none;
+    opacity: 0;
   }
 
-  #arvore-svg {
+  #flor-svg {
     position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 340px;
-    height: 320px;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 236px;
+    /* desloca a flor para baixo e a centraliza horizontalmente no ponto de
+       clique, evitando que ela fique colada/sobreposta à imagem da mão */
+    transform: translate(-50%, 40%);
     overflow: visible;
   }
 
-  #arvore-svg path {
+  #flor-svg path,
+  #flor-svg circle {
     fill: none;
     stroke-linecap: round;
     stroke-linejoin: round;
-    stroke-dasharray: 400;
-    stroke-dashoffset: 400;
+    stroke-dasharray: 600;
+    stroke-dashoffset: 600;
   }
 
-  /* tronco — marrom */
-  #p0, #p1 { stroke: #7a4010; stroke-width: 10; }
-  #p2, #p3 { stroke: #7a4010; stroke-width: 8; }
-  #p4, #p5 { stroke: #7a4010; stroke-width: 6; }
+  /* caule e folhas — verde */
+  #p0, #p1, #p2 { stroke: #3a7a2a; stroke-width: 5; }
 
-  /* contorno copa — verde escuro, espesso como pincelada */
-  #p6,  #p7  { stroke: #2d7a2d; stroke-width: 9; }
-  #p8,  #p9  { stroke: #2d7a2d; stroke-width: 9; }
-  #p10, #p11 { stroke: #2d7a2d; stroke-width: 9; }
-  #p12, #p13 { stroke: #2d7a2d; stroke-width: 9; }
-  #p14, #p15 { stroke: #2d7a2d; stroke-width: 8; }
-  #p16, #p17 { stroke: #2d7a2d; stroke-width: 8; }
+  /* pétalas — vermelho */
+  #p3, #p4, #p5, #p6, #p7, #p8, #p9, #p10 { stroke: #a8281f; stroke-width: 4.5; }
 
-  /* interior copa — verde médio, pinceladas largas */
-  #p18, #p19, #p20,
-  #p21, #p22, #p23 { stroke: #4aaa3a; stroke-width: 14; stroke-opacity: 0.75; }
+  /* veias internas — vermelho mais claro/translúcido */
+  #p11, #p12, #p13, #p14, #p15, #p16, #p17, #p18 {
+    stroke: #a8281f;
+    stroke-width: 2;
+    stroke-opacity: 0.55;
+  }
 
-  /* brilho / hachurado — verde claro, fino */
-  #p24, #p25, #p26,
-  #p27, #p28, #p29 { stroke: #7dcc60; stroke-width: 7; stroke-opacity: 0.55; }
+  /* miolo — anel dourado preenchido */
+  #p19 {
+    stroke: #b9781f;
+    stroke-width: 3.5;
+    fill: #f3c64b;
+    fill-opacity: 0;
+    transition: fill-opacity 0.4s ease;
+  }
+
+  /* pontinhos de textura do miolo — aparecem junto com o preenchimento */
+  .miolo-pt {
+    fill: #8a5a14;
+    stroke: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
 </style>
 
 <!-- ── SCRIPT DO PINCEL ── -->
@@ -199,99 +206,122 @@
   const mao    = document.getElementById('mao-btn');
   const arena  = document.getElementById('pincel-arena');
   const pincel = document.getElementById('pincel-img');
-  const svg    = document.getElementById('arvore-svg');
-  const paths  = Array.from(svg.querySelectorAll('path'));
+  const svg    = document.getElementById('flor-svg');
+  const miolo  = document.getElementById('p19');
+  const pontinhos = Array.from(svg.querySelectorAll('.miolo-pt'));
+  const paths  = Array.from(svg.querySelectorAll('path, circle:not(.miolo-pt)'));
   let ocupado  = false;
 
-  // Ajusta dasharray de cada path ao seu comprimento real
+  // Ajusta dasharray de cada path/circle ao seu comprimento real
+  function getLen(p) {
+    return p.getTotalLength();
+  }
   paths.forEach(p => {
-    const len = p.getTotalLength();
+    const len = getLen(p);
     p.style.strokeDasharray  = len;
     p.style.strokeDashoffset = len;
   });
 
-  mao.addEventListener('click', () => {
+  mao.addEventListener('click', (ev) => {
     if (ocupado) return;
     ocupado = true;
 
-    // Reseta SVG
+    // Posição do clique relativa ao DOCUMENTO (não à viewport), pois a arena
+    // é absolute dentro do body — assim a flor acompanha o scroll normalmente.
+    const clickX = ev.pageX;
+    const clickY = ev.pageY;
+
+    // Posiciona o SVG da flor exatamente no ponto clicado
+    svg.style.left = clickX + 'px';
+    svg.style.top  = clickY + 'px';
+
+    // Reseta o desenho
     paths.forEach(p => {
-      const len = p.getTotalLength();
+      const len = getLen(p);
       p.style.transition = 'none';
+      p.style.opacity = '1';
       p.style.strokeDashoffset = len;
     });
-
-    // Mostra arena
-    arena.style.transition = 'opacity 0.4s';
-    arena.style.opacity    = '1';
-    arena.style.height     = '380px';
-
-    // Pincel aparece
-    pincel.style.transition = 'opacity 0.3s';
-    pincel.style.opacity    = '1';
-
-    // Anima cada path sequencialmente com o pincel se movendo
-    let delay = 200;
-    const duracaoPorPath = 220;
-
-    paths.forEach((path, i) => {
-      const len = path.getTotalLength();
-      const pt  = path.getPointAtLength(len * 0.5); // ponto médio
-
-      setTimeout(() => {
-        // Move pincel para o ponto médio do path atual
-        const svgRect   = svg.getBoundingClientRect();
-        const arenaRect = arena.getBoundingClientRect();
-        const svgW = svgRect.width;
-        const svgH = svgRect.height;
-        const vbW  = 340, vbH = 320;
-        const scaleX = svgW / vbW;
-        const scaleY = svgH / vbH;
-
-        // posição dentro da arena
-        const px = (svgRect.left - arenaRect.left) + pt.x * scaleX;
-        const py = (svgRect.top  - arenaRect.top)  + pt.y * scaleY - 60;
-
-        pincel.style.transition = `left ${duracaoPorPath}ms ease, top ${duracaoPorPath}ms ease`;
-        pincel.style.left = px + 'px';
-        pincel.style.top  = py + 'px';
-        pincel.style.transform = 'translateX(-50%) rotate(' + (30 + Math.sin(i) * 20) + 'deg)';
-
-        // Desenha o traço
-        path.style.transition      = `stroke-dashoffset ${duracaoPorPath}ms ease`;
-        path.style.strokeDashoffset = '0';
-
-      }, delay + i * duracaoPorPath);
+    miolo.style.transition = 'none';
+    miolo.style.fillOpacity = '0';
+    pontinhos.forEach(pt => {
+      pt.style.transition = 'none';
+      pt.style.opacity = '0';
     });
 
-    const totalTempo = delay + paths.length * duracaoPorPath + 400;
+    // Mostra a arena (overlay full-screen, transparente a cliques)
+    arena.style.opacity = '1';
 
-    // Pincel some
-    setTimeout(() => {
-      pincel.style.transition = 'opacity 0.6s, transform 0.6s';
-      pincel.style.opacity    = '0';
-      pincel.style.transform  = 'translateX(-50%) rotate(80deg) scale(0.5)';
-    }, totalTempo);
+    // Pincel aparece já no ponto do clique
+    pincel.style.transition = 'none';
+    pincel.style.opacity = '1';
+    pincel.style.left = clickX + 'px';
+    pincel.style.top  = clickY + 'px';
 
-    // Árvore some suavemente depois
-    setTimeout(() => {
-      paths.forEach(p => {
-        p.style.transition = 'opacity 1.2s';
-        p.style.opacity    = '0';
+    // pequeno delay para garantir que o reset acima já foi aplicado
+    requestAnimationFrame(() => {
+      let tempoAcumulado = 0;
+      const temposCadaPath = [];
+
+      paths.forEach((path, i) => {
+        const len = getLen(path);
+        const midPoint = path.getPointAtLength ? path.getPointAtLength(len * 0.5) : { x: 110, y: 95 };
+
+        // veias internas (índices 8 a 15) são mais finas e rápidas de "pintar"
+        const ehVeia = i >= 8 && i <= 15;
+        const duracaoPorPath = ehVeia ? 110 : 200;
+        const inicioEsteTraco = tempoAcumulado;
+        temposCadaPath.push(duracaoPorPath);
+        tempoAcumulado += duracaoPorPath;
+
+        setTimeout(() => {
+          // svg.getBoundingClientRect() retorna coordenadas de VIEWPORT, mas o
+          // pincel é posicionado em coordenadas de DOCUMENTO (absolute), então
+          // somamos o scroll atual para converter.
+          const svgRect = svg.getBoundingClientRect();
+          const vbW = 220, vbH = 260;
+          const scaleX = svgRect.width  / vbW;
+          const scaleY = svgRect.height / vbH;
+
+          const px = svgRect.left + window.scrollX + midPoint.x * scaleX;
+          const py = svgRect.top  + window.scrollY + midPoint.y * scaleY - 50;
+
+          pincel.style.transition = `left ${duracaoPorPath}ms ease, top ${duracaoPorPath}ms ease`;
+          pincel.style.left = px + 'px';
+          pincel.style.top  = py + 'px';
+          pincel.style.transform = 'translate(60%, -120%) scaleY(-1) rotate(' + (300 + Math.sin(i) * 20) + 'deg)';
+
+          // Desenha o traço
+          path.style.transition       = `stroke-dashoffset ${duracaoPorPath}ms ease`;
+          path.style.strokeDashoffset = '0';
+
+          // Quando chega no miolo, preenche e revela os pontinhos de textura
+          if (path === miolo) {
+            miolo.style.transition = 'fill-opacity 0.4s ease';
+            miolo.style.fillOpacity = '0.55';
+            pontinhos.forEach(ponto => {
+              ponto.style.transition = 'opacity 0.3s ease';
+              ponto.style.opacity = '1';
+            });
+          }
+
+        }, inicioEsteTraco);
       });
-    }, totalTempo + 1000);
 
-    // Arena fecha e libera clique
-    setTimeout(() => {
-      arena.style.transition = 'opacity 0.5s, height 0.5s';
-      arena.style.opacity    = '0';
-      arena.style.height     = '0';
-      // reseta para próxima vez
-      paths.forEach(p => { p.style.opacity = '1'; });
-      pincel.style.opacity   = '1';
-      pincel.style.transform = 'translateX(-50%) rotate(40deg)';
-      ocupado = false;
-    }, totalTempo + 2400);
+      const totalTempo = tempoAcumulado + 400;
+
+      // Pincel some
+      setTimeout(() => {
+        pincel.style.transition = 'opacity 0.6s, transform 0.6s';
+        pincel.style.opacity    = '0';
+        pincel.style.transform  = 'translate(-12%, -88%) scaleY(-1) rotate(80deg) scale(0.5)';
+      }, totalTempo);
+
+      // A flor fica desenhada na tela — libera novo clique
+      setTimeout(() => {
+        ocupado = false;
+      }, totalTempo + 200);
+    });
   });
 })();
 </script>

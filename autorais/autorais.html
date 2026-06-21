@@ -40,45 +40,55 @@
 <!-- ÁREA DO PINCEL + ÁRVORE (aparece sob a seção acima) -->
 <div id="pincel-arena" aria-hidden="true">
   <img src="img/pincel.png" id="pincel-img" alt="">
-  <svg id="arvore-svg" viewBox="0 0 340 320" xmlns="http://www.w3.org/2000/svg">
-    <!-- tronco -->
-    <path id="p0" d="M170 310 Q168 270 165 240"/>
-    <!-- galhos principais -->
-    <path id="p1" d="M165 240 Q140 210 110 185"/>
-    <path id="p2" d="M165 240 Q190 205 220 175"/>
-    <path id="p3" d="M165 240 Q162 200 160 170"/>
-    <!-- galhos secundários esquerda -->
-    <path id="p4" d="M110 185 Q85 165 65 145"/>
-    <path id="p5" d="M110 185 Q105 158 100 135"/>
-    <!-- galhos secundários direita -->
-    <path id="p6" d="M220 175 Q242 150 258 128"/>
-    <path id="p7" d="M220 175 Q218 148 215 122"/>
-    <!-- galho centro alto -->
-    <path id="p8" d="M160 170 Q158 140 155 110"/>
-    <!-- galhinhos finais esquerda -->
-    <path id="p9"  d="M65 145 Q50 128 38 112"/>
-    <path id="p10" d="M65 145 Q60 125 55 105"/>
-    <path id="p11" d="M100 135 Q88 115 78 95"/>
-    <path id="p12" d="M100 135 Q102 112 104 90"/>
-    <!-- galhinhos finais direita -->
-    <path id="p13" d="M258 128 Q268 108 275 88"/>
-    <path id="p14" d="M258 128 Q252 106 248 86"/>
-    <path id="p15" d="M215 122 Q212 100 210 78"/>
-    <path id="p16" d="M215 122 Q220 100 224 80"/>
-    <!-- galhinhos finais centro -->
-    <path id="p17" d="M155 110 Q148 88 142 68"/>
-    <path id="p18" d="M155 110 Q160 86 163 64"/>
-    <!-- folhinhas / pontinhos finais -->
-    <path id="p19" d="M38 112 Q30 98 24 85"/>
-    <path id="p20" d="M55 105 Q48 90 43 76"/>
-    <path id="p21" d="M78 95  Q70 80 64 66"/>
-    <path id="p22" d="M104 90 Q100 74 97 60"/>
-    <path id="p23" d="M142 68 Q136 52 130 38"/>
-    <path id="p24" d="M163 64 Q162 48 160 32"/>
-    <path id="p25" d="M210 78 Q206 62 202 46"/>
-    <path id="p26" d="M224 80 Q228 64 230 48"/>
-    <path id="p27" d="M248 86 Q244 70 240 54"/>
-    <path id="p28" d="M275 88 Q280 72 283 56"/>
+  <svg id="arvore-svg" viewBox="0 0 340 340" xmlns="http://www.w3.org/2000/svg">
+    <!-- TRONCO — marrom, traços de pincel largos -->
+    <path id="p0" d="M155 320 Q150 290 148 265 Q145 240 150 220"/>
+    <path id="p1" d="M175 320 Q178 290 180 265 Q182 240 178 220"/>
+    <path id="p2" d="M148 265 Q130 260 115 255 Q100 250 90 260"/>
+    <path id="p3" d="M180 265 Q198 260 212 255 Q226 250 234 260"/>
+    <path id="p4" d="M150 220 Q148 210 152 200"/>
+    <path id="p5" d="M178 220 Q180 210 176 200"/>
+
+    <!-- COPA — contorno externo verde, pinceladas grossas arredondadas -->
+    <!-- base da copa / encontro com tronco -->
+    <path id="p6"  d="M152 205 Q130 195 112 185 Q95 175 85 158"/>
+    <path id="p7"  d="M176 205 Q198 195 214 183 Q228 170 235 155"/>
+
+    <!-- lado esquerdo da copa -->
+    <path id="p8"  d="M85 158 Q70 138 68 115 Q66 92 78 75"/>
+    <path id="p9"  d="M78 75  Q88 58 105 50 Q118 44 132 48"/>
+
+    <!-- topo da copa -->
+    <path id="p10" d="M132 48  Q148 38 164 36 Q178 35 190 42"/>
+    <path id="p11" d="M190 42  Q205 50 215 62 Q222 72 220 85"/>
+
+    <!-- lado direito da copa -->
+    <path id="p12" d="M220 85  Q228 102 230 122 Q232 142 225 158"/>
+    <path id="p13" d="M225 158 Q218 172 210 180"/>
+
+    <!-- saliências / gomos da copa esquerda -->
+    <path id="p14" d="M68 115  Q55 108 50 95  Q46 82 54 72 Q62 62 75 65"/>
+    <path id="p15" d="M78 75   Q68 62 72 48  Q78 36 92 32 Q106 30 112 42"/>
+
+    <!-- saliências / gomos da copa direita -->
+    <path id="p16" d="M230 122 Q242 116 248 103 Q253 88 244 76 Q235 65 222 68"/>
+    <path id="p17" d="M220 85  Q228 70 222 56 Q215 44 202 40 Q190 37 185 48"/>
+
+    <!-- pinceladas internas da copa — textura -->
+    <path id="p18" d="M100 160 Q115 130 130 105 Q145 80  160 65"/>
+    <path id="p19" d="M125 170 Q138 145 150 120 Q162 95  172 72"/>
+    <path id="p20" d="M155 168 Q164 140 172 115 Q180 90  185 68"/>
+    <path id="p21" d="M182 162 Q192 135 198 110 Q203 88  200 70"/>
+    <path id="p22" d="M88  130 Q100 108 114  88 Q126  70 136 58"/>
+    <path id="p23" d="M210 145 Q218 122 220 100 Q222  80 216 65"/>
+
+    <!-- traços de brilho / hachurado leve -->
+    <path id="p24" d="M108 148 Q118 128 130 112"/>
+    <path id="p25" d="M142 155 Q150 132 158 112"/>
+    <path id="p26" d="M170 150 Q177 128 182 108"/>
+    <path id="p27" d="M196 138 Q202 118 204 98"/>
+    <path id="p28" d="M90 108  Q98  90 108  76"/>
+    <path id="p29" d="M215 118 Q220 100 218  84"/>
   </svg>
 </div>
 
@@ -155,22 +165,32 @@
 
   #arvore-svg path {
     fill: none;
-    stroke: #3a2510;
     stroke-linecap: round;
     stroke-linejoin: round;
-    stroke-dasharray: 200;
-    stroke-dashoffset: 200;
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
   }
 
-  /* espessuras variadas por "geração" do galho */
-  #p0 { stroke-width: 5; }
-  #p1, #p2, #p3 { stroke-width: 3.5; }
-  #p4, #p5, #p6, #p7, #p8 { stroke-width: 2.5; }
-  #p9,  #p10, #p11, #p12,
-  #p13, #p14, #p15, #p16,
-  #p17, #p18 { stroke-width: 1.8; }
-  #p19, #p20, #p21, #p22, #p23,
-  #p24, #p25, #p26, #p27, #p28 { stroke-width: 1.2; }
+  /* tronco — marrom */
+  #p0, #p1 { stroke: #7a4010; stroke-width: 10; }
+  #p2, #p3 { stroke: #7a4010; stroke-width: 8; }
+  #p4, #p5 { stroke: #7a4010; stroke-width: 6; }
+
+  /* contorno copa — verde escuro, espesso como pincelada */
+  #p6,  #p7  { stroke: #2d7a2d; stroke-width: 9; }
+  #p8,  #p9  { stroke: #2d7a2d; stroke-width: 9; }
+  #p10, #p11 { stroke: #2d7a2d; stroke-width: 9; }
+  #p12, #p13 { stroke: #2d7a2d; stroke-width: 9; }
+  #p14, #p15 { stroke: #2d7a2d; stroke-width: 8; }
+  #p16, #p17 { stroke: #2d7a2d; stroke-width: 8; }
+
+  /* interior copa — verde médio, pinceladas largas */
+  #p18, #p19, #p20,
+  #p21, #p22, #p23 { stroke: #4aaa3a; stroke-width: 14; stroke-opacity: 0.75; }
+
+  /* brilho / hachurado — verde claro, fino */
+  #p24, #p25, #p26,
+  #p27, #p28, #p29 { stroke: #7dcc60; stroke-width: 7; stroke-opacity: 0.55; }
 </style>
 
 <!-- ── SCRIPT DO PINCEL ── -->
@@ -204,7 +224,7 @@
     // Mostra arena
     arena.style.transition = 'opacity 0.4s';
     arena.style.opacity    = '1';
-    arena.style.height     = '340px';
+    arena.style.height     = '380px';
 
     // Pincel aparece
     pincel.style.transition = 'opacity 0.3s';
