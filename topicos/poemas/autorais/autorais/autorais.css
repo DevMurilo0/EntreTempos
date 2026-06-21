@@ -9,10 +9,28 @@
 }
 
 body {
+  position: relative;
   background: #f2e8d5;
   font-family: 'Special Elite', serif;
   min-height: 100vh;
   overflow-x: hidden;
+}
+
+/* mão com coração flamejante — papel de parede fixo, canto inferior esquerdo */
+body::after {
+  content: "";
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 380px;
+  height: 480px;
+  background-image: url('../img/coracao-flamejante.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: bottom left;
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: 0;
 }
 
 body::before {
@@ -94,7 +112,7 @@ header a:hover { color: #c0392b; }
 }
 
 .foto-autora {
-  width: clamp(160px, 22vw, 260px);
+  width: clamp(190px, 26vw, 310px);
   height: auto;
   flex-shrink: 0;
   filter: drop-shadow(4px 6px 14px rgba(0,0,0,0.35)) sepia(15%);
@@ -167,7 +185,7 @@ header a:hover { color: #c0392b; }
   display: block;
   text-decoration: none;
   cursor: pointer;
-  width: clamp(180px, 24vw, 260px);
+  width: clamp(210px, 28vw, 300px);
 }
 
 .foto-nav img {
@@ -196,6 +214,66 @@ header a:hover { color: #c0392b; }
   font-size: 13px;
   letter-spacing: 1.5px;
   color: #3e3228;
+}
+
+/* ══════════════════════════════════════════
+   IMAGENS DECORATIVAS — espalhadas pela página
+   inteira, dentro do deco-container (igual ao
+   padrão usado em livros.html)
+   ══════════════════════════════════════════ */
+
+.deco-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.img-deco {
+  position: absolute;
+  pointer-events: none;
+}
+
+/* nuvem-rosto — canto superior direito, perto do título */
+.img-deco-01 {
+  top: 10px;
+  right: 2%;
+  width: 220px;
+  transform: rotate(5deg);
+  opacity: 0.9;
+  filter: drop-shadow(4px 8px 16px rgba(0,0,0,0.25));
+}
+
+/* pena-mao — esquerda, altura da seção de apresentação */
+.img-deco-02 {
+  top: 26%;
+  left: -40px;
+  width: 190px;
+  transform: rotate(-8deg);
+  opacity: 0.95;
+  filter: drop-shadow(3px 5px 10px rgba(0,0,0,0.25));
+}
+
+/* rosa-seca — esquerda, em cima da seção de fotos de navegação */
+.img-deco-03 {
+  top: 56%;
+  left: 4%;
+  width: 130px;
+  transform: rotate(-12deg);
+  opacity: 0.95;
+}
+
+/* pena-tinteiro — direita, na altura da foto de navegação */
+.img-deco-04 {
+  top: 58%;
+  right: 2%;
+  width: 170px;
+  transform: rotate(6deg);
+  opacity: 0.9;
+  filter: drop-shadow(3px 6px 12px rgba(0,0,0,0.2));
 }
 
 /* ── RODAPÉ ── */
@@ -241,7 +319,7 @@ header a:hover { color: #c0392b; }
   }
 
   .foto-autora {
-    width: clamp(140px, 55vw, 200px);
+    width: clamp(160px, 60vw, 230px);
   }
 
   .autora-nome {
@@ -266,6 +344,66 @@ header a:hover { color: #c0392b; }
   }
 
   .foto-nav {
-    width: clamp(150px, 60vw, 220px);
+    width: clamp(170px, 65vw, 240px);
+  }
+
+  /* ── IMAGENS DECORATIVAS NO MOBILE ──
+     Continuam dentro do deco-container (position: absolute,
+     relativo ao conteúdo da página, igual ao desktop) — por
+     isso rolam junto com o resto do conteúdo, sem usar
+     position: fixed. Mantidas com a MESMA opacidade do PC
+     (sem transparência extra) — só o tamanho é reduzido para
+     caber na tela. */
+
+  .deco-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .img-deco-01,
+  .img-deco-02,
+  .img-deco-03,
+  .img-deco-04 {
+    display: block;
+  }
+
+  /* nuvem-rosto — canto superior direito */
+  .img-deco-01 {
+    top: -4px;
+    right: -10px;
+    width: 100px;
+  }
+
+  /* pena-mao — encolhida, encostada na borda esquerda, abaixo do divisor, fora da área de texto */
+  .img-deco-02 {
+    top: 17%;
+    left: -34px;
+    width: 90px;
+    opacity: 0.7;
+  }
+
+  /* rosa-seca — canto esquerdo, em cima das fotos */
+  .img-deco-03 {
+    top: 58%;
+    left: 2%;
+    width: 65px;
+  }
+
+  /* pena-tinteiro — canto direito, altura das fotos */
+  .img-deco-04 {
+    top: 60%;
+    right: -8px;
+    width: 90px;
+  }
+
+  body::after {
+    width: 160px;
+    height: 220px;
+    opacity: 0.12;
   }
 }
