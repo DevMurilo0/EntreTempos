@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caio Fernando Abreu — Poemas | Entre Tempos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Caveat:wght@400;600&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../pessoa.css">
+</head>
+<body>
+<header>
+  <a href="../conhecidos.html">← Voltar para Poetas Conhecidos</a>
+</header>
+
+<section class="pessoa-section">
+  <img src="caio.jpg" alt="Caio Fernando Abreu" class="foto-pessoa">
+  <div class="pessoa-info">
+    <h2 class="pessoa-nome">Caio Fernando Abreu</h2>
+    <p class="pessoa-cargo">escritor · contista · poeta</p>
+    <p class="pessoa-bio">
+      Caio Fernando Abreu (1948–1996) foi um dos escritores mais intensos e
+      corajosos da literatura brasileira. Nascido em Santiago do Boqueirão, no
+      Rio Grande do Sul, escreveu contos, crônicas, romances e poemas com uma
+      linguagem visceral e poética que tocava as feridas mais fundas da alma humana.
+    </p>
+    <p class="pessoa-bio">
+      Três vezes laureado com o Prêmio Jabuti, Caio escrevia sobre amor, solidão,
+      desejo e morte com uma honestidade rara. Sua obra — especialmente
+      <em>Morangos Mofados</em> e <em>Os Dragões Não Conhecem o Paraíso</em> —
+      continua passada de mão em mão entre jovens que encontram nela um espelho
+      das próprias angústias.
+    </p>
+    <p class="contador-poemas">2 poemas</p>
+  </div>
+</section>
+
+<div class="divisor"></div>
+
+<!-- GRID DE ENVELOPES -->
+<section class="grade-envelopes">
+
+  <button class="envelope" data-alvo="poema-1">
+    <span class="env-numero">I</span>
+    <span class="env-titulo">Alento</span>
+    <span class="env-aba"></span>
+  </button>
+
+  <button class="envelope" data-alvo="poema-2">
+    <span class="env-numero">II</span>
+    <span class="env-titulo">Pequena Epifania</span>
+    <span class="env-aba"></span>
+  </button>
+
+</section>
+
+<!-- ÁREA DA FOLHA -->
+<div class="area-folha" id="area-folha" aria-live="polite">
+
+  <article class="poema" id="poema-1">
+    <p class="poema-numero">Poema I</p>
+    <h3 class="poema-titulo">Alento</h3>
+    <p class="poema-data">Caio Fernando Abreu</p>
+    <div class="poema-texto">
+      <p>
+        Quando nada mais houver,<br>
+        eu me erguerei cantando,<br>
+        saudando a vida<br>
+        com meu corpo de cavalo jovem.
+      </p>
+      <p>
+        E numa louca corrida<br>
+        entregarei meu ser ao ser do Tempo<br>
+        e a minha voz à doce voz do vento.
+      </p>
+      <p>
+        Despojado do que já não há<br>
+        solto no vazio do que ainda não veio,<br>
+        minha boca cantará<br>
+        cantos de alívio pelo que se foi,<br>
+        cantos de espera pelo que há de vir.
+      </p>
+    </div>
+    <p class="poema-assinatura">— Caio Fernando Abreu</p>
+  </article>
+
+  <article class="poema" id="poema-2">
+    <p class="poema-numero">Poema II</p>
+    <h3 class="poema-titulo">Pequena Epifania</h3>
+    <p class="poema-data">Caio Fernando Abreu</p>
+    <div class="poema-texto">
+      <p>
+        De repente você para no meio da rua<br>
+        e percebe que está vivo.<br>
+        Que o sol existe,<br>
+        que existe vento,<br>
+        que existem pássaros cantando.
+      </p>
+      <p>
+        E você respira fundo<br>
+        e pensa: caramba,<br>
+        que coisa extraordinária<br>
+        estar aqui,<br>
+        agora,<br>
+        neste exato momento.
+      </p>
+      <p>
+        E você sorri sozinho na rua<br>
+        e as pessoas passam<br>
+        e te olham meio de lado,<br>
+        mas não importa:<br>
+        você está vivo<br>
+        e isso é tudo.
+      </p>
+    </div>
+    <p class="poema-assinatura">— Caio Fernando Abreu</p>
+  </article>
+
+</div>
+
+<div class="rodape-poemas">
+  <div>entre tempos · revista eletrônica</div>
+  <div class="carimbo">POEMAS</div>
+</div>
+
+<script>
+  const envelopes = document.querySelectorAll('.envelope');
+  const poemas    = document.querySelectorAll('.poema');
+  const areaFolha = document.getElementById('area-folha');
+
+  poemas.forEach(p => p.classList.remove('visivel'));
+  areaFolha.classList.remove('aberta');
+
+  envelopes.forEach(env => {
+    env.addEventListener('click', () => {
+      const alvoId = env.dataset.alvo;
+      const jaAtivo = env.classList.contains('ativo');
+
+      envelopes.forEach(e => e.classList.remove('ativo'));
+
+      if (jaAtivo) {
+        poemas.forEach(p => {
+          p.classList.remove('visivel');
+          p.classList.add('saindo');
+          setTimeout(() => p.classList.remove('saindo'), 400);
+        });
+        areaFolha.classList.remove('aberta');
+        return;
+      }
+
+      env.classList.add('ativo');
+
+      const poemaAtivo = document.querySelector('.poema.visivel');
+      const poemaAlvo  = document.getElementById(alvoId);
+
+      if (poemaAtivo && poemaAtivo !== poemaAlvo) {
+        poemaAtivo.classList.remove('visivel');
+        poemaAtivo.classList.add('saindo');
+        setTimeout(() => {
+          poemaAtivo.classList.remove('saindo');
+          poemaAlvo.classList.add('visivel');
+        }, 280);
+      } else {
+        poemaAlvo.classList.add('visivel');
+      }
+
+      areaFolha.classList.add('aberta');
+    });
+  });
+</script>
+</body>
+</html>

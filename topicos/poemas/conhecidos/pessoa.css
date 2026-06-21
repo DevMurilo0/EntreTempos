@@ -1,7 +1,8 @@
 /* =============================================
    PESSOA.CSS — Entre Tempos · Página de poemas de UMA pessoa
-   Usado por: conhecidos/<nome>/index.html
    ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Bebas+Neue&family=Special+Elite&family=Dancing+Script:wght@400;600&family=IM+Fell+English:ital@0;1&family=Playfair+Display:ital,wght@0,700;1,700&display=swap');
 
 * {
   margin: 0;
@@ -9,6 +10,7 @@
   box-sizing: border-box;
 }
 
+/* ── FUNDO DO SITE — igual ao original ── */
 body {
   background: #f2e8d5;
   font-family: 'Special Elite', serif;
@@ -46,10 +48,7 @@ header a {
 
 header a:hover { color: #c0392b; }
 
-/* ══════════════════════════════════════════
-   CABEÇALHO DA PESSOA
-   ══════════════════════════════════════════ */
-
+/* ── CABEÇALHO DA PESSOA ── */
 .pessoa-section {
   position: relative;
   z-index: 5;
@@ -133,10 +132,8 @@ header a:hover { color: #c0392b; }
 }
 
 /* ══════════════════════════════════════════
-   LISTA DE POEMAS — rolagem única
-   cada poema é uma "página de diário" separada
+   LISTA DE POEMAS
    ══════════════════════════════════════════ */
-
 .lista-poemas {
   position: relative;
   z-index: 5;
@@ -145,69 +142,138 @@ header a:hover { color: #c0392b; }
   padding: 0 30px 100px;
   display: flex;
   flex-direction: column;
-  gap: 70px;
+  gap: 90px;
 }
 
+/* ── FOLHA DO POEMA — papel velho amarelado, amassado ── */
 .poema {
   position: relative;
-  background: #fbf6ea;
-  border: 1px solid #d9c79f;
-  box-shadow: 0 6px 22px rgba(0,0,0,0.12), 0 1px 0 #fff inset;
-  padding: 50px 55px 45px;
-  /* leve rotação alternada pra parecer páginas soltas de um caderno */
+  padding: 60px 58px 52px;
+
+  /* base: amarelo envelhecido */
+  background-color: #d4b87a;
+  background-image:
+    /* vincos de amassado — linhas diagonais cruzadas sutis */
+    repeating-linear-gradient(
+      127deg,
+      transparent 0px, transparent 22px,
+      rgba(0,0,0,0.03) 22px, rgba(0,0,0,0.03) 23px
+    ),
+    repeating-linear-gradient(
+      53deg,
+      transparent 0px, transparent 38px,
+      rgba(255,255,255,0.05) 38px, rgba(255,255,255,0.05) 39px
+    ),
+    /* manchas de envelhecimento distribuídas */
+    radial-gradient(ellipse at 12% 20%, rgba(160,110,30,0.25) 0%, transparent 40%),
+    radial-gradient(ellipse at 88% 75%, rgba(130,90,20,0.20) 0%, transparent 35%),
+    radial-gradient(ellipse at 55% 8%,  rgba(180,140,50,0.18) 0%, transparent 30%),
+    radial-gradient(ellipse at 30% 90%, rgba(110,75,15,0.15) 0%, transparent 28%),
+    radial-gradient(ellipse at 75% 40%, rgba(200,160,70,0.12) 0%, transparent 35%),
+    /* textura de fibras reais de papel */
+    url('https://www.transparenttextures.com/patterns/paper-fibers.png'),
+    url('https://www.transparenttextures.com/patterns/beige-paper.png');
+
+  box-shadow:
+    0 6px 28px rgba(0,0,0,0.26),
+    0 2px 8px rgba(0,0,0,0.16),
+    inset 0 0 100px rgba(120,80,10,0.22),
+    inset 0 0 30px rgba(70,40,5,0.14);
 }
 
-.poema:nth-of-type(odd) { transform: rotate(-0.4deg); }
-.poema:nth-of-type(even) { transform: rotate(0.4deg); }
+/* Rotações alternadas — folhas jogadas na mesa */
 
+
+
+
+
+
+
+
+
+.poema:hover {
+  transform: scale(1.01);
+  transition: transform 0.3s ease;
+  z-index: 10;
+  box-shadow:
+    0 14px 45px rgba(0,0,0,0.28),
+    inset 0 0 80px rgba(160,120,60,0.18);
+}
+
+/* Dobra no canto superior direito */
 .poema::before {
-  /* furinho/grampo de caderno no topo */
   content: "";
   position: absolute;
-  top: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 34px;
-  height: 6px;
-  background: #c4a96b;
-  opacity: 0.45;
-  border-radius: 3px;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 32px 32px 0;
+  border-color: transparent #f2e8d5 transparent transparent;
+  filter: drop-shadow(-2px 2px 2px rgba(0,0,0,0.12));
 }
 
+/* Mancha de umidade / desgaste */
+.poema::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+.poema:nth-of-type(odd)::after {
+  bottom: 24px;
+  right: 36px;
+  width: 70px;
+  height: 50px;
+  background: radial-gradient(ellipse, rgba(120,80,30,0.12) 0%, transparent 70%);
+  transform: rotate(18deg);
+}
+
+.poema:nth-of-type(even)::after {
+  top: 36px;
+  left: 30px;
+  width: 55px;
+  height: 42px;
+  background: radial-gradient(ellipse, rgba(100,65,20,0.10) 0%, transparent 70%);
+  transform: rotate(-12deg);
+}
+
+/* ── TEXTOS DOS POEMAS — fonte manuscrita ── */
+
 .poema-numero {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 13px;
-  letter-spacing: 3px;
-  color: #b0a090;
+  font-family: 'Caveat', cursive;
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: #9a7c5a;
   text-transform: uppercase;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .poema-titulo {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-weight: 700;
-  font-size: clamp(26px, 3.4vw, 36px);
-  color: #1a1a1a;
-  margin-bottom: 4px;
-  line-height: 1.15;
+  font-family: 'Dancing Script', cursive;
+  font-weight: 600;
+  font-size: clamp(28px, 3.6vw, 40px);
+  color: #1a0e04;
+  margin-bottom: 6px;
+  line-height: 1.2;
 }
 
 .poema-data {
-  font-family: 'Special Elite', serif;
-  font-size: 12px;
-  color: #8c3b3b;
+  font-family: 'Caveat', cursive;
+  font-size: 13px;
+  color: #8b5030;
   letter-spacing: 1px;
-  margin-bottom: 26px;
+  margin-bottom: 28px;
   font-style: italic;
 }
 
 .poema-texto {
-  font-family: 'IM Fell English', serif;
-  font-size: clamp(16px, 1.8vw, 19px);
-  line-height: 2;
-  color: #2e2620;
-  white-space: pre-line;
+  font-family: 'Caveat', cursive;
+  font-size: clamp(18px, 2.1vw, 22px);
+  line-height: 2.1;
+  color: #1e1408;
 }
 
 .poema-texto p {
@@ -215,15 +281,25 @@ header a:hover { color: #c0392b; }
 }
 
 .poema-assinatura {
-  margin-top: 30px;
+  margin-top: 28px;
   text-align: right;
-  font-family: 'Special Elite', serif;
-  font-size: 13px;
-  color: #b0a090;
-  letter-spacing: 1px;
+  font-family: 'Dancing Script', cursive;
+  font-weight: 600;
+  font-size: 17px;
+  color: #6e4a28;
+  font-style: italic;
 }
 
-/* mensagem para quando ainda não há poemas cadastrados */
+.poema-assinatura::before {
+  content: "";
+  display: block;
+  width: 55px;
+  height: 1px;
+  background: #b0906a;
+  margin: 0 0 10px auto;
+}
+
+/* ── SEM POEMAS ── */
 .sem-poemas {
   position: relative;
   z-index: 5;
@@ -266,7 +342,6 @@ header a:hover { color: #c0392b; }
 
 /* ── MOBILE ── */
 @media (max-width: 600px) {
-
   .pessoa-section {
     flex-direction: column;
     align-items: center;
@@ -275,37 +350,243 @@ header a:hover { color: #c0392b; }
     text-align: center;
   }
 
-  .foto-pessoa {
-    width: clamp(130px, 45vw, 170px);
-  }
+  .foto-pessoa { width: clamp(130px, 45vw, 170px); }
+  .pessoa-nome { border-left: none; padding-left: 0; }
+  .pessoa-cargo, .pessoa-bio, .contador-poemas { padding-left: 0; }
+  .pessoa-bio { text-align: left; max-width: 100%; }
 
-  .pessoa-nome {
-    border-left: none;
-    padding-left: 0;
-  }
-
-  .pessoa-cargo,
-  .pessoa-bio,
-  .contador-poemas {
-    padding-left: 0;
-  }
-
-  .pessoa-bio {
-    text-align: left;
-    max-width: 100%;
-  }
-
-  .lista-poemas {
-    padding: 0 16px 70px;
-    gap: 50px;
-  }
+  .lista-poemas { padding: 0 16px 70px; gap: 60px; }
 
   .poema {
     padding: 40px 22px 32px;
   }
 
-  .poema:nth-of-type(odd),
-  .poema:nth-of-type(even) {
-    transform: none;
+  
+  
+}
+
+/* ══════════════════════════════════════════
+   GRADE DE ENVELOPES
+   ══════════════════════════════════════════ */
+
+.grade-envelopes {
+  position: relative;
+  z-index: 5;
+  max-width: 780px;
+  margin: 0 auto 10px;
+  padding: 0 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+/* ── ENVELOPE ── */
+.envelope {
+  position: relative;
+  width: 200px;
+  height: 72px;
+  background: #e8d9b0;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  overflow: visible;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  /* sombra de papel */
+  box-shadow:
+    2px 3px 10px rgba(0,0,0,0.22),
+    inset 0 0 30px rgba(120,90,20,0.10);
+
+  /* textura de papel */
+  background-image:
+    url('https://www.transparenttextures.com/patterns/beige-paper.png');
+}
+
+/* Aba superior do envelope (triângulo) */
+.envelope .env-aba {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.envelope .env-aba::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 0; height: 0;
+  border-style: solid;
+  border-width: 26px 100px 0 100px;
+  border-color: #c9b880 transparent transparent transparent;
+}
+
+/* linha central do envelope */
+.envelope .env-aba::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0; height: 0;
+  border-style: solid;
+  border-width: 0 100px 22px 100px;
+  border-color: transparent transparent #d4c490 transparent;
+}
+
+.envelope .env-numero {
+  position: absolute;
+  bottom: 10px;
+  left: 14px;
+  font-family: 'Caveat', cursive;
+  font-size: 11px;
+  color: #9a7c50;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+.envelope .env-titulo {
+  position: absolute;
+  bottom: 10px;
+  left: 38px;
+  right: 10px;
+  font-family: 'Dancing Script', cursive;
+  font-size: 15px;
+  font-weight: 600;
+  color: #2a1c08;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  z-index: 2;
+}
+
+/* Hover */
+.envelope:hover {
+  transform: translateY(-4px) rotate(-1deg);
+  box-shadow: 3px 8px 18px rgba(0,0,0,0.28);
+}
+
+/* Ativo — envelope "aberto" */
+.envelope.ativo {
+  transform: translateY(-6px) rotate(-1.5deg);
+  box-shadow: 4px 10px 24px rgba(0,0,0,0.32);
+}
+
+.envelope.ativo .env-aba::before {
+  border-color: #a8954e transparent transparent transparent;
+}
+
+/* ══════════════════════════════════════════
+   ÁREA DA FOLHA
+   ══════════════════════════════════════════ */
+
+.area-folha {
+  position: relative;
+  z-index: 5;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 30px 100px;
+
+  /* altura 0 quando fechada */
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, padding 0.3s ease;
+}
+
+.area-folha.aberta {
+  max-height: 3000px;
+  padding-top: 50px;
+  padding-bottom: 100px;
+}
+
+/* Os poemas ficam escondidos por padrão */
+.poema {
+  display: none;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+/* Poema saindo */
+.poema.saindo {
+  display: block;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* Poema visível */
+.poema.visivel {
+  display: block;
+  opacity: 1;
+  transform: translateX(0);
+  animation: folhaSurge 0.4s ease forwards;
+}
+
+@keyframes folhaSurge {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Variações de rotação por ID */
+#poema-1.visivel { animation-name: folhaSurge1; }
+#poema-2.visivel { animation-name: folhaSurge2; }
+#poema-3.visivel { animation-name: folhaSurge3; }
+#poema-4.visivel { animation-name: folhaSurge4; }
+#poema-5.visivel { animation-name: folhaSurge5; }
+
+@keyframes folhaSurge1 {
+  from { opacity:0; transform: translateY(30px) scale(0.97); }
+  to   { opacity:1; transform: translateY(0); }
+}
+@keyframes folhaSurge2 {
+  from { opacity:0; transform: translateY(30px) scale(0.97); }
+  to   { opacity:1; transform: translateY(0); }
+}
+@keyframes folhaSurge3 {
+  from { opacity:0; transform: translateY(30px) scale(0.97); }
+  to   { opacity:1; transform: translateY(0); }
+}
+@keyframes folhaSurge4 {
+  from { opacity:0; transform: translateY(30px) scale(0.97); }
+  to   { opacity:1; transform: translateY(0); }
+}
+@keyframes folhaSurge5 {
+  from { opacity:0; transform: translateY(30px) scale(0.97); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+/* ── MOBILE ── */
+@media (max-width: 600px) {
+  .grade-envelopes {
+    padding: 0 16px;
+    gap: 14px;
+  }
+
+  .envelope {
+    width: calc(50% - 7px);
+    height: 64px;
+  }
+
+  .envelope .env-aba::before {
+    border-width: 22px 50% 0 50%;
+  }
+
+  .envelope .env-aba::after {
+    border-width: 0 50% 18px 50%;
+  }
+
+  .area-folha {
+    padding: 0 12px 70px;
+  }
+
+  .area-folha.aberta {
+    padding-top: 34px;
   }
 }
