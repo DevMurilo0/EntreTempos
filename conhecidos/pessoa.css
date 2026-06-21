@@ -61,7 +61,7 @@ header a:hover { color: #c0392b; }
 }
 
 .foto-pessoa {
-  width: clamp(220px, 28vw, 340px);
+  width: clamp(140px, 18vw, 200px);
   height: auto;
   flex-shrink: 0;
   filter: drop-shadow(4px 6px 14px rgba(0,0,0,0.35)) sepia(15%);
@@ -350,7 +350,7 @@ header a:hover { color: #c0392b; }
     text-align: center;
   }
 
-  .foto-pessoa { width: clamp(180px, 60vw, 260px); }
+  .foto-pessoa { width: clamp(130px, 45vw, 170px); }
   .pessoa-nome { border-left: none; padding-left: 0; }
   .pessoa-cargo, .pessoa-bio, .contador-poemas { padding-left: 0; }
   .pessoa-bio { text-align: left; max-width: 100%; }
