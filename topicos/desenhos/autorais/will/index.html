@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will — Desenhos | Entre Tempos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Caveat:wght@400;600&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../pessoa.css">
+</head>
+<body>
+<header>
+  <a href="../autorais.html">← Voltar para Autorais</a>
+</header>
+
+<section class="pessoa-section">
+  <img src="../img/placeholder-retrato.svg" alt="Will" class="foto-pessoa">
+  <div class="pessoa-info">
+    <h2 class="pessoa-nome">Will</h2>
+    <p class="pessoa-cargo">artista</p>
+    <p class="pessoa-bio">
+      Este artista desenha com toda a alma. Não é famoso, muito menos conhecido,
+      mas ele carrega sonhos de ter uma vida tranquila, de ser conhecido pela sua arte,
+      de expor seus traços com seus sentimentos antigos e atuais.
+    </p>
+    <p class="pessoa-bio">
+      Cada desenho é um sentimento, uma experiência, um momento único da vida dela,
+      e com estes simples traços ele deseja conquistar o mundo que há dentro de si.
+    </p>
+    <p class="contador-desenhos">3 desenhos</p>
+  </div>
+</section>
+
+<div class="divisor"></div>
+
+<!-- GRID DE ENVELOPES
+     Cada envelope representa um desenho. Para adicionar um novo desenho:
+     1) copie um <button class="envelope"> e mude o data-alvo, numero e titulo
+     2) copie o bloco <article class="desenho"> correspondente lá embaixo,
+        trocando o id, titulo, data e a imagem dentro do .desenho-quadro -->
+<section class="grade-envelopes">
+
+  <button class="envelope" data-alvo="desenho-1">
+    <span class="env-numero">I</span>
+    <span class="env-titulo">desenho 1</span>
+    <span class="env-aba"></span>
+  </button>
+
+  <button class="envelope" data-alvo="desenho-2">
+    <span class="env-numero">II</span>
+    <span class="env-titulo">desenho 2</span>
+    <span class="env-aba"></span>
+  </button>
+
+  <button class="envelope" data-alvo="desenho-3">
+    <span class="env-numero">III</span>
+    <span class="env-titulo">desenho 3</span>
+    <span class="env-aba"></span>
+  </button>
+
+</section>
+
+<!-- ÁREA DO QUADRO — um único slot onde o desenho aparece -->
+<div class="area-quadro" id="area-quadro" aria-live="polite">
+
+  <article class="desenho" id="desenho-1">
+    <p class="desenho-numero">Desenho I</p>
+    <h3 class="desenho-titulo">desenho 1</h3>
+    <p class="desenho-data">feito em — 2026</p>
+    <div class="desenho-quadro vazio">
+      <span>desenho em breve</span>
+      <!-- Quando tiver a imagem, troque a linha acima por:
+           <img src="../img/nome-da-imagem.png" alt="desenho 1">
+           e remova a classe "vazio" da div .desenho-quadro -->
+    </div>
+    <p class="desenho-assinatura">— Will</p>
+  </article>
+
+  <article class="desenho" id="desenho-2">
+    <p class="desenho-numero">Desenho II</p>
+    <h3 class="desenho-titulo">desenho 2</h3>
+    <p class="desenho-data">feito em — 2026</p>
+    <div class="desenho-quadro vazio">
+      <span>desenho em breve</span>
+    </div>
+    <p class="desenho-assinatura">— Will</p>
+  </article>
+
+  <article class="desenho" id="desenho-3">
+    <p class="desenho-numero">Desenho III</p>
+    <h3 class="desenho-titulo">desenho 3</h3>
+    <p class="desenho-data">feito em — 2026</p>
+    <div class="desenho-quadro vazio">
+      <span>desenho em breve</span>
+    </div>
+    <p class="desenho-assinatura">— Will</p>
+  </article>
+
+</div>
+
+<div class="rodape-desenhos">
+  <div>entre tempos · revista eletrônica</div>
+  <div class="carimbo">DESENHOS</div>
+</div>
+
+<script>
+  const envelopes = document.querySelectorAll('.envelope');
+  const desenhos  = document.querySelectorAll('.desenho');
+  const areaQuadro = document.getElementById('area-quadro');
+
+  // Esconde todos os desenhos inicialmente
+  desenhos.forEach(d => d.classList.remove('visivel'));
+  areaQuadro.classList.remove('aberta');
+
+  envelopes.forEach(env => {
+    env.addEventListener('click', () => {
+      const alvoId = env.dataset.alvo;
+      const jaAtivo = env.classList.contains('ativo');
+
+      // Remove estado ativo de todos os envelopes
+      envelopes.forEach(e => e.classList.remove('ativo'));
+
+      if (jaAtivo) {
+        // Fecha se clicar no mesmo envelope
+        desenhos.forEach(d => {
+          d.classList.remove('visivel');
+          d.classList.add('saindo');
+          setTimeout(() => d.classList.remove('saindo'), 400);
+        });
+        areaQuadro.classList.remove('aberta');
+        return;
+      }
+
+      // Ativa envelope clicado
+      env.classList.add('ativo');
+
+      // Troca o desenho com animação
+      const desenhoAtivo = document.querySelector('.desenho.visivel');
+      const desenhoAlvo  = document.getElementById(alvoId);
+
+      if (desenhoAtivo && desenhoAtivo !== desenhoAlvo) {
+        desenhoAtivo.classList.remove('visivel');
+        desenhoAtivo.classList.add('saindo');
+        setTimeout(() => {
+          desenhoAtivo.classList.remove('saindo');
+          desenhoAlvo.classList.add('visivel');
+        }, 280);
+      } else {
+        desenhoAlvo.classList.add('visivel');
+      }
+
+      areaQuadro.classList.add('aberta');
+    });
+  });
+</script>
+</body>
+</html>

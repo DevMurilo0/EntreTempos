@@ -143,9 +143,10 @@ header a:hover { color: #c0392b; }
 }
 
 /* ══════════════════════════════════════════
-   FOTOS DOS AUTORES — 3 lugares fixos,
-   cada um leva (por scroll) à galeria dele
-   mais abaixo na mesma página.
+   FOTOS DE NAVEGAÇÃO — uma foto por autor,
+   cada uma clicável, levando à página dele.
+   O layout cresce automaticamente conforme
+   mais autores são adicionados.
    ══════════════════════════════════════════ */
 
 .fotos-navegacao {
@@ -158,7 +159,7 @@ header a:hover { color: #c0392b; }
   gap: 40px;
   max-width: 900px;
   margin: 0 auto;
-  margin-bottom: 20px;
+  margin-bottom: 80px;
   padding: 0 40px;
 }
 
@@ -195,84 +196,6 @@ header a:hover { color: #c0392b; }
   font-size: 13px;
   letter-spacing: 1.5px;
   color: #3e3228;
-}
-
-.divisor-galerias {
-  margin-top: 50px;
-}
-
-/* ══════════════════════════════════════════
-   BLOCO DE CADA AUTOR — título + galeria
-   dos desenhos dele, aparece ao rolar a
-   página, logo abaixo das fotos.
-   ══════════════════════════════════════════ */
-
-.bloco-autor {
-  position: relative;
-  z-index: 5;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 10px 40px 60px;
-  scroll-margin-top: 90px;
-}
-
-.galeria-titulo {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(26px, 4vw, 38px);
-  color: #1a1a1a;
-  letter-spacing: 3px;
-  border-left: 5px solid #c0392b;
-  padding-left: 16px;
-  margin-bottom: 26px;
-}
-
-.galeria-desenhos {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 26px;
-}
-
-/* Quadro de desenho — moldura no mesmo espírito do site.
-   Para colocar um desenho real: troque a <div class="quadro-vazio">
-   por <div class="quadro-desenho"><img src="..." alt=""></div> */
-.quadro-vazio,
-.quadro-desenho {
-  width: clamp(160px, 27vw, 230px);
-  aspect-ratio: 4 / 5;
-  background: #e8dcc0;
-  border: 2px dashed #c4a96b;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  filter: drop-shadow(3px 5px 12px rgba(0,0,0,0.18));
-  transition: transform 0.3s ease;
-}
-
-.quadro-desenho {
-  border: none;
-  overflow: hidden;
-  background: #fff;
-}
-
-.quadro-desenho img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.quadro-vazio span {
-  font-family: 'IM Fell English', serif;
-  font-style: italic;
-  font-size: 14px;
-  color: #8c7c5e;
-  padding: 0 16px;
-}
-
-.quadro-vazio:hover,
-.quadro-desenho:hover {
-  transform: scale(1.03) rotate(-0.5deg);
 }
 
 /* ── RODAPÉ ── */
@@ -346,17 +269,5 @@ header a:hover { color: #c0392b; }
   .foto-nav {
     width: clamp(150px, 60vw, 220px);
   }
-
-  .bloco-autor {
-    padding: 10px 20px 50px;
-  }
-
-  .galeria-desenhos {
-    justify-content: center;
-  }
-
-  .quadro-vazio,
-  .quadro-desenho {
-    width: clamp(140px, 42vw, 200px);
-  }
 }
+
