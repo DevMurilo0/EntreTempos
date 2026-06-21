@@ -182,17 +182,17 @@ header a:hover { color: #c0392b; }
 }
 
 /* Rotações alternadas — folhas jogadas na mesa */
-.poema:nth-of-type(1)  { transform: rotate(-2.5deg) translateX(-14px); }
-.poema:nth-of-type(2)  { transform: rotate(1.8deg)  translateX(18px); }
-.poema:nth-of-type(3)  { transform: rotate(-1.3deg) translateX(-8px); }
-.poema:nth-of-type(4)  { transform: rotate(2.9deg)  translateX(12px); }
-.poema:nth-of-type(5)  { transform: rotate(-2.1deg) translateX(-16px); }
-.poema:nth-of-type(6)  { transform: rotate(1.4deg)  translateX(10px); }
-.poema:nth-of-type(7)  { transform: rotate(-3.2deg) translateX(-20px); }
-.poema:nth-of-type(8)  { transform: rotate(2.2deg)  translateX(14px); }
+
+
+
+
+
+
+
+
 
 .poema:hover {
-  transform: rotate(0deg) translateX(0) scale(1.01) !important;
+  transform: scale(1.01);
   transition: transform 0.3s ease;
   z-index: 10;
   box-shadow:
@@ -361,8 +361,8 @@ header a:hover { color: #c0392b; }
     padding: 40px 22px 32px;
   }
 
-  .poema:nth-of-type(odd)  { transform: rotate(-1.5deg) translateX(-6px); }
-  .poema:nth-of-type(even) { transform: rotate(1.3deg)  translateX(6px); }
+  
+  
 }
 
 /* ══════════════════════════════════════════
@@ -503,7 +503,7 @@ header a:hover { color: #c0392b; }
 .poema {
   display: none;
   opacity: 0;
-  transform: rotate(-1.5deg) translateY(20px);
+  transform: translateY(20px);
   transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
@@ -511,7 +511,7 @@ header a:hover { color: #c0392b; }
 .poema.saindo {
   display: block;
   opacity: 0;
-  transform: rotate(2deg) translateY(-10px);
+  transform: translateY(-10px);
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
@@ -519,18 +519,18 @@ header a:hover { color: #c0392b; }
 .poema.visivel {
   display: block;
   opacity: 1;
-  transform: rotate(-1.8deg) translateX(-10px);
+  transform: translateX(0);
   animation: folhaSurge 0.4s ease forwards;
 }
 
 @keyframes folhaSurge {
   from {
     opacity: 0;
-    transform: rotate(3deg) translateY(30px) scale(0.97);
+    transform: translateY(30px) scale(0.97);
   }
   to {
     opacity: 1;
-    transform: rotate(-1.8deg) translateX(-10px);
+    transform: translateY(0);
   }
 }
 
@@ -542,24 +542,24 @@ header a:hover { color: #c0392b; }
 #poema-5.visivel { animation-name: folhaSurge5; }
 
 @keyframes folhaSurge1 {
-  from { opacity:0; transform: rotate(4deg) translateY(30px) scale(0.97); }
-  to   { opacity:1; transform: rotate(-2.2deg) translateX(-12px); }
+  from { opacity:0; transform: translateY(30px) scale(0.97); }
+  to   { opacity:1; transform: translateY(0); }
 }
 @keyframes folhaSurge2 {
-  from { opacity:0; transform: rotate(-3deg) translateY(30px) scale(0.97); }
-  to   { opacity:1; transform: rotate(1.8deg) translateX(14px); }
+  from { opacity:0; transform: translateY(30px) scale(0.97); }
+  to   { opacity:1; transform: translateY(0); }
 }
 @keyframes folhaSurge3 {
-  from { opacity:0; transform: rotate(5deg) translateY(30px) scale(0.97); }
-  to   { opacity:1; transform: rotate(-1.4deg) translateX(-8px); }
+  from { opacity:0; transform: translateY(30px) scale(0.97); }
+  to   { opacity:1; transform: translateY(0); }
 }
 @keyframes folhaSurge4 {
-  from { opacity:0; transform: rotate(-4deg) translateY(30px) scale(0.97); }
-  to   { opacity:1; transform: rotate(2.6deg) translateX(10px); }
+  from { opacity:0; transform: translateY(30px) scale(0.97); }
+  to   { opacity:1; transform: translateY(0); }
 }
 @keyframes folhaSurge5 {
-  from { opacity:0; transform: rotate(3deg) translateY(30px) scale(0.97); }
-  to   { opacity:1; transform: rotate(-2.8deg) translateX(-16px); }
+  from { opacity:0; transform: translateY(30px) scale(0.97); }
+  to   { opacity:1; transform: translateY(0); }
 }
 
 /* ── MOBILE ── */

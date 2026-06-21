@@ -172,10 +172,10 @@ header a:hover { color: #c0392b; }
 
 .foto-nav img {
   width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
+  height: auto;
   display: block;
-  background: #e8dcc0;
+  object-fit: contain;
+  background: transparent;
   filter: drop-shadow(4px 6px 14px rgba(0,0,0,0.35)) sepia(15%);
   transition: transform 0.35s ease;
 }

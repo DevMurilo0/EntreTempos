@@ -81,8 +81,8 @@ header a:hover { color: #c0392b; }
   background: linear-gradient(to right, transparent, #c0392b, #c4a96b, #c0392b, transparent);
 }
 
-/* ── SEÇÃO AUTORA ── */
-.autora-section {
+/* ── SEÇÃO APRESENTAÇÃO ── */
+.apresentacao-section {
   position: relative;
   z-index: 5;
   display: flex;
@@ -93,62 +93,38 @@ header a:hover { color: #c0392b; }
   padding: 0 40px;
 }
 
-.foto-autora {
-  width: clamp(160px, 22vw, 260px);
-  height: auto;
-  flex-shrink: 0;
-  filter: drop-shadow(4px 6px 14px rgba(0,0,0,0.35)) sepia(15%);
-  transform: rotate(-2deg);
-  transition: transform 0.3s ease;
-}
-
-.foto-autora:hover {
-  transform: rotate(0deg) scale(1.02);
-}
-
-.autora-info {
+.apresentacao-texto {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
   padding-top: 10px;
+  flex: 1;
 }
 
-.autora-nome {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(36px, 5vw, 58px);
-  color: #1a1a1a;
-  letter-spacing: 4px;
-  line-height: 1;
-  border-left: 5px solid #c0392b;
-  padding-left: 16px;
-}
-
-.autora-cargo {
-  font-family: 'Special Elite', serif;
-  font-size: 14px;
-  color: #8c3b3b;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  padding-left: 21px;
-  font-style: italic;
-}
-
-.autora-bio {
+.apresentacao-texto p {
   font-family: 'IM Fell English', serif;
   font-size: clamp(15px, 1.6vw, 18px);
   color: #3e3228;
   line-height: 1.85;
   text-align: justify;
-  margin-top: 6px;
 }
 
-/* traço sob a descrição — mesmo gradiente do .divisor principal, mais discreto */
-.divisor-bio {
-  position: relative;
-  width: 100%;
-  height: 2px;
-  margin: 14px 0 0;
-  background: linear-gradient(to right, #c0392b, #c4a96b, transparent);
+.apresentacao-texto strong {
+  font-family: 'Special Elite', serif;
+  color: #8c3b3b;
+  font-style: italic;
+}
+
+.stamp-decor {
+  width: clamp(160px, 22vw, 260px);
+  height: auto;
+  flex-shrink: 0;
+  filter: drop-shadow(4px 6px 14px rgba(0,0,0,0.30));
+  transition: transform 0.3s ease;
+}
+
+.stamp-decor:hover {
+  transform: scale(1.03) rotate(1deg);
 }
 
 /* ══════════════════════════════════════════
@@ -300,7 +276,7 @@ header a:hover { color: #c0392b; }
     letter-spacing: 4px;
   }
 
-  .autora-section {
+  .apresentacao-section {
     flex-direction: column;
     align-items: center;
     gap: 24px;
@@ -308,27 +284,12 @@ header a:hover { color: #c0392b; }
     text-align: center;
   }
 
-  .foto-autora {
+  .stamp-decor {
     width: clamp(140px, 55vw, 200px);
   }
 
-  .autora-nome {
-    border-left: none;
-    padding-left: 0;
-    text-align: center;
-  }
-
-  .autora-cargo {
-    padding-left: 0;
-    text-align: center;
-  }
-
-  .autora-bio {
+  .apresentacao-texto p {
     text-align: left;
-  }
-
-  .divisor-bio {
-    margin-top: 18px;
   }
 
   .cards-navegacao {

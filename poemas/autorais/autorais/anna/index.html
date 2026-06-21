@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anna Vitoria — Poemas | Entre Tempos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Caveat:wght@400;600&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../pessoa.css">
+</head>
+<body>
+<header>
+  <a href="../autorais.html">← Voltar para Autorais</a>
+</header>
+
+<section class="pessoa-section">
+  <img src="../../anna.png" alt="Anna Vitoria" class="foto-pessoa">
+  <div class="pessoa-info">
+    <h2 class="pessoa-nome">Anna Vitoria</h2>
+    <p class="pessoa-cargo">poetisa</p>
+    <p class="pessoa-bio">
+      Esta poetisa escreve com toda a alma. Não é famosa, muito menos conhecida,
+      mas ela carrega sonhos de ter uma vida tranquila, de ser conhecida pela sua arte,
+      de publicar um livro com seus sentimentos antigos e atuais.
+    </p>
+    <p class="pessoa-bio">
+      Cada poesia é um sentimento, uma experiência, um momento único da vida dela,
+      e com estas simples poesias ela deseja conquistar o mundo que há dentro de si.
+    </p>
+    <p class="contador-poemas">2 poemas</p>
+  </div>
+</section>
+
+<div class="divisor"></div>
+
+<!-- GRID DE ENVELOPES -->
+<section class="grade-envelopes">
+
+  <button class="envelope" data-alvo="poema-1">
+    <span class="env-numero">I</span>
+    <span class="env-titulo">Um dia qualquer</span>
+    <span class="env-aba"></span>
+  </button>
+
+<!--envelopes-->
+  
+  <button class="envelope" data-alvo="poema-2">
+    <span class="env-numero">II</span>
+    <span class="env-titulo">metamorfose</span>
+    <span class="env-aba"></span>
+  </button>
+
+</section>
+
+<!-- ÁREA DA FOLHA — um único slot onde os poemas aparecem -->
+<div class="area-folha" id="area-folha" aria-live="polite">
+
+  <article class="poema" id="poema-1">
+    <p class="poema-numero">Poema I</p>
+    <h3 class="poema-titulo">Um dia qualquer</h3>
+    <p class="poema-data">escrito em — 2026</p>
+    <div class="poema-texto">
+      <p>
+        Um dia os pássaros<br>
+        vão parar de cantar<br>
+        porque decidiram voar<br>
+        para longe daqui.<br>
+
+      <p>
+        Um dia  o café esfriará<br> 
+        assim como esfriou<br> 
+        semana passada<br>
+        quando ela veio me visitar.<br>
+      </p>
+        Um dia os canos da casa<br> 
+        precisarão ser trocados,<br>
+        assim como quando precisamos trocar<br>
+        nossos amores e paixões.<br>
+      
+      <p>
+        Um dia as pessoas irão<br> 
+        e eu ficarei aqui no sofá de casa<br>
+        aprendendo com minha solitude a ser feliz sozinha.<br>
+      </p>
+      <p>
+      E se um dia, um dia qualquer,<br>
+aquele amor se for,<br>
+vai doer, e como vai!<br>
+e tudo bem, amores vem<br>
+e vão sem previsão alguma de vinda e ida.<br>
+      </p>
+
+
+      <p>
+        Mas se um dia ele se for,<br>
+leve seu tempo pra sarar a dor,<br>
+porque apenas o tempo e você<br>
+poderá fechar essa ferida que a saudade deixou…<br>
+      </p>
+    </div>
+    <p class="poema-assinatura">— Anna Vitoria</p>
+  </article>
+
+
+
+
+
+
+
+
+
+  <article class="poema" id="poema-2">
+    <p class="poema-numero">Poema II</p>
+    <h3 class="poema-titulo">Metamorfose o</h3>
+    <p class="poema-data">escrito em — 2026</p>
+    <div class="poema-texto">
+      <p>
+        Eu não sou eu, você não é você,<br>
+a menos que se encontre nesse abismo<br>
+que há em si, a menos que se jogue<br>
+a custo de se encontrar.<br>
+      </p>
+      <p>
+      Eu não sou eu, ando  carregando um falso nome,<br>
+eu sou um ser indefinido,<br>
+perdido num abismo a procura de um nome<br> 
+para ser chamada, pra chamar de meu. <br>
+      </p>
+
+      <p>
+        Ando buscando um peito,<br>
+um peito perdido, que anda sempre fugindo,<br>
+quero encontrá-lo, dar-lhe um nome,<br>
+o meu falso nome, que enfim se tornará meu nome.<br>
+
+      </p>
+
+      <p>
+        Nessa busca incansável por um nome,<br>
+eu decidi descansar, e percebi<br>
+que uma das minhas mais belas faces<br>
+é a metamorfose, sempre mudar,<br>
+nunca terei um único nome pra você me chamar.<br>
+      </p>
+
+      <p>
+        Eu terei o nome que o tempo<br> 
+decidir me dar, me chamar.<br>
+Até porque quem está sempre mudando<br>
+não tem tempo pra mesmice de um único nome.<br>
+      </p>
+      <p>
+        E então, eu me encontrei,<br>
+e me tornei uma metamorfose sem nome.<br>
+      </p>
+
+    </div>
+    <p class="poema-assinatura">— Anna Vitoria</p>
+  </article>
+
+</div>
+
+<div class="rodape-poemas">
+  <div>entre tempos · revista eletrônica</div>
+  <div class="carimbo">POEMAS</div>
+</div>
+
+<script>
+  const envelopes = document.querySelectorAll('.envelope');
+  const poemas    = document.querySelectorAll('.poema');
+  const areaFolha = document.getElementById('area-folha');
+
+  // Esconde todos os poemas inicialmente
+  poemas.forEach(p => p.classList.remove('visivel'));
+  areaFolha.classList.remove('aberta');
+
+  envelopes.forEach(env => {
+    env.addEventListener('click', () => {
+      const alvoId = env.dataset.alvo;
+      const jaAtivo = env.classList.contains('ativo');
+
+      // Remove estado ativo de todos os envelopes
+      envelopes.forEach(e => e.classList.remove('ativo'));
+
+      if (jaAtivo) {
+        // Fecha se clicar no mesmo envelope
+        poemas.forEach(p => {
+          p.classList.remove('visivel');
+          p.classList.add('saindo');
+          setTimeout(() => p.classList.remove('saindo'), 400);
+        });
+        areaFolha.classList.remove('aberta');
+        return;
+      }
+
+      // Ativa envelope clicado
+      env.classList.add('ativo');
+
+      // Troca o poema com animação
+      const poemaAtivo = document.querySelector('.poema.visivel');
+      const poemaAlvo  = document.getElementById(alvoId);
+
+      if (poemaAtivo && poemaAtivo !== poemaAlvo) {
+        // Guarda o atual e mostra o novo
+        poemaAtivo.classList.remove('visivel');
+        poemaAtivo.classList.add('saindo');
+        setTimeout(() => {
+          poemaAtivo.classList.remove('saindo');
+          poemaAlvo.classList.add('visivel');
+        }, 280);
+      } else {
+        poemaAlvo.classList.add('visivel');
+      }
+
+      areaFolha.classList.add('aberta');
+    });
+  });
+</script>
+</body>
+</html>
