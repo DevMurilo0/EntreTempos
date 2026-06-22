@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Musicas - Entre Tempos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="autorais.css">
+</head>
+<body>
+<header>
+  <a href="../musica.html">← Voltar</a>
+</header>
+
+<div class="page-titulo">
+  <h1>Autorais</h1>
+  <p class="subtitulo">traços que habitam o tempo</p>
+</div>
+<div class="divisor"></div>
+
+<!-- SEÇÃO APRESENTAÇÃO -->
+<section class="autora-section">
+  <img src="../img/mao.png" alt="" class="foto-autora" id="mao-btn" title="clique">
+  <div class="autora-info">
+    <h2 class="autora-nome">Apresentação</h2>
+    <p class="autora-cargo">desenhos autorais</p>
+    <p class="autora-bio">
+      Aqui você encontra os desenhos criados por quem faz parte desta revista.
+      São traços autorais, nascidos de experiências reais, sentimentos guardados
+      e momentos que pediam para ser transformados em imagem.
+    </p>
+    <p class="autora-bio">
+      Cada desenho carrega um pedaço de quem o fez — sonhos, memórias,
+      dores e alegrias colocados em linhas para serem vistos e sentidos por você.
+    </p>
+  </div>
+</section>
+
+<!-- ÁREA DO PINCEL + FLOR — aparece um pouco abaixo de onde o usuário clicar -->
+<div id="pincel-arena" aria-hidden="true">
+  <img src="img/pincel.png" id="pincel-img" alt="">
+  <svg id="flor-svg" viewBox="0 0 220 260" xmlns="http://www.w3.org/2000/svg">
+    <!-- CAULE curvo -->
+    <path id="p0" d="M110 252 Q106 210 110 175 Q113 150 108 120"/>
+    <!-- FOLHA 1 -->
+    <path id="p1" d="M108 195 Q84 186 68 200 Q82 212 108 204"/>
+    <!-- FOLHA 2 -->
+    <path id="p2" d="M110 220 Q132 214 144 226 Q130 235 110 228"/>
+
+    <!-- 8 PÉTALAS ao redor do centro (110,95) -->
+    <path id="p3" d="M110 95 Q102 68 110 38 Q119 68 110 95"/>
+    <path id="p4" d="M110 95 Q134 80 160 86 Q138 104 110 95"/>
+    <path id="p5" d="M110 95 Q136 104 146 130 Q120 124 110 95"/>
+    <path id="p6" d="M110 95 Q120 120 112 148 Q94 128 110 95"/>
+    <path id="p7" d="M110 95 Q94 122 68 122 Q78 98 110 95"/>
+    <path id="p8" d="M110 95 Q82 100 62 82 Q90 78 110 95"/>
+    <path id="p9" d="M110 95 Q86 80 80 54 Q104 64 110 95"/>
+    <path id="p10" d="M110 95 Q120 66 134 54 Q140 78 110 95"/>
+
+    <!-- veias internas leves -->
+    <path id="p11" d="M110 90 Q109 70 110 44"/>
+    <path id="p12" d="M115 92 Q132 86 150 88"/>
+    <path id="p13" d="M113 99 Q124 110 132 124"/>
+    <path id="p14" d="M111 100 Q108 118 105 138"/>
+    <path id="p15" d="M105 99 Q92 110 76 114"/>
+    <path id="p16" d="M104 92 Q88 88 72 84"/>
+    <path id="p17" d="M106 91 Q96 78 90 60"/>
+    <path id="p18" d="M114 90 Q122 74 130 62"/>
+
+    <!-- MIOLO: anel preenchido + pontinhos de textura -->
+    <circle id="p19" cx="110" cy="95" r="16"/>
+    <circle id="pt1" class="miolo-pt" cx="103" cy="89" r="1.6"/>
+    <circle id="pt2" class="miolo-pt" cx="112" cy="86" r="1.6"/>
+    <circle id="pt3" class="miolo-pt" cx="118" cy="92" r="1.6"/>
+    <circle id="pt4" class="miolo-pt" cx="116" cy="100" r="1.6"/>
+    <circle id="pt5" class="miolo-pt" cx="106" cy="101" r="1.6"/>
+    <circle id="pt6" class="miolo-pt" cx="110" cy="94" r="1.8"/>
+  </svg>
+</div>
+
+<div class="divisor"></div>
+
+<section class="fotos-navegacao">
+
+
+  <a href="Humberto/index.html" class="foto-nav foto-nav-2">
+    <img src="img/placeholder-retrato.svg" alt="Ver musicas de Humberto">
+    <span class="foto-nav-nome">Humbertol</span>
+  </a>
+
+
+</section>
+
+<div class="rodape-desenhos">
+  <div>entre tempos · revista eletrônica</div>
+  <div class="carimbo">DESENHOS</div>
+</div>
+
+<!-- ── ESTILOS DO PINCEL ── -->
+<style>
+  #mao-btn {
+    cursor: pointer;
+    transition: filter 0.2s, transform 0.2s;
+  }
+  #mao-btn:hover {
+    filter: drop-shadow(0 0 8px rgba(139,46,46,0.5)) sepia(15%);
+    transform: rotate(0deg) scale(1.04);
+  }
+
+  /* body precisa ser o container de referência para a arena absolute cobrir
+     toda a altura real da página (incluindo o que está fora da viewport) */
+  body { position: relative; }
+
+  /* Arena: overlay absoluto cobrindo toda a altura do documento (não da viewport),
+     assim a flor desenhada acompanha o scroll da página normalmente, ficando
+     "colada" no ponto exato onde o usuário clicou. */
+  #pincel-arena {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 999;
+    transition: opacity 0.4s ease;
+  }
+
+  #pincel-img {
+    position: absolute;
+    width: 220px;
+    top: 0;
+    left: 0;
+    transform: translate(-12%, -88%) scaleY(-1) rotate(40deg);
+    transform-origin: 20% 90%;
+    filter: drop-shadow(3px 4px 8px rgba(0,0,0,0.3));
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  #flor-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 236px;
+    /* desloca a flor para baixo e a centraliza horizontalmente no ponto de
+       clique, evitando que ela fique colada/sobreposta à imagem da mão */
+    transform: translate(-50%, 40%);
+    overflow: visible;
+  }
+
+  #flor-svg path,
+  #flor-svg circle {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 600;
+    stroke-dashoffset: 600;
+  }
+
+  /* caule e folhas — verde */
+  #p0, #p1, #p2 { stroke: #3a7a2a; stroke-width: 5; }
+
+  /* pétalas — vermelho */
+  #p3, #p4, #p5, #p6, #p7, #p8, #p9, #p10 { stroke: #a8281f; stroke-width: 4.5; }
+
+  /* veias internas — vermelho mais claro/translúcido */
+  #p11, #p12, #p13, #p14, #p15, #p16, #p17, #p18 {
+    stroke: #a8281f;
+    stroke-width: 2;
+    stroke-opacity: 0.55;
+  }
+
+  /* miolo — anel dourado preenchido */
+  #p19 {
+    stroke: #b9781f;
+    stroke-width: 3.5;
+    fill: #f3c64b;
+    fill-opacity: 0;
+    transition: fill-opacity 0.4s ease;
+  }
+
+  /* pontinhos de textura do miolo — aparecem junto com o preenchimento */
+  .miolo-pt {
+    fill: #8a5a14;
+    stroke: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+</style>
+
+<!-- ── SCRIPT DO PINCEL ── -->
+<script>
+(function () {
+  const mao    = document.getElementById('mao-btn');
+  const arena  = document.getElementById('pincel-arena');
+  const pincel = document.getElementById('pincel-img');
+  const svg    = document.getElementById('flor-svg');
+  const miolo  = document.getElementById('p19');
+  const pontinhos = Array.from(svg.querySelectorAll('.miolo-pt'));
+  const paths  = Array.from(svg.querySelectorAll('path, circle:not(.miolo-pt)'));
+  let ocupado  = false;
+
+  // Ajusta dasharray de cada path/circle ao seu comprimento real
+  function getLen(p) {
+    return p.getTotalLength();
+  }
+  paths.forEach(p => {
+    const len = getLen(p);
+    p.style.strokeDasharray  = len;
+    p.style.strokeDashoffset = len;
+  });
+
+  mao.addEventListener('click', (ev) => {
+    if (ocupado) return;
+    ocupado = true;
+
+    // Posição do clique relativa ao DOCUMENTO (não à viewport), pois a arena
+    // é absolute dentro do body — assim a flor acompanha o scroll normalmente.
+    const clickX = ev.pageX;
+    const clickY = ev.pageY;
+
+    // Posiciona o SVG da flor exatamente no ponto clicado
+    svg.style.left = clickX + 'px';
+    svg.style.top  = clickY + 'px';
+
+    // Reseta o desenho
+    paths.forEach(p => {
+      const len = getLen(p);
+      p.style.transition = 'none';
+      p.style.opacity = '1';
+      p.style.strokeDashoffset = len;
+    });
+    miolo.style.transition = 'none';
+    miolo.style.fillOpacity = '0';
+    pontinhos.forEach(pt => {
+      pt.style.transition = 'none';
+      pt.style.opacity = '0';
+    });
+
+    // Mostra a arena (overlay full-screen, transparente a cliques)
+    arena.style.opacity = '1';
+
+    // Pincel aparece já no ponto do clique
+    pincel.style.transition = 'none';
+    pincel.style.opacity = '1';
+    pincel.style.left = clickX + 'px';
+    pincel.style.top  = clickY + 'px';
+
+    // pequeno delay para garantir que o reset acima já foi aplicado
+    requestAnimationFrame(() => {
+      let tempoAcumulado = 0;
+      const temposCadaPath = [];
+
+      paths.forEach((path, i) => {
+        const len = getLen(path);
+        const midPoint = path.getPointAtLength ? path.getPointAtLength(len * 0.5) : { x: 110, y: 95 };
+
+        // veias internas (índices 8 a 15) são mais finas e rápidas de "pintar"
+        const ehVeia = i >= 8 && i <= 15;
+        const duracaoPorPath = ehVeia ? 110 : 200;
+        const inicioEsteTraco = tempoAcumulado;
+        temposCadaPath.push(duracaoPorPath);
+        tempoAcumulado += duracaoPorPath;
+
+        setTimeout(() => {
+          // svg.getBoundingClientRect() retorna coordenadas de VIEWPORT, mas o
+          // pincel é posicionado em coordenadas de DOCUMENTO (absolute), então
+          // somamos o scroll atual para converter.
+          const svgRect = svg.getBoundingClientRect();
+          const vbW = 220, vbH = 260;
+          const scaleX = svgRect.width  / vbW;
+          const scaleY = svgRect.height / vbH;
+
+          const px = svgRect.left + window.scrollX + midPoint.x * scaleX;
+          const py = svgRect.top  + window.scrollY + midPoint.y * scaleY - 50;
+
+          pincel.style.transition = `left ${duracaoPorPath}ms ease, top ${duracaoPorPath}ms ease`;
+          pincel.style.left = px + 'px';
+          pincel.style.top  = py + 'px';
+          pincel.style.transform = 'translate(60%, -120%) scaleY(-1) rotate(' + (300 + Math.sin(i) * 20) + 'deg)';
+
+          // Desenha o traço
+          path.style.transition       = `stroke-dashoffset ${duracaoPorPath}ms ease`;
+          path.style.strokeDashoffset = '0';
+
+          // Quando chega no miolo, preenche e revela os pontinhos de textura
+          if (path === miolo) {
+            miolo.style.transition = 'fill-opacity 0.4s ease';
+            miolo.style.fillOpacity = '0.55';
+            pontinhos.forEach(ponto => {
+              ponto.style.transition = 'opacity 0.3s ease';
+              ponto.style.opacity = '1';
+            });
+          }
+
+        }, inicioEsteTraco);
+      });
+
+      const totalTempo = tempoAcumulado + 400;
+
+      // Pincel some
+      setTimeout(() => {
+        pincel.style.transition = 'opacity 0.6s, transform 0.6s';
+        pincel.style.opacity    = '0';
+        pincel.style.transform  = 'translate(-12%, -88%) scaleY(-1) rotate(80deg) scale(0.5)';
+      }, totalTempo);
+
+      // A flor fica desenhada na tela — libera novo clique
+      setTimeout(() => {
+        ocupado = false;
+      }, totalTempo + 200);
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,5 +1,5 @@
 /* =============================================
-   DESENHOS.CSS — Entre Tempos · Página de Desenhos
+   AUTORAIS.CSS — Entre Tempos · Página de Desenhos Autorais
    ============================================= */
 
 * {
@@ -9,7 +9,6 @@
 }
 
 body {
-  position: relative;
   background: #f2e8d5;
   font-family: 'Special Elite', serif;
   min-height: 100vh;
@@ -24,57 +23,6 @@ body::before {
   opacity: 0.4;
   pointer-events: none;
   z-index: 0;
-}
-
-/* ── IMAGENS DECORATIVAS (mão, olho, paleta, pote) ──
-   Espalhadas pela página, acompanhando o conteúdo ao rolar
-   (position: absolute, relativo ao body — não fixed). */
-.deco-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.img-deco {
-  position: absolute;
-  filter: drop-shadow(3px 4px 10px rgba(0,0,0,0.3)) sepia(10%);
-  opacity: 0.9;
-}
-
-/* olho — espiando perto do título, lado direito */
-.img-deco-olho {
-  top: 4%;
-  right: -40px;
-  width: 130px;
-  transform: rotate(-8deg);
-}
-
-/* paleta — perto da seção de apresentação, lado esquerdo */
-.img-deco-paleta {
-  top: 26%;
-  left: -50px;
-  width: 170px;
-  transform: rotate(10deg);
-}
-
-/* mão — entre a apresentação e os cards, lado direito */
-.img-deco-mao {
-  top: 58%;
-  right: -30px;
-  width: 190px;
-  transform: rotate(-6deg);
-}
-
-/* pote — perto do rodapé, lado esquerdo */
-.img-deco-pote {
-  bottom: 4%;
-  left: -25px;
-  width: 120px;
-  transform: rotate(7deg);
 }
 
 /* ── HEADER ── */
@@ -134,7 +82,7 @@ header a:hover { color: #c0392b; }
 }
 
 /* ── SEÇÃO APRESENTAÇÃO ── */
-.apresentacao-section {
+.autora-section {
   position: relative;
   z-index: 5;
   display: flex;
@@ -145,7 +93,7 @@ header a:hover { color: #c0392b; }
   padding: 0 40px;
 }
 
-.foto-apresentacao {
+.foto-autora {
   width: clamp(160px, 22vw, 260px);
   height: auto;
   flex-shrink: 0;
@@ -154,18 +102,18 @@ header a:hover { color: #c0392b; }
   transition: transform 0.3s ease;
 }
 
-.foto-apresentacao:hover {
+.foto-autora:hover {
   transform: rotate(0deg) scale(1.02);
 }
 
-.apresentacao-info {
+.autora-info {
   display: flex;
   flex-direction: column;
   gap: 10px;
   padding-top: 10px;
 }
 
-.apresentacao-titulo {
+.autora-nome {
   font-family: 'Bebas Neue', sans-serif;
   font-size: clamp(36px, 5vw, 58px);
   color: #1a1a1a;
@@ -175,7 +123,7 @@ header a:hover { color: #c0392b; }
   padding-left: 16px;
 }
 
-.apresentacao-cargo {
+.autora-cargo {
   font-family: 'Special Elite', serif;
   font-size: 14px;
   color: #8c3b3b;
@@ -185,7 +133,7 @@ header a:hover { color: #c0392b; }
   font-style: italic;
 }
 
-.apresentacao-texto {
+.autora-bio {
   font-family: 'IM Fell English', serif;
   font-size: clamp(15px, 1.6vw, 18px);
   color: #3e3228;
@@ -194,56 +142,60 @@ header a:hover { color: #c0392b; }
   margin-top: 6px;
 }
 
-.apresentacao-texto strong {
-  color: #8c3b3b;
-  font-style: italic;
-}
-
 /* ══════════════════════════════════════════
-   CARDS — layout escalonado (igual ao poemas)
+   FOTOS DE NAVEGAÇÃO — uma foto por autor,
+   cada uma clicável, levando à página dele.
+   O layout cresce automaticamente conforme
+   mais autores são adicionados.
    ══════════════════════════════════════════ */
 
-.cards-navegacao {
+.fotos-navegacao {
   position: relative;
   z-index: 5;
-  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
   max-width: 900px;
   margin: 0 auto;
-  height: clamp(420px, 60vw, 580px);
-  padding: 0 40px;
   margin-bottom: 80px;
+  padding: 0 40px;
 }
 
-.card-img {
-  position: absolute;
+.foto-nav {
   display: block;
   text-decoration: none;
   cursor: pointer;
+  width: clamp(180px, 24vw, 260px);
 }
 
-.card-img img {
-  width: clamp(200px, 28vw, 300px);
+.foto-nav img {
+  width: 100%;
   height: auto;
   display: block;
+  object-fit: contain;
+  background: transparent;
+  filter: drop-shadow(4px 6px 14px rgba(0,0,0,0.35)) sepia(15%);
   transition: transform 0.35s ease;
 }
 
-.card-img:hover img {
-  transform: scale(1.04) rotate(-1deg);
+.foto-nav:hover img {
+  transform: scale(1.03) rotate(-1deg);
 }
 
-.card-img:active img {
+.foto-nav:active img {
   transform: scale(0.97);
 }
 
-.card-esquerda {
-  top: 40px;
-  left: 40px;
-}
-
-.card-direita {
-  top: 40px;
-  right: 40px;
+.foto-nav-nome {
+  display: block;
+  text-align: center;
+  margin-top: 12px;
+  font-family: 'Special Elite', serif;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  color: #3e3228;
 }
 
 /* ── RODAPÉ ── */
@@ -280,7 +232,7 @@ header a:hover { color: #c0392b; }
     letter-spacing: 4px;
   }
 
-  .apresentacao-section {
+  .autora-section {
     flex-direction: column;
     align-items: center;
     gap: 24px;
@@ -288,70 +240,33 @@ header a:hover { color: #c0392b; }
     text-align: center;
   }
 
-  .foto-apresentacao {
+  .foto-autora {
     width: clamp(140px, 55vw, 200px);
   }
 
-  .apresentacao-titulo {
+  .autora-nome {
     border-left: none;
     padding-left: 0;
     text-align: center;
   }
 
-  .apresentacao-cargo {
+  .autora-cargo {
     padding-left: 0;
     text-align: center;
   }
 
-  .apresentacao-texto {
+  .autora-bio {
     text-align: left;
   }
 
-  .cards-navegacao {
-    height: clamp(400px, 140vw, 520px);
-    padding: 0 16px;
+  .fotos-navegacao {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 0 20px;
   }
 
-  .card-img img {
-    width: clamp(160px, 55vw, 230px);
-  }
-
-  .card-esquerda {
-    top: 20px;
-    left: 10px;
-  }
-
-  .card-direita {
-    right: 10px;
-    top: 20px;
-  }
-
-  /* ── IMAGENS DECORATIVAS NO MOBILE ──
-     Continuam position: absolute (rolam com a página, igual
-     ao desktop) — só tamanho e posição são ajustados para
-     caber em telas pequenas. */
-
-  .img-deco-olho {
-    top: 2%;
-    right: -28px;
-    width: 80px;
-  }
-
-  .img-deco-paleta {
-    top: 22%;
-    left: -30px;
-    width: 95px;
-  }
-
-  .img-deco-mao {
-    top: 62%;
-    right: -18px;
-    width: 110px;
-  }
-
-  .img-deco-pote {
-    bottom: 3%;
-    left: -15px;
-    width: 75px;
+  .foto-nav {
+    width: clamp(150px, 60vw, 220px);
   }
 }

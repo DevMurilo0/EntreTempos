@@ -1,0 +1,276 @@
+/* =============================================================
+   LEITURA.CSS — Entre Tempos · Página de leitura de UMA música
+   =============================================================
+
+   COMO FUNCIONA ESTA PÁGINA:
+
+   1) CABEÇALHO DE ABERTURA (.musica-abertura)
+      Foto/imagem da pessoa ou da música do lado esquerdo,
+      e do lado direito o nome/título + um resumo introdutório.
+
+   2) CORPO DO TEXTO (.musica-corpo)
+      Uma sequência de blocos que você pode repetir e reordenar
+      livremente: blocos de IMAGEM/VÍDEO (.bloco-midia) e blocos
+      de TEXTO (.bloco-texto), indo um depois do outro, como num
+      artigo de revista.
+
+   Tudo que você precisa editar está comentado dentro do arquivo
+   HTML (leitura-exemplo.html). Este CSS só cuida da aparência —
+   normalmente você não precisa tocar aqui, a menos que queira
+   mudar cores, espaçamentos ou tamanhos.
+   ============================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Bebas+Neue&family=Special+Elite&family=Dancing+Script:wght@400;600&family=IM+Fell+English:ital@0;1&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #f2e8d5;
+  font-family: 'Special Elite', serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url('https://www.transparenttextures.com/patterns/aged-paper.png');
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── HEADER / "<- sair" ── */
+header {
+  position: relative;
+  z-index: 10;
+  padding: 18px 30px;
+  border-bottom: 2px solid #c4a96b;
+}
+
+header a {
+  text-decoration: none;
+  color: #3e4a59;
+  font-weight: bold;
+  font-family: 'Special Elite', serif;
+  font-size: 14px;
+  letter-spacing: 1px;
+  transition: color 0.2s;
+}
+header a:hover { color: #c0392b; }
+
+/* ══════════════════════════════════════════
+   ABERTURA — imagem + nome/título + resumo
+   ══════════════════════════════════════════ */
+
+.musica-abertura {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: flex-start;
+  gap: 50px;
+  max-width: 900px;
+  margin: 40px auto 0;
+  padding: 0 40px;
+}
+
+.foto-musica {
+  width: clamp(160px, 22vw, 260px);
+  height: auto;
+  flex-shrink: 0;
+  filter: drop-shadow(4px 6px 14px rgba(0,0,0,0.35)) sepia(15%);
+  transform: rotate(-2deg);
+  transition: transform 0.3s ease;
+}
+.foto-musica:hover { transform: rotate(0deg) scale(1.02); }
+
+/* placeholder enquanto a imagem real não é adicionada
+   (mesmo padrão usado nos cards das listas) */
+.foto-musica.vazio {
+  width: clamp(160px, 22vw, 260px);
+  aspect-ratio: 3 / 4;
+  background: #e8dcc0;
+  border: 2px dashed #c4a96b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  text-align: center;
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: #8c7c5e;
+  padding: 0 16px;
+}
+
+.musica-abertura-info {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 6px;
+}
+
+.musica-abertura-titulo {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: clamp(28px, 4vw, 44px);
+  color: #1a1a1a;
+  line-height: 1.15;
+}
+
+.musica-abertura-resumo {
+  font-family: 'IM Fell English', serif;
+  font-size: clamp(15px, 1.6vw, 18px);
+  color: #3e3228;
+  line-height: 1.85;
+  text-align: justify;
+}
+
+/* ── DIVISOR ── */
+.divisor {
+  position: relative;
+  z-index: 5;
+  width: 80%;
+  margin: 36px auto;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #c0392b, #c4a96b, #c0392b, transparent);
+}
+
+/* ══════════════════════════════════════════
+   CORPO DO TEXTO — blocos de mídia e de texto,
+   intercalados na ordem em que aparecem no HTML
+   ══════════════════════════════════════════ */
+
+.musica-corpo {
+  position: relative;
+  z-index: 5;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 40px 100px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* bloco de imagem ou vídeo */
+.bloco-midia {
+  width: 100%;
+}
+
+.bloco-midia img,
+.bloco-midia video,
+.bloco-midia iframe {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 6px solid #fff;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.28);
+}
+
+/* iframe (ex.: vídeo do YouTube) precisa de proporção fixa */
+.bloco-midia.video-embed {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* proporção 16:9 */
+}
+.bloco-midia.video-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 6px solid #fff;
+}
+
+/* placeholder enquanto a mídia real não é adicionada */
+.bloco-midia .midia-vazia {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #e8dcc0;
+  border: 2px dashed #c4a96b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 16px;
+  color: #8c7c5e;
+}
+
+.bloco-midia .legenda-midia {
+  margin-top: 10px;
+  text-align: center;
+  font-family: 'Dancing Script', cursive;
+  font-size: 16px;
+  color: #7a6a50;
+}
+
+/* bloco de texto */
+.bloco-texto p {
+  font-family: 'IM Fell English', serif;
+  font-size: clamp(15px, 1.6vw, 18px);
+  color: #3e3228;
+  line-height: 1.9;
+  text-align: justify;
+  margin-bottom: 16px;
+}
+
+.bloco-texto p:last-child { margin-bottom: 0; }
+
+.bloco-texto strong {
+  color: #8c3b3b;
+  font-style: italic;
+}
+
+/* ── RODAPÉ ── */
+.rodape-musica {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  padding: 20px;
+  font-family: 'Special Elite', serif;
+  font-size: 12px;
+  color: #b0a090;
+  letter-spacing: 2px;
+  border-top: 1px solid #c4a96b;
+}
+
+.carimbo {
+  display: inline-block;
+  border: 3px solid #c0392b;
+  color: #c0392b;
+  padding: 4px 14px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 3px;
+  transform: rotate(-3deg);
+  opacity: 0.6;
+  margin-top: 10px;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 600px) {
+  .musica-abertura {
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    padding: 0 20px;
+    text-align: center;
+  }
+
+  .foto-musica,
+  .foto-musica.vazio {
+    width: clamp(150px, 55vw, 200px);
+  }
+
+  .musica-abertura-titulo,
+  .musica-abertura-resumo {
+    text-align: left;
+  }
+
+  .musica-corpo {
+    padding: 0 18px 80px;
+    gap: 24px;
+  }
+}
