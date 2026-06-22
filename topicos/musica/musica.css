@@ -1,5 +1,5 @@
 /* =============================================
-   DESENHOS.CSS — Entre Tempos · Página de Desenhos
+   MUSICA.CSS — Entre Tempos · Página de Músicas
    ============================================= */
 
 * {
@@ -247,7 +247,7 @@ header a:hover { color: #c0392b; }
 }
 
 /* ── RODAPÉ ── */
-.rodape-desenhos {
+.rodape-musicas {
   position: relative;
   z-index: 5;
   text-align: center;
