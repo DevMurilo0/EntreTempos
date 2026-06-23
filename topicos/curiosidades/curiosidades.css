@@ -94,7 +94,7 @@ header a:hover { color: #c0392b; }
 }
 
 .foto-apresentacao {
-  width: clamp(160px, 22vw, 260px);
+  width: clamp(340px, 22vw, 260px);
   height: auto;
   flex-shrink: 0;
   filter: drop-shadow(4px 6px 14px rgba(0,0,0,0.35)) sepia(15%);
