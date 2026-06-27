@@ -216,7 +216,7 @@ header a:hover { color: #c0392b; }
 .decor-flor {
   top: -6px;
   right: 6%;
-  width: clamp(60px, 8vw, 110px);
+  width: clamp(200px, 8vw, 110px);
   transform: rotate(9deg);
   opacity: 0.95;
 }
@@ -224,8 +224,8 @@ header a:hover { color: #c0392b; }
 /* coisa — rabisco espiando por cima do primeiro divisor */
 .decor-coisa {
   top: -34px;
-  left: 2%;
-  width: clamp(60px, 7vw, 95px);
+  left: -20%;
+  width: clamp(200px, 7vw, 95px);
   transform: rotate(-14deg);
   opacity: 1.0;
 }
@@ -234,7 +234,7 @@ header a:hover { color: #c0392b; }
 .decor-zoio {
   top: -34px;
   right: -10px;
-  width: clamp(70px, 8vw, 120px);
+  width: clamp(200px, 8vw, 120px);
   transform: rotate(7deg);
   opacity: 0.85;
 }
@@ -242,21 +242,21 @@ header a:hover { color: #c0392b; }
 /* olhar — pequeno, ao lado do card "Poemas Autorais" */
 .decor-olhar {
   top: 68px;
-  left: 350px;
-  width: clamp(80px, 11vw, 130px);
+  left: 550px;
+  width: clamp(200px, 11vw, 130px);
   opacity: 0.85;
-  transform: rotate(-3deg);
+  transform: rotate(30deg);
   filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.2));
 }
 
 /* menino — figura grande no canto vazio, embaixo dos cards */
 .decor-menino {
   bottom: 10px;
-  left: 20px;
-  width: clamp(140px, 20vw, 220px);
+  left: -220px;
+  width: clamp(340px, 20vw, 220px);
   opacity: 0.5;
   filter: sepia(25%);
-  transform: rotate(2deg);
+  transform: rotate(-20deg);
 }
 
 /* livro — junto à bio, perto do trecho sobre o sonho de publicar */

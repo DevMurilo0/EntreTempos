@@ -7,6 +7,124 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Caveat:wght@400;600&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../pessoa.css">
+  <style>
+    /* ══════════════════════════════════════════
+       FRAGMENTOS DECORATIVOS — recortes espalhados
+       (mesmo padrão .decor usado em poemas.html / conhecidos.html)
+       ══════════════════════════════════════════ */
+    .decor {
+      position: absolute;
+      z-index: 3;
+      pointer-events: none;
+      user-select: none;
+      height: auto;
+      display: block;
+      max-width: none;
+    }
+
+    .decor-relogio {
+      top: -38px;
+      left: 2%;
+      width: clamp(170px, 6.5vw, 80px);
+      transform: rotate(-9deg);
+      opacity: 0.9;
+      filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.2));
+    }
+
+    .decor-coracao-flores {
+      top: -60px;
+      right: -15%;
+      width: clamp(150px, 6.5vw, 76px);
+      transform: rotate(7deg)
+    }
+
+    .decor-girassol {
+      bottom: -20px;
+      left: -160px;
+      width: clamp(200px, 6vw, 75px);
+      transform: rotate(-8deg);
+      opacity: 0.9;
+    }
+
+    .decor-lupa {
+      bottom: -30px;
+      right: 4%;
+      width: clamp(48px, 6vw, 78px);
+      transform: rotate(-10deg);
+      opacity: 0.85;
+      filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.2));
+    }
+
+    .decor-coracao-loveable {
+      top: 60px;
+      left: -32px;
+      width: clamp(48px, 6.5vw, 76px);
+      transform: rotate(5deg);
+      opacity: 0.9;
+    }
+
+    .decor-sapo {
+      top: -100px;
+      right: -24px;
+      width: clamp(205px, 7vw, 85px);
+      transform: rotate(7deg);
+      opacity: 0.9;
+    }
+
+    .decor-vaso {
+      top: -52px;
+      left: 4%;
+      width: clamp(48px, 6.2vw, 72px);
+      transform: rotate(-6deg);
+      opacity: 0.9;
+    }
+
+    .decor-mascara {
+      top: -30px;
+      left: 40%;
+      width: clamp(55px, 7vw, 88px);
+      transform: rotate(-5deg);
+      opacity: 0.85;
+    }
+
+    .decor-cartas {
+      top: -16px;
+      left: -50%;
+      width: clamp(400px, 7vw, 88px);
+      transform: rotate(-80deg);
+      opacity: 0.85;
+    }
+
+    .decor-gato {
+      bottom: -70px;
+      right: 2%;
+      width: clamp(42px, 5.5vw, 64px);
+      transform: rotate(5deg);
+      opacity: 0.9;
+    }
+
+    .pessoa-section,
+    .divisor,
+    .grade-envelopes,
+    .area-folha,
+    .rodape-poemas {
+      position: relative;
+    }
+
+    /* ── MOBILE: simplifica para não poluir telas pequenas ── */
+    @media (max-width: 600px) {
+      .decor-relogio   { width: clamp(34px, 12vw, 50px); top: -20px; left: 2%; }
+      .decor-coracao-flores { width: clamp(36px, 13vw, 52px); top: -14px; right: 4%; }
+      .decor-girassol  { display: none; }
+      .decor-lupa      { display: none; }
+      .decor-coracao-loveable { width: clamp(36px, 13vw, 52px); top: 30px; left: -10px; }
+      .decor-sapo      { width: clamp(40px, 14vw, 58px); top: -10px; right: -10px; }
+      .decor-vaso      { width: clamp(32px, 11vw, 46px); top: -30px; left: 2%; }
+      .decor-mascara   { width: clamp(34px, 12vw, 48px); top: -16px; left: 34%; }
+      .decor-cartas    { display: none; }
+      .decor-gato      { display: none; }
+    }
+  </style>
 </head>
 <body>
 <header>
@@ -14,6 +132,8 @@
 </header>
 
 <section class="pessoa-section">
+  <img src="../img-decor/relogio-bolso.png" alt="" class="decor decor-relogio">
+  <img src="../img-decor/coracao-loveable.png" alt="" class="decor decor-coracao-loveable">
   <img src="mario.png" alt="Mário Quintana" class="foto-pessoa">
   <div class="pessoa-info">
     <h2 class="pessoa-nome">Mário Quintana</h2>
@@ -32,12 +152,21 @@
     </p>
     <p class="contador-poemas">2 poemas</p>
   </div>
+  <img src="../img-decor/coracao-flores.png" alt="" class="decor decor-coracao-flores">
+  <img src="../img-decor/girassol.png" alt="" class="decor decor-girassol">
+  <img src="../img-decor/lupa.png" alt="" class="decor decor-lupa">
 </section>
 
-<div class="divisor"></div>
+<div class="divisor">
+  <img src="../img-decor/sapo-mago.png" alt="" class="decor decor-sapo">
+</div>
 
 <!-- GRID DE ENVELOPES -->
 <section class="grade-envelopes">
+  <img src="../img-decor/vaso-rosas.png" alt="" class="decor decor-vaso">
+  <img src="../img-decor/mascara-teatro.png" alt="" class="decor decor-mascara">
+  <img src="../img-decor/cartas-baralho.png" alt="" class="decor decor-cartas">
+  <img src="../img-decor/gato-banjo.png" alt="" class="decor decor-gato">
 
   <button class="envelope" data-alvo="poema-1">
     <span class="env-numero">I</span>
