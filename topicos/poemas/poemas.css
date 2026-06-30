@@ -8,6 +8,19 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative; /* garante que os absolutos sejam contidos aqui */
+}
+
+
+
 body {
   background: #f2e8d5;
   font-family: 'Special Elite', serif;
