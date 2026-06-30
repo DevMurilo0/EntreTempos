@@ -396,7 +396,7 @@ header a:hover { color: #c0392b; }
   /* pena-mao — encolhida, encostada na borda esquerda, abaixo do divisor, fora da área de texto */
   .img-deco-02 {
     top: 17%;
-    right: 64px;
+    right: 24px;
     width: 90px;
     opacity: 0.7;
   }
