@@ -94,6 +94,7 @@ header a:hover { color: #c0392b; }
   max-width: 1100px;
   margin: 0 auto;
   padding: 20px 30px 120px;
+  overflow-x: hidden;
 }
 
 /* ── IMAGENS DECORATIVAS DESKTOP ── */
