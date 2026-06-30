@@ -2,6 +2,20 @@
    AUTORAIS.CSS — Entre Tempos · Página de Poemas Autorais
    ============================================= */
 
+
+html {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative; /* garante que os absolutos sejam contidos aqui */
+}
+
+
+
 * {
   margin: 0;
   padding: 0;
