@@ -2,6 +2,18 @@
    LIVROS.CSS — Entre Tempos · Página de Livros
    ============================================= */
 
+
+html {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative; /* garante que os absolutos sejam contidos aqui */
+}
+
 * {
   margin: 0;
   padding: 0;
