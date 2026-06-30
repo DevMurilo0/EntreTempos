@@ -264,7 +264,7 @@ header a:hover { color: #c0392b; }
 /* pena-mao — esquerda, altura da seção de apresentação */
 .img-deco-02 {
   top: 26%;
-  left: -40px;
+  right: 40px;
   width: 190px;
   transform: rotate(-8deg);
   opacity: 0.95;
