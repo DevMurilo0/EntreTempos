@@ -1,106 +1,114 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Anna — Desenhos | Entre Tempos</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Caveat:wght@400;600&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Caveat:wght@400;600&family=Dancing+Script:wght@400;600&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="../pessoa.css">
 </head>
+
 <body>
-<header>
-  <a href="../autorais.html">← Voltar para Autorais</a>
-</header>
+  <header>
+    <a href="../autorais.html">← Voltar para Autorais</a>
+  </header>
 
-<section class="pessoa-section">
-  <img src="../img/placeholder-retrato.svg" alt="Anna" class="foto-pessoa">
-  <div class="pessoa-info">
-    <h2 class="pessoa-nome">Anna</h2>
-    <p class="pessoa-cargo">artista</p>
-    <p class="pessoa-bio">Esta artista desenha com toda a alma. Não é famosa, muito menos conhecida, mas ela carrega sonhos de ter uma vida tranquila, de ser conhecida pela sua arte, de expor seus traços com seus sentimentos antigos e atuais.</p>
-    <p class="pessoa-bio">Cada desenho é um sentimento, uma experiência, um momento único da vida dela, e com estes simples traços ela deseja conquistar o mundo que há dentro de si.</p>
-    <p class="contador-desenhos">3 desenhos</p>
-  </div>
-</section>
+  <section class="pessoa-section">
+    <img src="anna.png" alt="Anna" class="foto-pessoa">
+    <div class="pessoa-info">
+      <h2 class="pessoa-nome">Anna</h2>
+      <p class="pessoa-cargo">artista</p>
+      <p class="pessoa-bio">Esta artista desenha com toda a alma. Não é famosa, muito menos conhecida, mas ela carrega
+        sonhos de ter uma vida tranquila, de ser conhecida pela sua arte, de expor seus traços com seus sentimentos
+        antigos e atuais.</p>
+      <p class="pessoa-bio">Cada desenho é um sentimento, uma experiência, um momento único da vida dela, e com estes
+        simples traços ela deseja conquistar o mundo que há dentro de si.</p>
+      <p class="contador-desenhos">3 desenhos</p>
+    </div>
+  </section>
 
-<div class="divisor"></div>
+  <div class="divisor"></div>
 
-<!-- GALERIA — adicione mais .card-desenho conforme necessário.
+  <!-- GALERIA — adicione mais .card-desenho conforme necessário.
      Para inserir imagem: troque <span>desenho em breve</span> por
      <img src="../img/nome.png" alt="título"> e remova a classe "vazio" do .quadro -->
-<section class="galeria">
+  <section class="galeria">
 
-  <div class="card-desenho" data-titulo="Desenho I" data-img="">
-    <div class="quadro vazio">
-      <span>desenho em breve</span>
+    <div class="card-desenho" data-titulo="Desenho I" data-img="">
+      <div class="quadro vazio">
+        <span>desenho em breve</span>
+      </div>
+      <p class="card-titulo">desenho 1</p>
+      <p class="card-num">I</p>
     </div>
-    <p class="card-titulo">desenho 1</p>
-    <p class="card-num">I</p>
-  </div>
 
-  <div class="card-desenho" data-titulo="Desenho II" data-img="">
-    <div class="quadro vazio">
-      <span>desenho em breve</span>
+    <div class="card-desenho" data-titulo="Desenho II" data-img="">
+      <div class="quadro vazio">
+        <span>desenho em breve</span>
+      </div>
+      <p class="card-titulo">desenho 2</p>
+      <p class="card-num">II</p>
     </div>
-    <p class="card-titulo">desenho 2</p>
-    <p class="card-num">II</p>
-  </div>
 
-  <div class="card-desenho" data-titulo="Desenho III" data-img="">
-    <div class="quadro vazio">
-      <span>desenho em breve</span>
+    <div class="card-desenho" data-titulo="Desenho III" data-img="">
+      <div class="quadro vazio">
+        <span>desenho em breve</span>
+      </div>
+      <p class="card-titulo">desenho 3</p>
+      <p class="card-num">III</p>
     </div>
-    <p class="card-titulo">desenho 3</p>
-    <p class="card-num">III</p>
+
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+    <div class="lightbox-inner">
+      <button class="lightbox-fechar" id="lb-fechar" aria-label="Fechar">✕</button>
+      <img src="" alt="" id="lb-img">
+      <p class="lightbox-legenda" id="lb-legenda"></p>
+    </div>
   </div>
 
-</section>
-
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
-  <div class="lightbox-inner">
-    <button class="lightbox-fechar" id="lb-fechar" aria-label="Fechar">✕</button>
-    <img src="" alt="" id="lb-img">
-    <p class="lightbox-legenda" id="lb-legenda"></p>
+  <div class="rodape-desenhos">
+    <div>entre tempos · revista eletrônica</div>
+    <div class="carimbo">DESENHOS</div>
   </div>
-</div>
 
-<div class="rodape-desenhos">
-  <div>entre tempos · revista eletrônica</div>
-  <div class="carimbo">DESENHOS</div>
-</div>
+  <script>
+    const cards = document.querySelectorAll('.card-desenho');
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lb-img');
+    const lbLeg = document.getElementById('lb-legenda');
+    const lbFechar = document.getElementById('lb-fechar');
 
-<script>
-  const cards    = document.querySelectorAll('.card-desenho');
-  const lightbox = document.getElementById('lightbox');
-  const lbImg    = document.getElementById('lb-img');
-  const lbLeg    = document.getElementById('lb-legenda');
-  const lbFechar = document.getElementById('lb-fechar');
-
-  cards.forEach(card => {
-    card.addEventListener('click', () => {
-      const src    = card.dataset.img;
-      const titulo = card.dataset.titulo;
-      // Só abre lightbox se houver imagem
-      if (!src) return;
-      lbImg.src = src;
-      lbImg.alt = titulo;
-      lbLeg.textContent = titulo;
-      lightbox.classList.add('ativo');
-      document.body.style.overflow = 'hidden';
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const src = card.dataset.img;
+        const titulo = card.dataset.titulo;
+        // Só abre lightbox se houver imagem
+        if (!src) return;
+        lbImg.src = src;
+        lbImg.alt = titulo;
+        lbLeg.textContent = titulo;
+        lightbox.classList.add('ativo');
+        document.body.style.overflow = 'hidden';
+      });
     });
-  });
 
-  function fecharLb() {
-    lightbox.classList.remove('ativo');
-    document.body.style.overflow = '';
-    lbImg.src = '';
-  }
+    function fecharLb() {
+      lightbox.classList.remove('ativo');
+      document.body.style.overflow = '';
+      lbImg.src = '';
+    }
 
-  lbFechar.addEventListener('click', fecharLb);
-  lightbox.addEventListener('click', e => { if (e.target === lightbox) fecharLb(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharLb(); });
-</script>
+    lbFechar.addEventListener('click', fecharLb);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) fecharLb(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharLb(); });
+  </script>
 </body>
+
 </html>
