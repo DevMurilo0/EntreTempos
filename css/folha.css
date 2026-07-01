@@ -15,6 +15,7 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
+  overflow-x: hidden;
   font-family: Georgia, serif;
 }
 
