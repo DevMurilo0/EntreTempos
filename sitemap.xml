@@ -1,65 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-  <url>
-    <loc>https://entre-tempos.netlify.app/</loc>
-    <priority>1.0</priority>
-  </url>
-
-  <url>
-    <loc>https://entre-tempos.netlify.app/folha.html</loc>
-  </url>
-
-  <url>
-    <loc>https://entre-tempos.netlify.app/topicos/curiosidades/curiosidades.html</loc>
-  </url>
-
-  <url>
-    <loc>https://entre-tempos.netlify.app/topicos/curiosidades/autorais/autorais.html</loc>
-  </url>
-
-  <url>
-    <loc>https://entre-tempos.netlify.app/topicos/curiosidades/gerais/gerais.html</loc>
-  </url>
-
-  <url>
-    <loc>https://entre-tempos.netlify.app/topicos/desenhos/desenhos.html</loc>
-  </url>
-
-  <url>
-    <loc>https://entre-tempos.netlify.app/topicos/desenhos/autorais/autorais.html</loc>
-  </url>
-
-  <url>
-    <loc>https://entre-tempos.netlify.app/topicos/desenhos/conhecidos/conhecidos.html</loc>
-  </url>
-
-  <url>
-    <loc>https://entre-tempos.netlify.app/topicos/filmes/filmes.html</loc>
-  </url>
-
-  <url>
-    <loc>https://entre-tempos.netlify.app/topicos/livros/livros.html</loc>
-  </url>
-
-  <url>
-    <loc>https://entre-tempos.netlify.app/topicos/musica/musica.html</loc>
-  </url>
-
-  <url>
-    <loc>https://entre-tempos.netlify.app/topicos/musica/talento/talento.html</loc>
-  </url>
-
-  <url>
-    <loc>https://entre-tempos.netlify.app/topicos/musica/top%20musica/top.html</loc>
-  </url>
-
-  <url>
-    <loc>https://entre-tempos.netlify.app/topicos/poemas/poemas.html</loc>
-  </url>
-
-  <url>
-    <loc>https://entre-tempos.netlify.app/topicos/poemas/autorais/autorais/autorais.html</loc>
-  </url>
-
+<url>
+<loc>https://entre-tempos.netlify.app/</loc>
+<priority>1.0</priority>
+</url>
+<url>
+<loc>https://entre-tempos.netlify.app/folha.html</loc>
+</url>
+<url>
+<loc>https://entre-tempos.netlify.app/topicos/curiosidades/curiosidades.html</loc>
+</url>
+<url>
+<loc>https://entre-tempos.netlify.app/topicos/curiosidades/autorais/autorais.html</loc>
+</url>
+<url>
+<loc>https://entre-tempos.netlify.app/topicos/curiosidades/gerais/gerais.html</loc>
+</url>
+<url>
+<loc>https://entre-tempos.netlify.app/topicos/desenhos/desenhos.html</loc>
+</url>
+<url>
+<loc>https://entre-tempos.netlify.app/topicos/desenhos/autorais/autorais.html</loc>
+</url>
+<url>
+<loc>https://entre-tempos.netlify.app/topicos/desenhos/conhecidos/conhecidos.html</loc>
+</url>
+<url>
+<loc>https://entre-tempos.netlify.app/topicos/filmes/filmes.html</loc>
+</url>
+<url>
+<loc>https://entre-tempos.netlify.app/topicos/livros/livros.html</loc>
+</url>
+<url>
+<loc>https://entre-tempos.netlify.app/topicos/musica/musica.html</loc>
+</url>
+<url>
+<loc>https://entre-tempos.netlify.app/topicos/musica/talento/talento.html</loc>
+</url>
+<url>
+<loc>https://entre-tempos.netlify.app/topicos/musica/top%20musica/top.html</loc>
+</url>
+<url>
+<loc>https://entre-tempos.netlify.app/topicos/poemas/poemas.html</loc>
+</url>
+<url>
+<loc>https://entre-tempos.netlify.app/topicos/poemas/autorais/autorais/autorais.html</loc>
+</url>
 </urlset>
