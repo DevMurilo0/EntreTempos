@@ -14,7 +14,7 @@
 </header>
 
 <section class="pessoa-section">
-  <img src="../img/placeholder-retrato.svg" alt="Artista" class="foto-pessoa">
+  <img loading="lazy" decoding="async" src="../img/placeholder-retrato.svg" alt="Artista" class="foto-pessoa">
   <div class="pessoa-info">
     <h2 class="pessoa-nome">Nome do Artista</h2>
     <p class="pessoa-cargo">artista</p>
@@ -30,7 +30,7 @@
 <!-- GALERIA
      Para adicionar um desenho:
      1. data-img="nome-do-arquivo.png"
-     2. Troque <span>desenho em breve</span> por <img src="nome.png" alt="título">
+     2. Troque <span>desenho em breve</span> por <img loading="lazy" decoding="async" src="nome.png" alt="título">
      3. Remova a classe "vazio" do .quadro -->
 <section class="galeria">
 
@@ -64,7 +64,7 @@
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
   <div class="lightbox-inner">
     <button class="lightbox-fechar" id="lb-fechar" aria-label="Fechar">✕</button>
-    <img src="" alt="" id="lb-img">
+    <img loading="lazy" decoding="async" src="" alt="" id="lb-img">
     <p class="lightbox-legenda" id="lb-legenda"></p>
   </div>
 </div>

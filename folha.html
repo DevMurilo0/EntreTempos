@@ -15,29 +15,29 @@
   <div class="scene">
     <!-- LUA -->
     <div class="moon">
-      <img src="img/lua.webp" alt="Lua">
+      <img loading="lazy" decoding="async" src="img/lua.webp" alt="Lua">
     </div>
     <!-- LIVROS -->
     <div class="books">
-      <img src="img/livros.webp" alt="Pilha de livros">
+      <img loading="lazy" decoding="async" src="img/livros.webp" alt="Pilha de livros">
     </div>
     <!-- BILHETE -->
     <div class="note">
-      <img src="img/bilhete.webp" alt="Bilhete">
+      <img loading="lazy" decoding="async" src="img/bilhete.webp" alt="Bilhete">
     </div>
 
     <!-- POLAROIDS (movidos para dentro de .scene para acompanhar o scroll/altura no mobile) -->
     <div class="polaroid polaroid--1" data-rotate="-8">
-      <img src="img/polaroid1.webp" alt="Polaroid 1">
+      <img loading="lazy" decoding="async" src="img/polaroid1.webp" alt="Polaroid 1">
     </div>
     <div class="polaroid polaroid--2" data-rotate="6">
-      <img src="img/polaroid2.webp" alt="Polaroid 2">
+      <img loading="lazy" decoding="async" src="img/polaroid2.webp" alt="Polaroid 2">
     </div>
     <div class="polaroid polaroid--3" data-rotate="-4">
-      <img src="img/polaroid3.webp" alt="Polaroid 3">
+      <img loading="lazy" decoding="async" src="img/polaroid3.webp" alt="Polaroid 3">
     </div>
     <div class="polaroid polaroid--4" data-rotate="-2">
-      <img src="img/polaroid4.webp" alt="Polaroid 4">
+      <img loading="lazy" decoding="async" src="img/polaroid4.webp" alt="Polaroid 4">
     </div>
   </div>
 
@@ -58,7 +58,7 @@
       wrap.style.transform = `rotate(${cat.rotate}deg)`;
       const feet = document.createElement('div');
       feet.className = 'feet';
-      feet.innerHTML = `<img src="img/pegadas.webp" alt="pegadas">`;
+      feet.innerHTML = `<img loading="lazy" decoding="async" src="img/pegadas.webp" alt="pegadas">`;
       wrap.appendChild(feet);
       // etiqueta (não gira, fica em cima do pé, na mesma posição .fp--N)
       const tagWrap = document.createElement('a');
@@ -67,7 +67,7 @@
       tagWrap.setAttribute('aria-label', cat.label);
       tagWrap.innerHTML = `
     <div class="tag-img-wrap">
-      <img src="img/${cat.tagImg}" alt="${cat.label}">
+      <img loading="lazy" decoding="async" src="img/${cat.tagImg}" alt="${cat.label}">
       <span class="tag-label">${cat.label}</span>
     </div>
   `;
