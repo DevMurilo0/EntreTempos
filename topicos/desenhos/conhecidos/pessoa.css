@@ -54,8 +54,21 @@ header a:hover { color: #c0392b; }
   padding: 0 40px;
 }
 
+/* ── FOTO DO ARTISTA (retrato no topo da página) ──
+   Só essa regra controla o tamanho da FOTO DA PESSOA (não afeta as
+   artes/desenhos, que têm o próprio tamanho controlado em .obra-imagem-box
+   no index.html de cada artista).
+
+   width: clamp(MÍNIMO, PREFERIDO, MÁXIMO)
+     - MÍNIMO  → menor tamanho que a foto pode ter (em px)
+     - PREFERIDO → tamanho "ideal", em % da largura da tela (vw) — é o que
+                   faz a foto crescer/encolher conforme a janela do navegador
+     - MÁXIMO  → maior tamanho que a foto pode ter (em px)
+
+   Para AUMENTAR a foto: suba o valor de MÍNIMO e/ou MÁXIMO (ex: 200px → 260px)
+   Para DIMINUIR a foto: desça esses valores (ex: 260px → 200px) */
 .foto-pessoa {
-  width: clamp(140px, 18vw, 200px);
+  width: clamp(180px, 22vw, 260px);
   height: auto;
   flex-shrink: 0;
   filter: drop-shadow(4px 6px 14px rgba(0,0,0,0.35)) sepia(15%);
@@ -353,7 +366,10 @@ header a:hover { color: #c0392b; }
     padding: 0 20px;
     text-align: center;
   }
-  .foto-pessoa { width: clamp(130px, 45vw, 170px); }
+  /* Tamanho da foto do artista só no celular — mesma lógica do clamp()
+     explicada lá em cima, em .foto-pessoa. Ajuste aqui se quiser um
+     tamanho diferente especificamente na versão mobile. */
+  .foto-pessoa { width: clamp(160px, 50vw, 210px); }
   .pessoa-nome { border-left: none; padding-left: 0; }
   .pessoa-cargo, .pessoa-bio, .contador-desenhos { padding-left: 0; }
   .pessoa-bio { text-align: left; max-width: 100%; }

@@ -163,11 +163,22 @@ header a:hover { color: #c0392b; }
   padding: 0 40px;
 }
 
+/* ── FOTO DE CADA ARTISTA NA GRADE (miniatura clicável) ──
+   Controla só o tamanho da FOTO do artista aqui na listagem — não mexe
+   nas artes/desenhos, que ficam dentro da página de cada artista.
+
+   width: clamp(MÍNIMO, PREFERIDO, MÁXIMO)
+     - MÍNIMO  → menor tamanho que a foto pode ter (em px)
+     - PREFERIDO → tamanho "ideal", em % da largura da tela (vw)
+     - MÁXIMO  → maior tamanho que a foto pode ter (em px)
+
+   Para AUMENTAR a foto: suba o valor de MÍNIMO e/ou MÁXIMO (ex: 260px → 320px)
+   Para DIMINUIR a foto: desça esses valores (ex: 320px → 260px) */
 .foto-nav {
   display: block;
   text-decoration: none;
   cursor: pointer;
-  width: clamp(180px, 24vw, 260px);
+  width: clamp(220px, 28vw, 320px);
 }
 
 .foto-nav img {
@@ -266,8 +277,10 @@ header a:hover { color: #c0392b; }
     padding: 0 20px;
   }
 
+  /* Tamanho da foto do artista só no celular — mesma lógica do clamp()
+     explicada lá em cima, em .foto-nav. */
   .foto-nav {
-    width: clamp(150px, 60vw, 220px);
+    width: clamp(190px, 62vw, 260px);
   }
 }
 
