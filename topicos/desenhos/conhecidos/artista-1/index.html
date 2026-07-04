@@ -10,6 +10,139 @@
     href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Caveat:wght@400;600&family=Dancing+Script:wght@400;600&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="../pessoa.css">
+  <style>
+    /* ===== BLOCO DE CADA DESENHO =====
+       Texto corrido, imagem separada em seguida, legenda abaixo da
+       imagem — igual ao padrão usado nas curiosidades. Sem cards lado
+       a lado, sem caixa de fundo: tudo empilhado, largura cheia. */
+    .galeria {
+      display: block;
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .obra {
+      padding: 56px 0;
+    }
+
+    .obra:first-child {
+      padding-top: 40px;
+    }
+
+    .obra-divisor {
+      max-width: 640px;
+      margin: 0 auto;
+      border: none;
+      border-top: 1px dashed #b6a06f88;
+    }
+
+    .obra-cabecalho {
+      margin: 0 0 20px;
+    }
+
+    .obra-titulo {
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 1px;
+      font-size: 1.3rem;
+      color: #8a1f11;
+      margin: 0;
+    }
+
+    .obra-num {
+      font-family: 'Special Elite', monospace;
+      font-size: 0.8rem;
+      color: #8a7455;
+      margin: 2px 0 0;
+    }
+
+    .obra-texto {
+      color: #3a2f28;
+      font-family: 'IM Fell English', Georgia, serif;
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+
+    .obra-texto p {
+      margin: 0 0 28px;
+    }
+
+    .obra-texto:empty {
+      display: none;
+    }
+
+    .obra-imagem-box {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      box-sizing: border-box;
+      border: 2px dashed #b6a06f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: default;
+      margin: 8px 0 0;
+    }
+
+    .obra-imagem-box.tem-imagem {
+      cursor: pointer;
+    }
+
+    .obra-imagem-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .obra-placeholder {
+      font-family: 'IM Fell English', Georgia, serif;
+      font-style: italic;
+      color: #8a7455;
+      font-size: 0.95rem;
+    }
+
+    .obra-legenda {
+      display: block;
+      text-align: center;
+      font-style: italic;
+      font-family: 'IM Fell English', Georgia, serif;
+      color: #6b5d4a;
+      font-size: 0.9rem;
+      margin: 10px 0 0;
+    }
+
+    .obra-legenda:empty {
+      display: none;
+    }
+
+    .obra-legenda a {
+      color: #8a1f11;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .obra-legenda a:hover {
+      color: #b6a06f;
+    }
+
+    .obra-texto-depois {
+      color: #3a2f28;
+      font-family: 'IM Fell English', Georgia, serif;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-top: 28px;
+    }
+
+    .obra-texto-depois p {
+      margin: 0 0 28px;
+    }
+
+    .obra-texto-depois:empty {
+      display: none;
+      margin-top: 0;
+    }
+  </style>
 </head>
 
 <body>
@@ -18,7 +151,7 @@
   </header>
 
   <section class="pessoa-section">
-    <img loading="lazy" decoding="async" src="../img/placeholder-retrato.svg" alt="Artista" class="foto-pessoa">
+    <img loading="lazy" decoding="async" src="../img/van.png" alt="Artista" class="foto-pessoa">
     <div class="pessoa-info">
       <h2 class="pessoa-nome">Vincent Willem Van Gogh (1853-1890)</h2>
       <p class="pessoa-cargo">artista</p>
@@ -35,35 +168,83 @@
   <div class="divisor"></div>
 
   <!-- GALERIA
-     Para adicionar um desenho:
-     1. data-img="nome-do-arquivo.png"
-     2. Troque <span>desenho em breve</span> por <img loading="lazy" decoding="async" src="nome.png" alt="título">
-     3. Remova a classe "vazio" do .quadro -->
+     Cada desenho é um bloco (article.obra) com essa ordem, igual à
+     página de curiosidades:
+       1. .obra-texto        → parágrafo(s) ANTES da imagem (pode ficar vazio)
+       2. .obra-imagem-box   → a imagem do desenho
+       3. .obra-legenda      → legenda abaixo da imagem (pode ficar vazio)
+       4. .obra-texto-depois → parágrafo(s) DEPOIS da imagem (pode ficar vazio)
+
+     Para adicionar a imagem de verdade:
+     - Troque <span class="obra-placeholder">desenho em breve</span>
+       por <img loading="lazy" decoding="async" src="nome.png" alt="título">
+     - Adicione a classe "tem-imagem" na .obra-imagem-box
+     - Preencha data-img="nome.png" no <article class="obra"> para
+       o clique abrir a imagem ampliada (lightbox) -->
   <section class="galeria">
 
-    <div class="card-desenho" data-titulo="Desenho I" data-img="">
-      <div class="quadro vazio">
-        <span>desenho em breve</span>
+    <article class="obra" data-titulo="Noite Estrelada – 1889" data-img="noite.jpg">
+      <div class="obra-cabecalho">
+        <p class="obra-titulo">desenho 1</p>
+        <p class="obra-num">I</p>
       </div>
-      <p class="card-titulo">desenho 1</p>
-      <p class="card-num">I</p>
-    </div>
+      <div class="obra-texto">
+        <p><strong>Noite Estrelada – 1889.</strong> Obra mais famosa do artista, ela foi produzida no período que ele
+          estava internado no Hospital Psiquiátrico de Saint-Rémy-de-Provence em 1889.</p>
+      </div>
+      <div class="obra-imagem-box tem-imagem">
+        <img loading="lazy" decoding="async" src="noite.jpg" alt="Noite Estrelada, 1889, de Van Gogh">
+      </div>
+      <p class="obra-legenda">O quadro representa a visão que Van Gogh tinha da janela do quarto onde ele dormia.</p>
+      <div class="obra-texto-depois"></div>
+    </article>
 
-    <div class="card-desenho" data-titulo="Desenho II" data-img="">
-      <div class="quadro vazio">
-        <span>desenho em breve</span>
-      </div>
-      <p class="card-titulo">desenho 2</p>
-      <p class="card-num">II</p>
-    </div>
+    <hr class="obra-divisor">
 
-    <div class="card-desenho" data-titulo="Desenho III" data-img="">
-      <div class="quadro vazio">
-        <span>desenho em breve</span>
+    <article class="obra" data-titulo="Autorretrato com orelha cortada – 1889" data-img="orelha.jpg">
+      <div class="obra-cabecalho">
+        <p class="obra-titulo">Autorretrato com orelha cortada</p>
+        <p class="obra-num">II</p>
       </div>
-      <p class="card-titulo">desenho 3</p>
-      <p class="card-num">III</p>
-    </div>
+      <div class="obra-texto">
+        <p><strong>Autorretrato com orelha cortada – 1889.</strong> A informação que se tem sobre a amputação da orelha
+          direita é que ela ocorre após uma discussão com o pintor Paul Gauguin em 1888. Há um mistério em volta dessa
+          passagem da vida dele, pois não se tem certeza de que foi o próprio Van Gogh quem cortou a orelha ou se foi
+          Gauguin que era mestre em esgrima. Historiadores em arte afirmam que houve um pacto de silêncio entre os dois
+          amigos para que Gauguin não fosse preso. Van Gogh entrega a orelha decepada para Rachel, que trabalha em um
+          bordel da região, e foi para sua casa; por sorte, Rachel vai até a polícia, explica o que aconteceu e, depois
+          disso, Van Gogh recebe ajuda — caso Rachel não tivesse ido à polícia, ele teria morrido por hemorragia.</p>
+        <p>Há dúvida também sobre se a orelha foi cortada por completo ou apenas o lóbulo. A pesquisadora Bernadete
+          Marphy, intrigada com a dúvida em relação ao episódio, pois acreditava que devia haver algum registro,
+          mudou-se para a França em busca de informação; lá conseguiu a imagem da folha onde o médico que atendeu Van
+          Gogh após o incidente com a orelha fez o desenho mostrando a parte em que a lâmina cortou.</p>
+      </div>
+      <div class="obra-imagem-box tem-imagem">
+        <img loading="lazy" decoding="async" src="orelha.jpg" alt="Autorretrato com orelha cortada, 1889, de Van Gogh">
+      </div>
+      <p class="obra-legenda">Fonte: <a href="https://www.bbc.com/portuguese/geral-46731221" target="_blank" rel="noopener">bbc.com</a></p>
+      <div class="obra-texto-depois"></div>
+    </article>
+
+    <hr class="obra-divisor">
+
+    <article class="obra" data-titulo="Homem Velho com a Cabeça em suas Mãos (Portal da Eternidade) – 1890"
+      data-img="orelha.webp">
+      <div class="obra-cabecalho">
+        <p class="obra-titulo">Homem Velho com a Cabeça em suas Mãos (Portal da Eternidade)</p>
+        <p class="obra-num">III</p>
+      </div>
+      <div class="obra-texto">
+        <p><strong>Homem Velho com a Cabeça em suas Mãos (Portal da Eternidade) – 1890.</strong> Nessa obra o artista
+          usou um desenho e litografias como bases, produzidos em anos anteriores. Na obra temos um homem que aparenta
+          estar desolado, triste e sozinho. Van Gogh finalizou esse quadro meses antes de morrer.</p>
+      </div>
+      <div class="obra-imagem-box tem-imagem">
+        <img loading="lazy" decoding="async" src="orelha.webp" alt="Homem Velho com a Cabeça em suas Mãos (Portal da Eternidade), 1890, de Van Gogh">
+      </div>
+      <p class="obra-legenda">Trabalhador, em seu terno de bombazina remendado, com a cabeça careca.</p>
+      <div class="obra-texto-depois"></div>
+    </article>
 
   </section>
 
@@ -82,16 +263,18 @@
   </div>
 
   <script>
-    const cards = document.querySelectorAll('.card-desenho');
+    const obras = document.querySelectorAll('.obra');
     const lightbox = document.getElementById('lightbox');
     const lbImg = document.getElementById('lb-img');
     const lbLeg = document.getElementById('lb-legenda');
     const lbFechar = document.getElementById('lb-fechar');
 
-    cards.forEach(card => {
-      card.addEventListener('click', () => {
-        const src = card.dataset.img;
-        const titulo = card.dataset.titulo;
+    obras.forEach(obra => {
+      const box = obra.querySelector('.obra-imagem-box');
+      box.addEventListener('click', (e) => {
+        if (e.target.closest('a')) return;
+        const src = obra.dataset.img;
+        const titulo = obra.dataset.titulo;
         if (!src) return;
         lbImg.src = src;
         lbImg.alt = titulo;
