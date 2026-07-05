@@ -36,7 +36,7 @@ body::after {
   right: 0;
   width: 380px;
   height: 480px;
-  background-image: url('img/wallpaper_fundo.png');
+  background-image: url('img/wallpaper_fundo.webp');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: bottom right;
@@ -113,6 +113,13 @@ header a:hover { color: #c0392b; }
   margin: 10px auto 30px;
   height: 2px;
   background: linear-gradient(to right, transparent, #c0392b, #c4a96b, #c0392b, transparent);
+}
+
+/* ─── WRAPPER DE PÁGINA (largura total, base para as decorações) ─── */
+.pagina-livros {
+  position: relative;
+  z-index: 1;
+  min-height: 760px;
 }
 
 /* ─── MURAL CONTAINER ─── */
@@ -369,15 +376,6 @@ header a:hover { color: #c0392b; }
   filter: drop-shadow(2px 2px 8px rgba(0,0,0,0.3));
 }
 
-/* deco_06 — esquerda, meio-baixo */
-.img-deco-06 {
-  top: 55%;
-  left: -10px;
-  width: 125px;
-  transform: rotate(7deg);
-  filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
-}
-
 /* capa em destaque na coluna direita */
 .capa-destaque {
   width: 200px;
@@ -448,6 +446,24 @@ header a:hover { color: #c0392b; }
 }
 
 /* ╔══════════════════════════════════════════════╗ */
+/* ║  NOTEBOOK / TELAS MÉDIAS (601px – 1500px)     ║ */
+/* ║  Em Full HD (1920px) a margem lateral do      ║ */
+/* ║  mural é grande e as decorações cabem soltas; ║ */
+/* ║  em notebooks (ex.: 1366px) essa margem é     ║ */
+/* ║  bem menor e as mesmas imagens invadiam o     ║ */
+/* ║  texto da lista. Aqui elas ficam menores.     ║ */
+/* ╚══════════════════════════════════════════════╝ */
+@media (min-width: 601px) and (max-width: 1500px) {
+  .img-deco-01 { top: 8%;    left: -12px; width: 85px;  }
+  .img-deco-02 { bottom: 12%; right: 8px;  width: 90px;  }
+  .img-deco-03 { top: 6%;    right: -8px; width: 80px;  }
+  .img-deco-04 { bottom: 8%; left: 5px;   width: 70px;  }
+  .img-deco-05 { top: 44%;   right: -6px; width: 70px;  }
+
+  .top10-lista { padding-left: 90px; }
+}
+
+/* ╔══════════════════════════════════════════════╗ */
 /* ║  MOBILE (TELA <= 600px)                       ║ */
 /* ╚══════════════════════════════════════════════╝ */
 @media (max-width: 600px) {
@@ -486,8 +502,7 @@ header a:hover { color: #c0392b; }
   .img-deco-02,
   .img-deco-03,
   .img-deco-04,
-  .img-deco-05,
-  .img-deco-06 {
+  .img-deco-05 {
     display: block;
     opacity: 1;
   }
@@ -534,13 +549,5 @@ header a:hover { color: #c0392b; }
     transform: rotate(-12deg);
   }
 
-  /* deco_06 — canto inferior esquerdo */
-  .img-deco-06 {
-    top: auto;
-    bottom: 8%;
-    left: -10px;
-    width: 75px;
-    transform: rotate(6deg);
-  }
 }
 /* ═══════ FIM — NÃO ADICIONE NADA DEPOIS DESTA LINHA ═══════ */
