@@ -198,7 +198,7 @@ img.deco-maos {
 .ampulheta {
   width: clamp(50px, 7vw, 100px);
   height: auto;
-  filter: drop-shadow(0 8px 18px rgba(0,0,0,0.3));
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.3));
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
@@ -214,7 +214,7 @@ img.deco-maos {
   margin: 35px auto;
   overflow: hidden;
   border-radius: 10px;
-  box-shadow: 0 14px 40px rgba(0,0,0,0.3);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.3);
 }
 
 .slides {
@@ -249,7 +249,7 @@ img.deco-maos {
   width: min(88%, 650px);
   background: #fffdf7;
   padding: clamp(16px, 3vw, 28px) clamp(24px, 5vw, 48px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   transform: rotate(1deg);
   border-left: 5px solid #8c3b3b;
   border-right: 5px solid #8c3b3b;
@@ -360,14 +360,14 @@ img.deco-maos {
   letter-spacing: 0.14em;
   border-radius: 6px;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 20px rgba(140,59,59,0.45);
+  box-shadow: 0 8px 20px rgba(140, 59, 59, 0.45);
   text-transform: uppercase;
 }
 
 .botao-folha:hover {
   background: #6a2c2c;
   transform: scale(1.08);
-  box-shadow: 0 12px 30px rgba(140,59,59,0.55);
+  box-shadow: 0 12px 30px rgba(140, 59, 59, 0.55);
 }
 
 .botao-folha:active {
@@ -390,15 +390,22 @@ img.deco-maos {
     width: 46vw;
   }
 
-  img.deco-nuvem  { width: 28vw; }
-  img.deco-rasagado { width: 26vw; }
+  img.deco-nuvem {
+    width: 28vw;
+  }
+
+  img.deco-rasagado {
+    width: 26vw;
+  }
 
   img.deco-relogio {
     width: 28vw;
     right: 20px;
   }
 
-  img.deco-homem { width: 15vw; }
+  img.deco-homem {
+    width: 15vw;
+  }
 
   img.deco-maos {
     top: 140px;
@@ -435,8 +442,13 @@ img.deco-maos {
     transform: translateX(30%);
   }
 
-  img.deco-nuvem    { width: 32vw; }
-  img.deco-rasagado { width: 30vw; }
+  img.deco-nuvem {
+    width: 32vw;
+  }
+
+  img.deco-rasagado {
+    width: 30vw;
+  }
 
   img.deco-relogio {
     width: 32vw;
@@ -453,8 +465,13 @@ img.deco-maos {
     top: 80px;
   }
 
-  .carousel   { width: 70%; }
-  .sobre-card { width: 90%; }
+  .carousel {
+    width: 70%;
+  }
+
+  .sobre-card {
+    width: 90%;
+  }
 
 }
 
@@ -492,8 +509,13 @@ img.deco-maos {
     transform: translateX(30%);
   }
 
-  img.deco-nuvem    { width: 42vw; }
-  img.deco-rasagado { width: 40vw; }
+  img.deco-nuvem {
+    width: 42vw;
+  }
+
+  img.deco-rasagado {
+    width: 40vw;
+  }
 
   img.deco-relogio {
     display: block;
@@ -513,7 +535,9 @@ img.deco-maos {
     opacity: 0.4;
   }
 
-  .carousel { width: 88%; }
+  .carousel {
+    width: 88%;
+  }
 
   .sobre-card {
     width: 94%;
@@ -533,7 +557,9 @@ img.deco-maos {
 
 @media (max-width: 360px) {
 
-  .hero-text h2 { font-size: 8px; }
+  .hero-text h2 {
+    font-size: 8px;
+  }
 
   img.cortina-esquerda {
     width: 85vw;
@@ -546,9 +572,13 @@ img.deco-maos {
   }
 
   img.deco-nuvem,
-  img.deco-rasagado { width: 44vw; }
+  img.deco-rasagado {
+    width: 44vw;
+  }
 
-  img.deco-homem { width: 32vw; }
+  img.deco-homem {
+    width: 32vw;
+  }
 
 }
 
@@ -561,7 +591,8 @@ img.deco-maos {
    SETAS DO CARROSSEL
 ===================== */
 .carousel {
-  position: relative; /* já deve ter, só confirme */
+  position: relative;
+  /* já deve ter, só confirme */
 }
 
 .carousel-btn {
@@ -584,8 +615,18 @@ img.deco-maos {
   -webkit-tap-highlight-color: transparent;
 }
 
-.carousel-btn:hover { background: rgba(0,0,0,0.65); }
-.carousel-btn:active { transform: translateY(-50%) scale(0.92); }
+.carousel-btn:hover {
+  background: rgba(0, 0, 0, 0.65);
+}
 
-.carousel-btn.prev { left: 8px; }
-.carousel-btn.next { right: 8px; }
+.carousel-btn:active {
+  transform: translateY(-50%) scale(0.92);
+}
+
+.carousel-btn.prev {
+  left: 8px;
+}
+
+.carousel-btn.next {
+  right: 8px;
+}
