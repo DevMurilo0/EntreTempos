@@ -2,7 +2,11 @@
    FILMES.CSS — Entre Tempos · Página de Filmes
    ============================================= */
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 
 
@@ -14,7 +18,8 @@ html {
 body {
   overflow-x: hidden;
   width: 100%;
-  position: relative; /* garante que os absolutos sejam contidos aqui */
+  position: relative;
+  /* garante que os absolutos sejam contidos aqui */
 }
 
 
@@ -53,7 +58,10 @@ header a {
   letter-spacing: 1px;
   transition: color 0.2s;
 }
-header a:hover { color: #c0392b; }
+
+header a:hover {
+  color: #c0392b;
+}
 
 /* ── TÍTULO ── */
 .page-titulo {
@@ -62,6 +70,7 @@ header a:hover { color: #c0392b; }
   text-align: center;
   padding: 30px 20px 10px;
 }
+
 .page-titulo h1 {
   font-family: 'Bebas Neue', sans-serif;
   font-size: clamp(60px, 12vw, 130px);
@@ -70,6 +79,7 @@ header a:hover { color: #c0392b; }
   line-height: 1;
   text-shadow: 4px 4px 0 #c4a96b;
 }
+
 .page-titulo .subtitulo {
   font-size: 14px;
   color: #7a6a50;
@@ -87,6 +97,13 @@ header a:hover { color: #c0392b; }
   background: linear-gradient(to right, transparent, #c0392b, #c4a96b, #c0392b, transparent);
 }
 
+/* ── WRAPPER DE PÁGINA (largura total, base para as decorações) ── */
+.pagina-filmes {
+  position: relative;
+  z-index: 1;
+  min-height: 760px;
+}
+
 /* ── MURAL ── */
 .mural-filmes {
   position: relative;
@@ -94,7 +111,6 @@ header a:hover { color: #c0392b; }
   max-width: 1100px;
   margin: 0 auto;
   padding: 20px 30px 120px;
-  overflow-x: hidden;
 }
 
 /* ── IMAGENS DECORATIVAS DESKTOP ── */
@@ -109,87 +125,87 @@ header a:hover { color: #c0392b; }
 
 /* Chaplin pulando: topo esquerdo, destaque principal */
 .img-chaplin {
-  top: -250px;
-  left: 700px;
-  width: clamp(150px, 22vw, 230px);
+  top: 6%;
+  left: 1320px;
+  width: clamp(110px, 14vw, 170px);
   opacity: 0.92;
-  filter: drop-shadow(3px 5px 10px rgba(0,0,0,0.18));
+  filter: drop-shadow(3px 5px 10px rgba(0, 0, 0, 0.18));
   transform: rotate(-4deg);
 }
 
 /* Relógio: logo abaixo do Chaplin */
 .img-relogio {
-  top: -400px;
-  left: -70px;
-  width: clamp(220px, 24vw, 340px);
+  top: -12%;
+  left: 180px;
+  width: clamp(300px, 16vw, 220px);
   opacity: 0.88;
-  filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.15));
-  z-index: 3;
+  filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.15));
+  z-index: 1;
 }
 
-/* Padrinho: meio esquerdo */
-.img-godfather {
-  top: -30px;
-  right: 15px;
-  width: clamp(180px, 10vw, 280px);
-  filter: drop-shadow(3px 3px 8px rgba(0,0,0,0.25));
-}
-
-/* Escalada na corda: mais abaixo, silhueta vertical funciona bem */
+/* Escalada na corda: canto inferior esquerdo */
 .img-escalada {
-  bottom: 240px;
-  left: -200px;
-  width: 420px;
-  filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
+  bottom: 20%;
+  left: -100px;
+  width: 450px;
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3));
   transform: rotate(90deg);
   z-index: 1;
 }
 
-/* Bond: canto inferior esquerdo */
+/* Bond: canto inferior esquerdo, um pouco mais pro centro */
 .img-bond {
-  bottom: 230px;
-  right: -125px;
+  bottom: 6%;
+  left: 290px;
   width: clamp(55px, 7vw, 90px);
-  filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.25));
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.25));
+}
+
+/* Óculos: canto inferior direito, um pouco mais pro centro */
+.img-oculos {
+  bottom: -24%;
+  right: 70%;
+  width: clamp(110px, 10vw, 150px);
+  transform: rotate(-4deg);
+  filter: drop-shadow(2px 2px 6px rgba(0, 0, 0, 0.2));
 }
 
 /* ─────────────────────────────────────
    LADO DIREITO
    ───────────────────────────────────── */
 
-/* Câmera: topo direito */
+/* Câmera: direita, abaixo do Padrinho */
 .img-camera {
-  top: -30px;
-  right: -120px;
-  width: clamp(110px, 13vw, 165px);
+  top: 40%;
+  right: 0%;
+  width: clamp(100px, 12vw, 150px);
   transform: rotate(5deg);
-  filter: drop-shadow(3px 3px 10px rgba(0,0,0,0.3));
+  filter: drop-shadow(3px 3px 10px rgba(0, 0, 0, 0.3));
   opacity: 0.88;
+}
+
+/* Padrinho: canto superior direito */
+.img-godfather {
+  top: 21%;
+  right: 10%;
+  width: clamp(150px, 12vw, 220px);
+  filter: drop-shadow(3px 3px 8px rgba(0, 0, 0, 0.25));
 }
 
 /* TV: meio direito */
 .img-tv {
-  top: 300px;
-  right: -65px;
-  width: clamp(100px, 12vw, 155px);
-  filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.2));
-}
-
-/* Óculos: abaixo da TV */
-.img-oculos {
-  bottom: -80px;
-  left: -55px;
-  width: clamp(120px, 11vw, 165px);
-  transform: rotate(-4deg);
-  filter: drop-shadow(2px 2px 6px rgba(0,0,0,0.2));
+  top: 50%;
+  right: 20%;
+  width: clamp(90px, 11vw, 140px);
+  filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.2));
 }
 
 /* Fight Club: canto inferior direito */
 .img-fight {
-  bottom: -80px;
-  right: 150px;
-  width: clamp(100px, 12vw, 155px);
-  filter: drop-shadow(3px 3px 10px rgba(0,0,0,0.35));
+  bottom: 0%;
+  right: 10%;
+  width: clamp(90px, 11vw, 140px);
+  filter: drop-shadow(3px 3px 10px rgba(0, 0, 0, 0.35));
   opacity: 0.9;
 }
 
@@ -203,7 +219,9 @@ header a:hover { color: #c0392b; }
 .top5-lista {
   flex: 1;
   min-width: 280px;
-  padding-left: 120px;
+  max-width: 640px;
+  margin: 0 auto;
+  padding-left: clamp(0px, 9vw, 120px);
 }
 
 /* ── NAVEGAÇÃO MÊS ── */
@@ -223,6 +241,7 @@ header a:hover { color: #c0392b; }
   padding-left: 15px;
   line-height: 1;
 }
+
 .top5-titulo .mes-label {
   font-family: 'Special Elite', serif;
   font-size: 18px;
@@ -245,17 +264,28 @@ header a:hover { color: #c0392b; }
   cursor: pointer;
   flex-shrink: 0;
   transition: background 0.2s, transform 0.15s;
-  box-shadow: 0 4px 12px rgba(192,57,43,0.35);
+  box-shadow: 0 4px 12px rgba(192, 57, 43, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
   line-height: 1;
 }
-.seta-mes:hover  { background: #922b21; transform: scale(1.1); }
-.seta-mes:active { transform: scale(0.93); }
+
+.seta-mes:hover {
+  background: #922b21;
+  transform: scale(1.1);
+}
+
+.seta-mes:active {
+  transform: scale(0.93);
+}
 
 /* ── LISTA ── */
-.lista-filmes { list-style: none; display: flex; flex-direction: column; }
+.lista-filmes {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
 
 .filme-item {
   display: flex;
@@ -267,20 +297,29 @@ header a:hover { color: #c0392b; }
   animation: entrar 0.35s ease both;
   cursor: default;
 }
+
 .filme-item.clicavel {
   cursor: pointer;
 }
+
 .filme-item.clicavel:hover {
   transform: translateX(6px);
-  background: rgba(192,57,43,0.05);
+  background: rgba(192, 57, 43, 0.05);
   padding: 12px 8px;
   margin-left: -8px;
   border-radius: 4px;
 }
 
 @keyframes entrar {
-  from { opacity: 0; transform: translateX(-18px); }
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .filme-num {
@@ -290,13 +329,19 @@ header a:hover { color: #c0392b; }
   min-width: 45px;
   line-height: 1;
 }
-.filme-info { display: flex; flex-direction: column; }
+
+.filme-info {
+  display: flex;
+  flex-direction: column;
+}
+
 .filme-nome {
   font-family: 'Special Elite', serif;
   font-size: 17px;
   color: #1a1a1a;
   font-weight: bold;
 }
+
 .filme-dir {
   font-family: 'Special Elite', serif;
   font-size: 13px;
@@ -304,6 +349,7 @@ header a:hover { color: #c0392b; }
   font-style: italic;
   margin-top: 1px;
 }
+
 .vazio {
   text-align: center;
   color: #b0a090;
@@ -316,21 +362,32 @@ header a:hover { color: #c0392b; }
 /* ── NOTAS FILMICAS ── */
 .notas-filmicas {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   z-index: 1;
   overflow: hidden;
 }
+
 .nota {
   position: absolute;
   font-size: 24px;
   opacity: 0.06;
   animation: flutuar 8s infinite ease-in-out;
 }
+
 @keyframes flutuar {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50%       { transform: translateY(-20px) rotate(10deg); }
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-20px) rotate(10deg);
+  }
 }
 
 /* ── RODAPÉ ── */
@@ -344,6 +401,7 @@ header a:hover { color: #c0392b; }
   letter-spacing: 2px;
   border-top: 1px solid #c4a96b;
 }
+
 .carimbo {
   display: inline-block;
   border: 3px solid #c0392b;
@@ -364,13 +422,16 @@ header a:hover { color: #c0392b; }
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0, 0, 0, 0.6);
   z-index: 100;
   align-items: center;
   justify-content: center;
   overflow-y: auto;
 }
-.modal-filme.ativo { display: flex; }
+
+.modal-filme.ativo {
+  display: flex;
+}
 
 .modal-conteudo {
   background: #f2e8d5;
@@ -380,21 +441,31 @@ header a:hover { color: #c0392b; }
   width: 90%;
   position: relative;
   animation: slideUp 0.3s ease;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
   border: 3px solid #c0392b;
 }
+
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .modal-fechar {
   position: absolute;
-  top: 16px; right: 16px;
+  top: 16px;
+  right: 16px;
   background: #c0392b;
   color: white;
   border: none;
-  width: 40px; height: 40px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   font-size: 20px;
   cursor: pointer;
@@ -403,13 +474,21 @@ header a:hover { color: #c0392b; }
   justify-content: center;
   transition: background 0.2s, transform 0.2s;
 }
-.modal-fechar:hover  { background: #922b21; transform: scale(1.1); }
-.modal-fechar:active { transform: scale(0.95); }
+
+.modal-fechar:hover {
+  background: #922b21;
+  transform: scale(1.1);
+}
+
+.modal-fechar:active {
+  transform: scale(0.95);
+}
 
 .modal-titulo {
   text-align: center;
   margin-bottom: 24px;
 }
+
 .modal-titulo h2 {
   font-family: 'Bebas Neue', sans-serif;
   font-size: clamp(28px, 5vw, 44px);
@@ -417,6 +496,7 @@ header a:hover { color: #c0392b; }
   letter-spacing: 2px;
   margin-bottom: 6px;
 }
+
 .modal-titulo p {
   font-size: 16px;
   color: #7a6a50;
@@ -430,6 +510,7 @@ header a:hover { color: #c0392b; }
   border: 3px solid #c0392b;
   background: #000;
 }
+
 .modal-trailer video {
   display: block;
   width: 100%;
@@ -438,11 +519,12 @@ header a:hover { color: #c0392b; }
 }
 
 .modal-descricao {
-  background: rgba(192,57,43,0.08);
+  background: rgba(192, 57, 43, 0.08);
   padding: 20px;
   border-radius: 8px;
   border-left: 4px solid #c0392b;
 }
+
 .modal-descricao h3 {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 18px;
@@ -450,6 +532,7 @@ header a:hover { color: #c0392b; }
   letter-spacing: 1px;
   margin-bottom: 10px;
 }
+
 .modal-descricao p {
   font-size: 15px;
   color: #3e3e3e;
@@ -459,7 +542,71 @@ header a:hover { color: #c0392b; }
 /* ══════════════════════════════
    DESKTOP: esconde stickers mobile
    ══════════════════════════════ */
-.stickers-mobile { display: none; }
+.stickers-mobile {
+  display: none;
+}
+
+/* ══════════════════════════════
+   NOTEBOOK / TELAS MÉDIAS (601px – 1500px)
+   As decorações usavam tamanho em vw quase igual ao do
+   Full HD, mas nessas larguras a margem lateral do mural
+   é bem menor — por isso invadiam o texto do TOP 5.
+   Aqui elas ficam menores e coladas na borda.
+   ══════════════════════════════ */
+@media (min-width: 601px) and (max-width: 1500px) {
+  .img-chaplin {
+    top: 6%;
+    left: -10px;
+    width: 80px;
+  }
+
+  .img-relogio {
+    top: 27%;
+    left: -20px;
+    width: 95px;
+  }
+
+  .img-godfather {
+    top: 6%;
+    right: -8px;
+    width: 95px;
+  }
+
+  .img-escalada {
+    bottom: 10%;
+    left: -12px;
+    width: 70px;
+  }
+
+  .img-bond {
+    display: none;
+  }
+
+  .img-camera {
+    top: 30%;
+    right: -15px;
+    width: 65px;
+  }
+
+  .img-tv {
+    top: 50%;
+    right: -10px;
+    width: 60px;
+  }
+
+  .img-oculos {
+    bottom: 14%;
+    right: 30px;
+    width: 65px;
+  }
+
+  .img-fight {
+    bottom: 6%;
+    right: -8px;
+    width: 60px;
+  }
+
+}
 
 /* ══════════════════════════════
    MOBILE (≤ 600px)
@@ -471,7 +618,9 @@ header a:hover { color: #c0392b; }
     letter-spacing: 4px;
   }
 
-  .deco-desktop { display: none !important; }
+  .deco-desktop {
+    display: none !important;
+  }
 
   .mural-filmes {
     padding: 10px 0 60px;
@@ -487,6 +636,7 @@ header a:hover { color: #c0392b; }
     z-index: 4;
     pointer-events: none;
   }
+
   .stickers-mobile .lado-esq,
   .stickers-mobile .lado-dir {
     position: static;
@@ -501,22 +651,25 @@ header a:hover { color: #c0392b; }
   }
 
   /* RELÓGIO: abaixo da escalada no mobile */
-.img-escalada {
-  top: 20px !important;       /* era -180px */
-  left: -130px !important;     /* era -130px */
-  width: 340px !important;
-  transform: rotate(90deg) !important;
-  z-index: 2 !important;
-}
+  .img-escalada {
+    top: 20px !important;
+    /* era -180px */
+    left: -130px !important;
+    /* era -130px */
+    width: 340px !important;
+    transform: rotate(90deg) !important;
+    z-index: 2 !important;
+  }
 
-.img-relogio {
-  top: -300px !important;      /* era bottom: -80px */
-  left: -80px !important;
-  bottom: auto !important;
-  width: 230px !important;
-  transform: none !important;
-  z-index: 3 !important;
-}
+  .img-relogio {
+    top: -300px !important;
+    /* era bottom: -80px */
+    left: -80px !important;
+    bottom: auto !important;
+    width: 230px !important;
+    transform: none !important;
+    z-index: 3 !important;
+  }
 
 
   /* CHAPLIN: topo direito */
@@ -577,22 +730,68 @@ header a:hover { color: #c0392b; }
   }
 
   /* BOND: oculto no mobile */
-  .img-bond { display: none !important; }
+  .img-bond {
+    display: none !important;
+  }
 
-  .top5-wrapper { flex-direction: column; gap: 16px; padding: 0 80px; }
-  .top5-lista   { padding-left: 0; width: 100%; }
+  .top5-wrapper {
+    flex-direction: column;
+    gap: 16px;
+    padding: 0 80px;
+  }
 
-  .nav-mes   { gap: 8px; margin-bottom: 16px; }
-  .seta-mes  { width: 30px; height: 30px; font-size: 14px; }
-  .top5-titulo { font-size: 32px; }
-  .top5-titulo .mes-label { font-size: 15px; }
+  .top5-lista {
+    padding-left: 0;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+  }
 
-  .filme-num  { font-size: 26px; min-width: 36px; }
-  .filme-nome { font-size: 14px; }
-  .filme-dir  { font-size: 11px; }
+  .nav-mes {
+    gap: 8px;
+    margin-bottom: 16px;
+  }
 
-  .modal-conteudo { padding: 30px 20px; }
-  .modal-titulo h2 { font-size: clamp(20px, 6vw, 32px); }
-  .modal-descricao p { font-size: 13px; }
-  .modal-trailer video { max-height: 220px; }
+  .seta-mes {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+
+  .top5-titulo {
+    font-size: 32px;
+  }
+
+  .top5-titulo .mes-label {
+    font-size: 15px;
+  }
+
+  .filme-num {
+    font-size: 26px;
+    min-width: 36px;
+  }
+
+  .filme-nome {
+    font-size: 14px;
+  }
+
+  .filme-dir {
+    font-size: 11px;
+  }
+
+  .modal-conteudo {
+    padding: 30px 20px;
+  }
+
+  .modal-titulo h2 {
+    font-size: clamp(20px, 6vw, 32px);
+  }
+
+  .modal-descricao p {
+    font-size: 13px;
+  }
+
+  .modal-trailer video {
+    max-height: 220px;
+  }
 }
