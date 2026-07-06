@@ -326,11 +326,18 @@ header a:hover {
 
 .lista-atribuicoes li {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  align-items: baseline;
+  gap: 0.6rem;
   font-size: 0.88rem;
   padding: 0.25rem 0;
   color: var(--marrom-escuro);
+}
+
+.lista-atribuicoes li::before {
+  content: "—";
+  color: var(--dourado);
+  font-size: 0.85rem;
+  flex-shrink: 0;
 }
 
 .icone {
@@ -342,8 +349,9 @@ header a:hover {
   grid-template-columns: repeat(3, 1fr);
 }
 
+.card-pessoa .instagram,
 .card-equipe .instagram {
-  margin-top: auto;
+  margin-top: 0.8rem;
   padding-top: 0.8rem;
   border-top: 1px solid var(--borda);
   display: flex;
@@ -355,6 +363,7 @@ header a:hover {
   color: var(--marrom-medio);
 }
 
+.card-pessoa .instagram:hover,
 .card-equipe .instagram:hover {
   color: var(--dourado);
 }
