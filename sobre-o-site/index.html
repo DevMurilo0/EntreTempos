@@ -2,347 +2,321 @@
 <html lang="pt-BR">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre o Site | Entre Tempos</title>
 
-  <title>Sobre o Site | Entre Tempos</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Playfair+Display:ital,wght@0,700;1,700&family=Dancing+Script:wght@400;600&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Dancing+Script:wght@400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- ══════════════════════════════════════════════════════════
-       CABEÇALHO — link de volta para a página principal.
-       Troque o href para o caminho correto do seu site.
+    <!-- ══════════════════════════════════════════════════════════
+       CABEÇALHO — link de volta. Troque o href se necessário.
      ══════════════════════════════════════════════════════════ -->
-  <header>
-    <a href="../index.html">← voltar</a>
-  </header>
+    <header>
+        <a href="../index.html">← voltar</a>
+    </header>
 
-  <!-- ══════════════════════════════════════════════════════════
-       MARCA / LOGOTIPO DA REVISTA
+    <!-- ══════════════════════════════════════════════════════════
+       MARCA — nome da revista, com linhas vermelhas acima e abaixo
      ══════════════════════════════════════════════════════════ -->
-  <div class="linha-vermelha linha-vermelha-topo"></div>
-  <div class="marca">
-    <div class="marca-texto">
-      <span class="marca-titulo">Entre Tempos</span>
-      <span class="marca-subtitulo">revista por de trás das câmeras</span>
+    <div class="linha-vermelha"></div>
+    <div class="marca">
+        <span class="marca-titulo">Entre Tempos</span>
+        <span class="marca-subtitulo">revista por trás das câmeras</span>
     </div>
-  </div>
-  <div class="linha-vermelha linha-vermelha-base"></div>
+    <div class="linha-vermelha"></div>
 
-  <!-- ══════════════════════════════════════════════════════════
-       SEÇÃO 1 — HERO "A REVISTA"
-       Texto à esquerda, imagem ilustrativa à direita.
+    <!-- ══════════════════════════════════════════════════════════
+       SEÇÃO 1 — A REVISTA (apresentação do projeto)
      ══════════════════════════════════════════════════════════ -->
-  <section class="hero-sobre">
+    <section class="page-titulo">
+        <p class="eyebrow">Conheça o projeto</p>
+        <h1>A Revista</h1>
+    </section>
 
-    <div class="hero-sobre-texto">
-      <p class="eyebrow">Conheça o projeto</p>
-      <h1>A Revista</h1>
-      <div class="ornamento" aria-hidden="true">──── ⬥ ────</div>
+    <section class="apresentacao-section">
 
-      <p>
-        A Entre Tempos é uma revista virtual desenvolvida por estudantes
-        do Ensino Médio da Escola de Referência Professor Antônio Farias
-        — Gravatá, PE.
-      </p>
-      <p>
-        É uma revista sem fins lucrativos que busca informar, provocar
-        debates e incentivar reflexões sobre diversos temas de importância
-        social através da poesia, da arte e da palavra.
-      </p>
-    </div>
+        <!-- TROQUE A IMAGEM:
+       <img loading="lazy" decoding="async" src="img/hero-sobre.jpg"
+            class="foto-apresentacao" alt="Máquina de escrever, livros e relógios antigos">
+       (apague a div abaixo quando adicionar a imagem real) -->
+        <div class="foto-apresentacao vazio">
+            imagem ilustrativa<br><span>(ex: máquina de escrever, livros e relógios)</span>
+        </div>
 
-    <div class="hero-sobre-imagem">
-      <!-- TROQUE A IMAGEM:
-         <img loading="lazy" decoding="async" src="img/hero-sobre.jpg"
-              alt="Máquina de escrever, livros e relógios antigos">
-         (remova a classe "vazio" do placeholder abaixo quando adicionar a imagem real) -->
-      <div class="imagem-vazia vazio">
-        imagem ilustrativa<br><span>(ex: máquina de escrever, livros e relógios)</span>
-      </div>
+        <div class="apresentacao-texto">
+            <p>
+                A <strong>Entre Tempos</strong> é uma revista virtual desenvolvida por
+                estudantes do Ensino Médio da Escola de Referência Professor Antônio
+                Farias — Gravatá, PE.
+            </p>
+            <p>
+                É uma revista <strong>sem fins lucrativos</strong> que busca informar,
+                provocar debates e incentivar reflexões sobre diversos temas de
+                importância social através da poesia, da arte e da palavra.
+            </p>
+            <p class="frase-destaque">"Entre tempos, a palavra permanece."</p>
+        </div>
 
-      <!-- Cartão com a frase de efeito sobre a imagem -->
-      <div class="hero-nota">Entre tempos,<br>a palavra permanece.</div>
-    </div>
+    </section>
 
-  </section>
+    <div class="divisor"></div>
 
-  <div class="divisor"></div>
-
-  <!-- ══════════════════════════════════════════════════════════
+    <!-- ══════════════════════════════════════════════════════════
        SEÇÃO 2 — DESENVOLVEDORES DA REVISTA
-       Cada card: foto, nome, função, descrição e lista de atribuições.
-       Para adicionar/remover um desenvolvedor, copie ou apague um
-       <article class="card-pessoa"> inteiro.
+       Cada card: foto, nome, função, descrição, atribuições e Instagram.
+       Para adicionar/remover, copie ou apague um <article class="card-pessoa">.
      ══════════════════════════════════════════════════════════ -->
-  <section class="desenvolvedores">
-    <h2 class="titulo-secao"><span>Desenvolvedores da Revista</span></h2>
+    <section class="desenvolvedores">
+        <h2 class="titulo-secao"><span>Desenvolvedores da Revista</span></h2>
 
-    <div class="grid-cards">
+        <div class="grid-cards">
 
-      <!-- ── DESENVOLVEDOR 1 ── -->
-      <article class="card-pessoa">
-        <!-- TROQUE A FOTO:
-           <img loading="lazy" decoding="async" src="img/murilo.jpg" alt="Murilo Gabriel">
-           (remova a classe "vazio" quando adicionar a foto real) -->
-        <div class="foto-pessoa vazio">foto</div>
+            <!-- ── DESENVOLVEDOR 1 ── -->
+            <article class="card-pessoa">
+                <!-- TROQUE A FOTO:
+           <img loading="lazy" decoding="async" src="img/murilo.jpg" class="foto-pessoa" alt="Murilo Gabriel">
+           (apague a div "foto-pessoa vazio" abaixo quando adicionar a foto real) -->
+                <div class="foto-pessoa vazio">foto</div>
 
-        <h3>Murilo Gabriel</h3>
-        <p class="funcao">Programador Principal, Arquiteto do Sistema, Co-designer e Editor</p>
-        <p class="descricao">
-          Responsável pelo desenvolvimento, estruturação e design do site.
-          Cuida da experiência do usuário, interatividade e identidade visual.
-        </p>
-        <ul class="lista-atribuicoes">
-          <li>Estrutura e organização do site</li>
-          <li>Desenvolvimento da interface</li>
-          <li>Design de experiência</li>
-          <li>Efeitos e interatividade</li>
-        </ul>
-        <a class="instagram" href="https://www.instagram.com/murilo_gabriell0" target="_blank" rel="noopener">
-          <span class="icone" aria-hidden="true">📷</span> @Murilo_Gabriell0
-        </a>
-      </article>
+                <h3>Murilo Gabriel</h3>
+                <p class="funcao">Programador Principal, Arquiteto do Sistema, Co-designer e Editor</p>
+                <p class="descricao">
+                    Responsável pelo desenvolvimento, estruturação e design do site.
+                    Cuida da experiência do usuário, interatividade e identidade visual.
+                </p>
+                <ul class="lista-atribuicoes">
+                    <li>Estrutura e organização do site</li>
+                    <li>Desenvolvimento da interface</li>
+                    <li>Design de experiência</li>
+                    <li>Efeitos e interatividade</li>
+                </ul>
+                <a class="instagram-selo" href="https://www.instagram.com/murilo_gabriell0" target="_blank"
+                    rel="noopener">
+                    @Murilo_Gabriell0
+                </a>
+            </article>
 
-      <!-- ── DESENVOLVEDOR 2 ── -->
-      <article class="card-pessoa">
-        <div class="foto-pessoa vazio">foto</div>
-        <h3>Davi Mendes</h3>
-        <p class="funcao">Programador e Editor</p>
-        <p class="descricao">
-          Auxilia no desenvolvimento do site, implementa funcionalidades
-          e garante o desempenho e a responsividade da plataforma.
-        </p>
-        <ul class="lista-atribuicoes">
-          <li>Desenvolvimento da interface</li>
-          <li>Integração de funcionalidades</li>
-          <li>Aprimoramento de desempenho</li>
-          <li>Manutenção técnica</li>
-        </ul>
-        <a class="instagram" href="https://www.instagram.com/mendeszk_" target="_blank" rel="noopener">
-          <span class="icone" aria-hidden="true">📷</span> @mendeszk_
-        </a>
-      </article>
+            <!-- ── DESENVOLVEDOR 2 ── -->
+            <article class="card-pessoa">
+                <div class="foto-pessoa vazio">foto</div>
+                <h3>Davi Mendes</h3>
+                <p class="funcao">Programador e Editor</p>
+                <p class="descricao">
+                    Auxilia no desenvolvimento do site, implementa funcionalidades
+                    e garante o desempenho e a responsividade da plataforma.
+                </p>
+                <ul class="lista-atribuicoes">
+                    <li>Desenvolvimento da interface</li>
+                    <li>Integração de funcionalidades</li>
+                    <li>Aprimoramento de desempenho</li>
+                    <li>Manutenção técnica</li>
+                </ul>
+                <a class="instagram-selo" href="https://www.instagram.com/mendeszk_" target="_blank" rel="noopener">
+                    @mendeszk_
+                </a>
+            </article>
 
-      <!-- ── DESENVOLVEDOR 3 ── -->
-      <article class="card-pessoa">
-        <div class="foto-pessoa vazio">foto</div>
-        <h3>Anna Vitória</h3>
-        <p class="funcao">Poetisa e Designer</p>
-        <p class="descricao">
-          Responsável pelo design, identidade visual e diagramação da
-          revista. Também escreve poemas e textos autorais para as edições.
-        </p>
-        <ul class="lista-atribuicoes">
-          <li>Design da interface</li>
-          <li>Identidade visual</li>
-          <li>Diagramação das páginas</li>
-          <li>Produção de conteúdo</li>
-        </ul>
-        <a class="instagram" href="https://www.instagram.com/anavi._0" target="_blank" rel="noopener">
-          <span class="icone" aria-hidden="true">📷</span> @Anavi._0
-        </a>
-      </article>
+            <!-- ── DESENVOLVEDOR 3 ── -->
+            <article class="card-pessoa">
+                <div class="foto-pessoa vazio">foto</div>
+                <h3>Anna Vitória</h3>
+                <p class="funcao">Poetisa e Designer</p>
+                <p class="descricao">
+                    Responsável pelo design, identidade visual e diagramação da
+                    revista. Também escreve poemas e textos autorais para as edições.
+                </p>
+                <ul class="lista-atribuicoes">
+                    <li>Design da interface</li>
+                    <li>Identidade visual</li>
+                    <li>Diagramação das páginas</li>
+                    <li>Produção de conteúdo</li>
+                </ul>
+                <a class="instagram-selo" href="https://www.instagram.com/anavi._0" target="_blank" rel="noopener">
+                    @Anavi._0
+                </a>
+            </article>
 
-      <!-- ── DESENVOLVEDOR 4 ── -->
-      <article class="card-pessoa">
-        <div class="foto-pessoa vazio">foto</div>
-        <h3>Cícera Ramos</h3>
-        <p class="funcao">Professora de Português e Idealizadora do Projeto</p>
-        <p class="descricao">
-          Idealizadora da revista, orienta a produção textual e garante
-          a qualidade do conteúdo literário e pedagógico.
-        </p>
-        <ul class="lista-atribuicoes">
-          <li>Revisão de textos</li>
-          <li>Curadoria de conteúdo</li>
-          <li>Produção literária</li>
-          <li>Coordenação do projeto</li>
-        </ul>
-        <a class="instagram" href="https://www.instagram.com/ciceraport" target="_blank" rel="noopener">
-          <span class="icone" aria-hidden="true">📷</span> @ciceraport
-        </a>
-      </article>
+            <!-- ── DESENVOLVEDOR 4 ── -->
+            <article class="card-pessoa">
+                <div class="foto-pessoa vazio">foto</div>
+                <h3>Cícera Ramos</h3>
+                <p class="funcao">Professora de Português e Idealizadora do Projeto</p>
+                <p class="descricao">
+                    Idealizadora da revista, orienta a produção textual e garante
+                    a qualidade do conteúdo literário e pedagógico.
+                </p>
+                <ul class="lista-atribuicoes">
+                    <li>Revisão de textos</li>
+                    <li>Curadoria de conteúdo</li>
+                    <li>Produção literária</li>
+                    <li>Coordenação do projeto</li>
+                </ul>
+                <a class="instagram-selo" href="https://www.instagram.com/ciceraport" target="_blank" rel="noopener">
+                    @ciceraport
+                </a>
+            </article>
 
-      <!-- Para adicionar mais desenvolvedores, copie um <article class="card-pessoa">
-           inteiro (com foto, nome, função, descrição e lista) e cole aqui. -->
-
-    </div>
-  </section>
-
-  <div class="divisor"></div>
-
-  <!-- ══════════════════════════════════════════════════════════
-       SEÇÃO 3 — EQUIPE ATUAL
-       Cada card: foto, nome, função, descrição e Instagram.
-       Para adicionar/remover alguém, copie ou apague um
-       <article class="card-equipe"> inteiro.
-     ══════════════════════════════════════════════════════════ -->
-  <section class="equipe-atual">
-    <p class="eyebrow eyebrow-centro">Por trás das câmeras</p>
-    <h2 class="titulo-secao"><span>Equipe Atual</span></h2>
-    <p class="subtitulo-secao">Quem faz a revista acontecer hoje</p>
-
-    <div class="grid-cards grid-equipe">
-
-      <!-- ── MEMBRO DA EQUIPE 1 ──
-         TROQUE nome, foto, função, descrição e link do Instagram. -->
-      <article class="card-equipe">
-        <div class="foto-pessoa vazio">foto</div>
-        <h3>Nome do Integrante</h3>
-        <p class="funcao">Função na equipe</p>
-        <p class="descricao">
-          Breve descrição sobre o integrante: o que faz, desde quando
-          participa e como contribui com a revista.
-        </p>
-        <a class="instagram" href="https://instagram.com/usuario" target="_blank" rel="noopener">
-          <span class="icone" aria-hidden="true">📷</span> @usuario
-        </a>
-      </article>
-
-      <!-- ── MEMBRO DA EQUIPE 2 ── -->
-      <article class="card-equipe">
-        <div class="foto-pessoa vazio">foto</div>
-        <h3>Nome do Integrante</h3>
-        <p class="funcao">Função na equipe</p>
-        <p class="descricao">
-          Breve descrição sobre o integrante: o que faz, desde quando
-          participa e como contribui com a revista.
-        </p>
-        <a class="instagram" href="https://instagram.com/usuario" target="_blank" rel="noopener">
-          <span class="icone" aria-hidden="true">📷</span> @usuario
-        </a>
-      </article>
-
-      <!-- ── MEMBRO DA EQUIPE 3 ── -->
-      <article class="card-equipe">
-        <div class="foto-pessoa vazio">foto</div>
-        <h3>Nome do Integrante</h3>
-        <p class="funcao">Função na equipe</p>
-        <p class="descricao">
-          Breve descrição sobre o integrante: o que faz, desde quando
-          participa e como contribui com a revista.
-        </p>
-        <a class="instagram" href="https://instagram.com/usuario" target="_blank" rel="noopener">
-          <span class="icone" aria-hidden="true">📷</span> @usuario
-        </a>
-      </article>
-
-      <!-- Para adicionar mais integrantes, copie um <article class="card-equipe">
-           inteiro (com foto, nome, função, descrição e Instagram) e cole aqui. -->
-
-    </div>
-  </section>
-
-  <div class="divisor"></div>
-
-  <!-- ══════════════════════════════════════════════════════════
-       SEÇÃO 4 — GUIA DE CONTEÚDOS
-       6 categorias em grade 2 colunas. Para adicionar/remover,
-       copie ou apague um <article class="card-guia"> inteiro.
-     ══════════════════════════════════════════════════════════ -->
-  <section class="guia-conteudos">
-    <h2 class="titulo-secao"><span>Guia de Conteúdos</span></h2>
-    <p class="subtitulo-secao">Clique em "Vamos lá" e mergulhe nesses universos de descobertas.</p>
-
-    <div class="grid-guia">
-
-      <article class="card-guia">
-        <div class="icone-guia" aria-hidden="true">🎬</div>
-        <div class="card-guia-texto">
-          <h3>Filmes</h3>
-          <p>
-            Análises, recomendações e reflexões sobre filmes que atravessam
-            gerações. Histórias que emocionam, marcam épocas e nos fazem
-            ver o mundo por outros ângulos.
-          </p>
-        </div>
-      </article>
-
-      <article class="card-guia">
-        <div class="icone-guia" aria-hidden="true">🔍</div>
-        <div class="card-guia-texto">
-          <h3>Curiosidades</h3>
-          <p>
-            Fatos interessantes, acontecimentos históricos, coisas pouco
-            conhecidas e detalhes que mostram como o mundo é cheio de
-            surpresas em cada tempo.
-          </p>
-        </div>
-      </article>
-
-      <article class="card-guia">
-        <div class="icone-guia" aria-hidden="true">✏️</div>
-        <div class="card-guia-texto">
-          <h3>Desenhos</h3>
-          <p>
-            Traços, cores e formas que contam histórias sem palavras.
-            Uma seção dedicada à arte, criatividade e ao olhar sensível
-            de diferentes artistas e estilos.
-          </p>
-        </div>
-      </article>
-
-      <article class="card-guia">
-        <div class="icone-guia" aria-hidden="true">📖</div>
-        <div class="card-guia-texto">
-          <h3>Livros</h3>
-          <p>
-            Indicações, resenhas e pensamentos sobre livros que inspiram,
-            ensinam e transformam. Clássicos ou contemporâneos, aqui cada
-            página ganha um novo significado.
-          </p>
-        </div>
-      </article>
-
-      <article class="card-guia">
-        <div class="icone-guia" aria-hidden="true">🪶</div>
-        <div class="card-guia-texto">
-          <h3>Poemas</h3>
-          <p>
-            Palavras que tocam a alma. Poemas autorais e de grandes
-            escritores que traduzem sentimentos, tempos e silêncios
-            em versos.
-          </p>
-        </div>
-      </article>
-
-      <article class="card-guia">
-        <div class="icone-guia" aria-hidden="true">🎵</div>
-        <div class="card-guia-texto">
-          <h3>Músicas</h3>
-          <p>
-            Canções que embalam momentos, letras que marcam histórias e
-            artistas que dão voz ao que sentimos. Do clássico ao atual,
-            a música atravessa o tempo.
-          </p>
-        </div>
-      </article>
-
-      <!-- Para adicionar mais categorias, copie um <article class="card-guia">
+            <!-- Para adicionar mais desenvolvedores, copie um <article class="card-pessoa">
            inteiro e cole aqui. -->
 
-    </div>
-  </section>
+        </div>
+    </section>
 
-  <!-- ══════════════════════════════════════════════════════════
-       RODAPÉ — assinatura da revista + carimbo da seção.
-       Troque o texto dentro de .carimbo se for reaproveitar
-       este rodapé em outra página (ex: "FILMES", "POEMAS"...).
+    <div class="divisor"></div>
+
+    <!-- ══════════════════════════════════════════════════════════
+       SEÇÃO 3 — EQUIPE ATUAL
+       Informações ainda não definidas: os campos abaixo mostram
+       "A definir" até que os dados reais de cada integrante cheguem.
+       Para adicionar/remover, copie ou apague um <article class="card-equipe">.
      ══════════════════════════════════════════════════════════ -->
-  <div class="rodape-sobre">
-    <img loading="lazy" decoding="async" src="img/selo.webp" alt="" class="decor-rodape">
-    <div class="divisor divisor-rodape"></div>
-    <div>entre tempos · revista eletrônica</div>
-    <div class="carimbo">sobre o site</div>
-  </div>
+    <section class="equipe-atual">
+        <h2 class="titulo-secao"><span>Equipe Atual</span></h2>
+        <p class="subtitulo-secao">Quem faz a revista acontecer hoje</p>
+
+        <div class="grid-cards grid-equipe">
+
+            <!-- ── MEMBRO DA EQUIPE 1 ──
+         TROQUE: foto, nome, função, descrição e Instagram assim que definidos. -->
+            <article class="card-equipe">
+                <div class="foto-pessoa vazio">foto</div>
+                <h3>Nome do Integrante</h3>
+                <p class="funcao">A definir</p>
+                <p class="descricao">A definir.</p>
+                <span class="instagram-selo instagram-pendente">A definir</span>
+            </article>
+
+            <!-- ── MEMBRO DA EQUIPE 2 ── -->
+            <article class="card-equipe">
+                <div class="foto-pessoa vazio">foto</div>
+                <h3>Nome do Integrante</h3>
+                <p class="funcao">A definir</p>
+                <p class="descricao">A definir.</p>
+                <span class="instagram-selo instagram-pendente">A definir</span>
+            </article>
+
+            <!-- ── MEMBRO DA EQUIPE 3 ── -->
+            <article class="card-equipe">
+                <div class="foto-pessoa vazio">foto</div>
+                <h3>Nome do Integrante</h3>
+                <p class="funcao">A definir</p>
+                <p class="descricao">A definir.</p>
+                <span class="instagram-selo instagram-pendente">A definir</span>
+            </article>
+
+            <!-- Para adicionar mais integrantes, copie um <article class="card-equipe">
+           inteiro e cole aqui. -->
+
+        </div>
+    </section>
+
+    <div class="divisor"></div>
+
+    <!-- ══════════════════════════════════════════════════════════
+       SEÇÃO 4 — GUIA DE CONTEÚDOS
+       6 categorias. Para adicionar/remover, copie ou apague um
+       <article class="card-guia"> inteiro.
+     ══════════════════════════════════════════════════════════ -->
+    <section class="guia-conteudos">
+        <h2 class="titulo-secao"><span>Guia de Conteúdos</span></h2>
+        <p class="subtitulo-secao">Clique em "Vamos lá" e mergulhe nesses universos de descobertas.</p>
+
+        <div class="grid-guia">
+
+            <article class="card-guia">
+                <div class="icone-guia" aria-hidden="true">🎬</div>
+                <div class="card-guia-texto">
+                    <h3>Filmes</h3>
+                    <p>
+                        Análises, recomendações e reflexões sobre filmes que
+                        <strong>atravessam gerações</strong>. Histórias que emocionam,
+                        marcam épocas e nos fazem ver o mundo por outros ângulos.
+                    </p>
+                </div>
+            </article>
+
+            <article class="card-guia">
+                <div class="icone-guia" aria-hidden="true">🔍</div>
+                <div class="card-guia-texto">
+                    <h3>Curiosidades</h3>
+                    <p>
+                        Fatos interessantes, acontecimentos históricos e detalhes que
+                        mostram como <strong>o mundo é cheio de surpresas</strong> em
+                        cada tempo.
+                    </p>
+                </div>
+            </article>
+
+            <article class="card-guia">
+                <div class="icone-guia" aria-hidden="true">✏️</div>
+                <div class="card-guia-texto">
+                    <h3>Desenhos</h3>
+                    <p>
+                        Traços, cores e formas que contam histórias sem palavras.
+                        Uma seção dedicada à <strong>arte e à criatividade</strong>
+                        de diferentes artistas e estilos.
+                    </p>
+                </div>
+            </article>
+
+            <article class="card-guia">
+                <div class="icone-guia" aria-hidden="true">📖</div>
+                <div class="card-guia-texto">
+                    <h3>Livros</h3>
+                    <p>
+                        Indicações e resenhas sobre livros que inspiram, ensinam e
+                        transformam. Clássicos ou contemporâneos, aqui cada página
+                        <strong>ganha um novo significado</strong>.
+                    </p>
+                </div>
+            </article>
+
+            <article class="card-guia">
+                <div class="icone-guia" aria-hidden="true">🪶</div>
+                <div class="card-guia-texto">
+                    <h3>Poemas</h3>
+                    <p>
+                        <strong>Palavras que tocam a alma.</strong> Poemas autorais e de
+                        grandes escritores que traduzem sentimentos, tempos e silêncios
+                        em versos.
+                    </p>
+                </div>
+            </article>
+
+            <article class="card-guia">
+                <div class="icone-guia" aria-hidden="true">🎵</div>
+                <div class="card-guia-texto">
+                    <h3>Músicas</h3>
+                    <p>
+                        Canções que embalam momentos e artistas que dão voz ao que
+                        sentimos. <strong>Do clássico ao atual</strong>, a música
+                        atravessa o tempo.
+                    </p>
+                </div>
+            </article>
+
+            <!-- Para adicionar mais categorias, copie um <article class="card-guia">
+           inteiro e cole aqui. -->
+
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════════
+       RODAPÉ — assinatura + carimbo da seção.
+       Reaproveite trocando só o texto dentro de .carimbo
+       (ex: "FILMES", "POEMAS"...).
+     ══════════════════════════════════════════════════════════ -->
+    <div class="rodape-sobre">
+        <div>entre tempos · revista eletrônica</div>
+        <div class="carimbo">sobre o site</div>
+    </div>
 
 </body>
 
