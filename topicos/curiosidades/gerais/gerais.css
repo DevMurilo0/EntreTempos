@@ -302,6 +302,14 @@ header a:hover {
   min-width: 0;
 }
 
+.card-curiosidade .curiosidade-conteudo h1 {
+  font-family: 'Dancing Script', cursive;
+  font-weight: 600;
+  font-size: clamp(20px, 2.6vw, 26px);
+  color: #1a0e04;
+  margin: 0;
+}
+
 .card-curiosidade .curiosidade-titulo {
   font-family: 'Dancing Script', cursive;
   font-weight: 600;
