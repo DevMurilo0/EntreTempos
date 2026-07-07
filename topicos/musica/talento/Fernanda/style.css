@@ -22,7 +22,11 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Bebas+Neue&family=Special+Elite&family=Dancing+Script:wght@400;600&family=IM+Fell+English:ital@0;1&display=swap');
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
   background: #f2e8d5;
@@ -58,7 +62,10 @@ header a {
   letter-spacing: 1px;
   transition: color 0.2s;
 }
-header a:hover { color: #c0392b; }
+
+header a:hover {
+  color: #c0392b;
+}
 
 /* ══════════════════════════════════════════
    ABERTURA — imagem + nome/título + resumo
@@ -76,14 +83,17 @@ header a:hover { color: #c0392b; }
 }
 
 .foto-musica {
-  width: clamp(160px, 22vw, 260px);
+  width: clamp(300px, 22vw, 260px);
   height: auto;
   flex-shrink: 0;
-  filter: drop-shadow(4px 6px 14px rgba(0,0,0,0.35)) sepia(15%);
+  filter: drop-shadow(4px 6px 14px rgba(0, 0, 0, 0.35)) sepia(15%);
   transform: rotate(-2deg);
   transition: transform 0.3s ease;
 }
-.foto-musica:hover { transform: rotate(0deg) scale(1.02); }
+
+.foto-musica:hover {
+  transform: rotate(0deg) scale(1.02);
+}
 
 /* placeholder enquanto a imagem real não é adicionada
    (mesmo padrão usado nos cards das listas) */
@@ -166,15 +176,17 @@ header a:hover { color: #c0392b; }
   height: auto;
   display: block;
   border: 6px solid #fff;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.28);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
 }
 
 /* iframe (ex.: vídeo do YouTube) precisa de proporção fixa */
 .bloco-midia.video-embed {
   position: relative;
   width: 100%;
-  padding-top: 56.25%; /* proporção 16:9 */
+  padding-top: 56.25%;
+  /* proporção 16:9 */
 }
+
 .bloco-midia.video-embed iframe {
   position: absolute;
   inset: 0;
@@ -216,7 +228,9 @@ header a:hover { color: #c0392b; }
   margin-bottom: 16px;
 }
 
-.bloco-texto p:last-child { margin-bottom: 0; }
+.bloco-texto p:last-child {
+  margin-bottom: 0;
+}
 
 .bloco-texto strong {
   color: #8c3b3b;
