@@ -1,0 +1,541 @@
+/* ══════════════════════════════════════════════════════════════
+   SOBRE O SITE — Entre Tempos
+   Paleta e tipografia iguais às outras páginas do site
+   (poemas.css / conhecidos.css / pessoa.css): papel envelhecido,
+   Special Elite, Bebas Neue e IM Fell English, com linhas
+   vermelhas em gradiente separando as seções.
+
+   ÍNDICE DESTE ARQUIVO:
+   1. Reset, fundo de papel e header      → linha ~30
+   2. Marca (logo) + linhas vermelhas     → linha ~75
+   3. Título de seção (reutilizável)      → linha ~110
+   4. Apresentação (A Revista)            → linha ~150
+   5. Cards de pessoa (devs + equipe)     → linha ~230
+   6. Selo de Instagram (destaque)        → linha ~300
+   7. Guia de conteúdos                   → linha ~330
+   8. Rodapé                              → linha ~370
+   9. Responsivo (mobile)                 → linha ~400
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 1. RESET, FUNDO DE PAPEL E HEADER ────────────────────────── */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #f2e8d5;
+    font-family: 'Special Elite', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: #3e3228;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: url('https://www.transparenttextures.com/patterns/aged-paper.png');
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 0;
+}
+
+header {
+    position: relative;
+    z-index: 10;
+    padding: 18px 30px;
+    border-bottom: 2px solid #c4a96b;
+}
+
+header a {
+    text-decoration: none;
+    color: #3e4a59;
+    font-weight: bold;
+    font-family: 'Special Elite', serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+    transition: color 0.2s;
+}
+
+header a:hover {
+    color: #c0392b;
+}
+
+/* ── 2. MARCA (LOGO) + LINHAS VERMELHAS ──────────────────────── */
+
+/* Linha vermelha em gradiente — o mesmo divisor usado em todas
+   as páginas do site (poemas.css, conhecidos.css, pessoa.css). */
+.linha-vermelha,
+.divisor {
+    position: relative;
+    z-index: 5;
+    width: 80%;
+    max-width: 900px;
+    margin: 0 auto;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #c0392b, #c4a96b, #c0392b, transparent);
+}
+
+.divisor {
+    margin: 36px auto;
+}
+
+.marca {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    padding: 14px 20px;
+}
+
+.marca-titulo {
+    display: block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(32px, 5vw, 46px);
+    color: #1a1a1a;
+    letter-spacing: 6px;
+    text-shadow: 3px 3px 0 #c4a96b;
+}
+
+.marca-subtitulo {
+    display: block;
+    font-family: 'Special Elite', serif;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #7a6a50;
+    margin-top: 4px;
+}
+
+/* ── 3. TÍTULO DE SEÇÃO (reutilizável) ───────────────────────── */
+.titulo-secao {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(34px, 5vw, 54px);
+    letter-spacing: 4px;
+    color: #1a1a1a;
+    text-shadow: 3px 3px 0 #c4a96b;
+    margin: 0 auto 8px;
+    padding: 0 20px;
+}
+
+.subtitulo-secao {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    font-family: 'Special Elite', serif;
+    font-style: normal;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #7a6a50;
+    margin-bottom: 2.5rem;
+}
+
+.eyebrow {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    font-family: 'Special Elite', serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #8c3b3b;
+    margin-bottom: 6px;
+}
+
+/* ── 4. APRESENTAÇÃO (A Revista) ─────────────────────────────── */
+.page-titulo {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    padding: 34px 20px 6px;
+}
+
+.page-titulo h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(50px, 9vw, 96px);
+    color: #1a1a1a;
+    letter-spacing: 6px;
+    line-height: 1;
+    text-shadow: 4px 4px 0 #c4a96b;
+}
+
+.apresentacao-section {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    align-items: flex-start;
+    gap: 50px;
+    max-width: 900px;
+    margin: 30px auto 40px;
+    padding: 0 40px;
+}
+
+.foto-apresentacao {
+    width: clamp(200px, 26vw, 300px);
+    height: auto;
+    flex-shrink: 0;
+    filter: drop-shadow(4px 6px 14px rgba(0, 0, 0, 0.35)) sepia(15%);
+    transform: rotate(-2deg);
+    transition: transform 0.3s ease;
+}
+
+.foto-apresentacao:hover {
+    transform: rotate(0deg) scale(1.02);
+}
+
+/* placeholder — mesmo padrão visual usado nas outras páginas do site
+   (ver .foto-curiosidade.vazio / .midia-vazia em leitura.css) */
+.foto-apresentacao.vazio {
+    aspect-ratio: 4 / 3;
+    background: #e8dcc0;
+    border: 2px dashed #c4a96b;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: #8c7c5e;
+    padding: 0 20px;
+    transform: none;
+}
+
+.foto-apresentacao.vazio span {
+    font-size: 11px;
+    margin-top: 6px;
+}
+
+.apresentacao-texto {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 10px;
+    flex: 1;
+}
+
+.apresentacao-texto p {
+    font-family: 'IM Fell English', serif;
+    font-size: clamp(15px, 1.6vw, 18px);
+    color: #3e3228;
+    line-height: 1.85;
+    text-align: justify;
+}
+
+/* frases em destaque, no mesmo tom vermelho-acastanhado usado
+   em toda a revista para dar ênfase (ex: apresentacao-texto strong) */
+.apresentacao-texto strong,
+.card-guia-texto strong {
+    font-family: 'Special Elite', serif;
+    color: #8c3b3b;
+    font-style: italic;
+    font-weight: normal;
+}
+
+.frase-destaque {
+    font-family: 'Dancing Script', cursive;
+    font-weight: 600;
+    font-size: clamp(20px, 2.6vw, 26px) !important;
+    color: #6e4a28;
+    text-align: center !important;
+    margin-top: 8px;
+}
+
+/* ── 5. CARDS DE PESSOA (desenvolvedores + equipe) ───────────── */
+.grid-cards {
+    position: relative;
+    z-index: 5;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.6rem;
+    max-width: 1200px;
+    margin: 2rem auto 0;
+    padding: 0 40px 3rem;
+}
+
+.grid-equipe {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 900px;
+}
+
+.card-pessoa,
+.card-equipe {
+    background: #fffdf7;
+    padding: 1.6rem 1.3rem;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
+    border-left: 4px solid #8c3b3b;
+    border-right: 4px solid #8c3b3b;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card-pessoa:hover,
+.card-equipe:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.22);
+}
+
+/* placeholder de foto — mesmo padrão do resto do site */
+.foto-pessoa {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.foto-pessoa img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: sepia(15%);
+}
+
+.foto-pessoa.vazio {
+    background: #e8dcc0;
+    border: 2px dashed #c4a96b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 12px;
+    color: #8c7c5e;
+}
+
+.card-pessoa h3,
+.card-equipe h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1.5px;
+    color: #1a1a1a;
+    margin-bottom: 2px;
+}
+
+.funcao {
+    font-family: 'Special Elite', serif;
+    font-style: italic;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    color: #8c3b3b;
+    margin-bottom: 0.7rem;
+}
+
+.descricao {
+    font-family: 'IM Fell English', serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #3e3228;
+    margin-bottom: 1rem;
+}
+
+.lista-atribuicoes {
+    list-style: none;
+    margin-top: auto;
+    border-top: 1px dashed #c4a96b;
+    padding-top: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.lista-atribuicoes li {
+    position: relative;
+    padding-left: 1rem;
+    font-family: 'IM Fell English', serif;
+    font-size: 14px;
+    color: #3e3228;
+    padding-bottom: 0.35rem;
+}
+
+.lista-atribuicoes li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: #c4a96b;
+}
+
+/* ── 6. SELO DE INSTAGRAM (em destaque) ──────────────────────── */
+.instagram-selo {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    align-self: flex-start;
+    margin-top: auto;
+    padding: 6px 14px;
+    border: 2px solid #c0392b;
+    border-radius: 3px;
+    font-family: 'Special Elite', serif;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    color: #c0392b;
+    text-decoration: none;
+    transform: rotate(-1deg);
+    transition: all 0.2s ease;
+}
+
+.instagram-selo::before {
+    content: "IG";
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 1px;
+    border-right: 1px solid currentColor;
+    padding-right: 6px;
+}
+
+.instagram-selo:hover {
+    background: #c0392b;
+    color: #fffdf7;
+    transform: rotate(0deg) scale(1.04);
+}
+
+/* selo "a definir" — mesmo formato, porém neutro e não clicável */
+.instagram-pendente {
+    border-color: #c4a96b;
+    color: #8c7c5e;
+    font-style: italic;
+    cursor: default;
+    transform: none;
+}
+
+.instagram-pendente::before {
+    content: "IG";
+    color: #8c7c5e;
+}
+
+.instagram-pendente:hover {
+    background: none;
+    color: #8c7c5e;
+    transform: none;
+}
+
+/* nos cards, a lista de atribuições empurra o rodapé do card para
+   baixo; quando não há lista (equipe atual), o selo se ajusta sozinho */
+.card-equipe .instagram-selo,
+.card-equipe .instagram-pendente {
+    margin-top: auto;
+}
+
+/* ── 7. GUIA DE CONTEÚDOS ─────────────────────────────────────── */
+.guia-conteudos {
+    padding-bottom: 1rem;
+}
+
+.grid-guia {
+    position: relative;
+    z-index: 5;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem 3rem;
+    max-width: 1000px;
+    margin: 2rem auto 0;
+    padding: 0 40px 3rem;
+}
+
+.card-guia {
+    display: flex;
+    gap: 1.1rem;
+    align-items: flex-start;
+    padding-bottom: 1.4rem;
+    border-bottom: 1px dashed #c4a96b;
+}
+
+.icone-guia {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #e8dcc0;
+    border: 1px solid #c4a96b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+}
+
+.card-guia-texto h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 21px;
+    letter-spacing: 1px;
+    color: #1a1a1a;
+    margin-bottom: 0.35rem;
+}
+
+.card-guia-texto p {
+    font-family: 'IM Fell English', serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #3e3228;
+    margin: 0;
+}
+
+/* ── 8. RODAPÉ ────────────────────────────────────────────────── */
+.rodape-sobre {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    padding: 24px 20px;
+    font-family: 'Special Elite', serif;
+    font-size: 12px;
+    color: #b0a090;
+    letter-spacing: 2px;
+    border-top: 1px solid #c4a96b;
+}
+
+.carimbo {
+    display: inline-block;
+    border: 3px solid #c0392b;
+    color: #c0392b;
+    padding: 4px 14px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    transform: rotate(-3deg);
+    opacity: 0.6;
+    margin-top: 10px;
+}
+
+/* ── 9. RESPONSIVO (MOBILE) ───────────────────────────────────── */
+@media (max-width: 900px) {
+    .grid-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-equipe {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-guia {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .apresentacao-section {
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+        padding: 0 20px;
+    }
+
+    .foto-apresentacao,
+    .foto-apresentacao.vazio {
+        width: clamp(160px, 60vw, 220px);
+    }
+
+    .apresentacao-texto p {
+        text-align: left;
+    }
+
+    .grid-cards,
+    .grid-equipe {
+        grid-template-columns: 1fr;
+        padding: 0 20px 2.5rem;
+    }
+}

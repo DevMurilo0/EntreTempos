@@ -198,7 +198,7 @@ img.deco-maos {
 .ampulheta {
   width: clamp(50px, 7vw, 100px);
   height: auto;
-  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,0.3));
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
@@ -214,7 +214,7 @@ img.deco-maos {
   margin: 35px auto;
   overflow: hidden;
   border-radius: 10px;
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.3);
 }
 
 .slides {
@@ -249,7 +249,7 @@ img.deco-maos {
   width: min(88%, 650px);
   background: #fffdf7;
   padding: clamp(16px, 3vw, 28px) clamp(24px, 5vw, 48px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
   transform: rotate(1deg);
   border-left: 5px solid #8c3b3b;
   border-right: 5px solid #8c3b3b;
@@ -278,64 +278,61 @@ img.deco-maos {
 }
 
 /* =====================
-   CHAMADA PARA A EQUIPE
+   ORGANIZADORES
 ===================== */
 
-.chamada-equipe {
+.organizadores {
   position: relative;
   z-index: 5;
   width: min(88%, 500px);
   margin: 0 auto 60px;
-  padding: clamp(20px, 4vw, 34px) clamp(18px, 4vw, 30px);
-  text-align: center;
-  background: #fffdf7;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  padding: 0 20px;
   transform: rotate(-1deg);
-  border-left: 5px solid #8c3b3b;
-  border-right: 5px solid #8c3b3b;
   transition: transform 0.3s ease;
 }
 
-.chamada-equipe:hover {
+.organizadores:hover {
   transform: rotate(0deg);
 }
 
-.chamada-equipe h2 {
-  font-size: clamp(22px, 3vw, 30px);
+.organizadores h2 {
+  font-size: clamp(24px, 3vw, 34px);
+  margin-bottom: 20px;
   color: #1a1a1a;
   font-weight: 700;
-  margin-bottom: 10px;
 }
 
-.chamada-equipe p {
-  font-size: clamp(15px, 1.6vw, 19px);
-  color: #666;
-  font-style: italic;
-  margin-bottom: 20px;
+.pessoa {
+  margin-bottom: 18px;
 }
 
-.botao-equipe {
-  display: inline-block;
-  padding: clamp(9px, 1.5vw, 12px) clamp(22px, 4vw, 32px);
-  background: #8c3b3b;
-  color: white;
-  text-decoration: none;
-  font-size: clamp(15px, 1.7vw, 19px);
+.pessoa strong {
+  display: block;
+  font-size: clamp(18px, 2vw, 26px);
+  color: #000;
   font-weight: 700;
-  letter-spacing: 0.1em;
-  border-radius: 6px;
-  transition: all 0.3s ease;
-  box-shadow: 0 8px 20px rgba(140, 59, 59, 0.4);
 }
 
-.botao-equipe:hover {
-  background: #6a2c2c;
-  transform: scale(1.06);
-  box-shadow: 0 12px 28px rgba(140, 59, 59, 0.5);
+.pessoa p {
+  font-size: clamp(15px, 1.6vw, 20px);
+  color: #666;
+  margin-top: 3px;
+  font-style: italic;
 }
 
-.botao-equipe:active {
-  transform: scale(0.96);
+.pessoa a {
+  display: inline-block;
+  color: #8c3b3b;
+  text-decoration: none;
+  font-size: clamp(14px, 1.5vw, 18px);
+  transition: color 0.2s ease;
+  margin-top: 5px;
+  font-weight: 600;
+}
+
+.pessoa a:hover {
+  color: #1a1a1a;
+  text-decoration: underline;
 }
 
 /* =====================
@@ -360,14 +357,14 @@ img.deco-maos {
   letter-spacing: 0.14em;
   border-radius: 6px;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 20px rgba(140, 59, 59, 0.45);
+  box-shadow: 0 8px 20px rgba(140,59,59,0.45);
   text-transform: uppercase;
 }
 
 .botao-folha:hover {
   background: #6a2c2c;
   transform: scale(1.08);
-  box-shadow: 0 12px 30px rgba(140, 59, 59, 0.55);
+  box-shadow: 0 12px 30px rgba(140,59,59,0.55);
 }
 
 .botao-folha:active {
@@ -390,22 +387,15 @@ img.deco-maos {
     width: 46vw;
   }
 
-  img.deco-nuvem {
-    width: 28vw;
-  }
-
-  img.deco-rasagado {
-    width: 26vw;
-  }
+  img.deco-nuvem  { width: 28vw; }
+  img.deco-rasagado { width: 26vw; }
 
   img.deco-relogio {
     width: 28vw;
     right: 20px;
   }
 
-  img.deco-homem {
-    width: 15vw;
-  }
+  img.deco-homem { width: 15vw; }
 
   img.deco-maos {
     top: 140px;
@@ -442,13 +432,8 @@ img.deco-maos {
     transform: translateX(30%);
   }
 
-  img.deco-nuvem {
-    width: 32vw;
-  }
-
-  img.deco-rasagado {
-    width: 30vw;
-  }
+  img.deco-nuvem    { width: 32vw; }
+  img.deco-rasagado { width: 30vw; }
 
   img.deco-relogio {
     width: 32vw;
@@ -465,13 +450,8 @@ img.deco-maos {
     top: 80px;
   }
 
-  .carousel {
-    width: 70%;
-  }
-
-  .sobre-card {
-    width: 90%;
-  }
+  .carousel   { width: 70%; }
+  .sobre-card { width: 90%; }
 
 }
 
@@ -509,13 +489,8 @@ img.deco-maos {
     transform: translateX(30%);
   }
 
-  img.deco-nuvem {
-    width: 42vw;
-  }
-
-  img.deco-rasagado {
-    width: 40vw;
-  }
+  img.deco-nuvem    { width: 42vw; }
+  img.deco-rasagado { width: 40vw; }
 
   img.deco-relogio {
     display: block;
@@ -535,18 +510,16 @@ img.deco-maos {
     opacity: 0.4;
   }
 
-  .carousel {
-    width: 88%;
-  }
+  .carousel { width: 88%; }
 
   .sobre-card {
     width: 94%;
     padding: 16px 18px;
   }
 
-  .chamada-equipe {
+  .organizadores {
     width: 94%;
-    padding: 20px 14px;
+    padding: 0 14px;
   }
 
 }
@@ -557,9 +530,7 @@ img.deco-maos {
 
 @media (max-width: 360px) {
 
-  .hero-text h2 {
-    font-size: 8px;
-  }
+  .hero-text h2 { font-size: 8px; }
 
   img.cortina-esquerda {
     width: 85vw;
@@ -572,13 +543,9 @@ img.deco-maos {
   }
 
   img.deco-nuvem,
-  img.deco-rasagado {
-    width: 44vw;
-  }
+  img.deco-rasagado { width: 44vw; }
 
-  img.deco-homem {
-    width: 32vw;
-  }
+  img.deco-homem { width: 32vw; }
 
 }
 
@@ -591,8 +558,7 @@ img.deco-maos {
    SETAS DO CARROSSEL
 ===================== */
 .carousel {
-  position: relative;
-  /* já deve ter, só confirme */
+  position: relative; /* já deve ter, só confirme */
 }
 
 .carousel-btn {
@@ -615,18 +581,8 @@ img.deco-maos {
   -webkit-tap-highlight-color: transparent;
 }
 
-.carousel-btn:hover {
-  background: rgba(0, 0, 0, 0.65);
-}
+.carousel-btn:hover { background: rgba(0,0,0,0.65); }
+.carousel-btn:active { transform: translateY(-50%) scale(0.92); }
 
-.carousel-btn:active {
-  transform: translateY(-50%) scale(0.92);
-}
-
-.carousel-btn.prev {
-  left: 8px;
-}
-
-.carousel-btn.next {
-  right: 8px;
-}
+.carousel-btn.prev { left: 8px; }
+.carousel-btn.next { right: 8px; }

@@ -43,7 +43,9 @@ header a {
   transition: color 0.2s;
 }
 
-header a:hover { color: #c0392b; }
+header a:hover {
+  color: #c0392b;
+}
 
 /* ── TÍTULO ── */
 .page-titulo {
@@ -97,7 +99,7 @@ header a:hover { color: #c0392b; }
   width: clamp(160px, 22vw, 260px);
   height: auto;
   flex-shrink: 0;
-  filter: drop-shadow(4px 6px 14px rgba(0,0,0,0.35)) sepia(15%);
+  filter: drop-shadow(4px 6px 14px rgba(0, 0, 0, 0.35)) sepia(15%);
   transform: rotate(-2deg);
   transition: transform 0.3s ease;
 }
@@ -143,9 +145,9 @@ header a:hover { color: #c0392b; }
 }
 
 /* ══════════════════════════════════════════
-   BLOCO DE AUTOR — cabeçalho (foto + nome) seguido
-   direto pelas curiosidades dele. Um bloco por autor,
-   sem precisar entrar em outra página.
+   BLOCO DE TEMA — as curiosidades organizadas
+   por tema, um bloco por tema, sem precisar
+   entrar em outra página.
    ══════════════════════════════════════════ */
 
 .autor-bloco {
@@ -175,7 +177,7 @@ header a:hover { color: #c0392b; }
   display: block;
   object-fit: contain;
   background: transparent;
-  filter: drop-shadow(4px 6px 14px rgba(0,0,0,0.35)) sepia(15%);
+  filter: drop-shadow(4px 6px 14px rgba(0, 0, 0, 0.35)) sepia(15%);
 }
 
 .autor-cabecalho .foto-nav-nome {
@@ -204,21 +206,22 @@ header a:hover { color: #c0392b; }
   gap: 26px;
 
   background-color: #ede4cc;
-  background-image:
-    url('https://www.transparenttextures.com/patterns/paper-fibers.png'),
-    url('https://www.transparenttextures.com/patterns/beige-paper.png');
 
-  padding: 22px 24px;
 
   box-shadow:
-    0 8px 28px rgba(0,0,0,0.24),
-    inset 0 0 50px rgba(120,80,10,0.12);
+    0 8px 28px rgba(0, 0, 0, 0.24),
+    inset 0 0 50px rgba(120, 80, 10, 0.12);
 
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card-curiosidade:nth-child(odd)  { transform: rotate(-0.6deg); }
-.card-curiosidade:nth-child(even) { transform: rotate(0.6deg);  }
+.card-curiosidade:nth-child(odd) {
+  transform: rotate(-0.6deg);
+}
+
+.card-curiosidade:nth-child(even) {
+  transform: rotate(0.6deg);
+}
 
 /* alterna o lado da imagem: ímpares = imagem à esquerda,
    pares = imagem à direita (descrição à esquerda) */
@@ -237,15 +240,17 @@ header a:hover { color: #c0392b; }
 
 .card-curiosidade:hover {
   transform: rotate(0deg) scale(1.015) !important;
-  box-shadow: 0 16px 44px rgba(0,0,0,0.32);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.32);
   z-index: 10;
 }
 
 .card-curiosidade::before {
   content: "";
   position: absolute;
-  top: 0; right: 0;
-  width: 0; height: 0;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
   border-style: solid;
   border-width: 0 22px 22px 0;
   border-color: transparent #f2e8d5 transparent transparent;
@@ -256,10 +261,10 @@ header a:hover { color: #c0392b; }
   aspect-ratio: 3 / 4;
   flex-shrink: 0;
   background: #fff;
-  border: 8px solid #fff;
+
   box-shadow:
-    0 3px 12px rgba(0,0,0,0.22),
-    inset 0 0 0 1px rgba(0,0,0,0.05);
+    0 3px 12px rgba(0, 0, 0, 0.22),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.05);
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -278,11 +283,7 @@ header a:hover { color: #c0392b; }
   transform: scale(1.04);
 }
 
-.card-curiosidade .quadro.vazio {
-  background: #e8dcc0;
-  border-color: #c4a96b;
-  border-style: dashed;
-}
+
 
 .card-curiosidade .quadro.vazio span {
   font-family: 'IM Fell English', serif;
@@ -299,6 +300,14 @@ header a:hover { color: #c0392b; }
   justify-content: center;
   gap: 10px;
   min-width: 0;
+}
+
+.card-curiosidade .curiosidade-conteudo h1 {
+  font-family: 'Dancing Script', cursive;
+  font-weight: 600;
+  font-size: clamp(20px, 2.6vw, 26px);
+  color: #1a0e04;
+  margin: 0;
 }
 
 .card-curiosidade .curiosidade-titulo {
@@ -331,19 +340,19 @@ header a:hover { color: #c0392b; }
   letter-spacing: 1.5px;
   text-transform: uppercase;
   border: 2px solid #c0392b;
-  box-shadow: 3px 4px 0 rgba(0,0,0,0.2);
+  box-shadow: 3px 4px 0 rgba(0, 0, 0, 0.2);
   transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn-ler-curiosidade:hover {
   background: #c0392b;
   transform: translate(-2px, -2px);
-  box-shadow: 5px 6px 0 rgba(0,0,0,0.22);
+  box-shadow: 5px 6px 0 rgba(0, 0, 0, 0.22);
 }
 
 .btn-ler-curiosidade:active {
   transform: translate(0, 0);
-  box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
 }
 
 /* ── RODAPÉ ── */
