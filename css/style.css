@@ -630,3 +630,225 @@ img.deco-maos {
 .carousel-btn.next {
   right: 8px;
 }
+
+/* =====================
+   SEÇÕES DA REVISTA (MIGRADO DE SOBRE-O-SITE)
+===================== */
+
+.linha-vermelha,
+.divisor {
+    position: relative;
+    z-index: 5;
+    width: 80%;
+    max-width: 900px;
+    margin: 0 auto;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #c0392b, #c4a96b, #c0392b, transparent);
+}
+
+.divisor {
+    margin: 36px auto;
+}
+
+.titulo-secao {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(34px, 5vw, 54px);
+    letter-spacing: 4px;
+    color: #1a1a1a;
+    text-shadow: 3px 3px 0 #c4a96b;
+    margin: 0 auto 8px;
+    padding: 0 20px;
+}
+
+.eyebrow {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    font-family: 'Special Elite', serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #8c3b3b;
+    margin-bottom: 6px;
+}
+
+.page-titulo {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    padding: 34px 20px 6px;
+}
+
+.page-titulo h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(50px, 9vw, 96px);
+    color: #1a1a1a;
+    letter-spacing: 6px;
+    line-height: 1;
+    text-shadow: 4px 4px 0 #c4a96b;
+}
+
+.apresentacao-section {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    align-items: flex-start;
+    gap: 50px;
+    max-width: 900px;
+    margin: 30px auto 40px;
+    padding: 0 40px;
+}
+
+.foto-apresentacao {
+    width: clamp(200px, 26vw, 300px);
+    height: auto;
+    flex-shrink: 0;
+    filter: drop-shadow(4px 6px 14px rgba(0, 0, 0, 0.35)) sepia(15%);
+    transform: rotate(-2deg);
+    transition: transform 0.3s ease;
+}
+
+.foto-apresentacao:hover {
+    transform: rotate(0deg) scale(1.02);
+}
+
+.foto-apresentacao.vazio {
+    aspect-ratio: 4 / 3;
+    background: #e8dcc0;
+    border: 2px dashed #c4a96b;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: #8c7c5e;
+    padding: 0 20px;
+    transform: none;
+    width: clamp(200px, 26vw, 300px);
+    flex-shrink: 0;
+}
+
+.foto-apresentacao.vazio span {
+    font-size: 11px;
+    margin-top: 6px;
+}
+
+.apresentacao-texto {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 10px;
+    flex: 1;
+}
+
+.apresentacao-texto p {
+    font-family: 'IM Fell English', serif;
+    font-size: clamp(15px, 1.6vw, 18px);
+    color: #3e3228;
+    line-height: 1.85;
+    text-align: justify;
+}
+
+.apresentacao-texto strong,
+.card-guia-texto strong {
+    font-family: 'Special Elite', serif;
+    color: #8c3b3b;
+    font-style: italic;
+    font-weight: normal;
+}
+
+.frase-destaque {
+    font-family: 'Dancing Script', cursive;
+    font-weight: 600;
+    font-size: clamp(20px, 2.6vw, 26px) !important;
+    color: #6e4a28;
+    text-align: center !important;
+    margin-top: 8px;
+}
+
+.guia-conteudos {
+    padding-bottom: 1rem;
+}
+
+.grid-guia {
+    position: relative;
+    z-index: 5;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem 3rem;
+    max-width: 1000px;
+    margin: 2rem auto 0;
+    padding: 0 40px 3rem;
+}
+
+.card-guia {
+    display: flex;
+    gap: 1.1rem;
+    align-items: flex-start;
+    padding-bottom: 1.4rem;
+    border-bottom: 1px dashed #c4a96b;
+}
+
+.icone-guia {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #e8dcc0;
+    border: 1px solid #c4a96b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icone-guia svg {
+    width: 24px;
+    height: 24px;
+    color: #8c3b3b;
+}
+
+.card-guia-texto h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 21px;
+    letter-spacing: 1px;
+    color: #1a1a1a;
+    margin-bottom: 0.35rem;
+}
+
+.card-guia-texto p {
+    font-family: 'IM Fell English', serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #3e3228;
+    margin: 0;
+}
+
+@media (max-width: 900px) {
+    .grid-guia {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .apresentacao-section {
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+        padding: 0 20px;
+    }
+
+    .foto-apresentacao,
+    .foto-apresentacao.vazio {
+        width: clamp(160px, 60vw, 220px);
+    }
+
+    .apresentacao-texto p {
+        text-align: left;
+    }
+}
