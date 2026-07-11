@@ -801,6 +801,7 @@ img.deco-maos {
 .img-poemas {
   width: 160px;
   transform: rotate(6deg);
+  margin-left: -20px;
 }
 
 .img-livros {
@@ -811,6 +812,7 @@ img.deco-maos {
 .img-curiosidades {
   width: 160px;
   transform: rotate(-5deg);
+  margin-left: -20px;
 }
 
 /* Filmes, Desenhos e Músicas: ainda maiores que os demais */
@@ -818,16 +820,19 @@ img.deco-maos {
 .img-filmes {
   width: 190px;
   transform: rotate(-7deg);
+  margin-left: -25px;
 }
 
 .img-desenho {
   width: 190px;
   transform: rotate(5deg);
+  margin-left: -25px;
 }
 
 .img-musicas {
   width: 190px;
   transform: rotate(-4deg);
+  margin-left: -25px;
 }
 
 .card-guia-texto h3 {
