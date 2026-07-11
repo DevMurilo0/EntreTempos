@@ -789,28 +789,26 @@ img.deco-maos {
 
 .card-guia {
     display: flex;
-    gap: 1.1rem;
+    gap: 1.8rem;
     align-items: flex-start;
     padding-bottom: 1.4rem;
     border-bottom: 1px dashed #c4a96b;
 }
 
-.icone-guia {
+.imagem-guia {
     flex-shrink: 0;
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    background: #e8dcc0;
-    border: 1px solid #c4a96b;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 140px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.15));
 }
 
-.icone-guia svg {
-    width: 24px;
-    height: 24px;
-    color: #8c3b3b;
+.img-invertida-x {
+    transform: scaleX(-1);
+}
+
+.img-inclinada-dentro {
+    transform: rotate(5deg);
 }
 
 .card-guia-texto h3 {
@@ -850,5 +848,10 @@ img.deco-maos {
 
     .apresentacao-texto p {
         text-align: left;
+    }
+
+    .img-livros {
+        margin-left: -40px;
+        width: 170px;
     }
 }
