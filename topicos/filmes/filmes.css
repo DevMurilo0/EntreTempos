@@ -113,6 +113,10 @@ header a:hover {
   padding: 20px 30px 120px;
 }
 
+.pagina-filmes {
+  overflow-x: hidden;
+}
+
 /* ── IMAGENS DECORATIVAS DESKTOP ── */
 .img-deco {
   position: absolute;
@@ -554,29 +558,48 @@ header a:hover {
    Aqui elas ficam menores e coladas na borda.
    ══════════════════════════════ */
 @media (min-width: 601px) and (max-width: 1200px) {
+  /* Centraliza o bloco TOP 5 de verdade nessa faixa
+     (antes o flex:1 + padding-left jogava a caixa pra
+     esquerda, deixando tudo torto e colado nas decorações) */
+  .top5-wrapper {
+    justify-content: center;
+  }
+
+  .top5-lista {
+    flex: none;
+    width: 100%;
+    max-width: 520px;
+    padding-left: 0;
+  }
+
   .img-chaplin {
-    top: 6%;
+    top: 4%;
     left: auto;
-    right: 2%;
-    width: clamp(60px, 7vw, 100px);
+    right: 1%;
+    width: clamp(50px, 6vw, 85px);
+    opacity: 0.75;
   }
 
   .img-relogio {
-    top: 20%;
+    top: 4%;
     left: 1%;
-    width: clamp(80px, 10vw, 140px);
+    bottom: auto;
+    width: clamp(70px, 9vw, 120px);
+    opacity: 0.7;
   }
 
   .img-godfather {
-    top: 8%;
-    right: 2%;
-    width: clamp(80px, 8vw, 120px);
+    top: 6%;
+    right: 1%;
+    width: clamp(65px, 7vw, 100px);
+    opacity: 0.8;
   }
 
   .img-escalada {
-    bottom: 10%;
-    left: -2%;
-    width: clamp(150px, 16vw, 250px);
+    bottom: 6%;
+    left: -4%;
+    width: clamp(120px, 14vw, 210px);
+    opacity: 0.7;
   }
 
   .img-bond {
@@ -584,29 +607,61 @@ header a:hover {
   }
 
   .img-camera {
-    top: 35%;
-    right: 1%;
-    width: clamp(55px, 6vw, 90px);
+    top: 32%;
+    right: 0.5%;
+    width: clamp(45px, 5vw, 75px);
+    opacity: 0.75;
   }
 
   .img-tv {
-    top: 50%;
-    right: 3%;
-    width: clamp(55px, 6vw, 85px);
+    top: 48%;
+    right: 2%;
+    width: clamp(45px, 5vw, 70px);
+    opacity: 0.7;
   }
 
   .img-oculos {
-    bottom: 14%;
-    left: 5%;
-    width: clamp(55px, 6vw, 85px);
+    bottom: 8%;
+    left: 3%;
+    width: clamp(45px, 5vw, 70px);
+    opacity: 0.7;
   }
 
   .img-fight {
-    bottom: 4%;
-    right: 2%;
-    width: clamp(55px, 6vw, 85px);
+    bottom: 2%;
+    right: 1%;
+    width: clamp(45px, 5vw, 70px);
+    opacity: 0.75;
   }
 
+}
+
+/* ══════════════════════════════
+   TABLET ESTREITO / JANELA PEQUENA (601px – 900px)
+   Faixa onde ainda menos espaço sobra — reduz mais
+   as decorações para não brigar com o conteúdo.
+   ══════════════════════════════ */
+@media (min-width: 601px) and (max-width: 900px) {
+  .img-chaplin,
+  .img-godfather,
+  .img-camera,
+  .img-tv,
+  .img-oculos,
+  .img-fight {
+    width: 46px;
+  }
+
+  .img-relogio {
+    width: 70px;
+  }
+
+  .img-escalada {
+    width: 130px;
+  }
+
+  .top5-lista {
+    max-width: 460px;
+  }
 }
 
 /* ══════════════════════════════
