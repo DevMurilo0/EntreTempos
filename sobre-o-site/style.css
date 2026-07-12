@@ -11,10 +11,10 @@
    3. Título de seção (reutilizável)      → linha ~110
    4. Apresentação (A Revista)            → linha ~150
    5. Pessoas (devs + equipe) — SEM CARD  → linha ~230
-   6. Selo de Instagram (destaque)        → linha ~360
-   7. Guia de conteúdos                   → linha ~390
-   8. Rodapé                              → linha ~430
-   9. Responsivo (mobile)                 → linha ~460
+   6. Selo de Instagram (destaque)        → linha ~370
+   7. Guia de conteúdos                   → linha ~400
+   8. Rodapé                              → linha ~440
+   9. Responsivo (mobile)                 → linha ~470
    ══════════════════════════════════════════════════════════════ */
 
 /* ── 1. RESET, FUNDO DE PAPEL E HEADER ────────────────────────── */
@@ -253,8 +253,18 @@ header a:hover {
    usando "grid-template-areas", trocando o layout por breakpoint
    sem precisar duplicar HTML.
 
-   MOBILE (padrão): foto ao lado do nome + caixa de função;
-   descrição, lista e selo ficam embaixo, ocupando a largura toda.
+   A foto pode ser marcada de duas formas, e as duas funcionam:
+     <img class="foto-pessoa" src="...">           (direto na tag)
+     <div class="foto-pessoa"><img ...></div>       (img dentro da div)
+   Por isso as regras de posicionamento (grid-area, aspect-ratio)
+   ficam em ".foto-pessoa" (bate nos dois casos), e o
+   "object-fit: cover" fica tanto em "img.foto-pessoa" quanto em
+   ".foto-pessoa img", pra imagem NUNCA esticar/achatar.
+
+   MOBILE (padrão): foto maior, ao lado do nome e da caixa de
+   função; logo abaixo da caixa de função vem a descrição. Lista de
+   atribuições e selo do Instagram ficam embaixo, ocupando a
+   largura toda.
 
    DESKTOP (≥ 701px): a foto fica ao lado de TODO o bloco de texto
    (nome, caixa, descrição, lista, selo) e alternamos o lado da
@@ -274,11 +284,11 @@ header a:hover {
 .card-pessoa,
 .card-equipe {
     display: grid;
-    grid-template-columns: 100px 1fr;
+    grid-template-columns: 150px 1fr;
     grid-template-areas:
         "foto nome"
         "foto funcao"
-        "descricao descricao"
+        "foto descricao"
         "lista lista"
         "instagram instagram";
     column-gap: 1.2rem;
@@ -297,22 +307,33 @@ header a:hover {
     border-bottom: none;
 }
 
-/* placeholder de foto — quadrada, com borda tracejada */
+/* posicionamento da foto (bate tanto se a classe estiver na <img>
+   diretamente quanto numa <div> que envolve a <img>). O placeholder
+   "vazio" (sem foto real ainda) é quadrado; a foto de verdade NÃO
+   é forçada a nenhuma proporção — aparece inteira, sem cortar. */
 .foto-pessoa {
     grid-area: foto;
+    display: block;
     width: 100%;
-    aspect-ratio: 1 / 1;
     overflow: hidden;
 }
 
+/* foto de verdade: largura 100%, altura livre (proporção original
+   preservada), sem cortar nada. Cobre os dois jeitos de marcar a
+   foto (ver comentário acima). */
+img.foto-pessoa,
 .foto-pessoa img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
+    max-width: 100%;
+    display: block;
+    object-fit: contain;
     filter: sepia(15%);
 }
 
+/* só o placeholder (sem foto real) fica quadrado, com borda tracejada */
 .foto-pessoa.vazio {
+    aspect-ratio: 1 / 1;
     background: #e8dcc0;
     border: 2px dashed #c4a96b;
     display: flex;
@@ -524,7 +545,7 @@ header a:hover {
 
     .card-pessoa,
     .card-equipe {
-        grid-template-columns: 300px 1fr;
+        grid-template-columns: 260px 1fr;
         column-gap: 2.5rem;
         grid-template-areas:
             "foto nome"
@@ -538,7 +559,7 @@ header a:hover {
        pessoas em posição par (2ª, 4ª...): foto à direita. */
     .card-pessoa:nth-child(even),
     .card-equipe:nth-child(even) {
-        grid-template-columns: 1fr 300px;
+        grid-template-columns: 1fr 260px;
         grid-template-areas:
             "nome foto"
             "funcao foto"
@@ -547,9 +568,17 @@ header a:hover {
             "instagram foto";
     }
 
-    .foto-pessoa {
+    /* só o placeholder "vazio" preenche a altura toda da linha;
+       a foto real (img.foto-pessoa) mantém o tamanho natural dela,
+       alinhada no topo, pra não esticar nem cortar nada */
+    .foto-pessoa.vazio {
         height: 100%;
         align-self: stretch;
+    }
+
+    img.foto-pessoa,
+    .foto-pessoa img {
+        align-self: start;
     }
 
     .card-pessoa h3,
