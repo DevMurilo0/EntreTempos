@@ -12,9 +12,10 @@
    4. Apresentação (A Revista)            → linha ~150
    5. Pessoas (devs + equipe) — SEM CARD  → linha ~230
    6. Selo de Instagram (destaque)        → linha ~370
-   7. Guia de conteúdos                   → linha ~400
-   8. Rodapé                              → linha ~440
-   9. Responsivo (mobile)                 → linha ~470
+   7. Decorações soltas (card do Murilo)  → linha ~400
+   8. Guia de conteúdos                   → linha ~470
+   9. Rodapé                              → linha ~510
+   10. Responsivo (mobile / desktop)      → linha ~540
    ══════════════════════════════════════════════════════════════ */
 
 /* ── 1. RESET, FUNDO DE PAPEL E HEADER ────────────────────────── */
@@ -297,6 +298,12 @@ header a:hover {
     border-bottom: 1px dashed #c4a96b;
 }
 
+/* card com decorações (ver seção 7) precisa ser âncora de
+   posicionamento pros ícones soltos ao redor */
+.card-decorado {
+    position: relative;
+}
+
 .lista-pessoas>.card-pessoa:first-child,
 .lista-pessoas>.card-equipe:first-child {
     padding-top: 0.5rem;
@@ -457,7 +464,80 @@ img.foto-pessoa,
     color: #8c7c5e;
 }
 
-/* ── 7. GUIA DE CONTEÚDOS ─────────────────────────────────────── */
+/* ── 7. DECORAÇÕES SOLTAS (só no card do Murilo, por enquanto) ──
+   Ícones "de colagem" (café, notebook, xadrez, dados, cursor, gato,
+   linux) espalhados na MARGEM do card — nunca sobre a foto, o nome,
+   a função, a descrição, a lista ou o selo. É por isso que os
+   deslocamentos (top/left/right/bottom) empurram cada ícone para
+   FORA da caixa do card (valores negativos ou perto das bordas),
+   como se estivessem "colados" ao redor do recorte de papel.
+   "pointer-events: none" garante que eles nunca atrapalham cliques
+   em links por baixo.
+   ─────────────────────────────────────────────────────────────── */
+.decoracoes-dev {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.deco-dev {
+    position: absolute;
+    pointer-events: none;
+    filter: drop-shadow(3px 5px 8px rgba(0, 0, 0, 0.25));
+    opacity: 0.92;
+}
+
+.deco-cafe {
+    top: -30px;
+    left: -94px;
+    width: 90px;
+    transform: rotate(-12deg);
+}
+
+.deco-notebook {
+    top: -30px;
+    right: 89px;
+    width: 150px;
+    transform: rotate(9deg);
+}
+
+.deco-xadrez {
+    top: -30px;
+    left: 496px;
+    width: 85px;
+    transform: rotate(6deg);
+}
+
+.deco-dados {
+    bottom: 105px;
+    right: 29px;
+    width: 125px;
+    transform: rotate(-8deg);
+}
+
+.deco-dedos {
+    bottom: 20px;
+    right: 99px;
+    width: 200px;
+    transform: rotate(-4deg);
+}
+
+.deco-gato {
+    bottom: -10px;
+    left: -104px;
+    width: 150px;
+    transform: rotate(10deg) scaleX(-1);
+}
+
+.deco-linux {
+    bottom: 140px;
+    left: 626px;
+    width: 100px;
+    transform: rotate(-6deg);
+}
+
+/* ── 8. GUIA DE CONTEÚDOS ─────────────────────────────────────── */
 .guia-conteudos {
     padding-bottom: 1rem;
 }
@@ -510,7 +590,7 @@ img.foto-pessoa,
     margin: 0;
 }
 
-/* ── 8. RODAPÉ ────────────────────────────────────────────────── */
+/* ── 9. RODAPÉ ────────────────────────────────────────────────── */
 .rodape-sobre {
     position: relative;
     z-index: 5;
@@ -537,7 +617,7 @@ img.foto-pessoa,
     margin-top: 10px;
 }
 
-/* ── 9. RESPONSIVO (MOBILE / DESKTOP) ─────────────────────────── */
+/* ── 10. RESPONSIVO (MOBILE / DESKTOP) ────────────────────────── */
 
 /* DESKTOP — foto ao lado de todo o bloco de texto, alternando lado.
    (mobile é o layout padrão definido acima) */
@@ -599,5 +679,52 @@ img.foto-pessoa,
 
     .grid-guia {
         grid-template-columns: 1fr;
+    }
+
+    /* no celular não tem margem sobrando igual no computador — em
+       vez de sumir, os ícones ficam bem menores, mas na MESMA
+       distribuição espacial da referência: café e xadrez em cima,
+       gato embaixo à esquerda, notebook/linux/dados/dedos agrupados
+       do lado direito */
+    .deco-cafe {
+        top: -14px;
+        left: -12px;
+        width: 30px;
+    }
+
+    .deco-notebook {
+        top: -6px;
+        right: 8px;
+        width: 46px;
+    }
+
+    .deco-xadrez {
+        top: -22px;
+        left: 54%;
+        width: 20px;
+    }
+
+    .deco-dados {
+        bottom: 26%;
+        right: 2px;
+        width: 46px;
+    }
+
+    .deco-dedos {
+        bottom: -12px;
+        right: 6px;
+        width: 68px;
+    }
+
+    .deco-gato {
+        top: 250px;
+        left: 20px;
+        width: 130px;
+    }
+
+    .deco-linux {
+        bottom: 34%;
+        left: 62%;
+        width: 26px;
     }
 }
