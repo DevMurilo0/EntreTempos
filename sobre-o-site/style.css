@@ -10,11 +10,11 @@
    2. Marca (logo) + linhas vermelhas     → linha ~75
    3. Título de seção (reutilizável)      → linha ~110
    4. Apresentação (A Revista)            → linha ~150
-   5. Cards de pessoa (devs + equipe)     → linha ~230
-   6. Selo de Instagram (destaque)        → linha ~300
-   7. Guia de conteúdos                   → linha ~330
-   8. Rodapé                              → linha ~370
-   9. Responsivo (mobile)                 → linha ~400
+   5. Pessoas (devs + equipe) — SEM CARD  → linha ~230
+   6. Selo de Instagram (destaque)        → linha ~360
+   7. Guia de conteúdos                   → linha ~390
+   8. Rodapé                              → linha ~430
+   9. Responsivo (mobile)                 → linha ~460
    ══════════════════════════════════════════════════════════════ */
 
 /* ── 1. RESET, FUNDO DE PAPEL E HEADER ────────────────────────── */
@@ -247,47 +247,61 @@ header a:hover {
     margin-top: 8px;
 }
 
-/* ── 5. CARDS DE PESSOA (desenvolvedores + equipe) ───────────── */
-.grid-cards {
+/* ── 5. PESSOAS (desenvolvedores + equipe) — SEM CARD ─────────
+   Sem fundo branco, sem sombra: os elementos ficam soltos direto
+   sobre o papel da página. O posicionamento é feito com CSS Grid
+   usando "grid-template-areas", trocando o layout por breakpoint
+   sem precisar duplicar HTML.
+
+   MOBILE (padrão): foto ao lado do nome + caixa de função;
+   descrição, lista e selo ficam embaixo, ocupando a largura toda.
+
+   DESKTOP (≥ 701px): a foto fica ao lado de TODO o bloco de texto
+   (nome, caixa, descrição, lista, selo) e alternamos o lado da
+   foto a cada pessoa (ímpar = foto à esquerda, par = foto à
+   direita), como num "zigue-zague".
+   ─────────────────────────────────────────────────────────────── */
+.lista-pessoas {
     position: relative;
     z-index: 5;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.6rem;
-    max-width: 1200px;
-    margin: 2rem auto 0;
+    max-width: 1000px;
+    margin: 2.5rem auto 0;
     padding: 0 40px 3rem;
-}
-
-.grid-equipe {
-    grid-template-columns: repeat(3, 1fr);
-    max-width: 900px;
+    display: flex;
+    flex-direction: column;
 }
 
 .card-pessoa,
 .card-equipe {
-    background: #fffdf7;
-    padding: 1.6rem 1.3rem;
-    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
-    border-left: 4px solid #8c3b3b;
-    border-right: 4px solid #8c3b3b;
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    grid-template-areas:
+        "foto nome"
+        "foto funcao"
+        "descricao descricao"
+        "lista lista"
+        "instagram instagram";
+    column-gap: 1.2rem;
+    row-gap: 0.5rem;
+    padding: 2rem 0;
+    border-bottom: 1px dashed #c4a96b;
 }
 
-.card-pessoa:hover,
-.card-equipe:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.22);
+.lista-pessoas>.card-pessoa:first-child,
+.lista-pessoas>.card-equipe:first-child {
+    padding-top: 0.5rem;
 }
 
-/* placeholder de foto — mesmo padrão do resto do site */
+.lista-pessoas>.card-pessoa:last-child,
+.lista-pessoas>.card-equipe:last-child {
+    border-bottom: none;
+}
+
+/* placeholder de foto — quadrada, com borda tracejada */
 .foto-pessoa {
-    width: 84px;
-    height: 84px;
-    border-radius: 50%;
-    margin-bottom: 1rem;
+    grid-area: foto;
+    width: 100%;
+    aspect-ratio: 1 / 1;
     overflow: hidden;
 }
 
@@ -304,6 +318,7 @@ header a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
     font-family: 'IM Fell English', serif;
     font-style: italic;
     font-size: 12px;
@@ -312,36 +327,47 @@ header a:hover {
 
 .card-pessoa h3,
 .card-equipe h3 {
+    grid-area: nome;
+    align-self: end;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
+    font-size: 21px;
     letter-spacing: 1.5px;
     color: #1a1a1a;
-    margin-bottom: 2px;
+    line-height: 1.1;
+}
+
+/* caixa que destaca a função da pessoa */
+.pessoa-funcao-box {
+    grid-area: funcao;
+    align-self: start;
+    border: 2px solid #8c3b3b;
+    padding: 0.4rem 0.6rem;
 }
 
 .funcao {
     font-family: 'Special Elite', serif;
     font-style: italic;
-    font-size: 13px;
-    letter-spacing: 0.5px;
+    font-size: 12px;
+    line-height: 1.5;
+    letter-spacing: 0.3px;
     color: #8c3b3b;
-    margin-bottom: 0.7rem;
 }
 
 .descricao {
+    grid-area: descricao;
     font-family: 'IM Fell English', serif;
     font-size: 15px;
     line-height: 1.7;
     color: #3e3228;
-    margin-bottom: 1rem;
+    margin-top: 0.3rem;
 }
 
 .lista-atribuicoes {
+    grid-area: lista;
     list-style: none;
-    margin-top: auto;
     border-top: 1px dashed #c4a96b;
     padding-top: 0.8rem;
-    margin-bottom: 1rem;
+    margin-top: 0.3rem;
 }
 
 .lista-atribuicoes li {
@@ -361,12 +387,14 @@ header a:hover {
 }
 
 /* ── 6. SELO DE INSTAGRAM (em destaque) ──────────────────────── */
-.instagram-selo {
+.instagram-selo,
+.instagram-pendente {
+    grid-area: instagram;
+    justify-self: start;
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    align-self: flex-start;
-    margin-top: auto;
+    margin-top: 0.4rem;
     padding: 6px 14px;
     border: 2px solid #c0392b;
     border-radius: 3px;
@@ -379,7 +407,8 @@ header a:hover {
     transition: all 0.2s ease;
 }
 
-.instagram-selo::before {
+.instagram-selo::before,
+.instagram-pendente::before {
     content: "IG";
     font-family: 'Bebas Neue', sans-serif;
     font-size: 11px;
@@ -404,21 +433,7 @@ header a:hover {
 }
 
 .instagram-pendente::before {
-    content: "IG";
     color: #8c7c5e;
-}
-
-.instagram-pendente:hover {
-    background: none;
-    color: #8c7c5e;
-    transform: none;
-}
-
-/* nos cards, a lista de atribuições empurra o rodapé do card para
-   baixo; quando não há lista (equipe atual), o selo se ajusta sozinho */
-.card-equipe .instagram-selo,
-.card-equipe .instagram-pendente {
-    margin-top: auto;
 }
 
 /* ── 7. GUIA DE CONTEÚDOS ─────────────────────────────────────── */
@@ -501,41 +516,59 @@ header a:hover {
     margin-top: 10px;
 }
 
-/* ── 9. RESPONSIVO (MOBILE) ───────────────────────────────────── */
-@media (max-width: 900px) {
-    .grid-cards {
-        grid-template-columns: repeat(2, 1fr);
+/* ── 9. RESPONSIVO (MOBILE / DESKTOP) ─────────────────────────── */
+
+/* DESKTOP — foto ao lado de todo o bloco de texto, alternando lado.
+   (mobile é o layout padrão definido acima) */
+@media (min-width: 701px) {
+
+    .card-pessoa,
+    .card-equipe {
+        grid-template-columns: 300px 1fr;
+        column-gap: 2.5rem;
+        grid-template-areas:
+            "foto nome"
+            "foto funcao"
+            "foto descricao"
+            "foto lista"
+            "foto instagram";
     }
 
-    .grid-equipe {
-        grid-template-columns: repeat(2, 1fr);
+    /* pessoas em posição ímpar (1ª, 3ª...): foto à esquerda (padrão acima).
+       pessoas em posição par (2ª, 4ª...): foto à direita. */
+    .card-pessoa:nth-child(even),
+    .card-equipe:nth-child(even) {
+        grid-template-columns: 1fr 300px;
+        grid-template-areas:
+            "nome foto"
+            "funcao foto"
+            "descricao foto"
+            "lista foto"
+            "instagram foto";
+    }
+
+    .foto-pessoa {
+        height: 100%;
+        align-self: stretch;
+    }
+
+    .card-pessoa h3,
+    .card-equipe h3 {
+        align-self: start;
+        font-size: 26px;
+    }
+
+    .pessoa-funcao-box {
+        justify-self: start;
+    }
+}
+
+@media (max-width: 700px) {
+    .lista-pessoas {
+        padding: 0 20px 2.5rem;
     }
 
     .grid-guia {
         grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 600px) {
-    .apresentacao-section {
-        flex-direction: column;
-        align-items: center;
-        gap: 24px;
-        padding: 0 20px;
-    }
-
-    .foto-apresentacao,
-    .foto-apresentacao.vazio {
-        width: clamp(160px, 60vw, 220px);
-    }
-
-    .apresentacao-texto p {
-        text-align: left;
-    }
-
-    .grid-cards,
-    .grid-equipe {
-        grid-template-columns: 1fr;
-        padding: 0 20px 2.5rem;
     }
 }

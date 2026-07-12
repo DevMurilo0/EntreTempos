@@ -34,13 +34,20 @@
 
     <!-- ══════════════════════════════════════════════════════════
        SEÇÃO 2 — DESENVOLVEDORES DA REVISTA
-       Cada card: foto, nome, função, descrição, atribuições e Instagram.
+       SEM fundo de card: os elementos ficam soltos sobre o papel.
+       A marcação é "achatada" (foto, nome, caixa de função,
+       descrição, lista e selo são todos filhos diretos do
+       <article>) porque o posicionamento — foto ao lado da caixa
+       no celular, foto ao lado de TODO o texto e alternando de
+       lado no computador — é feito só com CSS Grid
+       (grid-template-areas), sem precisar de marcação diferente
+       por tela.
        Para adicionar/remover, copie ou apague um <article class="card-pessoa">.
      ══════════════════════════════════════════════════════════ -->
     <section class="desenvolvedores">
         <h2 class="titulo-secao"><span>Desenvolvedores da Revista</span></h2>
 
-        <div class="grid-cards">
+        <div class="lista-pessoas">
 
             <!-- ── DESENVOLVEDOR 1 ── -->
             <article class="card-pessoa">
@@ -50,17 +57,26 @@
                 <div class="foto-pessoa vazio">foto</div>
 
                 <h3>Murilo Gabriel</h3>
-                <p class="funcao">Programador Principal, Arquiteto do Sistema, Designer e Editor</p>
+
+                <div class="pessoa-funcao-box">
+                    <p class="funcao">Programador Principal, Designer e Direção Criativa</p>
+                </div>
+
                 <p class="descricao">
-                    Responsável pelo desenvolvimento, estruturação e design do site.
-                    Cuida da experiência do usuário, interatividade e identidade visual.
+                    Responsável pelo desenvolvimento principal do site, pela definição da estrutura
+                    visual e organização das páginas, além do direcionamento e acompanhamento das
+                    diferentes áreas do projeto durante seu desenvolvimento. Também participou da
+                    escolha, edição e organização dos elementos visuais e imagens que compõem a
+                    apresentação da revista.
                 </p>
+
                 <ul class="lista-atribuicoes">
-                    <li>Estrutura e organização do site</li>
-                    <li>Desenvolvimento da interface</li>
-                    <li>Design de experiência</li>
-                    <li>Efeitos e interatividade</li>
+                    <li>Desenvolvimento da aplicação</li>
+                    <li>Estruturação da interface</li>
+                    <li>Organização dos elementos visuais</li>
+                    <li>Implementação de funcionalidades e interatividade</li>
                 </ul>
+
                 <a class="instagram-selo" href="https://www.instagram.com/murilo_gabriell0" target="_blank"
                     rel="noopener">
                     @Murilo_Gabriell0
@@ -71,10 +87,15 @@
             <article class="card-pessoa">
                 <div class="foto-pessoa vazio">foto</div>
                 <h3>Davi Mendes</h3>
-                <p class="funcao">Programador e Editor</p>
+                <div class="pessoa-funcao-box">
+                    <p class="funcao">Programador e Editor</p>
+                </div>
                 <p class="descricao">
-                    Auxilia no desenvolvimento do site, implementa funcionalidades
-                    e garante o desempenho e a responsividade da plataforma.
+                    Atua no desenvolvimento do site, contribuindo para a implementação de
+                    funcionalidades, otimização da plataforma e aprimoramento da experiência
+                    de navegação. Também participa da edição e ajuste de conteúdos e elementos
+                    da revista, colaborando com a organização e preparação do material para publicação.
+
                 </p>
                 <ul class="lista-atribuicoes">
                     <li>Desenvolvimento da interface</li>
@@ -91,10 +112,14 @@
             <article class="card-pessoa">
                 <div class="foto-pessoa vazio">foto</div>
                 <h3>Anna Vitória</h3>
-                <p class="funcao">Poetisa e Designer</p>
+                <div class="pessoa-funcao-box">
+                    <p class="funcao">Poetisa e Designer</p>
+                </div>
                 <p class="descricao">
-                    Responsável pelo design, identidade visual e diagramação da
-                    revista. Também escreve poemas e textos autorais para as edições.
+                    Responsável pela produção poética e pela construção artística da revista,
+                    participando do desenvolvimento da identidade estética do projeto, da elaboração
+                    dos elementos visuais e da definição de aspectos que contribuem para a atmosfera
+                    e expressão artística presentes na publicação.
                 </p>
                 <ul class="lista-atribuicoes">
                     <li>Design da interface</li>
@@ -111,10 +136,13 @@
             <article class="card-pessoa">
                 <div class="foto-pessoa vazio">foto</div>
                 <h3>Cícera Ramos</h3>
-                <p class="funcao">Professora de Português e Idealizadora do Projeto</p>
+                <div class="pessoa-funcao-box">
+                    <p class="funcao">Idealizadora do Projeto e Professora de Português</p>
+                </div>
                 <p class="descricao">
-                    Idealizadora da revista, orienta a produção textual e garante
-                    a qualidade do conteúdo literário e pedagógico.
+                    Idealizadora da revista e responsável pela orientação pedagógica e textual do projeto,
+                    contribuindo para a qualidade literária e para o desenvolvimento da proposta educacional da
+                    publicação.
                 </p>
                 <ul class="lista-atribuicoes">
                     <li>Revisão de textos</li>
@@ -133,54 +161,69 @@
         </div>
     </section>
 
-    <div class="divisor"></div>
-
     <!-- ══════════════════════════════════════════════════════════
        SEÇÃO 3 — EQUIPE ATUAL
-       Informações ainda não definidas: os campos abaixo mostram
-       "A definir" até que os dados reais de cada integrante cheguem.
+       Mesma estrutura achatada da seção acima, sem a lista de
+       atribuições. Informações ainda não definidas: os campos
+       abaixo mostram "A definir" até que os dados reais cheguem.
        Para adicionar/remover, copie ou apague um <article class="card-equipe">.
      ══════════════════════════════════════════════════════════ -->
+    <!--
+════════════════════════════════════════════════════════════
+SEÇÃO TEMPORARIAMENTE DESATIVADA
+
+Esta seção foi mantida no código para uso futuro.
+Para reativá-la, basta remover este bloco de comentários
+` e ->`) que envolve toda a seção abaixo.
+
+    Após a reativação, substitua os dados de exemplo pelos
+    integrantes reais da equipe atual da revista.
+    ════════════════════════════════════════════════════════════
+       -->
+
+    <!--
+<div class="divisor"></div>
     <section class="equipe-atual">
         <h2 class="titulo-secao"><span>Equipe Atual</span></h2>
         <p class="subtitulo-secao">Quem faz a revista acontecer hoje</p>
+<div class="divisor"></div> 
 
-        <div class="grid-cards grid-equipe">
+        <div class="lista-pessoas lista-equipe">
 
-            <!-- ── MEMBRO DA EQUIPE 1 ──
-         TROQUE: foto, nome, função, descrição e Instagram assim que definidos. -->
             <article class="card-equipe">
                 <div class="foto-pessoa vazio">foto</div>
                 <h3>Nome do Integrante</h3>
-                <p class="funcao">A definir</p>
+                <div class="pessoa-funcao-box">
+                    <p class="funcao">A definir</p>
+                </div>
                 <p class="descricao">A definir.</p>
                 <span class="instagram-selo instagram-pendente">A definir</span>
             </article>
 
-            <!-- ── MEMBRO DA EQUIPE 2 ── -->
             <article class="card-equipe">
                 <div class="foto-pessoa vazio">foto</div>
                 <h3>Nome do Integrante</h3>
-                <p class="funcao">A definir</p>
+                <div class="pessoa-funcao-box">
+                    <p class="funcao">A definir</p>
+                </div>
                 <p class="descricao">A definir.</p>
                 <span class="instagram-selo instagram-pendente">A definir</span>
             </article>
 
-            <!-- ── MEMBRO DA EQUIPE 3 ── -->
             <article class="card-equipe">
                 <div class="foto-pessoa vazio">foto</div>
                 <h3>Nome do Integrante</h3>
-                <p class="funcao">A definir</p>
+                <div class="pessoa-funcao-box">
+                    <p class="funcao">A definir</p>
+                </div>
                 <p class="descricao">A definir.</p>
                 <span class="instagram-selo instagram-pendente">A definir</span>
             </article>
-
-            <!-- Para adicionar mais integrantes, copie um <article class="card-equipe">
-           inteiro e cole aqui. -->
 
         </div>
     </section>
 
+-->
     <!-- ══════════════════════════════════════════════════════════
        RODAPÉ — assinatura + carimbo da seção.
        Reaproveite trocando só o texto dentro de .carimbo

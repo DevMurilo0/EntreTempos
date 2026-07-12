@@ -786,6 +786,11 @@ img.deco-maos {
   border-bottom: 1px dashed #c4a96b;
 }
 
+.card-guia-texto {
+  flex: 1;
+  min-width: 0;
+}
+
 .imagem-guia {
   flex-shrink: 0;
   width: 140px;
@@ -799,9 +804,9 @@ img.deco-maos {
 ===================== */
 
 .img-poemas {
-  width: 160px;
+  width: 125px;
   transform: rotate(6deg);
-  margin-left: -20px;
+  margin-left: -10px;
 }
 
 .img-livros {
@@ -810,29 +815,29 @@ img.deco-maos {
 }
 
 .img-curiosidades {
-  width: 160px;
+  width: 125px;
   transform: rotate(-5deg);
-  margin-left: -20px;
+  margin-left: -10px;
 }
 
-/* Filmes, Desenhos e Músicas: ainda maiores que os demais */
+/* Filmes, Desenhos e Músicas: ainda maiores que os demais, mas sem tomar espaço do texto */
 
 .img-filmes {
-  width: 190px;
+  width: 145px;
   transform: rotate(-7deg);
-  margin-left: -25px;
+  margin-left: -10px;
 }
 
 .img-desenho {
-  width: 190px;
+  width: 145px;
   transform: rotate(5deg);
-  margin-left: -25px;
+  margin-left: -10px;
 }
 
 .img-musicas {
-  width: 190px;
+  width: 145px;
   transform: rotate(-4deg);
-  margin-left: -25px;
+  margin-left: -10px;
 }
 
 .card-guia-texto h3 {
