@@ -687,33 +687,33 @@ img.foto-pessoa,
        gato embaixo à esquerda, notebook/linux/dados/dedos agrupados
        do lado direito */
     .deco-cafe {
-        top: -14px;
+        top: 240px;
         left: -12px;
-        width: 30px;
+        width: 70px;
     }
 
     .deco-notebook {
-        top: -6px;
-        right: 8px;
-        width: 46px;
+        top: -40px;
+        right: -15px;
+        width: 80px;
     }
 
     .deco-xadrez {
         top: -22px;
-        left: 54%;
-        width: 20px;
+        left: -10%;
+        width: 80px;
     }
 
     .deco-dados {
-        bottom: 26%;
+        bottom: 15%;
         right: 2px;
-        width: 46px;
+        width: 90px;
     }
 
     .deco-dedos {
         bottom: -12px;
         right: 6px;
-        width: 68px;
+        width: 120px;
     }
 
     .deco-gato {
@@ -724,7 +724,8 @@ img.foto-pessoa,
 
     .deco-linux {
         bottom: 34%;
-        left: 62%;
-        width: 26px;
+        left: 30%;
+        width: 86px;
+        transform: rotate(20deg);
     }
 }
