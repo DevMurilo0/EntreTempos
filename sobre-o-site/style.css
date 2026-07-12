@@ -537,6 +537,63 @@ img.foto-pessoa,
     transform: rotate(-6deg);
 }
 
+/* ── DECORAÇÕES DO DAVI ── */
+.deco-gaita {
+    top: -35px;
+    left: -110px;
+    width: 120px;
+    transform: rotate(-15deg);
+}
+
+.deco-java {
+    top: 170px;
+    right: -40px;
+    width: 75px;
+    transform: rotate(8deg);
+}
+
+.deco-hornet {
+    top: 200px;
+    left: 480px;
+    width: 90px;
+    transform: rotate(5deg);
+}
+
+.deco-archlinux {
+    bottom: 120px;
+    left: -100px;
+    width: 85px;
+    transform: rotate(-10deg);
+}
+
+.deco-github {
+    bottom: -10px;
+    left: 620px;
+    width: 90px;
+    transform: rotate(6deg);
+}
+
+.deco-camera {
+    bottom: 30px;
+    right: 40px;
+    width: 150px;
+    transform: rotate(-12deg);
+}
+
+.deco-coracoes {
+    top: 50px;
+    right: 20px;
+    width: 100px;
+    transform: rotate(4deg);
+}
+
+.deco-deadpool {
+    top: -45px;
+    right: 10px;
+    width: 130px;
+    transform: rotate(4deg);
+}
+
 /* ── 8. GUIA DE CONTEÚDOS ─────────────────────────────────────── */
 .guia-conteudos {
     padding-bottom: 1rem;
@@ -727,5 +784,54 @@ img.foto-pessoa,
         left: 30%;
         width: 86px;
         transform: rotate(20deg);
+    }
+
+    /* decorações do Davi — mobile */
+    .deco-gaita {
+        top: 220px;
+        left: -10px;
+        width: 80px;
+    }
+
+    .deco-java {
+        top: -30px;
+        right: -10px;
+        width: 60px;
+    }
+
+    .deco-hornet {
+        top: -15px;
+        left: -8%;
+        width: 70px;
+    }
+
+    .deco-archlinux {
+        bottom: 20%;
+        left: -5px;
+        width: 65px;
+    }
+
+    .deco-github {
+        bottom: 30%;
+        left: 28%;
+        width: 70px;
+    }
+
+    .deco-camera {
+        bottom: -10px;
+        right: 5px;
+        width: 80px;
+    }
+
+    .deco-coracoes {
+        top: 240px;
+        right: 5px;
+        width: 70px;
+    }
+
+    .deco-deadpool {
+        bottom: -10px;
+        left: 10px;
+        width: 100px;
     }
 }
