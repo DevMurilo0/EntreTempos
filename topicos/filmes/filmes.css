@@ -123,21 +123,21 @@ header a:hover {
    LADO ESQUERDO
    ───────────────────────────────────── */
 
-/* Chaplin pulando: topo esquerdo, destaque principal */
+/* Chaplin pulando: canto superior, colado na borda esquerda do conteúdo central */
 .img-chaplin {
   top: 6%;
-  left: 1320px;
-  width: clamp(110px, 14vw, 170px);
+  left: 68%;
+  width: clamp(100px, 9vw, 170px);
   opacity: 0.92;
   filter: drop-shadow(3px 5px 10px rgba(0, 0, 0, 0.18));
   transform: rotate(-4deg);
 }
 
-/* Relógio: logo abaixo do Chaplin */
+/* Relógio: topo esquerdo */
 .img-relogio {
   top: -12%;
-  left: 180px;
-  width: clamp(300px, 16vw, 220px);
+  left: 9%;
+  width: clamp(180px, 16vw, 300px);
   opacity: 0.88;
   filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.15));
   z-index: 1;
@@ -146,8 +146,8 @@ header a:hover {
 /* Escalada na corda: canto inferior esquerdo */
 .img-escalada {
   bottom: 20%;
-  left: -100px;
-  width: 450px;
+  left: -5%;
+  width: clamp(250px, 23vw, 450px);
   filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3));
   transform: rotate(90deg);
   z-index: 1;
@@ -156,16 +156,16 @@ header a:hover {
 /* Bond: canto inferior esquerdo, um pouco mais pro centro */
 .img-bond {
   bottom: 6%;
-  left: 290px;
-  width: clamp(55px, 7vw, 90px);
+  left: 15%;
+  width: clamp(55px, 5vw, 90px);
   filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.25));
 }
 
-/* Óculos: canto inferior direito, um pouco mais pro centro */
+/* Óculos: canto inferior esquerdo */
 .img-oculos {
   bottom: -24%;
-  right: 70%;
-  width: clamp(110px, 10vw, 150px);
+  left: 20%;
+  width: clamp(90px, 8vw, 150px);
   transform: rotate(-4deg);
   filter: drop-shadow(2px 2px 6px rgba(0, 0, 0, 0.2));
 }
@@ -177,8 +177,8 @@ header a:hover {
 /* Câmera: direita, abaixo do Padrinho */
 .img-camera {
   top: 40%;
-  right: 0%;
-  width: clamp(100px, 12vw, 150px);
+  right: 1%;
+  width: clamp(80px, 8vw, 150px);
   transform: rotate(5deg);
   filter: drop-shadow(3px 3px 10px rgba(0, 0, 0, 0.3));
   opacity: 0.88;
@@ -187,24 +187,24 @@ header a:hover {
 /* Padrinho: canto superior direito */
 .img-godfather {
   top: 21%;
-  right: 10%;
-  width: clamp(150px, 12vw, 220px);
+  right: 5%;
+  width: clamp(120px, 11vw, 220px);
   filter: drop-shadow(3px 3px 8px rgba(0, 0, 0, 0.25));
 }
 
 /* TV: meio direito */
 .img-tv {
   top: 50%;
-  right: 20%;
-  width: clamp(90px, 11vw, 140px);
+  right: 10%;
+  width: clamp(80px, 8vw, 140px);
   filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.2));
 }
 
 /* Fight Club: canto inferior direito */
 .img-fight {
   bottom: 0%;
-  right: 10%;
-  width: clamp(90px, 11vw, 140px);
+  right: 3%;
+  width: clamp(80px, 8vw, 140px);
   filter: drop-shadow(3px 3px 10px rgba(0, 0, 0, 0.35));
   opacity: 0.9;
 }
@@ -553,29 +553,30 @@ header a:hover {
    é bem menor — por isso invadiam o texto do TOP 5.
    Aqui elas ficam menores e coladas na borda.
    ══════════════════════════════ */
-@media (min-width: 601px) and (max-width: 1500px) {
+@media (min-width: 601px) and (max-width: 1200px) {
   .img-chaplin {
     top: 6%;
-    left: -10px;
-    width: 80px;
+    left: auto;
+    right: 2%;
+    width: clamp(60px, 7vw, 100px);
   }
 
   .img-relogio {
-    top: 27%;
-    left: -20px;
-    width: 95px;
+    top: 20%;
+    left: 1%;
+    width: clamp(80px, 10vw, 140px);
   }
 
   .img-godfather {
-    top: 6%;
-    right: -8px;
-    width: 95px;
+    top: 8%;
+    right: 2%;
+    width: clamp(80px, 8vw, 120px);
   }
 
   .img-escalada {
     bottom: 10%;
-    left: -12px;
-    width: 70px;
+    left: -2%;
+    width: clamp(150px, 16vw, 250px);
   }
 
   .img-bond {
@@ -583,27 +584,27 @@ header a:hover {
   }
 
   .img-camera {
-    top: 30%;
-    right: -15px;
-    width: 65px;
+    top: 35%;
+    right: 1%;
+    width: clamp(55px, 6vw, 90px);
   }
 
   .img-tv {
     top: 50%;
-    right: -10px;
-    width: 60px;
+    right: 3%;
+    width: clamp(55px, 6vw, 85px);
   }
 
   .img-oculos {
     bottom: 14%;
-    right: 30px;
-    width: 65px;
+    left: 5%;
+    width: clamp(55px, 6vw, 85px);
   }
 
   .img-fight {
-    bottom: 6%;
-    right: -8px;
-    width: 60px;
+    bottom: 4%;
+    right: 2%;
+    width: clamp(55px, 6vw, 85px);
   }
 
 }
