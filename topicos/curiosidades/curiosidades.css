@@ -1,5 +1,5 @@
 /* =============================================
-   GERAIS.CSS — Entre Tempos · Página de Curiosidades Gerais
+   DESENHOS.CSS — Entre Tempos · Página de Desenhos
    ============================================= */
 
 * {
@@ -8,16 +8,10 @@
   box-sizing: border-box;
 }
 
-html {
-  height: 100%;
-}
-
 body {
-  position: relative;
   background: #f2e8d5;
   font-family: 'Special Elite', serif;
   min-height: 100vh;
-  height: 100%;
   overflow-x: hidden;
 }
 
@@ -49,9 +43,7 @@ header a {
   transition: color 0.2s;
 }
 
-header a:hover {
-  color: #c0392b;
-}
+header a:hover { color: #c0392b; }
 
 /* ── TÍTULO ── */
 .page-titulo {
@@ -87,10 +79,11 @@ header a:hover {
   margin: 10px auto 30px;
   height: 2px;
   background: linear-gradient(to right, transparent, #c0392b, #c4a96b, #c0392b, transparent);
+  overflow: visible;
 }
 
 /* ── SEÇÃO APRESENTAÇÃO ── */
-.autora-section {
+.apresentacao-section {
   position: relative;
   z-index: 5;
   display: flex;
@@ -101,27 +94,27 @@ header a:hover {
   padding: 0 40px;
 }
 
-.foto-autora {
+.foto-apresentacao {
   width: clamp(160px, 22vw, 260px);
   height: auto;
   flex-shrink: 0;
-  filter: drop-shadow(4px 6px 14px rgba(0, 0, 0, 0.35)) sepia(15%);
+  filter: drop-shadow(4px 6px 14px rgba(0,0,0,0.35)) sepia(15%);
   transform: rotate(-2deg);
   transition: transform 0.3s ease;
 }
 
-.foto-autora:hover {
+.foto-apresentacao:hover {
   transform: rotate(0deg) scale(1.02);
 }
 
-.autora-info {
+.apresentacao-info {
   display: flex;
   flex-direction: column;
   gap: 10px;
   padding-top: 10px;
 }
 
-.autora-nome {
+.apresentacao-titulo {
   font-family: 'Bebas Neue', sans-serif;
   font-size: clamp(36px, 5vw, 58px);
   color: #1a1a1a;
@@ -131,7 +124,7 @@ header a:hover {
   padding-left: 16px;
 }
 
-.autora-cargo {
+.apresentacao-cargo {
   font-family: 'Special Elite', serif;
   font-size: 14px;
   color: #8c3b3b;
@@ -141,7 +134,7 @@ header a:hover {
   font-style: italic;
 }
 
-.autora-bio {
+.apresentacao-texto {
   font-family: 'IM Fell English', serif;
   font-size: clamp(15px, 1.6vw, 18px);
   color: #3e3228;
@@ -150,215 +143,56 @@ header a:hover {
   margin-top: 6px;
 }
 
+.apresentacao-texto strong {
+  color: #8c3b3b;
+  font-style: italic;
+}
+
 /* ══════════════════════════════════════════
-   BLOCO DE TEMA — as curiosidades organizadas
-   por tema, um bloco por tema, sem precisar
-   entrar em outra página.
+   CARDS — layout escalonado (igual ao poemas)
    ══════════════════════════════════════════ */
 
-.autor-bloco {
+.cards-navegacao {
   position: relative;
   z-index: 5;
-  max-width: 900px;
-  margin: 0 auto 70px;
-  padding: 0 40px;
-}
-
-.autor-cabecalho {
-  display: flex;
-  align-items: center;
-  gap: 22px;
-  margin-bottom: 28px;
-}
-
-.autor-cabecalho .foto-nav {
-  display: block;
-  width: clamp(70px, 8vw, 96px);
-  flex-shrink: 0;
-}
-
-.autor-cabecalho .foto-nav img {
   width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  height: clamp(420px, 60vw, 580px);
+  padding: 0 40px;
+  margin-bottom: 80px;
+}
+
+.card-img {
+  position: absolute;
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.card-img img {
+  width: clamp(200px, 28vw, 300px);
   height: auto;
   display: block;
-  object-fit: contain;
-  background: transparent;
-  filter: drop-shadow(4px 6px 14px rgba(0, 0, 0, 0.35)) sepia(15%);
+  transition: transform 0.35s ease;
 }
 
-.autor-cabecalho .foto-nav-nome {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(24px, 3vw, 34px);
-  letter-spacing: 2px;
-  color: #1a1a1a;
-  border-left: 4px solid #c0392b;
-  padding-left: 14px;
+.card-img:hover img {
+  transform: scale(1.04) rotate(-1deg);
 }
 
-/* ── LISTA DE CURIOSIDADES — cada item é um card com
-   imagem de um lado e descrição + botão do outro,
-   alternando o lado a cada card. ── */
-
-.lista-curiosidades {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
+.card-img:active img {
+  transform: scale(0.97);
 }
 
-.card-curiosidade {
-  position: relative;
-  display: flex;
-  align-items: stretch;
-  gap: 26px;
-
-  background-color: #ede4cc;
-
-
-  box-shadow:
-    0 8px 28px rgba(0, 0, 0, 0.24),
-    inset 0 0 50px rgba(120, 80, 10, 0.12);
-
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.card-esquerda {
+  top: 40px;
+  left: 40px;
 }
 
-.card-curiosidade:nth-child(odd) {
-  transform: rotate(-0.6deg);
-}
-
-.card-curiosidade:nth-child(even) {
-  transform: rotate(0.6deg);
-}
-
-/* alterna o lado da imagem: ímpares = imagem à esquerda,
-   pares = imagem à direita (descrição à esquerda) */
-.card-curiosidade:nth-child(even) {
-  flex-direction: row-reverse;
-}
-
-.card-curiosidade:nth-child(even) .curiosidade-conteudo,
-.card-curiosidade:nth-child(even) .curiosidade-texto {
-  text-align: right;
-}
-
-.card-curiosidade:nth-child(even) .btn-ler-curiosidade {
-  align-self: flex-end;
-}
-
-.card-curiosidade:hover {
-  transform: rotate(0deg) scale(1.015) !important;
-  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.32);
-  z-index: 10;
-}
-
-.card-curiosidade::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 22px 22px 0;
-  border-color: transparent #f2e8d5 transparent transparent;
-}
-
-.card-curiosidade .quadro {
-  width: clamp(140px, 24vw, 220px);
-  aspect-ratio: 3 / 4;
-  flex-shrink: 0;
-  background: #fff;
-
-  box-shadow:
-    0 3px 12px rgba(0, 0, 0, 0.22),
-    inset 0 0 0 1px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.card-curiosidade .quadro img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.4s ease;
-}
-
-.card-curiosidade:hover .quadro img {
-  transform: scale(1.04);
-}
-
-
-
-.card-curiosidade .quadro.vazio span {
-  font-family: 'IM Fell English', serif;
-  font-style: italic;
-  font-size: 13px;
-  color: #8c7c5e;
-  text-align: center;
-  padding: 0 12px;
-}
-
-.card-curiosidade .curiosidade-conteudo {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 10px;
-  min-width: 0;
-}
-
-.card-curiosidade .curiosidade-conteudo h1 {
-  font-family: 'Dancing Script', cursive;
-  font-weight: 600;
-  font-size: clamp(20px, 2.6vw, 26px);
-  color: #1a0e04;
-  margin: 0;
-}
-
-.card-curiosidade .curiosidade-titulo {
-  font-family: 'Dancing Script', cursive;
-  font-weight: 600;
-  font-size: clamp(20px, 2.6vw, 26px);
-  color: #1a0e04;
-}
-
-.card-curiosidade .curiosidade-texto {
-  font-family: 'IM Fell English', serif;
-  font-size: clamp(14px, 1.5vw, 16px);
-  color: #3e3228;
-  line-height: 1.7;
-  text-align: justify;
-}
-
-.btn-ler-curiosidade {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  align-self: flex-start;
-  margin-top: 6px;
-  padding: 9px 20px;
-  background: #8c3b3b;
-  color: #f2e8d5;
-  text-decoration: none;
-  font-family: 'Special Elite', serif;
-  font-size: 13px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  border: 2px solid #c0392b;
-  box-shadow: 3px 4px 0 rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-}
-
-.btn-ler-curiosidade:hover {
-  background: #c0392b;
-  transform: translate(-2px, -2px);
-  box-shadow: 5px 6px 0 rgba(0, 0, 0, 0.22);
-}
-
-.btn-ler-curiosidade:active {
-  transform: translate(0, 0);
-  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+.card-direita {
+  bottom: 0;
+  right: 40px;
 }
 
 /* ── RODAPÉ ── */
@@ -388,79 +222,62 @@ header a:hover {
 }
 
 /* ══════════════════════════════════════════
-   IMAGENS DECORATIVAS — espalhadas pela página,
-   responsivas e sem interferir na leitura.
-   Mesmo padrão usado em autorais.css: position
-   absolute a partir do topo da página, com
-   coordenadas fixas para cada imagem.
+   FRAGMENTOS DECORATIVOS — recortes espalhados
    ══════════════════════════════════════════ */
 
-.decor-imagens {
+.decor {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1;
+  z-index: 3;
   pointer-events: none;
   user-select: none;
 }
 
-.decor-img {
-  position: absolute;
-  opacity: 0.85;
-  filter: drop-shadow(3px 5px 10px rgba(0, 0, 0, 0.25));
+/* câmera — cantinho do título, registrando o que é curioso */
+.decor-camera {
+  top: -10px;
+  right: 6%;
+  width: clamp(200px, 7vw, 95px);
+  transform: rotate(8deg);
+  opacity: 0.9;
 }
 
-.decor-maos {
-  top: 160px;
-  right: 3%;
-  width: clamp(120px, 12vw, 200px);
+/* megafone — espiando por cima do primeiro divisor, dando um choque de novidade */
+.decor-megafone {
+  top: -28px;
+  left: -9%;
+  width: clamp(400px, 6vw, 75px);
+  transform: rotate(-10deg);
+  opacity: 0.95;
+}
+
+/* lâmpada — junto ao texto de apresentação, como uma ideia que se acende */
+.decor-lampada {
+  bottom: -18px;
+  right: -230px;
+  width: clamp(300px, 6vw, 70px);
   transform: rotate(6deg);
+  opacity: 0.9;
+  filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.2));
 }
 
-.decor-olhos {
-  top: 520px;
-  left: 1.5%;
-  width: clamp(150px, 15vw, 250px);
-  transform: rotate(-3deg);
+/* cérebro — no alto da área de cards, perto do card de curiosidades autorais */
+.decor-cerebro {
+  top: 0px;
+  left: 330px;
+  width: clamp(200px, 8vw, 90px);
+  opacity: 0.85;
+  transform: rotate(-4deg);
+  filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.2));
 }
 
-.decor-resistance {
-  top: 900px;
-  right: 1.5%;
-  width: clamp(120px, 12vw, 190px);
-  transform: rotate(-5deg);
-}
-
-.decor-alice {
-  top: 1280px;
-  left: 1.5%;
-  width: clamp(100px, 10vw, 170px);
-  transform: rotate(4deg);
-}
-
-.decor-raposa {
-  top: 1650px;
-  right: 2%;
-  width: clamp(110px, 11vw, 180px);
-  transform: rotate(-6deg);
-}
-
-.decor-vaca {
-  top: 1900px;
-  left: 2.5%;
-  width: clamp(120px, 12vw, 190px);
-  transform: rotate(5deg);
-}
-
-/* Seções com conteúdo real ficam acima das imagens decorativas */
-.page-titulo,
-.divisor,
-.autora-section,
-.autor-bloco,
-.rodape-curiosidade {
-  position: relative;
-  z-index: 5;
+/* tv antiga — figura grande no canto vazio, embaixo dos cards */
+.decor-tv {
+  bottom: 30px;
+  left: -90px;
+  width: clamp(300px, 15vw, 160px);
+  opacity: 0.5;
+  filter: sepia(20%);
+  transform: rotate(-24deg);
 }
 
 /* ── MOBILE ── */
@@ -471,7 +288,7 @@ header a:hover {
     letter-spacing: 4px;
   }
 
-  .autora-section {
+  .apresentacao-section {
     flex-direction: column;
     align-items: center;
     gap: 24px;
@@ -479,114 +296,70 @@ header a:hover {
     text-align: center;
   }
 
-  .foto-autora {
+  .foto-apresentacao {
     width: clamp(140px, 55vw, 200px);
   }
 
-  .autora-nome {
+  .apresentacao-titulo {
     border-left: none;
     padding-left: 0;
     text-align: center;
   }
 
-  .autora-cargo {
+  .apresentacao-cargo {
     padding-left: 0;
     text-align: center;
   }
 
-  .autora-bio {
+  .apresentacao-texto {
     text-align: left;
   }
 
-  .autor-bloco {
+  .cards-navegacao {
+    height: clamp(400px, 140vw, 520px);
     padding: 0 16px;
   }
 
-  .autor-cabecalho {
-    gap: 14px;
-    margin-bottom: 18px;
+  .card-img img {
+    width: clamp(160px, 55vw, 230px);
   }
 
-  .lista-curiosidades {
-    gap: 22px;
+  .card-esquerda {
+    top: 20px;
+    left: 10px;
   }
 
-  .card-curiosidade {
-    flex-direction: column;
-    gap: 16px;
+  .card-direita {
+    right: 10px;
+    bottom: 0;
   }
 
-  .card-curiosidade:nth-child(odd),
-  .card-curiosidade:nth-child(even) {
-    transform: rotate(0deg);
-  }
-
-  .card-curiosidade .quadro {
-    width: 100%;
-    max-width: 240px;
-    margin: 0 auto;
-  }
-
-  .card-curiosidade .curiosidade-titulo,
-  .card-curiosidade .curiosidade-texto,
-  .card-curiosidade:nth-child(even) .curiosidade-titulo,
-  .card-curiosidade:nth-child(even) .curiosidade-texto {
-    text-align: left;
-  }
-
-  .btn-ler-curiosidade,
-  .card-curiosidade:nth-child(even) .btn-ler-curiosidade {
-    align-self: center;
-  }
-}
-
-@media (max-width: 768px) {
-  .decor-img {
-    opacity: 0.55;
-    width: clamp(55px, 20vw, 95px);
-  }
-
-  .decor-maos {
-    top: 200px;
-    right: -8px;
-  }
-
-  .decor-olhos {
-    top: 700px;
-    left: -10px;
-    width: clamp(160px, 55vw, 220px);
-    opacity: 0.4;
-  }
-
-  .decor-resistance {
-    top: 1150px;
-    right: -8px;
-  }
-
-  .decor-alice {
-    top: 1600px;
-    left: -10px;
-  }
-
-  .decor-raposa {
-    top: 2050px;
-    right: -8px;
-  }
-
-  .decor-vaca {
-    top: 2450px;
-    left: -8px;
-  }
-}
-
-@media (max-width: 420px) {
-  .decor-img {
-    width: clamp(48px, 22vw, 78px);
-    opacity: 0.45;
-  }
-
-  .decor-resistance,
-  .decor-alice {
+  /* fragmentos: simplifica para não poluir telas pequenas */
+  .decor-megafone {
     display: none;
+  }
+
+  .decor-camera {
+    width: clamp(55px, 16vw, 75px);
+    top: -10px;
+    right: 4%;
+  }
+
+  .decor-lampada {
+    width: clamp(45px, 14vw, 65px);
+    bottom: -14px;
+    right: 0;
+  }
+
+  .decor-cerebro {
+    top: 18px;
+    left: 165px;
+    width: clamp(55px, 18vw, 80px);
+  }
+
+  .decor-tv {
+    width: clamp(95px, 32vw, 130px);
+    left: 8px;
+    bottom: 4px;
   }
 }
