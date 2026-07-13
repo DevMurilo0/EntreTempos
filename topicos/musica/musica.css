@@ -73,8 +73,8 @@ body::before {
 
 /* guitarra fender — perto dos cards, lado esquerdo */
 .img-deco-fender {
-  top: 70%;
-  left: 50px;
+  top: 60%;
+  left: 80px;
   width: clamp(150px, 44vw, 570px);
   transform: rotate(10deg);
 }
