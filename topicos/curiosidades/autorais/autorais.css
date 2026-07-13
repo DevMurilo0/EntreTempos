@@ -8,11 +8,16 @@
   box-sizing: border-box;
 }
 
+html {
+  height: 100%;
+}
+
 body {
   position: relative;
   background: #f2e8d5;
   font-family: 'Special Elite', serif;
   min-height: 100vh;
+  height: 100%;
   overflow-x: hidden;
 }
 
@@ -450,6 +455,7 @@ header a:hover {
     align-self: center;
   }
 }
+
 /* ══════════════════════════════════════════
    IMAGENS DECORATIVAS — espalhadas pela página,
    responsivas e sem interferir na leitura.
@@ -474,12 +480,47 @@ header a:hover {
   filter: sepia(10%) contrast(0.97);
 }
 
-.da { top: 4%;   left: 1.5%;  width: clamp(70px, 8vw, 130px); transform: rotate(-10deg); }
-.db { top: 16%;  right: 2%;   width: clamp(80px, 9vw, 150px); transform: rotate(8deg); }
-.dc { top: 32%;  left: 0.5%;  width: clamp(65px, 7vw, 120px); transform: rotate(6deg); }
-.dd { top: 46%;  right: 1.5%; width: clamp(75px, 8vw, 135px); transform: rotate(-7deg); }
-.de { top: 62%;  left: 2%;    width: clamp(70px, 9vw, 145px); transform: rotate(12deg); }
-.df { top: 80%;  right: 2.5%; width: clamp(95px, 11vw, 190px); transform: rotate(-5deg); }
+.da {
+  top: 99px;
+  left: 89px;
+  width: clamp(250px, 8vw, 130px);
+  transform: rotate(-20deg);
+}
+
+.db {
+  top: 130px;
+  right: 80px;
+  width: clamp(180px, 9vw, 150px);
+  transform: rotate(8deg);
+}
+
+.dc {
+  top: 360px;
+  left: 0.5%;
+  width: clamp(165px, 7vw, 120px);
+  transform: rotate(6deg);
+}
+
+.dd {
+  top: 400px;
+  right: 1.5%;
+  width: clamp(175px, 8vw, 135px);
+  transform: rotate(-7deg);
+}
+
+.de {
+  top: 590px;
+  left: 2%;
+  width: clamp(70px, 9vw, 145px);
+  transform: rotate(12deg);
+}
+
+.df {
+  top: 760px;
+  right: 2.5%;
+  width: clamp(195px, 11vw, 190px);
+  transform: rotate(-5deg);
+}
 
 /* Seções com conteúdo real ficam acima das imagens decorativas */
 .page-titulo,
@@ -496,12 +537,37 @@ header a:hover {
     opacity: 0.55;
     width: clamp(55px, 20vw, 95px);
   }
-  .da { top: 5%;   left: -8px; }
-  .db { top: 18%;  right: -10px; }
-  .dc { top: 34%;  left: -12px; }
-  .dd { top: 48%;  right: -8px; }
-  .de { top: 64%;  left: -10px; }
-  .df { top: 82%;  right: -12px; width: clamp(70px, 26vw, 120px); }
+
+  .da {
+    top: 5%;
+    left: -8px;
+  }
+
+  .db {
+    top: 18%;
+    right: -10px;
+  }
+
+  .dc {
+    top: 34%;
+    left: -12px;
+  }
+
+  .dd {
+    top: 48%;
+    right: -8px;
+  }
+
+  .de {
+    top: 64%;
+    left: -10px;
+  }
+
+  .df {
+    top: 82%;
+    right: -12px;
+    width: clamp(70px, 26vw, 120px);
+  }
 }
 
 @media (max-width: 420px) {
@@ -509,5 +575,10 @@ header a:hover {
     width: clamp(48px, 22vw, 78px);
     opacity: 0.45;
   }
-  .db, .dd, .df { display: none; }
+
+  .db,
+  .dd,
+  .df {
+    display: none;
+  }
 }
