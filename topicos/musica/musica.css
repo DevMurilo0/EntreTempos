@@ -28,7 +28,9 @@ body::before {
 
 /* ── IMAGENS DECORATIVAS (notas, guitarra, vinil, fender) ──
    Espalhadas pela página, acompanhando o conteúdo ao rolar
-   (position: absolute, relativo ao body — não fixed). */
+   (position: absolute, relativo ao body — não fixed).
+   Tamanhos fluidos com clamp() para se adaptarem a qualquer
+   largura de tela, sem precisar de breakpoints fixos. */
 .deco-container {
   position: absolute;
   top: 0;
@@ -49,15 +51,15 @@ body::before {
 .img-deco-notas {
   top: 2%;
   right: -30px;
-  width: 300px;
+  width: clamp(135px, 35vw, 450px);
   transform: rotate(-8deg);
 }
 
 /* guitarra "MUSIC" — perto da seção de apresentação, lado esquerdo */
 .img-deco-musictexto {
-  top: 24%;
-  left: 45px;
-  width: 360px;
+  top: 5%;
+  left: -20px;
+  width: clamp(165px, 42vw, 540px);
   transform: rotate(-40deg);
 }
 
@@ -65,7 +67,7 @@ body::before {
 .img-deco-vinil {
   top: 56%;
   right: -40px;
-  width: 300px;
+  width: clamp(143px, 35vw, 450px);
   transform: rotate(-6deg);
 }
 
@@ -73,7 +75,7 @@ body::before {
 .img-deco-fender {
   top: 70%;
   left: 50px;
-  width: 380px;
+  width: clamp(150px, 44vw, 570px);
   transform: rotate(10deg);
 }
 
@@ -296,30 +298,5 @@ header a:hover {
   .card-direita {
     right: 10px;
     bottom: 0;
-  }
-
-  /* ── IMAGENS DECORATIVAS NO MOBILE ── */
-  .img-deco-notas {
-    top: 1%;
-    right: -20px;
-    width: 90px;
-  }
-
-  .img-deco-musictexto {
-    top: 20%;
-    left: -32px;
-    width: 110px;
-  }
-
-  .img-deco-vinil {
-    top: 52%;
-    right: -22px;
-    width: 95px;
-  }
-
-  .img-deco-fender {
-    top: 74%;
-    left: -28px;
-    width: 100px;
   }
 }
