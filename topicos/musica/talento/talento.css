@@ -53,6 +53,7 @@ header a:hover {
   z-index: 5;
   text-align: center;
   padding: 30px 20px 10px;
+  overflow: visible;
 }
 
 .page-titulo h1 {
@@ -93,7 +94,6 @@ header a:hover {
   max-width: 1100px;
   margin: 0 auto 40px;
   padding: 0 40px;
-  z-index: 1;
 }
 
 .foto-musica {
@@ -147,6 +147,103 @@ header a:hover {
 }
 
 /* ══════════════════════════════════════════
+   IMAGENS DECORATIVAS — espalhadas de forma
+   organizada, opacidade normal
+   ══════════════════════════════════════════ */
+
+.decor {
+  position: absolute;
+  opacity: 1;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.decor-cassete {
+  top: -55px;
+  left: -40px;
+  width: clamp(120px, 13vw, 185px);
+  height: auto;
+  transform: rotate(-12deg);
+}
+
+.decor-microfone {
+  bottom: -85px;
+  right: -50px;
+  width: clamp(135px, 15vw, 215px);
+  height: auto;
+  transform: rotate(8deg);
+}
+
+.decor-dvd {
+  bottom: -15px;
+  left: -10px;
+  width: clamp(105px, 12vw, 165px);
+  height: auto;
+  transform: rotate(-6deg);
+  opacity: 1;
+}
+
+.decor-gatinho {
+  top: -75px;
+  right: 0px;
+  width: clamp(120px, 13vw, 175px);
+  height: auto;
+  transform: rotate(6deg);
+}
+
+/* ── decorativos no título ── */
+.decor-volume {
+  top: 10px;
+  left: clamp(0px, 4vw, 60px);
+  width: clamp(70px, 8vw, 105px);
+  height: auto;
+  transform: rotate(-10deg);
+}
+
+.decor-boca {
+  top: 0px;
+  right: clamp(0px, 4vw, 60px);
+  width: clamp(75px, 8.5vw, 115px);
+  height: auto;
+  transform: rotate(8deg);
+}
+
+/* ── decorativo extra na seção de apresentação ── */
+.decor-bateria {
+  bottom: -60px;
+  left: -30px;
+  width: clamp(110px, 12.5vw, 175px);
+  height: auto;
+  transform: rotate(-7deg);
+}
+
+/* ── decorativo extra na navegação ── */
+.decor-showbola {
+  bottom: -55px;
+  right: -25px;
+  width: clamp(110px, 12vw, 165px);
+  height: auto;
+  transform: rotate(5deg);
+}
+
+/* ── decorativos no rodapé ── */
+.decor-fone {
+  bottom: 5px;
+  left: clamp(10px, 5vw, 70px);
+  width: clamp(80px, 9vw, 125px);
+  height: auto;
+  transform: rotate(-8deg);
+}
+
+.decor-spotfy {
+  bottom: 0px;
+  right: clamp(10px, 5vw, 70px);
+  width: clamp(90px, 10vw, 140px);
+  height: auto;
+  transform: rotate(6deg);
+}
+
+/* ══════════════════════════════════════════
    FOTOS DE NAVEGAÇÃO — uma foto por artista,
    cada uma clicável, levando à página dele.
    O layout cresce automaticamente conforme
@@ -163,8 +260,8 @@ header a:hover {
   gap: 40px;
   max-width: 900px;
   margin: 0 auto;
-  margin-bottom: 80px;
-  padding: 0 40px;
+  margin-bottom: 100px;
+  padding: 40px 40px 0;
 }
 
 .foto-nav {
@@ -274,5 +371,69 @@ header a:hover {
 
   .foto-nav {
     width: clamp(150px, 60vw, 220px);
+  }
+
+  .decor {
+    opacity: 1;
+  }
+
+  .decor-cassete {
+    width: 102px;
+    top: -14px;
+    left: -8px;
+  }
+
+  .decor-microfone {
+    width: 119px;
+    bottom: -22px;
+    right: -10px;
+  }
+
+  .decor-bateria {
+    width: 116px;
+    bottom: -20px;
+    left: -8px;
+  }
+
+  .decor-gatinho {
+    width: 102px;
+    top: -22px;
+    right: 4px;
+  }
+
+  .decor-dvd {
+    width: 94px;
+    bottom: -6px;
+    left: 2px;
+  }
+
+  .decor-showbola {
+    width: 111px;
+    bottom: -20px;
+    right: -4px;
+  }
+
+  .decor-volume {
+    width: 78px;
+    top: 4px;
+    left: 4px;
+  }
+
+  .decor-boca {
+    width: 82px;
+    top: 0px;
+    right: 4px;
+  }
+
+  .decor-fone {
+    width: 94px;
+    bottom: 4px;
+    left: 8px;
+  }
+
+  .decor-spotfy {
+    width: 102px;
+    bottom: 0px;
+    right: 8px;
   }
 }
