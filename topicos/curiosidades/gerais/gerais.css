@@ -8,11 +8,16 @@
   box-sizing: border-box;
 }
 
+html {
+  height: 100%;
+}
+
 body {
   position: relative;
   background: #f2e8d5;
   font-family: 'Special Elite', serif;
   min-height: 100vh;
+  height: 100%;
   overflow-x: hidden;
 }
 
@@ -383,59 +388,80 @@ header a:hover {
 }
 
 /* ══════════════════════════════════════════
-   FRAGMENTOS DECORATIVOS — recortes espalhados
-   pela página, em fluxo normal (não quebram
-   o layout responsivo).
+   IMAGENS DECORATIVAS — espalhadas pela página,
+   responsivas e sem interferir na leitura.
+   No desktop ficam nas posições originais (só
+   50% maiores). No celular, ficam concentradas
+   apenas na área da seção de Apresentação (20%
+   maiores do que estavam antes).
    ══════════════════════════════════════════ */
 
-.decor {
-  display: block;
-  z-index: 4;
+.decor-imagens {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
   pointer-events: none;
   user-select: none;
+}
+
+.decor-img {
+  position: absolute;
+  opacity: 0.85;
   filter: drop-shadow(3px 5px 10px rgba(0, 0, 0, 0.25));
 }
 
-.decor-maos {
-  width: clamp(90px, 9vw, 140px);
-  margin: -10px 8% 0 auto;
+.decor-anunciando {
+  top: 160px;
+  right: 3%;
+  width: clamp(180px, 18vw, 300px);
   transform: rotate(6deg);
-  opacity: 0.9;
 }
 
-.decor-olhos {
-  width: clamp(160px, 16vw, 240px);
-  margin: -14px auto 0 6%;
+.decor-estrela {
+  top: 520px;
+  left: 1.5%;
+  width: clamp(225px, 22.5vw, 375px);
   transform: rotate(-3deg);
-  opacity: 0.85;
 }
 
-.decor-resistance {
-  width: clamp(90px, 9vw, 130px);
-  margin: -30px 10% 0 auto;
+.decor-jornal {
+  top: 900px;
+  right: 1.5%;
+  width: clamp(180px, 18vw, 285px);
   transform: rotate(-5deg);
-  opacity: 0.9;
 }
 
-.decor-alice {
-  width: clamp(70px, 7vw, 110px);
-  margin: -20px auto 0 8%;
+.decor-papel {
+  top: 1280px;
+  left: 1.5%;
+  width: clamp(150px, 15vw, 255px);
   transform: rotate(4deg);
-  opacity: 0.9;
 }
 
-.decor-raposa {
-  width: clamp(80px, 8vw, 120px);
-  margin: -24px 9% 0 auto;
+.decor-pessoas {
+  top: 1650px;
+  right: 2%;
+  width: clamp(165px, 16.5vw, 270px);
   transform: rotate(-6deg);
-  opacity: 0.9;
 }
 
-.decor-vaca {
-  width: clamp(90px, 9vw, 130px);
-  margin: 10px auto 0 8%;
+.decor-semafaro {
+  top: 1900px;
+  left: 2.5%;
+  width: clamp(180px, 18vw, 285px);
   transform: rotate(5deg);
-  opacity: 0.9;
+}
+
+/* Seções com conteúdo real ficam acima das imagens decorativas */
+.page-titulo,
+.divisor,
+.autora-section,
+.autor-bloco,
+.rodape-curiosidade {
+  position: relative;
+  z-index: 5;
 }
 
 /* ── MOBILE ── */
@@ -514,22 +540,54 @@ header a:hover {
     align-self: center;
   }
 
-  .decor-maos,
-  .decor-resistance,
-  .decor-alice,
-  .decor-raposa,
-  .decor-vaca {
-    width: clamp(55px, 20vw, 80px);
+}
+
+@media (max-width: 768px) {
+  .decor-img {
+    opacity: 0.55;
+    width: clamp(66px, 24vw, 114px);
   }
 
-  .decor-olhos {
-    width: clamp(120px, 55vw, 180px);
+  /* No celular, as imagens ficam concentradas apenas ao redor da
+     seção de Apresentação (foto + texto de descrição), em vez de
+     espalhadas pelo resto da página. */
+
+  .decor-anunciando {
+    top: 230px;
+    right: -8px;
   }
 
-  .decor-maos { margin: -6px 4% 0 auto; }
-  .decor-olhos { margin: -8px auto 0 2%; }
-  .decor-resistance { margin: -16px 4% 0 auto; }
-  .decor-alice { margin: -12px auto 0 4%; }
-  .decor-raposa { margin: -14px 4% 0 auto; }
-  .decor-vaca { margin: 6px auto 0 4%; }
+  .decor-estrela {
+    top: 380px;
+    left: -10px;
+    width: clamp(192px, 66vw, 264px);
+    opacity: 0.4;
+  }
+
+  .decor-jornal {
+    top: 520px;
+    right: -8px;
+  }
+
+  .decor-papel {
+    top: 660px;
+    left: -8px;
+  }
+
+  .decor-pessoas {
+    top: 800px;
+    right: -8px;
+  }
+
+  .decor-semafaro {
+    top: 920px;
+    left: -8px;
+  }
+}
+
+@media (max-width: 420px) {
+  .decor-img {
+    width: clamp(58px, 26vw, 94px);
+    opacity: 0.45;
+  }
 }
