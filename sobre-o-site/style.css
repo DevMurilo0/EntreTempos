@@ -546,16 +546,16 @@ img.foto-pessoa,
 }
 
 .deco-java {
-    top: 170px;
-    right: -40px;
-    width: 75px;
-    transform: rotate(8deg);
+    top: -19px;
+    right: 600px;
+    width: 150px;
+    transform: rotate(-8deg);
 }
 
 .deco-hornet {
     top: 200px;
-    left: 480px;
-    width: 90px;
+    left: 510px;
+    width: 150px;
     transform: rotate(5deg);
 }
 
@@ -568,30 +568,30 @@ img.foto-pessoa,
 
 .deco-github {
     bottom: -10px;
-    left: 620px;
+    left: 220px;
     width: 90px;
-    transform: rotate(6deg);
+    transform: rotate(-11deg);
 }
 
 .deco-camera {
-    bottom: 30px;
-    right: 40px;
+    bottom: -20px;
+    right: -60px;
     width: 150px;
-    transform: rotate(-12deg);
+    transform: rotate(0deg);
 }
 
 .deco-coracoes {
-    top: 50px;
-    right: 20px;
-    width: 100px;
-    transform: rotate(4deg);
+    top: 300px;
+    right: 80px;
+    width: 150px;
+    transform: rotate(7deg);
 }
 
 .deco-deadpool {
-    top: -45px;
+    top: -55px;
     right: 10px;
     width: 130px;
-    transform: rotate(4deg);
+    transform: rotate(1deg);
 }
 
 /* ── 8. GUIA DE CONTEÚDOS ─────────────────────────────────────── */
