@@ -8,7 +8,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   max-width: 100%;
   overflow-x: hidden;
 }
@@ -17,6 +18,7 @@ body {
   background: #f2e8d5;
   font-family: 'Special Elite', serif;
   min-height: 100vh;
+  position: relative;
 }
 
 body::before {
@@ -27,6 +29,65 @@ body::before {
   opacity: 0.4;
   pointer-events: none;
   z-index: 0;
+}
+
+/* ── IMAGENS DECORATIVAS (flor, gatito, mago, peixe, minina) ──
+   Espalhadas pela página, acompanhando o conteúdo ao rolar
+   (position: absolute, relativo ao body — não fixed). */
+.deco-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.img-deco {
+  position: absolute;
+  filter: drop-shadow(3px 4px 10px rgba(0, 0, 0, 0.3)) sepia(10%);
+  opacity: 1;
+}
+
+/* flor — perto do título, lado esquerdo */
+.img-deco-flor {
+  top: 10%;
+  left: -25px;
+  width: 110px;
+  transform: rotate(-12deg);
+}
+
+/* gatito — logo abaixo da flor, lado direito */
+.img-deco-gatito {
+  top: 22%;
+  right: -25px;
+  width: 150px;
+  transform: rotate(9deg);
+}
+
+/* mago — logo abaixo do gatito, lado esquerdo */
+.img-deco-mago {
+  top: 34%;
+  left: -30px;
+  width: 160px;
+  transform: rotate(-6deg);
+}
+
+/* peixe — logo abaixo do mago, lado direito */
+.img-deco-peixe {
+  top: 47%;
+  right: -18px;
+  width: 140px;
+  transform: rotate(5deg);
+}
+
+/* minina — logo abaixo do peixe, lado esquerdo */
+.img-deco-minina {
+  top: 59%;
+  left: -20px;
+  width: 130px;
+  transform: rotate(-8deg);
 }
 
 /* ── HEADER ── */
@@ -47,7 +108,9 @@ header a {
   transition: color 0.2s;
 }
 
-header a:hover { color: #c0392b; }
+header a:hover {
+  color: #c0392b;
+}
 
 /* ── TÍTULO ── */
 .page-titulo {
@@ -101,7 +164,7 @@ header a:hover { color: #c0392b; }
   width: clamp(160px, 22vw, 260px);
   height: auto;
   flex-shrink: 0;
-  filter: drop-shadow(4px 6px 14px rgba(0,0,0,0.35)) sepia(15%);
+  filter: drop-shadow(4px 6px 14px rgba(0, 0, 0, 0.35)) sepia(15%);
   transform: rotate(-2deg);
   transition: transform 0.3s ease;
 }
@@ -180,7 +243,7 @@ header a:hover { color: #c0392b; }
   display: block;
   object-fit: contain;
   background: transparent;
-  filter: drop-shadow(4px 6px 14px rgba(0,0,0,0.35)) sepia(15%);
+  filter: drop-shadow(4px 6px 14px rgba(0, 0, 0, 0.35)) sepia(15%);
   transition: transform 0.35s ease;
 }
 
@@ -272,5 +335,40 @@ header a:hover { color: #c0392b; }
 
   .foto-nav {
     width: clamp(150px, 60vw, 220px);
+  }
+
+  /* ── IMAGENS DECORATIVAS NO MOBILE ──
+     Continuam position: absolute (rolam com a página, igual
+     ao desktop) — só tamanho e posição são ajustados para
+     caber em telas pequenas. */
+
+  .img-deco-flor {
+    top: 8%;
+    left: -14px;
+    width: 65px;
+  }
+
+  .img-deco-gatito {
+    top: 18%;
+    right: -14px;
+    width: 85px;
+  }
+
+  .img-deco-mago {
+    top: 30%;
+    left: -16px;
+    width: 90px;
+  }
+
+  .img-deco-peixe {
+    top: 43%;
+    right: -10px;
+    width: 80px;
+  }
+
+  .img-deco-minina {
+    top: 55%;
+    left: -12px;
+    width: 75px;
   }
 }
