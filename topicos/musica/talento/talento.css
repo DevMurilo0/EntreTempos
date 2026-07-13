@@ -167,11 +167,11 @@ header a:hover {
 }
 
 .decor-microfone {
-  bottom: -85px;
-  right: -50px;
-  width: clamp(135px, 15vw, 215px);
+  top: 50%;
+  left: -60px;
+  transform: translateY(-50%) rotate(8deg);
+  width: clamp(110px, 12vw, 165px);
   height: auto;
-  transform: rotate(8deg);
 }
 
 .decor-dvd {
@@ -208,16 +208,15 @@ header a:hover {
   transform: rotate(8deg);
 }
 
-/* ── decorativo extra na seção de apresentação ── */
+/* ── decorativos extras na navegação ── */
 .decor-bateria {
-  bottom: -60px;
-  left: -30px;
+  top: -60px;
+  left: -20px;
   width: clamp(110px, 12.5vw, 175px);
   height: auto;
   transform: rotate(-7deg);
 }
 
-/* ── decorativo extra na navegação ── */
 .decor-showbola {
   bottom: -55px;
   right: -25px;
@@ -226,15 +225,15 @@ header a:hover {
   transform: rotate(5deg);
 }
 
-/* ── decorativos no rodapé ── */
 .decor-fone {
-  bottom: 5px;
-  left: clamp(10px, 5vw, 70px);
-  width: clamp(80px, 9vw, 125px);
+  top: 50%;
+  right: -65px;
+  transform: translateY(-50%) rotate(-8deg);
+  width: clamp(95px, 10.5vw, 145px);
   height: auto;
-  transform: rotate(-8deg);
 }
 
+/* ── decorativo no rodapé ── */
 .decor-spotfy {
   bottom: 0px;
   right: clamp(10px, 5vw, 70px);
@@ -384,32 +383,32 @@ header a:hover {
   }
 
   .decor-microfone {
-    width: 119px;
-    bottom: -22px;
-    right: -10px;
+    width: 100px;
+    top: 50%;
+    left: -10px;
   }
 
   .decor-bateria {
-    width: 116px;
-    bottom: -20px;
-    left: -8px;
+    width: 100px;
+    top: -22px;
+    left: -6px;
   }
 
   .decor-gatinho {
-    width: 102px;
+    width: 100px;
     top: -22px;
     right: 4px;
   }
 
   .decor-dvd {
-    width: 94px;
-    bottom: -6px;
-    left: 2px;
+    width: 90px;
+    bottom: -10px;
+    left: -4px;
   }
 
   .decor-showbola {
-    width: 111px;
-    bottom: -20px;
+    width: 100px;
+    bottom: -10px;
     right: -4px;
   }
 
@@ -426,9 +425,9 @@ header a:hover {
   }
 
   .decor-fone {
-    width: 94px;
-    bottom: 4px;
-    left: 8px;
+    width: 90px;
+    top: 50%;
+    right: -10px;
   }
 
   .decor-spotfy {

@@ -10,7 +10,7 @@ html {
 body {
   overflow-x: hidden;
   width: 100%;
-  position: relative; 
+  position: relative;
 }
 
 
@@ -54,7 +54,7 @@ body::before {
 
 .img-deco {
   position: absolute;
-  filter: drop-shadow(3px 4px 10px rgba(0,0,0,0.3)) sepia(10%);
+  filter: drop-shadow(3px 4px 10px rgba(0, 0, 0, 0.3)) sepia(10%);
   opacity: 0.9;
 }
 
@@ -90,6 +90,7 @@ body::before {
   transform: rotate(7deg);
 }
 
+<<<<<<< HEAD
 /* bolhas — acima do título, lado esquerdo */
 .img-deco-bolhas {
   top: 1%;
@@ -136,6 +137,46 @@ body::before {
   right: 18%;
   width: 130px;
   transform: rotate(3deg);
+=======
+/* flor — perto do título, lado esquerdo (contrapondo o olho) */
+.img-deco-flor {
+  top: 2%;
+  left: -35px;
+  width: 110px;
+  transform: rotate(-12deg);
+}
+
+/* gatito — perto da apresentação, lado direito (contrapondo a paleta) */
+.img-deco-gatito {
+  top: 30%;
+  right: -35px;
+  width: 150px;
+  transform: rotate(9deg);
+}
+
+/* mago — entre apresentação e cards, lado esquerdo */
+.img-deco-mago {
+  top: 48%;
+  left: -40px;
+  width: 160px;
+  transform: rotate(-6deg);
+}
+
+/* peixe — na altura dos cards, lado direito, mais baixo que a mão */
+.img-deco-peixe {
+  top: 72%;
+  right: -25px;
+  width: 140px;
+  transform: rotate(5deg);
+}
+
+/* minina — perto do rodapé, lado direito (contrapondo o pote) */
+.img-deco-minina {
+  bottom: 2%;
+  right: -30px;
+  width: 130px;
+  transform: rotate(-8deg);
+>>>>>>> 45a2b704c498f260fdce72f007f3ff569c6979a2
 }
 
 /* ── HEADER ── */
@@ -156,7 +197,9 @@ header a {
   transition: color 0.2s;
 }
 
-header a:hover { color: #c0392b; }
+header a:hover {
+  color: #c0392b;
+}
 
 /* ── TÍTULO ── */
 .page-titulo {
@@ -210,7 +253,7 @@ header a:hover { color: #c0392b; }
   width: clamp(160px, 22vw, 260px);
   height: auto;
   flex-shrink: 0;
-  filter: drop-shadow(4px 6px 14px rgba(0,0,0,0.35)) sepia(15%);
+  filter: drop-shadow(4px 6px 14px rgba(0, 0, 0, 0.35)) sepia(15%);
   transform: rotate(-2deg);
   transition: transform 0.3s ease;
 }
@@ -416,6 +459,7 @@ header a:hover { color: #c0392b; }
     width: 75px;
   }
 
+<<<<<<< HEAD
   .img-deco-bolhas {
     top: 0.5%;
     left: 1%;
@@ -452,3 +496,35 @@ header a:hover { color: #c0392b; }
     width: 70px;
   }
 }
+=======
+  .img-deco-flor {
+    top: 1%;
+    left: -20px;
+    width: 65px;
+  }
+
+  .img-deco-gatito {
+    top: 28%;
+    right: -20px;
+    width: 85px;
+  }
+
+  .img-deco-mago {
+    top: 50%;
+    left: -22px;
+    width: 90px;
+  }
+
+  .img-deco-peixe {
+    top: 74%;
+    right: -14px;
+    width: 80px;
+  }
+
+  .img-deco-minina {
+    bottom: 2%;
+    right: -16px;
+    width: 75px;
+  }
+}
+>>>>>>> 45a2b704c498f260fdce72f007f3ff569c6979a2
