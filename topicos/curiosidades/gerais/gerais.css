@@ -9,6 +9,7 @@
 }
 
 body {
+  position: relative;
   background: #f2e8d5;
   font-family: 'Special Elite', serif;
   min-height: 100vh;
@@ -381,6 +382,62 @@ header a:hover {
   margin-top: 10px;
 }
 
+/* ══════════════════════════════════════════
+   FRAGMENTOS DECORATIVOS — recortes espalhados
+   pela página, em fluxo normal (não quebram
+   o layout responsivo).
+   ══════════════════════════════════════════ */
+
+.decor {
+  display: block;
+  z-index: 4;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(3px 5px 10px rgba(0, 0, 0, 0.25));
+}
+
+.decor-maos {
+  width: clamp(90px, 9vw, 140px);
+  margin: -10px 8% 0 auto;
+  transform: rotate(6deg);
+  opacity: 0.9;
+}
+
+.decor-olhos {
+  width: clamp(160px, 16vw, 240px);
+  margin: -14px auto 0 6%;
+  transform: rotate(-3deg);
+  opacity: 0.85;
+}
+
+.decor-resistance {
+  width: clamp(90px, 9vw, 130px);
+  margin: -30px 10% 0 auto;
+  transform: rotate(-5deg);
+  opacity: 0.9;
+}
+
+.decor-alice {
+  width: clamp(70px, 7vw, 110px);
+  margin: -20px auto 0 8%;
+  transform: rotate(4deg);
+  opacity: 0.9;
+}
+
+.decor-raposa {
+  width: clamp(80px, 8vw, 120px);
+  margin: -24px 9% 0 auto;
+  transform: rotate(-6deg);
+  opacity: 0.9;
+}
+
+.decor-vaca {
+  width: clamp(90px, 9vw, 130px);
+  margin: 10px auto 0 8%;
+  transform: rotate(5deg);
+  opacity: 0.9;
+}
+
 /* ── MOBILE ── */
 @media (max-width: 600px) {
 
@@ -456,4 +513,23 @@ header a:hover {
   .card-curiosidade:nth-child(even) .btn-ler-curiosidade {
     align-self: center;
   }
+
+  .decor-maos,
+  .decor-resistance,
+  .decor-alice,
+  .decor-raposa,
+  .decor-vaca {
+    width: clamp(55px, 20vw, 80px);
+  }
+
+  .decor-olhos {
+    width: clamp(120px, 55vw, 180px);
+  }
+
+  .decor-maos { margin: -6px 4% 0 auto; }
+  .decor-olhos { margin: -8px auto 0 2%; }
+  .decor-resistance { margin: -16px 4% 0 auto; }
+  .decor-alice { margin: -12px auto 0 4%; }
+  .decor-raposa { margin: -14px 4% 0 auto; }
+  .decor-vaca { margin: 6px auto 0 4%; }
 }

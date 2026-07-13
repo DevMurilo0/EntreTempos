@@ -9,6 +9,7 @@
 }
 
 body {
+  position: relative;
   background: #f2e8d5;
   font-family: 'Special Elite', serif;
   min-height: 100vh;
@@ -448,4 +449,65 @@ header a:hover {
   .card-curiosidade:nth-child(even) .btn-ler-curiosidade {
     align-self: center;
   }
+}
+/* ══════════════════════════════════════════
+   IMAGENS DECORATIVAS — espalhadas pela página,
+   responsivas e sem interferir na leitura.
+   ══════════════════════════════════════════ */
+
+.decor-imagens {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.decor-img {
+  position: absolute;
+  width: clamp(70px, 9vw, 150px);
+  height: auto;
+  opacity: 0.85;
+  filter: sepia(10%) contrast(0.97);
+}
+
+.da { top: 4%;   left: 1.5%;  width: clamp(70px, 8vw, 130px); transform: rotate(-10deg); }
+.db { top: 16%;  right: 2%;   width: clamp(80px, 9vw, 150px); transform: rotate(8deg); }
+.dc { top: 32%;  left: 0.5%;  width: clamp(65px, 7vw, 120px); transform: rotate(6deg); }
+.dd { top: 46%;  right: 1.5%; width: clamp(75px, 8vw, 135px); transform: rotate(-7deg); }
+.de { top: 62%;  left: 2%;    width: clamp(70px, 9vw, 145px); transform: rotate(12deg); }
+.df { top: 80%;  right: 2.5%; width: clamp(95px, 11vw, 190px); transform: rotate(-5deg); }
+
+/* Seções com conteúdo real ficam acima das imagens decorativas */
+.page-titulo,
+.divisor,
+.autora-section,
+.autor-bloco,
+.rodape-curiosidade {
+  position: relative;
+  z-index: 5;
+}
+
+@media (max-width: 768px) {
+  .decor-img {
+    opacity: 0.55;
+    width: clamp(55px, 20vw, 95px);
+  }
+  .da { top: 5%;   left: -8px; }
+  .db { top: 18%;  right: -10px; }
+  .dc { top: 34%;  left: -12px; }
+  .dd { top: 48%;  right: -8px; }
+  .de { top: 64%;  left: -10px; }
+  .df { top: 82%;  right: -12px; width: clamp(70px, 26vw, 120px); }
+}
+
+@media (max-width: 420px) {
+  .decor-img {
+    width: clamp(48px, 22vw, 78px);
+    opacity: 0.45;
+  }
+  .db, .dd, .df { display: none; }
 }

@@ -90,6 +90,54 @@ body::before {
   transform: rotate(7deg);
 }
 
+/* bolhas — acima do título, lado esquerdo */
+.img-deco-bolhas {
+  top: 1%;
+  left: 2%;
+  width: 90px;
+  transform: rotate(-10deg);
+}
+
+/* kapow — perto do divisor, entre apresentação e cards */
+.img-deco-kapow {
+  top: 50%;
+  left: 4%;
+  width: 110px;
+  transform: rotate(6deg);
+}
+
+/* cone — direita, no meio da apresentação */
+.img-deco-cone {
+  top: 34%;
+  right: 2%;
+  width: 90px;
+  transform: rotate(4deg);
+}
+
+/* caneta — próxima aos cards de navegação, esquerda */
+.img-deco-caneta {
+  top: 68%;
+  left: -20px;
+  width: 160px;
+  transform: rotate(-4deg);
+}
+
+/* tinta — próxima ao rodapé, lado direito */
+.img-deco-tinta {
+  bottom: 10%;
+  right: 1%;
+  width: 100px;
+  transform: rotate(-6deg);
+}
+
+/* pintora — bem no rodapé, centro-direita */
+.img-deco-pintora {
+  bottom: -1%;
+  right: 18%;
+  width: 130px;
+  transform: rotate(3deg);
+}
+
 /* ── HEADER ── */
 header {
   position: relative;
@@ -366,5 +414,41 @@ header a:hover { color: #c0392b; }
     bottom: 3%;
     left: -15px;
     width: 75px;
+  }
+
+  .img-deco-bolhas {
+    top: 0.5%;
+    left: 1%;
+    width: 50px;
+  }
+
+  .img-deco-kapow {
+    top: 48%;
+    left: 2%;
+    width: 65px;
+  }
+
+  .img-deco-cone {
+    top: 32%;
+    right: 1%;
+    width: 50px;
+  }
+
+  .img-deco-caneta {
+    top: 66%;
+    left: -12px;
+    width: 90px;
+  }
+
+  .img-deco-tinta {
+    bottom: 8%;
+    right: 0.5%;
+    width: 55px;
+  }
+
+  .img-deco-pintora {
+    bottom: -0.5%;
+    right: 12%;
+    width: 70px;
   }
 }
