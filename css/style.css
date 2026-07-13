@@ -764,7 +764,12 @@ img.deco-maos {
 }
 
 .guia-conteudos {
+  position: relative;
   padding-bottom: 1rem;
+}
+
+.acesso-folha {
+  overflow: visible;
 }
 
 .grid-guia {
@@ -883,5 +888,157 @@ img.deco-maos {
     margin-left: -40px;
     width: 140px;
     transform: scaleX(-1);
+  }
+}
+
+/* =====================
+   STICKERS DECORATIVOS
+===================== */
+
+.sticker {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  z-index: 4;
+  filter: drop-shadow(3px 5px 8px rgba(0, 0, 0, 0.25));
+}
+
+.sticker-mao-rock {
+  top: 900px;
+  right: 100px;
+  width: clamp(300px, 7vw, 100px);
+  transform: rotate(-11deg);
+}
+
+.sticker-claquete {
+  top: 10px;
+  left: 8px;
+  width: clamp(250px, 8vw, 110px);
+  transform: rotate(-10deg);
+  z-index: 6;
+}
+
+.sticker-guitarra {
+  top: -25px;
+  right: -260px;
+  width: clamp(350px, 6vw, 80px);
+  transform: rotate(14deg);
+}
+
+.sticker-coracao {
+  position: absolute;
+  bottom: -130px;
+  right: 900px;
+  width: clamp(250px, 6vw, 80px);
+  transform: rotate(-10deg);
+}
+
+.sticker-spray {
+  top: -10px;
+  right: 2%;
+  width: clamp(105px, 6vw, 90px);
+  transform: rotate(8deg);
+}
+
+.sticker-gato-skate {
+  bottom: 10px;
+  left: 100px;
+  width: clamp(300px, 8vw, 120px);
+  transform: rotate(6deg);
+}
+
+.sticker-snoopy {
+  bottom: -18px;
+  left: -300px;
+  width: clamp(160px, 8vw, 100px);
+  transform: rotate(-8deg);
+}
+
+.sticker-pessoa {
+  bottom: 40px;
+  left: 1200px;
+  width: clamp(300px, 4.5vw, 60px);
+  transform: rotate(19deg);
+}
+
+@media (max-width: 1024px) {
+  .sticker-pessoa {
+    left: calc(50% + 100px);
+  }
+}
+
+@media (max-width: 768px) {
+  .sticker-mao-rock {
+    width: clamp(50px, 9vw, 75px);
+    right: 3%;
+    top: 15px;
+  }
+
+  .sticker-claquete {
+    width: clamp(55px, 10vw, 80px);
+    left: 4%;
+  }
+
+  .sticker-coracao {
+    width: clamp(40px, 8vw, 60px);
+    bottom: -24px;
+  }
+
+  .sticker-spray {
+    width: clamp(45px, 8vw, 65px);
+  }
+
+  .sticker-gato-skate {
+    width: clamp(55px, 10vw, 90px);
+  }
+
+  .sticker-snoopy {
+    width: clamp(50px, 9vw, 75px);
+    left: -15px;
+    bottom: -14px;
+  }
+
+  .sticker-pessoa {
+    display: none;
+  }
+
+  .sticker-guitarra {
+    width: 42px;
+    top: -18px;
+    right: 6px;
+  }
+}
+
+@media (max-width: 600px) {
+  .sticker-guitarra {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .sticker-mao-rock {
+    top: 8px;
+    width: 48px;
+  }
+
+  .sticker-claquete {
+    top: 4px;
+    width: 50px;
+  }
+
+  .sticker-spray,
+  .sticker-gato-skate {
+    display: none;
+  }
+
+  .sticker-coracao {
+    width: 42px;
+    bottom: -20px;
+    right: -4px;
+  }
+
+  .sticker-snoopy {
+    width: 46px;
+    left: -8px;
   }
 }
