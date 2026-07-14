@@ -473,6 +473,37 @@ img.deco-maos {
     width: 90%;
   }
 
+  /* ── STICKERS NO MOBILE ──
+     No celular, os stickers espalhados pela página (posições
+     absolutas pensadas pro PC) somem, e no lugar aparece o
+     bloco .stickers-mobile logo abaixo do título "A Revista",
+     com todas as figurinhas juntas, maiores e organizadas. */
+
+  .sticker {
+    display: none !important;
+  }
+
+  .stickers-mobile {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    max-width: 460px;
+    margin: 6px auto 26px;
+    padding: 0 24px;
+    position: relative;
+    z-index: 5;
+  }
+
+  .sticker-mobile-img {
+    width: clamp(62px, 17vw, 96px);
+    height: auto;
+    filter: drop-shadow(3px 5px 8px rgba(0, 0, 0, 0.25));
+    pointer-events: none;
+    user-select: none;
+  }
+
 }
 
 /* =====================
@@ -549,6 +580,17 @@ img.deco-maos {
     padding: 20px 14px;
   }
 
+  .stickers-mobile {
+    gap: 12px;
+    max-width: 340px;
+    margin: 4px auto 22px;
+    padding: 0 16px;
+  }
+
+  .sticker-mobile-img {
+    width: clamp(56px, 20vw, 80px);
+  }
+
 }
 
 /* =====================
@@ -578,6 +620,15 @@ img.deco-maos {
 
   img.deco-homem {
     width: 32vw;
+  }
+
+  .stickers-mobile {
+    gap: 10px;
+    max-width: 300px;
+  }
+
+  .sticker-mobile-img {
+    width: clamp(50px, 22vw, 70px);
   }
 
 }
@@ -1041,4 +1092,15 @@ img.deco-maos {
     width: 46px;
     left: -8px;
   }
+}
+
+/* =====================
+   STICKERS AGRUPADOS — SÓ MOBILE
+   Escondidos por padrão (PC); aparecem no bloco
+   .stickers-mobile só dentro das media queries acima
+   (≤768px). Fica logo abaixo do título "A Revista".
+===================== */
+
+.stickers-mobile {
+  display: none;
 }
