@@ -36,7 +36,7 @@ const livrosPorMes = {
       titulo: "A Metamorfose",
       autor: "Franz Kafka",
       descricao: "Gregor Samsa acorda transformado em um enorme inseto e passa a enfrentar o isolamento, o preconceito e a incompreensão da própria família. A obra é um dos maiores clássicos da literatura mundial e aborda temas como alienação, identidade e condição humana.",
-      capa: "img/capa_destaque.png",
+      capa: "img_livros/metamorfose.jpg",
       link: "https://colegiocngparanagua.com.br/wp-content/uploads/2021/02/A-METAMORFOSE.pdf",
       linkTexto: "Ler"
     },
@@ -44,7 +44,7 @@ const livrosPorMes = {
       titulo: "A Volta ao Mundo em 80 Dias",
       autor: "Júlio Verne",
       descricao: "O excêntrico inglês Phileas Fogg aposta que consegue dar a volta ao mundo em apenas 80 dias. Ao lado de seu fiel criado Passepartout, ele embarca em uma aventura repleta de desafios, imprevistos e descobertas através de diferentes países e culturas.",
-      capa: "img/capa_destaque.png",
+      capa: "img_livros/80dias.jpg",
       link: "https://www.netmundi.org/home/wp-content/uploads/2020/10/A-volta-ao-mundo-em-80-dias-julio-verne.pdf",
       linkTexto: "Ler"
     },
@@ -52,25 +52,25 @@ const livrosPorMes = {
       titulo: "Blecaute",
       autor: "Marcelo Rubens Paiva",
       descricao: "Em meio ao caos provocado por uma grande interrupção de energia, a obra explora as reações humanas diante da insegurança, da vulnerabilidade e das transformações sociais que surgem quando a rotina é abruptamente interrompida.",
-      capa: "img/capa_destaque.png",
+      capa: "img_livros/blecaute.jpg",
       link: "https://bibliopedra.wordpress.com/wp-content/uploads/2015/09/blecaute-marcelo-rubens-paiva.pdf",
-      linkTexto: "ler"
+      linkTexto: "Ler"
     },
     {
       titulo: "O Retrato de Dorian Gray",
       autor: "Oscar Wilde",
       descricao: "Dorian Gray deseja permanecer eternamente jovem enquanto um retrato envelhece em seu lugar. À medida que mergulha em uma vida de excessos e corrupção moral, apenas a pintura revela as consequências de seus atos.",
-      capa: "img/capa_destaque.png",
-      link: "#",
-      linkTexto: "Baixar / Comprar"
+      capa: "img_livros/retrato.jpg",
+      link: "https://www.jaimemoniz.com/images/docs/recursos/Oscar-Wilde-livro.pdfhttps://www.jaimemoniz.com/images/docs/recursos/Oscar-Wilde-livro.pdf",
+      linkTexto: "Ler"
     },
     {
       titulo: "O Pequeno Príncipe",
       autor: "Antoine de Saint-Exupéry",
       descricao: "Um piloto perdido no deserto encontra um pequeno príncipe vindo de outro planeta. Por meio de encontros e reflexões poéticas, a obra aborda amizade, amor, infância, solidão e os valores essenciais da vida.",
-      capa: "img/capa_destaque.png",
-      link: "#",
-      linkTexto: "Baixar / Comprar"
+      capa: "img_livros/pequenoprincipe.jpg",
+      link: "https://osaberdigital.com.br/wp-content/uploads/2024/11/O-Pequeno-Principe-Saint-Exupery-Zahar.pdf",
+      linkTexto: "Ler"
     }
   ]
 
