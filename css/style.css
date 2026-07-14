@@ -50,6 +50,16 @@ body::before {
   user-select: none;
 }
 
+/* Bloco de stickers agrupados (mobile) — escondido por padrão.
+   Fica visível só dentro da media query (max-width: 768px) mais
+   abaixo, que troca para display: flex. Esta regra padrão TEM
+   que vir antes de qualquer media query no arquivo — senão,
+   por ter a mesma especificidade, ela venceria por estar depois
+   na cascata e as figurinhas nunca apareceriam no celular. */
+.stickers-mobile {
+  display: none;
+}
+
 /* =====================
    CORTINAS
    — left/right negativos grandes garantem que sempre toquem a borda
@@ -475,33 +485,97 @@ img.deco-maos {
 
   /* ── STICKERS NO MOBILE ──
      No celular, os stickers espalhados pela página (posições
-     absolutas pensadas pro PC) somem, e no lugar aparece o
-     bloco .stickers-mobile logo abaixo do título "A Revista",
-     com todas as figurinhas juntas, maiores e organizadas. */
+     absolutas pensadas pro PC) somem, e as mesmas figurinhas
+     reaparecem espalhadas por uma faixa bem maior da página —
+     começando do lado do título "A Revista" e descendo até perto
+     do Guia de Conteúdos — em vez de ficarem juntas num bloco só.
+
+     O .stickers-mobile fica logo depois do .page-titulo no HTML,
+     mas com altura 0: ele não empurra o resto do conteúdo pra
+     baixo, só marca o ponto a partir do qual cada figurinha
+     (position: absolute) é posicionada com o próprio "top". Por
+     isso os valores de "top" abaixo são relativos ao FIM do
+     título "A Revista": números negativos sobem pra dentro do
+     título, números positivos grandes descem pelas seções
+     seguintes (Apresentação, Guia de Conteúdos). São uma
+     estimativa — como não dá pra ver o site rodando aqui, pode
+     ser preciso ajustar um pouco depois de olhar no celular. */
 
   .sticker {
     display: none !important;
   }
 
   .stickers-mobile {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
-    max-width: 460px;
-    margin: 6px auto 26px;
-    padding: 0 24px;
+    display: block;
     position: relative;
-    z-index: 5;
+    width: 100%;
+    height: 0;
+    overflow: visible;
+    z-index: 3;
   }
 
   .sticker-mobile-img {
-    width: clamp(62px, 17vw, 96px);
+    position: absolute;
+    width: clamp(64px, 19vw, 92px);
     height: auto;
     filter: drop-shadow(3px 5px 8px rgba(0, 0, 0, 0.25));
     pointer-events: none;
     user-select: none;
+  }
+
+  /* ao lado do título "A Revista" */
+  .sm-claquete {
+    top: -128px;
+    left: 3%;
+    transform: rotate(-9deg);
+  }
+
+  .sm-mao-rock {
+    top: -75px;
+    right: 2%;
+    transform: rotate(8deg);
+  }
+
+  /* logo abaixo do título, antes da Apresentação */
+  .sm-guitarra {
+    top: 30px;
+    right: -3%;
+    width: clamp(56px, 16vw, 78px);
+    transform: rotate(11deg);
+  }
+
+  .sm-coracao {
+    top: 95px;
+    left: -2%;
+    width: clamp(56px, 16vw, 78px);
+    transform: rotate(-7deg);
+  }
+
+  /* pela área da Apresentação */
+  .sm-spray {
+    top: 320px;
+    left: 0;
+    transform: rotate(4deg);
+  }
+
+  .sm-gato-skate {
+    top: 460px;
+    right: -2%;
+    transform: rotate(-9deg);
+  }
+
+  /* descendo até perto do Guia de Conteúdos */
+  .sm-snoopy {
+    top: 700px;
+    left: 2%;
+    transform: rotate(-5deg);
+  }
+
+  .sm-pessoa {
+    top: 840px;
+    right: 4%;
+    width: clamp(46px, 13vw, 64px);
+    transform: rotate(12deg);
   }
 
 }
@@ -580,15 +654,8 @@ img.deco-maos {
     padding: 20px 14px;
   }
 
-  .stickers-mobile {
-    gap: 12px;
-    max-width: 340px;
-    margin: 4px auto 22px;
-    padding: 0 16px;
-  }
-
   .sticker-mobile-img {
-    width: clamp(56px, 20vw, 80px);
+    width: clamp(54px, 20vw, 76px);
   }
 
 }
@@ -622,13 +689,8 @@ img.deco-maos {
     width: 32vw;
   }
 
-  .stickers-mobile {
-    gap: 10px;
-    max-width: 300px;
-  }
-
   .sticker-mobile-img {
-    width: clamp(50px, 22vw, 70px);
+    width: clamp(48px, 22vw, 66px);
   }
 
 }
@@ -1092,15 +1154,4 @@ img.deco-maos {
     width: 46px;
     left: -8px;
   }
-}
-
-/* =====================
-   STICKERS AGRUPADOS — SÓ MOBILE
-   Escondidos por padrão (PC); aparecem no bloco
-   .stickers-mobile só dentro das media queries acima
-   (≤768px). Fica logo abaixo do título "A Revista".
-===================== */
-
-.stickers-mobile {
-  display: none;
 }
