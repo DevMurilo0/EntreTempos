@@ -211,7 +211,7 @@ header a:hover { color: #c0392b; }
 
 .livro-item {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
   padding: 14px 0;
   border-bottom: 1px dashed #c4a96b;
@@ -240,6 +240,7 @@ header a:hover { color: #c0392b; }
 .livro-info {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .livro-titulo {
@@ -257,41 +258,17 @@ header a:hover { color: #c0392b; }
   margin-top: 1px;
 }
 
-/* ─── DESCRIÇÃO ─── */
-.livro-desc {
+/* indicador de que o item abre os detalhes ao clicar */
+.livro-abrir {
+  margin-left: auto;
+  padding-left: 10px;
   font-family: 'Special Elite', serif;
-  font-size: 12.5px;
-  color: #5a4a38;
-  line-height: 1.6;
-  margin-top: 6px;
-  /* começa escondida */
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height 0.4s ease, opacity 0.35s ease, margin-top 0.3s ease;
-}
-
-/* quando o item está aberto */
-.livro-item.aberto .livro-desc {
-  max-height: 200px;
-  opacity: 1;
-  margin-top: 8px;
-}
-
-/* pequena seta indicando que é expansível */
-.livro-toggle {
   font-size: 11px;
   color: #c0392b;
-  margin-top: 4px;
   letter-spacing: 1px;
-  font-style: normal;
-  display: inline-block;
-  transition: transform 0.3s;
-  user-select: none;
-}
-
-.livro-item.aberto .livro-toggle {
-  transform: rotate(180deg);
+  white-space: nowrap;
+  opacity: 0.75;
+  flex-shrink: 0;
 }
 
 /* Mensagem quando não há livros */
@@ -417,6 +394,165 @@ header a:hover { color: #c0392b; }
 @keyframes flutuar {
   0%, 100% { transform: translateY(0) rotate(0deg); }
   50%       { transform: translateY(-20px) rotate(8deg); }
+}
+
+/* ═══════════════════════════════════════════════════
+   MODAL DE DESCRIÇÃO DO LIVRO — abre ao clicar em um
+   item da lista. Mostra capa, título, autor, descrição
+   e o link de download/compra daquele livro.
+   ═══════════════════════════════════════════════════ */
+
+.modal-livro-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 20, 10, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.modal-livro-overlay.aberto {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-livro-caixa {
+  position: relative;
+  background-color: #f2e8d5;
+  background-image: url('https://www.transparenttextures.com/patterns/aged-paper.png');
+  max-width: 640px;
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  border: 2px solid #c4a96b;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  padding: 36px;
+  transform: scale(0.92) translateY(10px);
+  transition: transform 0.25s ease;
+}
+
+.modal-livro-overlay.aberto .modal-livro-caixa {
+  transform: scale(1) translateY(0);
+}
+
+.modal-fechar {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: #c0392b;
+  color: #fff;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.modal-fechar:hover {
+  background: #922b21;
+  transform: scale(1.08);
+}
+
+.modal-livro-conteudo {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+}
+
+.modal-livro-capa {
+  width: 160px;
+  flex-shrink: 0;
+  filter: drop-shadow(4px 6px 14px rgba(0, 0, 0, 0.4));
+  transform: rotate(-3deg);
+}
+
+.modal-livro-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.modal-livro-titulo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 30px;
+  letter-spacing: 1px;
+  color: #1a1a1a;
+  line-height: 1.1;
+}
+
+.modal-livro-autor {
+  font-family: 'Special Elite', serif;
+  font-size: 14px;
+  font-style: italic;
+  color: #7a6a50;
+}
+
+.modal-livro-desc {
+  font-family: 'Special Elite', serif;
+  font-size: 14px;
+  line-height: 1.75;
+  color: #5a4a38;
+}
+
+.modal-livro-link {
+  align-self: flex-start;
+  margin-top: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  background: #8c3b3b;
+  color: #f2e8d5;
+  text-decoration: none;
+  font-family: 'Special Elite', serif;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: 2px solid #c0392b;
+  box-shadow: 3px 4px 0 rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.modal-livro-link:hover {
+  background: #c0392b;
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 6px 0 rgba(0, 0, 0, 0.22);
+}
+
+@media (max-width: 600px) {
+  .modal-livro-caixa {
+    padding: 26px 20px;
+  }
+
+  .modal-livro-conteudo {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .modal-livro-capa {
+    width: 130px;
+  }
+
+  .modal-livro-info {
+    align-items: center;
+  }
+
+  .modal-livro-link {
+    align-self: center;
+  }
 }
 
 /* ─── RODAPÉ ─── */

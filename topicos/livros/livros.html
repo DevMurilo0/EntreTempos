@@ -72,6 +72,23 @@
   <div class="carimbo">LIVROS</div>
 </div>
 
+<!-- MODAL — abre ao clicar em um livro da lista, mostra capa,
+     descrição e o link de download/compra daquele livro. -->
+<div class="modal-livro-overlay" id="modal-livro" aria-hidden="true">
+  <div class="modal-livro-caixa" role="dialog" aria-modal="true" aria-labelledby="modal-livro-titulo">
+    <button class="modal-fechar" id="modal-fechar" aria-label="Fechar">&times;</button>
+    <div class="modal-livro-conteudo">
+      <img src="" alt="" class="modal-livro-capa" id="modal-livro-capa">
+      <div class="modal-livro-info">
+        <h2 class="modal-livro-titulo" id="modal-livro-titulo"></h2>
+        <p class="modal-livro-autor" id="modal-livro-autor"></p>
+        <p class="modal-livro-desc" id="modal-livro-desc"></p>
+        <a href="#" class="modal-livro-link" id="modal-livro-link" target="_blank" rel="noopener">Acessar</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="livros.js"></script>
 </body>
 </html>
