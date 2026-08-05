@@ -60,12 +60,18 @@
      dele. Para cada curiosidade: troque <span>curiosidade em breve</span> por
      <img loading="lazy" decoding="async" src="..." alt="título"> e remova a classe "vazio" do .quadro.
 
-     PÁGINA DE LEITURA: o botão "Ler curiosidade" de cada card leva para um
-     arquivo dentro da pasta leituras/ (ex.: leituras/curiosidade-1.html).
-     Para criar a leitura de uma nova curiosidade: copie o arquivo
-     leituras/curiosidade-1.html, dê um novo nome a ele (ex.: curiosidade-2.html),
-     edite o conteúdo (está tudo comentado lá dentro) e troque o href do
-     botão correspondente aqui para apontar pro novo arquivo. -->
+     PÁGINA DE LEITURA: cada pessoa tem sua própria pasta dentro de leituras/
+     (ex.: leituras/ruan/, leituras/jose/), com o nome dela e todas as coisas
+     daquela pessoa (o .html da curiosidade + as imagens de decoração dela).
+     O botão "Ler curiosidade" de cada card leva para o .html dentro da
+     pasta da pessoa (ex.: leituras/ruan/ruan.html).
+
+     Para adicionar uma NOVA pessoa: crie uma pasta com o nome dela dentro
+     de leituras/ (ex.: leituras/maria/), copie o .html de exemplo
+     (leituras/ruan/ruan.html) para dentro dela e renomeie (ex.: maria.html),
+     coloque lá dentro as imagens de decoração dela (decor-1.webp etc.) e a
+     foto de capa, edite o conteúdo (está tudo comentado lá dentro) e troque
+     o href do botão correspondente aqui para apontar pro novo arquivo. -->
 
   <section class="autor-bloco">
 
@@ -84,12 +90,8 @@
             pra derrotar chefes <br>-_-
           </p>
           <!-- Este botão já aponta para um exemplo funcionando em
-             leituras/curiosidade-1.html. Para criar a página de leitura
-             de uma NOVA curiosidade: copie leituras/curiosidade-1.html,
-             renomeie (ex.: leituras/curiosidade-2.html), edite o
-             conteúdo dentro dele e troque o href abaixo para apontar
-             pro novo arquivo. -->
-          <a href="leituras/curiosidade-1.html" class="btn-ler-curiosidade">Ler curiosidade →</a>
+             leituras/ruan/ruan.html. -->
+          <a href="leituras/ruan/ruan.html" class="btn-ler-curiosidade">Ler curiosidade →</a>
         </div>
       </article>
       <!--
@@ -113,6 +115,32 @@
       </div>
     </article>
 -->
+    </div>
+
+  </section>
+
+  <section class="autor-bloco">
+
+    <div class="lista-curiosidades">
+
+      <article class="card-curiosidade">
+        <div class="quadro vazio">
+          <img loading="lazy" decoding="async" src="img/placeholder-retrato.svg" alt="título">
+        </div>
+        <div class="curiosidade-conteudo">
+          <h1>José Gleidson de Farias</h1>
+          <h3 class="curiosidade-titulo">Curiosidade em breve</h3>
+          <p class="curiosidade-texto">
+            [TEXTO PENDENTE — descrição breve da curiosidade do José, contando
+            o suficiente para despertar a atenção de quem está lendo sem
+            revelar tudo.]
+          </p>
+          <!-- Este botão já aponta para leituras/jose/jose.html, que está
+             pronto como um esqueleto pra ser preenchido. -->
+          <a href="leituras/jose/jose.html" class="btn-ler-curiosidade">Ler curiosidade →</a>
+        </div>
+      </article>
+
     </div>
 
   </section>
