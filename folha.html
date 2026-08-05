@@ -13,20 +13,22 @@
     <a href="index.html">&#8592; Voltar</a>
   </header>
   <div class="scene">
-    <!-- LUA -->
+    <!-- LUA - a luona la no canto direito, da um clima demais -->
     <div class="moon">
       <img loading="lazy" decoding="async" src="img/folha/lua.webp" alt="Lua">
     </div>
-    <!-- LIVROS -->
+    <!-- LIVROS - pilha de livros la no canto, pra dar aquele ar intelectual kkk -->
     <div class="books">
       <img loading="lazy" decoding="async" src="img/folha/livros.webp" alt="Pilha de livros">
     </div>
-    <!-- BILHETE -->
+    <!-- BILHETE - o bilhete misterioso no meio da tela -->
     <div class="note">
       <img loading="lazy" decoding="async" src="img/folha/bilhete.webp" alt="Bilhete">
     </div>
 
-    <!-- POLAROIDS (movidos para dentro de .scene para acompanhar o scroll/altura no mobile) -->
+    <!-- POLAROIDS - fotos estilo polaroid arrastáveis
+         sim, da pra arrastar. sim, ficou legal pra porra
+         ...vamo parar de xingar quando estivermos documentando -->
     <div class="polaroid polaroid--1" data-rotate="-8">
       <img loading="lazy" decoding="async" src="img/folha/polaroid1.webp" alt="Polaroid 1">
     </div>
@@ -52,7 +54,7 @@
     ];
     const scene = document.querySelector('.scene');
     categories.forEach(cat => {
-      // pé (gira)
+      // pe da pegada (gira na direcao certa)
       const wrap = document.createElement('div');
       wrap.className = `footprint-group ${cat.cls}`;
       wrap.style.transform = `rotate(${cat.rotate}deg)`;
@@ -60,7 +62,8 @@
       feet.className = 'feet';
       feet.innerHTML = `<img loading="lazy" decoding="async" src="img/folha/pegadas.webp" alt="pegadas">`;
       wrap.appendChild(feet);
-      // etiqueta (não gira, fica em cima do pé, na mesma posição .fp--N)
+      // etiqueta com o nome do topico (nao gira junto com o pe)
+      // fica em cima da pegada como se fosse um postit colado
       const tagWrap = document.createElement('a');
       tagWrap.href = cat.href;
       tagWrap.className = `tag-group ${cat.cls}`;

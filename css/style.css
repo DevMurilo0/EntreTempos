@@ -1,5 +1,7 @@
 /* =====================
-   RESET
+   RESET - o básico do básico, zera tudo
+   pq o navegador tem umas ideias proprias
+   e a gente nao quer isso nao
 ===================== */
 * {
   margin: 0;
@@ -9,7 +11,8 @@
 }
 
 /* =====================
-   FUNDO
+   FUNDO - cor de papel velho aesthetic
+   sim, a gente gosta de coisa vintage, e dai?
 ===================== */
 html,
 body {
@@ -41,7 +44,11 @@ body::before {
 }
 
 /* =====================
-   DECORAÇÕES
+   DECORAÇÕES - as firulas bonitas
+   Davi arruma essa parte das imagens decorativas
+   DAVI TU VAI ARRUMAR ESTA BESTAFERA AQUI OU NAO??
+   TO ARRUMANDO AGORA INFELIZ!
+   Ata :D obrigado paixão
 ===================== */
 
 .deco {
@@ -50,20 +57,20 @@ body::before {
   user-select: none;
 }
 
-/* Bloco de stickers agrupados (mobile) — escondido por padrão.
-   Fica visível só dentro da media query (max-width: 768px) mais
-   abaixo, que troca para display: flex. Esta regra padrão TEM
-   que vir antes de qualquer media query no arquivo — senão,
-   por ter a mesma especificidade, ela venceria por estar depois
-   na cascata e as figurinhas nunca apareceriam no celular. */
+/* os stickers no celular ficam escondidos aqui
+   e so aparecem la embaixo na media query de mobile.
+   ESSA REGRA TEM QUE FICAR AQUI EM CIMA senao
+   a cascata do css come o cu e nada funciona */
 .stickers-mobile {
   display: none;
 }
 
 /* =====================
    CORTINAS
-   — left/right negativos grandes garantem que sempre toquem a borda
-   — width generoso para cobrir bem mesmo em telas intermediárias
+   as cortinas de teatro la do topo, ficam grudadas
+   na borda com left/right negativo pra nao vazar
+   COMO CARALHOS ISSO FUNCIONA??
+   arrumei :D tava muito feio e bagunçado
 ===================== */
 
 img.cortina-esquerda {
@@ -85,7 +92,7 @@ img.cortina-direita {
 }
 
 /* =====================
-   NUVEM
+   NUVEM - a nuvenzinha fofa la no canto
 ===================== */
 
 img.deco-nuvem {
@@ -97,7 +104,9 @@ img.deco-nuvem {
 }
 
 /* =====================
-   RASGADO
+   RASGADO - efeito de papel rasgado no bottom
+   ficou bonito pra caralho isso aqui
+   ...vamo parar de xingar...
 ===================== */
 
 img.deco-rasagado {
@@ -110,7 +119,8 @@ img.deco-rasagado {
 }
 
 /* =====================
-   RELÓGIO
+   RELÓGIO - o relogio grandao la na direita
+   Davi ajusta a opacidade disso ai por favor
 ===================== */
 img.deco-relogio {
   top: 65%;
@@ -122,7 +132,9 @@ img.deco-relogio {
 }
 
 /* =====================
-   HOMEM
+   HOMEM - o homenzinho pensativo no fundo
+   ele ta ali representando todo mundo que
+   vai ler essa revista e repensar a vida
 ===================== */
 img.deco-homem {
   bottom: 20px;
@@ -135,7 +147,9 @@ img.deco-homem {
 }
 
 /* =====================
-   MÃOS
+   MÃOS - aquela imagem gigante das maos
+   que fica no fundo atras de tudo
+   sim, a gente gosta de drama visual
 ===================== */
 img.deco-maos {
   top: 280px;
@@ -160,7 +174,9 @@ img.deco-maos {
 }
 
 /* =====================
-   HERO
+   HERO - a parte principal, o textão
+   de boas vindas da revista
+   se tu mexer aqui e quebrar eu te mato <3
 ===================== */
 
 .hero-text {
@@ -187,7 +203,8 @@ img.deco-maos {
 }
 
 /* =====================
-   TITULO
+   TITULO - "Revista Entre Tempos"
+   o nome bonito la em cima, a estrela do show
 ===================== */
 
 .titulo-revista {
@@ -214,7 +231,9 @@ img.deco-maos {
 }
 
 /* =====================
-   CARROSSEL
+   CARROSSEL - os banners que ficam rodando
+   deu um TRABALHÃO pra fazer isso funcionar
+   bonito no celular... mas ficou lindo ne
 ===================== */
 
 .carousel {
@@ -243,7 +262,9 @@ img.deco-maos {
 }
 
 /* =====================
-   SOBRE
+   SOBRE - cardão da apresentação
+   o hover levanta e endireita o card
+   Davi achou bonito e eu concordo
 ===================== */
 
 .sobre-revista {
@@ -289,6 +310,8 @@ img.deco-maos {
 
 /* =====================
    CHAMADA PARA A EQUIPE
+   "conheça a equipe" - pra galera saber
+   quem são os malucos por trás disso tudo
 ===================== */
 
 .chamada-equipe {
@@ -349,7 +372,10 @@ img.deco-maos {
 }
 
 /* =====================
-   BOTAO
+   BOTAO - o botão que leva pra folha.html
+   vermelhão bonito com hover que cresce
+   porra ficou bom demais
+   ...vamo parar de xingar quando estivermos documentando
 ===================== */
 
 .acesso-folha {
@@ -386,6 +412,8 @@ img.deco-maos {
 
 /* =====================
    RESPONSIVIDADE — TABLET (até 1024px)
+   aqui começa a dor de cabeça dos breakpoints
+   cada tela é uma aventura diferente
 ===================== */
 
 @media (max-width: 1024px) {
@@ -425,6 +453,9 @@ img.deco-maos {
 
 /* =====================
    RESPONSIVIDADE — TABLET PEQUENO (até 768px)
+   DAVI desgraça tu vai arrumar essa porra no css ou nao? demonio
+   calma irmao to mexendo aqui
+   ta bom entao amor
 ===================== */
 
 @media (max-width: 768px) {
@@ -484,22 +515,20 @@ img.deco-maos {
   }
 
   /* ── STICKERS NO MOBILE ──
-     No celular, os stickers espalhados pela página (posições
-     absolutas pensadas pro PC) somem, e as mesmas figurinhas
-     reaparecem espalhadas por uma faixa bem maior da página —
-     começando do lado do título "A Revista" e descendo até perto
-     do Guia de Conteúdos — em vez de ficarem juntas num bloco só.
+     no celular os sticker do desktop somem e esses aqui
+     aparecem espalhados pela pagina inteira
 
-     O .stickers-mobile fica logo depois do .page-titulo no HTML,
-     mas com altura 0: ele não empurra o resto do conteúdo pra
-     baixo, só marca o ponto a partir do qual cada figurinha
-     (position: absolute) é posicionada com o próprio "top". Por
-     isso os valores de "top" abaixo são relativos ao FIM do
-     título "A Revista": números negativos sobem pra dentro do
-     título, números positivos grandes descem pelas seções
-     seguintes (Apresentação, Guia de Conteúdos). São uma
-     estimativa — como não dá pra ver o site rodando aqui, pode
-     ser preciso ajustar um pouco depois de olhar no celular. */
+     o .stickers-mobile tem height: 0 pra nao empurrar
+     nada pra baixo, os stickers usam position absolute
+     e os "top" sao relativos ao titulo "A Revista"
+
+     negativo = sobe, positivo grande = desce
+     pode precisar ajustar olhando no celular
+
+     Davi me ajuda a testar no celular ai
+     mano eu to sem bateria
+     COMO ASSIM SEM BATERIA CARREGA ESSA PORRA
+     ...vamo parar de xingar quando estivermos documentando */
 
   .sticker {
     display: none !important;
@@ -582,6 +611,8 @@ img.deco-maos {
 
 /* =====================
    RESPONSIVIDADE — MOBILE (até 480px)
+   celular pequeno, tela apertada, tudo encolhe
+   sofri demais ajustando tudo aqui ein
 ===================== */
 
 @media (max-width: 480px) {
@@ -662,6 +693,8 @@ img.deco-maos {
 
 /* =====================
    RESPONSIVIDADE — MOBILE PEQUENO (até 360px)
+   pra aquele celular que mal cabe na mão
+   se chegou até aqui é pq o celular é minusculo kkk
 ===================== */
 
 @media (max-width: 360px) {
@@ -697,6 +730,8 @@ img.deco-maos {
 
 /* =====================
    SETAS DO CARROSSEL
+   os botões de próximo/anterior do banner
+   bolinhas pretas com setinha, simples e eficaz
 ===================== */
 
 .carousel-btn {
@@ -736,7 +771,11 @@ img.deco-maos {
 }
 
 /* =====================
-   SEÇÕES DA REVISTA (MIGRADO DE SOBRE-O-SITE)
+   SEÇÕES DA REVISTA
+   linhas vermelhas divisórias e titulos de seção
+   o gradiente ficou chique demais
+   vermelho → dourado → vermelho
+   a gente tem bom gosto sim senhor
 ===================== */
 
 .linha-vermelha,
@@ -918,7 +957,11 @@ img.deco-maos {
 }
 
 /* =====================
-   IMAGENS DOS TÓPICOS (tamanho maior + levemente tortas)
+   IMAGENS DOS TÓPICOS
+   cada imagem tem um tamanho e rotação diferente
+   pra nao ficar tudo certinho e sem graça ne
+   a imperfeição é a perfeição
+   (ficou filosófico isso kkkkk)
 ===================== */
 
 .img-poemas {
@@ -938,7 +981,8 @@ img.deco-maos {
   margin-left: -10px;
 }
 
-/* Filmes, Desenhos e Músicas: ainda maiores que os demais, mas sem tomar espaço do texto */
+/* filmes, desenhos e musicas sao maiores pq merecem destaque
+   mas sem comer o espaço do texto do lado */
 
 .img-filmes {
   width: 145px;
@@ -1006,6 +1050,11 @@ img.deco-maos {
 
 /* =====================
    STICKERS DECORATIVOS
+   as figurinhas espalhadas pela pagina toda
+   mão de rock, claquete, guitarra, coração...
+   cada uma com posição e rotação propria
+   parece que alguem colou adesivo no site
+   (e foi exatamente isso que a gente quis)
 ===================== */
 
 .sticker {

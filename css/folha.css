@@ -25,7 +25,9 @@ body {
   height: 100vh;
 }
 
-/* ── HEADER VOLTAR ── */
+/* ── HEADER VOLTAR ──
+   o botaozinho de voltar la em cima
+   simples e direto, sem frescura */
 .header-voltar {
   position: relative;
   z-index: 20;
@@ -47,7 +49,10 @@ body {
   color: #c0392b;
 }
 
-/* ── LUA ── */
+/* ── LUA ──
+   a lua grandona no canto superior direito
+   metade dela fica pra fora da tela e isso eh intencional
+   da aquele efeito de "espiando" sabe? */
 .moon {
   position: absolute;
   top: -230px;
@@ -62,7 +67,10 @@ body {
   display: block;
 }
 
-/* ── LIVROS ── */
+/* ── LIVROS ──
+   pilha de livros no canto inferior direito
+   espelhado com scaleX(-1) pq ficava melhor assim
+   Davi que teve a ideia de espelhar e admito que ficou bom */
 .books {
   position: absolute;
   bottom: 0;
@@ -78,7 +86,9 @@ body {
   display: block;
 }
 
-/* ── BILHETE ── */
+/* ── BILHETE ──
+   o bilhete centralizado com aquela inclinaçãozinha
+   parece um recado colado na parede */
 .note {
   position: absolute;
   top: 50%;
@@ -95,7 +105,11 @@ body {
   display: block;
 }
 
-/* ── COMPONENTE DE PEGADA ── */
+/* ── COMPONENTE DE PEGADA ──
+   as pegadas que levam pros topicos
+   cada uma gira num angulo diferente
+   parece que alguem andou de verdade na pagina kkk
+   nem teve graça, to ficando maluco */
 .footprint-group {
   position: absolute;
   display: flex;
@@ -117,7 +131,12 @@ body {
   transform: rotate(90deg);
 }
 
-/* ── ETIQUETA (fica sobre a pegada, sem girar) ── */
+/* ── ETIQUETA ──
+   as etiquetas com nome de cada topico
+   ficam em cima das pegadas e tem hover animado
+   TA UMA PORRA ISSO AQUI
+   
+   Arrumei :) depois de dias? sim mas arrumei*/
 .tag-group {
   position: absolute;
   display: block;
@@ -153,7 +172,9 @@ body {
   pointer-events: none;
 }
 
-/* ── POSIÇÕES (DESKTOP) ── */
+/* ── POSIÇÕES DAS PEGADAS (DESKTOP) ──
+   cada pegada tem um top/left diferente
+   espalhadas pela tela feito mapa do maroto */
 .fp--1 {
   top: 9%;
   left: 13%;
@@ -186,8 +207,9 @@ body {
 
 /* ════════════════════════════════════════════ */
 /* ROTAÇÃO DAS ETIQUETAS — DESKTOP               */
-/* Só vale quando a tela é MAIOR que 768px.      */
-/* Edite os graus aqui para mudar o DESKTOP.     */
+/* só funciona em tela > 768px                    */
+/* mexe aqui pra mudar no computador              */
+/* e reza pra nao quebrar nada                    */
 /* ════════════════════════════════════════════ */
 
 /*Poemas*/
@@ -244,7 +266,10 @@ body {
   transform: translate(-100px, 12px) rotate(25deg) scale(1.15);
 }
 
-/* ── POLAROIDS ── */
+/* ── POLAROIDS ──
+   as fotinhas espalhadas pela pagina
+   da pra arrastar elas (cursor: grab)
+   nao serve pra nada mas eh legal demais */
 .polaroid {
   position: absolute;
   width: clamp(110px, 13vw, 180px);
@@ -296,10 +321,10 @@ body {
 
 
 /* ╔════════════════════════════════════════════════╗ */
-/* ║  A PARTIR DAQUI: SÓ MOBILE (TELA <= 768px)      ║ */
-/* ║  Existe SOMENTE UM @media no arquivo inteiro.   ║ */
-/* ║  NUNCA cole outro bloco "@media" — edite os      ║ */
-/* ║  números AQUI DENTRO, nunca por fora.            ║ */
+/* ║  DAQUI PRA BAIXO: SÓ MOBILE (TELA <= 768px)    ║ */
+/* ║  tem UM @media só nesse arquivo inteiro         ║ */
+/* ║  NAO COLE OUTRO @media - edita AQUI DENTRO      ║ */
+/* ║  senao eu juro que vou chorar                    ║ */
 /* ╚════════════════════════════════════════════════╝ */
 @media (max-width: 768px) {
 
@@ -309,8 +334,9 @@ body {
 
   .scene {
     height: auto;
-    /* Aumentado de 870px → 1400px para dar mais
-       espaço vertical entre as pegadas no mobile. */
+    /* a scene fica maior no mobile (1400px)
+       pra caber todas as pegadas com espaço entre elas
+       sem esse min-height fica tudo amontoado e feio */
     min-height: 1400px;
     padding-bottom: 60px;
     overflow-x: hidden;
@@ -325,22 +351,22 @@ body {
   .books {
     width: 95px;
     right: -38px;
-    /* Acompanha o fundo da scene maior */
+    /* livro acompanha o fundo maior */
     bottom: 0;
   }
 
   .note {
     left: 30%;
-    /* Bilhete centralizado na nova altura */
+    /* bilhete centralizado na tela maior */
     top: 45%;
     width: 68vw;
   }
 
   /* ── POSIÇÕES DAS PEGADAS NO MOBILE ──
-     Distribuídas em 6 fatias de ~14% cada,
-     com mais espaço entre elas.
-     left alternado (direita/esquerda) para
-     criar o efeito de trilha. */
+     espalhadas em 6 fatias de ~14% cada
+     alternando esquerda/direita pra parecer
+     que alguem ta andando de verdade
+     ficou lindo meu deus */
   .fp--1 {
     top: 4%;
     left: 45%;
@@ -373,8 +399,10 @@ body {
 
   /* ────────────────────────────────────────────
      ROTAÇÃO DAS PEGADAS — MOBILE
-     !important necessário pois o JS aplica rotate
-     inline no elemento (sem isso o CSS não vence).
+     precisa de !important pq o JS coloca rotate inline
+     e sem isso o CSS perde a briga
+     porra de especificidade
+     ...vamo parar de xingar quando estivermos documentando
      ──────────────────────────────────────────── */
   .footprint-group.fp--1 {
     transform: rotate(45deg) !important;
@@ -402,6 +430,8 @@ body {
 
   /* ────────────────────────────────────────────
      ROTAÇÃO DAS ETIQUETAS — MOBILE
+     mesma logica, ajusta a posição e rotação
+     das etiquetas pra ficarem bonitinhas
      ──────────────────────────────────────────── */
   .tag-group.fp--1 {
     transform: translate(-95px, 30px) rotate(25deg);
@@ -452,8 +482,8 @@ body {
   }
 
   /* ── POLAROIDS ──
-     Reposicionados para preencher os vãos
-     na nova altura da scene (1400px). */
+     reposicionados pro mobile pra ficar bonito
+     na tela maior do celular (scene de 1400px) */
   .polaroid--1 {
     top: 5%;
     left: 73%;
@@ -484,4 +514,8 @@ body {
 
 }
 
-/* ═══════ FIM — NÃO ADICIONE NADA DEPOIS DESTA LINHA ═══════ */
+/* ═══════ FIM — nao adicione NADA depois dessa linha
+   se adicionar eu vou saber e vou ficar triste
+   Davi eu to falando com vc tambem
+   ta bom murilo nao vo mexer aqui
+   bom garoto <3 ═══════ */

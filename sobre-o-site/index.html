@@ -15,48 +15,35 @@
 
 <body>
 
-    <!-- ══════════════════════════════════════════════════════════
-       CABEÇALHO — link de volta. Troque o href se necessário.
-     ══════════════════════════════════════════════════════════ -->
+    <!-- CABEÇALHO - link pra voltar pra home
+         se precisar trocar o caminho, muda o href ai -->
     <header>
         <a href="../index.html">← voltar</a>
     </header>
 
-    <!-- ══════════════════════════════════════════════════════════
-       MARCA — nome da revista, com linhas vermelhas acima e abaixo
-     ══════════════════════════════════════════════════════════ -->
+    <!-- MARCA - logo da revista com linhas vermelhas
+         esse visual vintage ficou bonito demais nao nego -->
     <div class="marca">
         <span class="marca-titulo">Entre Tempos</span>
         <span class="marca-subtitulo">revista por trás das câmeras</span>
     </div>
     <div class="linha-vermelha"></div>
 
-    <!-- ══════════════════════════════════════════════════════════
-       SEÇÃO 2 — DESENVOLVEDORES DA REVISTA
-       SEM fundo de card: os elementos ficam soltos sobre o papel.
-       A marcação é "achatada" (foto, nome, caixa de função,
-       descrição, lista e selo são todos filhos diretos do
-       <article>) porque o posicionamento — foto ao lado da caixa
-       no celular, foto ao lado de TODO o texto e alternando de
-       lado no computador — é feito só com CSS Grid
-       (grid-template-areas), sem precisar de marcação diferente
-       por tela.
-       Para adicionar/remover, copie ou apague um <article class="card-pessoa">.
-     ══════════════════════════════════════════════════════════ -->
+    <!-- DESENVOLVEDORES DA REVISTA
+         a galera que fez essa parada toda funcionar
+         cada um com seu card, foto, funcao e instagram
+         pra adicionar mais gente, copia um <article class="card-pessoa"> -->
     <section class="desenvolvedores">
         <h2 class="titulo-secao"><span>Desenvolvedores da Revista</span></h2>
 
         <div class="lista-pessoas">
 
-            <!-- ── DESENVOLVEDOR 1 ── -->
-            <!-- "card-decorado": só o card do Murilo tem esses ícones soltos
-                 ao redor (café, notebook, gato, dados, dedos, linux, xadrez).
-                 Eles ficam fora da área de texto (posicionados nas bordas/
-                 cantos do card, com "pointer-events:none" pra não atrapalhar
-                 cliques) e somem no celular (ver seção 9 do CSS), porque não
-                 tem espaço sobrando numa tela estreita sem sobrepor o texto.
-                 Pra colocar em outra pessoa, copie a div "decoracoes-dev"
-                 inteira pra dentro do <article> desejado. -->
+            <!-- EU (Murilo) - o primeiro da lista pq eu mereço kkk -->
+            <!-- meu card tem umas decorações extras ao redor
+                 (cafe, notebook, gato, dados, dedos, linux, xadrez)
+                 pq eu sou especial e o site eh meu entao eu posso
+                 se quiser colocar no card de outra pessoa é só copiar
+                 a div "decoracoes-dev" pra dentro do article -->
             <article class="card-pessoa card-decorado">
                 <div class="decoracoes-dev" aria-hidden="true">
                     <img loading="lazy" decoding="async" src="img/decoracoes/cafe.webp" class="deco-dev deco-cafe"
@@ -103,7 +90,8 @@
                 </a>
             </article>
 
-            <!-- ── DESENVOLVEDOR 2 ── -->
+            <!-- DAVI - meu parceiro de codigo, o brabo
+                 programador e editor, faz de tudo um pouco -->
             <article class="card-pessoa card-decorado">
                 <div class="decoracoes-dev decoracoes-davi" aria-hidden="true">
                     <img loading="lazy" decoding="async" src="img/decoracoes/gaita.webp" class="deco-dev deco-gaita"
@@ -147,7 +135,7 @@
                 </a>
             </article>
 
-            <!-- ── DESENVOLVEDOR 3 ── -->
+            <!--E anna ... >:( -->
             <article class="card-pessoa">
                 <img loading="lazy" decoding="async" src="anna.webp" class="foto-pessoa" alt="Anna Vitória">
                 <h3>Anna Vitória</h3>
@@ -170,7 +158,7 @@
                     rel="noopener">@Anavi._0</a>
             </article>
 
-            <!-- ── DESENVOLVEDOR 4 ── -->
+
             <article class="card-pessoa">
                 <img loading="lazy" decoding="async" src="cicera.png" class="foto-pessoa" alt="Cicera Ramos">
                 <h3>Cícera Ramos</h3>
@@ -193,31 +181,18 @@
                 </a>
             </article>
 
-            <!-- Para adicionar mais desenvolvedores, copie um <article class="card-pessoa">
-           inteiro e cole aqui. -->
+            <!-- pra add mais gente, copia um article desses ai e cola aqui
+                 nao tem misterio, eh copy paste da vida -->
 
         </div>
     </section>
 
-    <!-- ══════════════════════════════════════════════════════════
-       SEÇÃO 3 — EQUIPE ATUAL
-       Mesma estrutura achatada da seção acima, sem a lista de
-       atribuições. Informações ainda não definidas: os campos
-       abaixo mostram "A definir" até que os dados reais cheguem.
-       Para adicionar/remover, copie ou apague um <article class="card-equipe">.
-     ══════════════════════════════════════════════════════════ -->
-    <!--
-════════════════════════════════════════════════════════════
-SEÇÃO TEMPORARIAMENTE DESATIVADA
-
-Esta seção foi mantida no código para uso futuro.
-Para reativá-la, basta remover este bloco de comentários
-` e ->`) que envolve toda a seção abaixo.
-
-    Após a reativação, substitua os dados de exemplo pelos
-    integrantes reais da equipe atual da revista.
-    ════════════════════════════════════════════════════════════
-       -->
+    <!-- EQUIPE ATUAL
+         mesma estrutura de cima mas sem a lista de atribuições
+         quando tiver os dados reais eh so preencher ai -->
+    <!-- SEÇÃO DESATIVADA POR ENQUANTO
+         quando a equipe nova chegar a gente ativa de volta
+         eh so tirar os comentários que envolvem a secao abaixo -->
 
     <!--
 <div class="divisor"></div>
@@ -262,11 +237,9 @@ Para reativá-la, basta remover este bloco de comentários
     </section>
 
 -->
-    <!-- ══════════════════════════════════════════════════════════
-       RODAPÉ — assinatura + carimbo da seção.
-       Reaproveite trocando só o texto dentro de .carimbo
-       (ex: "FILMES", "POEMAS"...).
-     ══════════════════════════════════════════════════════════ -->
+    <!-- RODAPÉ - assinatura da revista e carimbo
+         muda o texto do .carimbo se precisar
+         (tipo "FILMES", "POEMAS" e tal) -->
     <div class="rodape-sobre">
         <div>entre tempos · revista eletrônica</div>
         <div class="carimbo">sobre o site</div>

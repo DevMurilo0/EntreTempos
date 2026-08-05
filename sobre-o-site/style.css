@@ -1,24 +1,23 @@
 /* ══════════════════════════════════════════════════════════════
    SOBRE O SITE — Entre Tempos
-   Paleta e tipografia iguais às outras páginas do site
-   (poemas.css / conhecidos.css / pessoa.css): papel envelhecido,
-   Special Elite, Bebas Neue e IM Fell English, com linhas
-   vermelhas em gradiente separando as seções.
+   CSS da página "por trás das câmeras"
+   mesma paleta vintage das outras paginas
 
-   ÍNDICE DESTE ARQUIVO:
-   1. Reset, fundo de papel e header      → linha ~30
-   2. Marca (logo) + linhas vermelhas     → linha ~75
-   3. Título de seção (reutilizável)      → linha ~110
-   4. Apresentação (A Revista)            → linha ~150
-   5. Pessoas (devs + equipe) — SEM CARD  → linha ~230
-   6. Selo de Instagram (destaque)        → linha ~370
-   7. Decorações soltas (card do Murilo)  → linha ~400
-   8. Guia de conteúdos                   → linha ~470
-   9. Rodapé                              → linha ~510
-   10. Responsivo (mobile / desktop)      → linha ~540
+   INDICE (pra tu nao se perder nesse arquivo enorme):
+   1. Reset, fundo e header           → la em cima
+   2. Marca (logo) + linhas vermelhas → mais abaixo
+   3. Titulo de seção                 → reutilizável
+   4. Apresentação (A Revista)        → o card bonito
+   5. Pessoas (devs + equipe)         → sem card de fundo
+   6. Selo de Instagram               → o destaquezinho
+   7. Decorações soltas               → meu card e do davi
+   8. Guia de conteúdos               → os topicos
+   9. Rodapé                          → assinatura
+   10. Responsivo                     → a dor de cabeça
    ══════════════════════════════════════════════════════════════ */
 
-/* ── 1. RESET, FUNDO DE PAPEL E HEADER ────────────────────────── */
+/* ── 1. RESET, FUNDO E HEADER ──
+   o de sempre: zera tudo, fundo de papel velho, header com botão voltar */
 * {
     margin: 0;
     padding: 0;
@@ -64,10 +63,8 @@ header a:hover {
     color: #c0392b;
 }
 
-/* ── 2. MARCA (LOGO) + LINHAS VERMELHAS ──────────────────────── */
-
-/* Linha vermelha em gradiente — o mesmo divisor usado em todas
-   as páginas do site (poemas.css, conhecidos.css, pessoa.css). */
+/* ── 2. MARCA (LOGO) + LINHAS VERMELHAS ──
+   gradiente vermelho-dourado, o mesmo de todas as paginas */
 .linha-vermelha,
 .divisor {
     position: relative;
@@ -109,7 +106,7 @@ header a:hover {
     margin-top: 4px;
 }
 
-/* ── 3. TÍTULO DE SEÇÃO (reutilizável) ───────────────────────── */
+/* ── 3. TÍTULO DE SEÇÃO (reutilizável em qualquer página) ── */
 .titulo-secao {
     position: relative;
     z-index: 5;
@@ -148,7 +145,8 @@ header a:hover {
     margin-bottom: 6px;
 }
 
-/* ── 4. APRESENTAÇÃO (A Revista) ─────────────────────────────── */
+/* ── 4. APRESENTAÇÃO (A Revista) ──
+   o bloco com foto e texto sobre a revista */
 .page-titulo {
     position: relative;
     z-index: 5;
@@ -189,8 +187,6 @@ header a:hover {
     transform: rotate(0deg) scale(1.02);
 }
 
-/* placeholder — mesmo padrão visual usado nas outras páginas do site
-   (ver .foto-curiosidade.vazio / .midia-vazia em leitura.css) */
 .foto-apresentacao.vazio {
     aspect-ratio: 4 / 3;
     background: #e8dcc0;
@@ -229,8 +225,6 @@ header a:hover {
     text-align: justify;
 }
 
-/* frases em destaque, no mesmo tom vermelho-acastanhado usado
-   em toda a revista para dar ênfase (ex: apresentacao-texto strong) */
 .apresentacao-texto strong,
 .card-guia-texto strong {
     font-family: 'Special Elite', serif;
@@ -248,29 +242,20 @@ header a:hover {
     margin-top: 8px;
 }
 
-/* ── 5. PESSOAS (desenvolvedores + equipe) — SEM CARD ─────────
-   Sem fundo branco, sem sombra: os elementos ficam soltos direto
-   sobre o papel da página. O posicionamento é feito com CSS Grid
-   usando "grid-template-areas", trocando o layout por breakpoint
-   sem precisar duplicar HTML.
+/* ── 5. PESSOAS (desenvolvedores + equipe) ──
+   sem fundo branco, sem card, os elementos ficam
+   soltos direto no papel da página
 
-   A foto pode ser marcada de duas formas, e as duas funcionam:
-     <img class="foto-pessoa" src="...">           (direto na tag)
-     <div class="foto-pessoa"><img ...></div>       (img dentro da div)
-   Por isso as regras de posicionamento (grid-area, aspect-ratio)
-   ficam em ".foto-pessoa" (bate nos dois casos), e o
-   "object-fit: cover" fica tanto em "img.foto-pessoa" quanto em
-   ".foto-pessoa img", pra imagem NUNCA esticar/achatar.
+   o layout usa CSS Grid com grid-template-areas
+   troca entre celular e computador sem duplicar HTML
+   ficou elegante pra caralho
+   ...vamo parar de xingar quando estivermos documentando
 
-   MOBILE (padrão): foto maior, ao lado do nome e da caixa de
-   função; logo abaixo da caixa de função vem a descrição. Lista de
-   atribuições e selo do Instagram ficam embaixo, ocupando a
-   largura toda.
+   a foto pode ser <img class="foto-pessoa"> direto
+   ou <div class="foto-pessoa"><img></div>, as duas funcionam
 
-   DESKTOP (≥ 701px): a foto fica ao lado de TODO o bloco de texto
-   (nome, caixa, descrição, lista, selo) e alternamos o lado da
-   foto a cada pessoa (ímpar = foto à esquerda, par = foto à
-   direita), como num "zigue-zague".
+   MOBILE: foto grande do lado do nome e função
+   DESKTOP: foto do lado de TUDO, alternando lados (zigue-zague)
    ─────────────────────────────────────────────────────────────── */
 .lista-pessoas {
     position: relative;
@@ -298,8 +283,6 @@ header a:hover {
     border-bottom: 1px dashed #c4a96b;
 }
 
-/* card com decorações (ver seção 7) precisa ser âncora de
-   posicionamento pros ícones soltos ao redor */
 .card-decorado {
     position: relative;
 }
@@ -314,10 +297,6 @@ header a:hover {
     border-bottom: none;
 }
 
-/* posicionamento da foto (bate tanto se a classe estiver na <img>
-   diretamente quanto numa <div> que envolve a <img>). O placeholder
-   "vazio" (sem foto real ainda) é quadrado; a foto de verdade NÃO
-   é forçada a nenhuma proporção — aparece inteira, sem cortar. */
 .foto-pessoa {
     grid-area: foto;
     display: block;
@@ -325,9 +304,6 @@ header a:hover {
     overflow: hidden;
 }
 
-/* foto de verdade: largura 100%, altura livre (proporção original
-   preservada), sem cortar nada. Cobre os dois jeitos de marcar a
-   foto (ver comentário acima). */
 img.foto-pessoa,
 .foto-pessoa img {
     width: 100%;
@@ -338,7 +314,6 @@ img.foto-pessoa,
     filter: sepia(15%);
 }
 
-/* só o placeholder (sem foto real) fica quadrado, com borda tracejada */
 .foto-pessoa.vazio {
     aspect-ratio: 1 / 1;
     background: #e8dcc0;
@@ -364,7 +339,6 @@ img.foto-pessoa,
     line-height: 1.1;
 }
 
-/* caixa que destaca a função da pessoa */
 .pessoa-funcao-box {
     grid-area: funcao;
     align-self: start;
@@ -414,7 +388,9 @@ img.foto-pessoa,
     color: #c4a96b;
 }
 
-/* ── 6. SELO DE INSTAGRAM (em destaque) ──────────────────────── */
+/* ── 6. SELO DE INSTAGRAM ──
+   aquele botãozinho com "IG" do lado que leva pro insta
+   hover muda a cor e gira um pouquinho */
 .instagram-selo,
 .instagram-pendente {
     grid-area: instagram;
@@ -451,7 +427,6 @@ img.foto-pessoa,
     transform: rotate(0deg) scale(1.04);
 }
 
-/* selo "a definir" — mesmo formato, porém neutro e não clicável */
 .instagram-pendente {
     border-color: #c4a96b;
     color: #8c7c5e;
@@ -464,15 +439,13 @@ img.foto-pessoa,
     color: #8c7c5e;
 }
 
-/* ── 7. DECORAÇÕES SOLTAS (só no card do Murilo, por enquanto) ──
-   Ícones "de colagem" (café, notebook, xadrez, dados, cursor, gato,
-   linux) espalhados na MARGEM do card — nunca sobre a foto, o nome,
-   a função, a descrição, a lista ou o selo. É por isso que os
-   deslocamentos (top/left/right/bottom) empurram cada ícone para
-   FORA da caixa do card (valores negativos ou perto das bordas),
-   como se estivessem "colados" ao redor do recorte de papel.
-   "pointer-events: none" garante que eles nunca atrapalham cliques
-   em links por baixo.
+/* ── 7. DECORAÇÕES SOLTAS (meu card e do Davi) ──
+   icones de "colagem" espalhados na MARGEM do card
+   cafe, notebook, gato, xadrez, dados, cursor, linux...
+   ficam fora do texto, nas bordas, com pointer-events: none
+   pra nao atrapalhar cliques
+   é só cosmético mas da um charme da porra
+   ...vamo parar de xingar quando estivermos documentando
    ─────────────────────────────────────────────────────────────── */
 .decoracoes-dev {
     position: absolute;
@@ -537,7 +510,10 @@ img.foto-pessoa,
     transform: rotate(-6deg);
 }
 
-/* ── DECORAÇÕES DO DAVI ── */
+/* ── DECORAÇÕES DO DAVI ──
+   mesma ideia, mas com as coisas que o Davi curte
+   gaita, java, hornet, archlinux, github, camera, corações, deadpool
+   Davi tu tem gosto eclético ein mano */
 .deco-gaita {
     top: -35px;
     left: -110px;
@@ -594,7 +570,8 @@ img.foto-pessoa,
     transform: rotate(1deg);
 }
 
-/* ── 8. GUIA DE CONTEÚDOS ─────────────────────────────────────── */
+/* ── 8. GUIA DE CONTEÚDOS ──
+   os cards dos topicos (filmes, poemas, livros...) */
 .guia-conteudos {
     padding-bottom: 1rem;
 }
@@ -647,7 +624,9 @@ img.foto-pessoa,
     margin: 0;
 }
 
-/* ── 9. RODAPÉ ────────────────────────────────────────────────── */
+/* ── 9. RODAPÉ ──
+   assinatura + carimbo vermelho inclinado
+   bonito e discreto, como deve ser */
 .rodape-sobre {
     position: relative;
     z-index: 5;
@@ -674,10 +653,12 @@ img.foto-pessoa,
     margin-top: 10px;
 }
 
-/* ── 10. RESPONSIVO (MOBILE / DESKTOP) ────────────────────────── */
+/* ── 10. RESPONSIVO (MOBILE / DESKTOP) ──
+   aqui a brincadeira fica séria
+   cada tela é uma aventura diferente */
 
-/* DESKTOP — foto ao lado de todo o bloco de texto, alternando lado.
-   (mobile é o layout padrão definido acima) */
+/* DESKTOP — foto do lado de todo o texto, alternando lado
+   o mobile é o layout padrão lá em cima */
 @media (min-width: 701px) {
 
     .card-pessoa,
@@ -692,8 +673,8 @@ img.foto-pessoa,
             "foto instagram";
     }
 
-    /* pessoas em posição ímpar (1ª, 3ª...): foto à esquerda (padrão acima).
-       pessoas em posição par (2ª, 4ª...): foto à direita. */
+    /* alterna a foto de lado (impar=esquerda, par=direita)
+       tipo zigue-zague, fica mto estiloso */
     .card-pessoa:nth-child(even),
     .card-equipe:nth-child(even) {
         grid-template-columns: 1fr 260px;
@@ -705,9 +686,8 @@ img.foto-pessoa,
             "instagram foto";
     }
 
-    /* só o placeholder "vazio" preenche a altura toda da linha;
-       a foto real (img.foto-pessoa) mantém o tamanho natural dela,
-       alinhada no topo, pra não esticar nem cortar nada */
+    /* placeholder preenche a altura toda
+       foto real fica no tamanho natural, alinhada no topo */
     .foto-pessoa.vazio {
         height: 100%;
         align-self: stretch;
@@ -738,11 +718,9 @@ img.foto-pessoa,
         grid-template-columns: 1fr;
     }
 
-    /* no celular não tem margem sobrando igual no computador — em
-       vez de sumir, os ícones ficam bem menores, mas na MESMA
-       distribuição espacial da referência: café e xadrez em cima,
-       gato embaixo à esquerda, notebook/linux/dados/dedos agrupados
-       do lado direito */
+    /* no celular os icones ficam menores mas na MESMA
+       distribuição espacial do desktop
+       não some, só encolhe */
     .deco-cafe {
         top: 240px;
         left: -12px;
@@ -786,7 +764,9 @@ img.foto-pessoa,
         transform: rotate(20deg);
     }
 
-    /* decorações do Davi — mobile */
+    /* decorações do Davi no mobile
+       DAVI arruma as posições dos teus negocios no celular
+       já arrumei irmao, relaxa */
     .deco-gaita {
         top: 220px;
         left: -10px;
