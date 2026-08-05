@@ -266,7 +266,7 @@ header a:hover {
   width: clamp(140px, 24vw, 220px);
   aspect-ratio: 3 / 4;
   flex-shrink: 0;
-  background: #fff;
+  background: transparent;
 
   box-shadow:
     0 3px 12px rgba(0, 0, 0, 0.22),
@@ -280,7 +280,7 @@ header a:hover {
 .card-curiosidade .quadro img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
   transition: transform 0.4s ease;
 }
