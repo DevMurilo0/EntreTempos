@@ -41,6 +41,13 @@
     <div class="polaroid polaroid--4" data-rotate="-2">
       <img loading="lazy" decoding="async" src="img/folha/polaroid4.webp" alt="Polaroid 4">
     </div>
+
+    <!-- BOTÃO PODCAST — enquanto a etiqueta/pegada do podcast (fp--7) não
+         tem a arte final (falta Etiqueta-podcast.webp), esse botão aqui já
+         deixa o link funcionando naquele vão vazio entre a pegada do meio
+         e a polaroid da direita. Posição ajustável em .btn-podcast no CSS —
+         botei uma estimativa olhando o print, pode não bater 100% aí. -->
+    <a href="topicos/podcast/podcast.html" class="btn-podcast">🎙️ Podcast</a>
   </div>
 
   <script>
@@ -51,6 +58,10 @@
       { label: "", href: "/topicos/desenhos/desenhos.html", cls: "fp--4", rotate: 223, tagImg: "Etiqueta-desenhos.webp" },
       { label: "", href: "/topicos/musica/musica.html", cls: "fp--5", rotate: 55, tagImg: "Etiqueta-musica.webp" },
       { label: "", href: "/topicos/curiosidades/curiosidades.html", cls: "fp--6", rotate: 30, tagImg: "Etiqueta-curiosidades.webp" },
+      // Podcast — pegada nova. Falta a etiqueta de verdade (Etiqueta-podcast.webp,
+      // mesmo tamanho/estilo das outras) dentro de img/folha/. Até lá o <img>
+      // fica quebrado, então bota o arquivo assim que tiver.
+      { label: "", href: "/topicos/podcast/podcast.html", cls: "fp--7", rotate: 205, tagImg: "Etiqueta-podcast.webp" },
     ];
     const scene = document.querySelector('.scene');
     categories.forEach(cat => {

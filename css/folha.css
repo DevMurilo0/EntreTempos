@@ -205,6 +205,13 @@ body {
   left: 44%;
 }
 
+/* Podcast — a pegada nova, ficou meio sozinha lá embaixo
+   mas sobrou esse cantinho livre entre os livros e o bilhete */
+.fp--7 {
+  top: 84%;
+  left: 62%;
+}
+
 /* ════════════════════════════════════════════ */
 /* ROTAÇÃO DAS ETIQUETAS — DESKTOP               */
 /* só funciona em tela > 768px                    */
@@ -266,6 +273,15 @@ body {
   transform: translate(-100px, 12px) rotate(25deg) scale(1.15);
 }
 
+/*Podcast*/
+.tag-group.fp--7 {
+  transform: translate(-80px, 30px) rotate(-6deg);
+}
+
+.tag-group.fp--7:hover {
+  transform: translate(-100px, 15px) rotate(-25deg) scale(1.15);
+}
+
 /* ── POLAROIDS ──
    as fotinhas espalhadas pela pagina
    da pra arrastar elas (cursor: grab)
@@ -320,6 +336,41 @@ body {
 }
 
 
+/* ── BOTÃO PODCAST ──
+   solução rápida enquanto não existe a arte da etiqueta/pegada (fp--7).
+   Fica no vãozinho vazio entre a pegada do meio e a polaroid da direita.
+   Se a posição não bater certinho com onde você queria, é só mexer
+   no top/left aqui embaixo. */
+.btn-podcast {
+  position: absolute;
+  top: 58%;
+  left: 58%;
+  z-index: 6;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  background: #fffdf7;
+  border: 2px solid #3a2010;
+  border-radius: 30px;
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 13px;
+  color: #3a2010;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 3px 4px 0 rgba(0, 0, 0, 0.18);
+  transform: rotate(-3deg);
+  transition: transform 0.25s cubic-bezier(.22, .68, 0, 1.4), box-shadow 0.25s, border-color 0.2s, color 0.2s;
+}
+
+.btn-podcast:hover {
+  transform: rotate(0deg) scale(1.08);
+  box-shadow: 5px 6px 0 rgba(0, 0, 0, 0.22);
+  border-color: #c0392b;
+  color: #c0392b;
+}
+
 /* ╔════════════════════════════════════════════════╗ */
 /* ║  DAQUI PRA BAIXO: SÓ MOBILE (TELA <= 768px)    ║ */
 /* ║  tem UM @media só nesse arquivo inteiro         ║ */
@@ -334,10 +385,10 @@ body {
 
   .scene {
     height: auto;
-    /* a scene fica maior no mobile (1400px)
-       pra caber todas as pegadas com espaço entre elas
+    /* a scene fica maior no mobile (1550px)
+       pra caber todas as pegadas (agora 7!) com espaço entre elas
        sem esse min-height fica tudo amontoado e feio */
-    min-height: 1400px;
+    min-height: 1550px;
     padding-bottom: 60px;
     overflow-x: hidden;
   }
@@ -358,12 +409,12 @@ body {
   .note {
     left: 30%;
     /* bilhete centralizado na tela maior */
-    top: 45%;
+    top: 40%;
     width: 68vw;
   }
 
   /* ── POSIÇÕES DAS PEGADAS NO MOBILE ──
-     espalhadas em 6 fatias de ~14% cada
+     espalhadas em 7 fatias de ~12.5% cada
      alternando esquerda/direita pra parecer
      que alguem ta andando de verdade
      ficou lindo meu deus */
@@ -373,28 +424,33 @@ body {
   }
 
   .fp--2 {
-    top: 18%;
+    top: 16%;
     left: 60%;
   }
 
   .fp--3 {
-    top: 32%;
+    top: 28%;
     left: 70%;
   }
 
   .fp--4 {
-    top: 47%;
+    top: 41%;
     left: 70%;
   }
 
   .fp--5 {
-    top: 62%;
+    top: 54%;
     left: 60%;
   }
 
   .fp--6 {
-    top: 77%;
+    top: 67%;
     left: 45%;
+  }
+
+  .fp--7 {
+    top: 80%;
+    left: 60%;
   }
 
   /* ────────────────────────────────────────────
@@ -426,6 +482,10 @@ body {
 
   .footprint-group.fp--6 {
     transform: rotate(120deg) !important;
+  }
+
+  .footprint-group.fp--7 {
+    transform: rotate(130deg) !important;
   }
 
   /* ────────────────────────────────────────────
@@ -481,9 +541,17 @@ body {
     transform: translate(-110px, -10px) rotate(45deg) scale(1.1);
   }
 
+  .tag-group.fp--7 {
+    transform: translate(-100px, -10px) rotate(25deg);
+  }
+
+  .tag-group.fp--7:hover {
+    transform: translate(-110px, -10px) rotate(45deg) scale(1.1);
+  }
+
   /* ── POLAROIDS ──
      reposicionados pro mobile pra ficar bonito
-     na tela maior do celular (scene de 1400px) */
+     na tela maior do celular (scene de 1550px) */
   .polaroid--1 {
     top: 5%;
     left: 73%;
@@ -512,10 +580,22 @@ body {
     transform: rotate(-14deg);
   }
 
+  .btn-podcast {
+    top: 92%;
+    left: 50%;
+    transform: translateX(-50%) rotate(-2deg);
+    font-size: 12px;
+    padding: 9px 16px;
+  }
+
+  .btn-podcast:hover {
+    transform: translateX(-50%) rotate(0deg) scale(1.06);
+  }
+
 }
 
 /* ═══════ FIM — nao adicione NADA depois dessa linha
    se adicionar eu vou saber e vou ficar triste
    Davi eu to falando com vc tambem
-   ta bom murilo nao vo mexer aqui
+   ta bom canso nao vo mexer aqui ca
    bom garoto <3 ═══════ */

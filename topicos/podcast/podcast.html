@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Podcast - Entre Tempos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Playfair+Display:ital,wght@0,700;1,700&family=Dancing+Script:wght@400;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="podcast.css">
+</head>
+
+<body>
+  <!-- Ajuste este link pra apontar pra página principal/índice do site. -->
+  <header>
+    <a href="../../folha.html">← Voltar</a>
+  </header>
+
+  <div class="page-titulo">
+    <h1>Podcast</h1>
+    <p class="subtitulo">bate-papo com quem faz a escola acontecer</p>
+  </div>
+  <div class="divisor"></div>
+
+  <!-- SEÇÃO APRESENTAÇÃO -->
+  <section class="podcast-apresentacao">
+    <h2>Um papo reto, sem microfone de mentira</h2>
+    <p>
+      Aqui alunos entrevistam professores e funcionários da escola sobre
+      temas do dia a dia — sem prova, sem cobrança, só uma conversa de verdade,
+      gravada na mesa do podcast.
+    </p>
+  </section>
+
+  <!-- BUSCA — filtra os cards abaixo por nome ou por descrição, em tempo real -->
+  <div class="busca-podcast">
+    <label for="campo-busca">Pesquisar</label>
+    <input type="text" id="campo-busca" placeholder="nome do entrevistado ou assunto...">
+    <p class="busca-vazio" id="busca-vazio">Nenhum episódio encontrado.</p>
+  </div>
+
+  <!-- LISTA DE EPISÓDIOS
+     Para adicionar um episódio: copie o <a class="card-episodio"> inteiro
+     (o exemplo, não o "vazio"), preencha data-nome/data-descricao (usados
+     pela busca), troque foto/cargo/EP/descrição/entrevistadores e o href.
+     Pra criar a página completa: copie a pasta episodios/episodio-1/,
+     renomeie (ex.: episodios/episodio-2/) e edite o conteúdo de dentro
+     (está tudo comentado lá). -->
+  <section class="lista-episodios" id="lista-episodios">
+
+    <!-- EXEMPLO DE EPISÓDIO PUBLICADO -->
+    <a href="episodios/episodio-1/episodio-1.html" class="card-episodio" data-nome="joão da silva"
+      data-descricao="séries games época de escola professor de matemática">
+      <div class="topo-card">
+        <!-- Enquanto não tiver foto real do convidado, fica assim (iniciais).
+             Quando tiver: <div class="capa-episodio"><img src="../../img/joao.webp" alt=""></div> -->
+        <div class="capa-episodio placeholder">JS</div>
+
+        <div class="info-card">
+          <div class="etiquetas">
+            <span class="badge-cargo">Professor</span>
+            <span class="badge-episodio">EP: 01</span>
+          </div>
+          <h1 class="nome-convidado">João da Silva</h1>
+          <p class="descricao-episodio">
+            [DESCRIÇÃO PENDENTE — um resumo curto e convidativo do episódio,
+            contando o suficiente pra despertar curiosidade sem entregar tudo.]
+          </p>
+        </div>
+      </div>
+      <p class="entrevistadores">entrevistadores: [Nome] [Nome]</p>
+    </a>
+
+    <!-- CARD "EM BREVE" — deixe um ou mais no fim da lista pra sinalizar
+       episódio vindo por aí. Pra publicar de verdade, copie o card do
+       exemplo acima em vez deste. -->
+    <div class="card-episodio vazio">
+      <p>Próximo episódio em breve…</p>
+    </div>
+
+  </section>
+
+  <div class="rodape-podcast">
+    <div>entre tempos · revista eletrônica</div>
+    <div class="carimbo">podcast</div>
+  </div>
+
+  <script>
+    // Busca simples: mostra só os cards cujo nome ou descrição batem com
+    // o que foi digitado. Cards "vazio" (sem data-nome) ficam sempre visíveis.
+    const campoBusca = document.getElementById('campo-busca');
+    const cards = document.querySelectorAll('#lista-episodios .card-episodio[data-nome]');
+    const avisoVazio = document.getElementById('busca-vazio');
+
+    campoBusca.addEventListener('input', () => {
+      const termo = campoBusca.value.trim().toLowerCase();
+      let algumVisivel = false;
+
+      cards.forEach((card) => {
+        const nome = card.dataset.nome || '';
+        const descricao = card.dataset.descricao || '';
+        const bate = nome.includes(termo) || descricao.includes(termo);
+        card.style.display = bate ? '' : 'none';
+        if (bate) algumVisivel = true;
+      });
+
+      avisoVazio.style.display = (!algumVisivel && termo !== '') ? 'block' : 'none';
+    });
+  </script>
+
+</body>
+
+</html>
