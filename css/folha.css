@@ -273,10 +273,6 @@ body {
   transform: translate(-100px, 12px) rotate(25deg) scale(1.15);
 }
 
-/*Podcast*/
-.tag-group.fp--7 {
-  transform: translate(-80px, 30px) rotate(-6deg);
-}
 
 .tag-group.fp--7:hover {
   transform: translate(-100px, 15px) rotate(-25deg) scale(1.15);
