@@ -51,7 +51,8 @@ const livrosPorMes = {
     {
       titulo: "Blecaute",
       autor: "Marcelo Rubens Paiva",
-      descricao: "Em meio ao caos provocado por uma grande interrupção de energia, a obra explora as reações humanas diante da insegurança, da vulnerabilidade e das transformações sociais que surgem quando a rotina é abruptamente interrompida.",
+      descricao: Três amigos ficam presos numa caverna depois de uma enchente. Quando saem, descobrem que todo mundo no mundo virou tipo estátua, parado, duro, sem vida. Eles parecem ser os únicos sobreviventes do planeta.
+O livro acompanha a jornada desses três enquanto tentam sobreviver e entender o que aconteceu, e como isso vai mexendo com a cabeça e com a relação entre eles.",
       capa: "img_livros/blecaute.jpg",
       link: "https://bibliopedra.wordpress.com/wp-content/uploads/2015/09/blecaute-marcelo-rubens-paiva.pdf",
       linkTexto: "Ler"
@@ -61,7 +62,7 @@ const livrosPorMes = {
       autor: "Oscar Wilde",
       descricao: "Dorian Gray deseja permanecer eternamente jovem enquanto um retrato envelhece em seu lugar. À medida que mergulha em uma vida de excessos e corrupção moral, apenas a pintura revela as consequências de seus atos.",
       capa: "img_livros/retrato.jpg",
-      link: "https://www.jaimemoniz.com/images/docs/recursos/Oscar-Wilde-livro.pdfhttps://www.jaimemoniz.com/images/docs/recursos/Oscar-Wilde-livro.pdf",
+      link: "https://www.jaimemoniz.com/images/docs/recursos/Oscar-Wilde-livro.pdf",
       linkTexto: "Ler"
     },
     {
