@@ -199,6 +199,10 @@ poderá fechar essa ferida que a saudade deixou…<br>
       </p>
     </div>
     <p class="poema-assinatura">— Anna Vitoria</p>
+    <button class="btn-like" data-like-id="poema-anna-1" aria-label="Curtir poema" aria-pressed="false">
+      <span class="like-icon">♡</span>
+      <span class="like-count">0</span>
+    </button>
   </article>
 
 
@@ -256,6 +260,10 @@ e me tornei uma metamorfose sem nome.<br>
 
     </div>
     <p class="poema-assinatura">— Anna Vitoria</p>
+    <button class="btn-like" data-like-id="poema-anna-2" aria-label="Curtir poema" aria-pressed="false">
+      <span class="like-icon">♡</span>
+      <span class="like-count">0</span>
+    </button>
   </article>
 
 </div>
@@ -316,6 +324,16 @@ e me tornei uma metamorfose sem nome.<br>
       areaFolha.classList.add('aberta');
     });
   });
+</script>
+
+<script src="../../../../../js/likes.js"></script>
+<script>
+  // Reinicializa likes quando um poema se torna visível
+  // (os poemas aparecem após clique no envelope)
+  document.querySelectorAll('.envelope').forEach(env => {
+    env.addEventListener('click', () => setTimeout(initLikes, 50));
+  });
+  initLikes();
 </script>
 </body>
 </html>

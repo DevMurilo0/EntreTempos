@@ -92,6 +92,10 @@
           <!-- Este botão já aponta para um exemplo funcionando em
              leituras/ruan/ruan.html. -->
           <a href="leituras/ruan/ruan.html" class="btn-ler-curiosidade">Ler curiosidade →</a>
+          <button class="btn-like" data-like-id="curiosidade-ruan" aria-label="Curtir curiosidade" aria-pressed="false">
+            <span class="like-icon">♡</span>
+            <span class="like-count">0</span>
+          </button>
         </div>
       </article>
       <!--
@@ -138,6 +142,10 @@
           <!-- Este botão já aponta para leituras/jose/jose.html, que está
              pronto como um esqueleto pra ser preenchido. -->
           <a href="leituras/jose/jose.html" class="btn-ler-curiosidade">Ler curiosidade →</a>
+          <button class="btn-like" data-like-id="curiosidade-jose" aria-label="Curtir curiosidade" aria-pressed="false">
+            <span class="like-icon">♡</span>
+            <span class="like-count">0</span>
+          </button>
         </div>
       </article>
 
@@ -184,6 +192,8 @@
       <div class="carimbo">curiosidades</div>
     </div>
 
+  <script src="../../../js/likes.js"></script>
+  <script>initLikes();</script>
 </body>
 
 </html>
