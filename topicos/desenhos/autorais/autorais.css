@@ -255,6 +255,11 @@ header a:hover {
   transform: scale(0.97);
 }
 
+/* Júlio — imagem sem borda polaroid embutida, aumentar para equiparar visualmente */
+.foto-nav-4 {
+  width: clamp(220px, 30vw, 320px);
+}
+
 .foto-nav-nome {
   display: block;
   text-align: center;
@@ -335,6 +340,10 @@ header a:hover {
 
   .foto-nav {
     width: clamp(150px, 60vw, 220px);
+  }
+
+  .foto-nav-4 {
+    width: clamp(190px, 72vw, 260px);
   }
 
   /* ── IMAGENS DECORATIVAS NO MOBILE ──
