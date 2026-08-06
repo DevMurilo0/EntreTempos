@@ -415,7 +415,7 @@ body {
 
   .fp--7 {
     top: 80%;
-    left: 60%;
+    left: 40%;
   }
 
   /* ────────────────────────────────────────────
@@ -450,7 +450,7 @@ body {
   }
 
   .footprint-group.fp--7 {
-    transform: rotate(180deg) !important;
+    transform: rotate(100deg) !important;
   }
 
   /* ────────────────────────────────────────────
