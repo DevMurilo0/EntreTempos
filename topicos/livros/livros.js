@@ -51,8 +51,7 @@ const livrosPorMes = {
     {
       titulo: "Blecaute",
       autor: "Marcelo Rubens Paiva",
-      descricao: Três amigos ficam presos numa caverna depois de uma enchente. Quando saem, descobrem que todo mundo no mundo virou tipo estátua, parado, duro, sem vida. Eles parecem ser os únicos sobreviventes do planeta.
-O livro acompanha a jornada desses três enquanto tentam sobreviver e entender o que aconteceu, e como isso vai mexendo com a cabeça e com a relação entre eles.",
+      descricao: "Três amigos ficam presos numa caverna depois de uma enchente. Quando saem, descobrem que todo mundo no mundo virou tipo estátua, parado, duro, sem vida. Eles parecem ser os únicos sobreviventes do planeta O livro acompanha a jornada desses três enquanto tentam sobreviver e entender o que aconteceu, e como isso vai mexendo com a cabeça e com a relação entre eles.",
       capa: "img_livros/blecaute.jpg",
       link: "https://bibliopedra.wordpress.com/wp-content/uploads/2015/09/blecaute-marcelo-rubens-paiva.pdf",
       linkTexto: "Ler"
