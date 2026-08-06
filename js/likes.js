@@ -1,93 +1,166 @@
 /**
  * likes.js — Entre Tempos
- * Sistema de curtidas local via localStorage.
+ * Sistema de curtidas compartilhado via Firebase Firestore.
  *
- * Uso:
+ * Uso (mesmo HTML de antes, nada muda):
  *   <button class="btn-like" data-like-id="julio-desenho-1" aria-label="Curtir">
  *     <span class="like-icon">♡</span>
  *     <span class="like-count">0</span>
  *   </button>
  *
- *   initLikes();  // chama após o DOM carregar
+ * Importante: este arquivo é um módulo ES. No HTML, troque a tag antiga por:
+ *   <script type="module" src="js/likes.js"></script>
+ *
+ * initLikes() continua disponível globalmente (window.initLikes), então
+ * qualquer chamada manual que você já tenha (ex: depois de abrir um lightbox
+ * com conteúdo dinâmico) continua funcionando igual.
  */
 
-(function () {
-  'use strict';
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getFirestore, doc, getDoc, setDoc, deleteDoc,
+  updateDoc, increment, onSnapshot
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import {
+  getAuth, signInAnonymously, onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-  const KEY_COUNT = (id) => `et_like_count__${id}`;
-  const KEY_ME    = (id) => `et_like_me__${id}`;
+const firebaseConfig = {
+  apiKey: "AIzaSyCC_MH5a5WvD602F9Y7JnAzYpJow3i1axA",
+  authDomain: "entretempos-27471.firebaseapp.com",
+  projectId: "entretempos-27471",
+  storageBucket: "entretempos-27471.firebasestorage.app",
+  messagingSenderId: "448383791330",
+  appId: "1:448383791330:web:b19cafc6ce5311292c6ebb"
+};
 
-  function getCount(id) {
-    return parseInt(localStorage.getItem(KEY_COUNT(id)) || '0', 10);
-  }
-  function setCount(id, n) {
-    localStorage.setItem(KEY_COUNT(id), String(Math.max(0, n)));
-  }
-  function hasLiked(id) {
-    return localStorage.getItem(KEY_ME(id)) === '1';
-  }
-  function setLiked(id, val) {
-    localStorage.setItem(KEY_ME(id), val ? '1' : '0');
-  }
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
 
-  function updateButton(btn, id) {
-    const liked = hasLiked(id);
-    const count = getCount(id);
-    const icon  = btn.querySelector('.like-icon');
-    const label = btn.querySelector('.like-count');
+let currentUid = null;
+const unsubscribers = new Map(); // id -> função pra cancelar o listener em tempo real
 
-    if (icon)  icon.textContent  = liked ? '♥' : '♡';
-    if (label) label.textContent = count;
+function postRef(id) {
+  return doc(db, 'curtidas', id);
+}
+function userLikeRef(id, uid) {
+  return doc(db, 'curtidas', id, 'usuarios', uid);
+}
 
-    btn.classList.toggle('liked', liked);
-    btn.setAttribute('aria-pressed', liked ? 'true' : 'false');
-  }
+function renderButton(btn, total, liked) {
+  const icon = btn.querySelector('.like-icon');
+  const label = btn.querySelector('.like-count');
 
-  function handleClick(btn, id) {
-    if (btn.dataset.animating) return;
-    btn.dataset.animating = '1';
+  if (icon) icon.textContent = liked ? '♥' : '♡';
+  if (label) label.textContent = total;
 
-    const liked = hasLiked(id);
-    const count = getCount(id);
+  btn.classList.toggle('liked', liked);
+  btn.setAttribute('aria-pressed', liked ? 'true' : 'false');
+}
 
-    if (liked) {
-      setLiked(id, false);
-      setCount(id, count - 1);
+function bump(btn) {
+  btn.classList.add('like-bump');
+  btn.addEventListener('animationend', () => {
+    btn.classList.remove('like-bump');
+  }, { once: true });
+}
+
+async function handleClick(btn, id) {
+  if (btn.dataset.animating || !currentUid) return;
+  btn.dataset.animating = '1';
+  btn.disabled = true;
+
+  try {
+    const uRef = userLikeRef(id, currentUid);
+    const pRef = postRef(id);
+    const already = await getDoc(uRef);
+
+    if (already.exists()) {
+      // descurtir
+      await deleteDoc(uRef);
+      await updateDoc(pRef, { total: increment(-1) }).catch(async () => {
+        // se o post ainda não existe por algum motivo, ignora
+      });
     } else {
-      setLiked(id, true);
-      setCount(id, count + 1);
+      // curtir
+      const postSnap = await getDoc(pRef);
+      if (!postSnap.exists()) {
+        await setDoc(pRef, { total: 1 });
+      } else {
+        await updateDoc(pRef, { total: increment(1) });
+      }
+      await setDoc(uRef, { curtiuEm: Date.now() });
     }
 
-    updateButton(btn, id);
-
-    // animação de bounce
-    btn.classList.add('like-bump');
-    btn.addEventListener('animationend', () => {
-      btn.classList.remove('like-bump');
-      delete btn.dataset.animating;
-    }, { once: true });
+    bump(btn);
+  } catch (err) {
+    console.error('Erro ao curtir:', err);
+  } finally {
+    delete btn.dataset.animating;
+    btn.disabled = false;
   }
+}
 
-  /**
-   * Inicializa todos os botões .btn-like com data-like-id dentro do documento.
-   * Pode ser chamado múltiplas vezes (idempotente — não duplica listeners).
-   */
-  function initLikes() {
+async function setupButton(btn) {
+  const id = btn.dataset.likeId;
+
+  // estado inicial: já curtiu nesse dispositivo/uid?
+  const uRef = userLikeRef(id, currentUid);
+  const likedSnap = await getDoc(uRef);
+  renderButton(btn, 0, likedSnap.exists());
+
+  // escuta o total em tempo real — se outra pessoa curtir, o número
+  // atualiza sozinho na tela, sem precisar dar refresh
+  const pRef = postRef(id);
+  const unsub = onSnapshot(pRef, (snap) => {
+    const total = snap.exists() ? (snap.data().total || 0) : 0;
+    renderButton(btn, total, btn.classList.contains('liked'));
+  });
+  unsubscribers.set(id, unsub);
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation(); // não propaga pro card (lightbox etc.)
+    handleClick(btn, id);
+  });
+}
+
+/**
+ * Inicializa todos os botões .btn-like com data-like-id dentro do documento.
+ * Pode ser chamado múltiplas vezes (idempotente — não duplica listeners).
+ */
+function initLikes() {
+  const start = () => {
     const buttons = document.querySelectorAll('.btn-like[data-like-id]');
     buttons.forEach(btn => {
       if (btn.dataset.likeInit) return; // já inicializado
       btn.dataset.likeInit = '1';
-
-      const id = btn.dataset.likeId;
-      updateButton(btn, id); // estado inicial
-
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation(); // não propaga para o card (lightbox etc.)
-        handleClick(btn, id);
-      });
+      setupButton(btn);
     });
-  }
+  };
 
-  // Expõe globalmente
-  window.initLikes = initLikes;
-})();
+  if (currentUid) {
+    start();
+  } else {
+    // ainda não logou anonimamente — espera e tenta de novo
+    const check = setInterval(() => {
+      if (currentUid) {
+        clearInterval(check);
+        start();
+      }
+    }, 100);
+  }
+}
+
+signInAnonymously(auth).catch((err) => {
+  console.error('Falha no login anônimo do Firebase:', err);
+});
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    currentUid = user.uid;
+  }
+});
+
+// Expõe globalmente, igual antes
+window.initLikes = initLikes;
