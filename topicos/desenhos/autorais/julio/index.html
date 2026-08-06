@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pessoa Nova — Desenhos | Entre Tempos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Caveat:wght@400;600&family=Dancing+Script:wght@400;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../pessoa.css">
+</head>
+
+<body>
+  <header>
+    <a href="../autorais.html">← Voltar para Autorais</a>
+  </header>
+
+  <section class="pessoa-section">
+    <img loading="lazy" decoding="async" src="img/foto-perfil.webp" alt="Júlio César" class="foto-pessoa">
+    <div class="pessoa-info">
+      <h2 class="pessoa-nome">Júlio César</h2>
+      <p class="pessoa-cargo">artista</p>
+      <p class="pessoa-bio">Opa eae :D
+        Meu nome é Júlio e eu sou um aluno do 2°C e eu gosto de desenhar como um hobbie.
+        Geralmente desenho personagens de jogos ou até séries que eu gosto ;0;, mas fico
+        feliz em mostrar o que eu consigo fazer e até aprender com o passar do tempo :></p>
+      <p class="contador-desenhos">8 desenhos</p>
+    </div>
+  </section>
+
+  <div class="divisor"></div>
+
+  <!-- GALERIA -->
+  <section class="galeria">
+
+    <div class="card-desenho" data-titulo="Desenho I" data-img="img/desenho1.webp">
+      <div class="quadro">
+        <img loading="lazy" decoding="async" src="img/desenho1.webp" alt="Desenho I">
+      </div>
+      <p class="card-titulo">desenho 1</p>
+      <p class="card-num">I</p>
+    </div>
+
+    <div class="card-desenho" data-titulo="Desenho II" data-img="img/desenho2.webp">
+      <div class="quadro">
+        <img loading="lazy" decoding="async" src="img/desenho2.webp" alt="Desenho II">
+      </div>
+      <p class="card-titulo">desenho 2</p>
+      <p class="card-num">II</p>
+    </div>
+
+    <div class="card-desenho" data-titulo="Desenho III" data-img="img/desenho3.webp">
+      <div class="quadro">
+        <img loading="lazy" decoding="async" src="img/desenho3.webp" alt="Desenho III">
+      </div>
+      <p class="card-titulo">desenho 3</p>
+      <p class="card-num">III</p>
+    </div>
+
+    <div class="card-desenho" data-titulo="Desenho IV" data-img="img/desenho4.webp">
+      <div class="quadro">
+        <img loading="lazy" decoding="async" src="img/desenho4.webp" alt="Desenho IV">
+      </div>
+      <p class="card-titulo">desenho 4</p>
+      <p class="card-num">IV</p>
+    </div>
+
+    <div class="card-desenho" data-titulo="Desenho V" data-img="img/desenho5.webp">
+      <div class="quadro">
+        <img loading="lazy" decoding="async" src="img/desenho5.webp" alt="Desenho V">
+      </div>
+      <p class="card-titulo">desenho 5</p>
+      <p class="card-num">V</p>
+    </div>
+
+    <div class="card-desenho" data-titulo="Desenho VI" data-img="img/desenho6.webp">
+      <div class="quadro">
+        <img loading="lazy" decoding="async" src="img/desenho6.webp" alt="Desenho VI">
+      </div>
+      <p class="card-titulo">desenho 6</p>
+      <p class="card-num">VI</p>
+    </div>
+
+    <div class="card-desenho" data-titulo="Desenho VII" data-img="img/desenho7.webp">
+      <div class="quadro">
+        <img loading="lazy" decoding="async" src="img/desenho7.webp" alt="Desenho VII">
+      </div>
+      <p class="card-titulo">desenho 7</p>
+      <p class="card-num">VII</p>
+    </div>
+
+    <div class="card-desenho" data-titulo="Desenho VIII" data-img="img/desenho8.webp">
+      <div class="quadro">
+        <img loading="lazy" decoding="async" src="img/desenho8.webp" alt="Desenho VIII">
+      </div>
+      <p class="card-titulo">desenho 8</p>
+      <p class="card-num">VIII</p>
+    </div>
+
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+    <div class="lightbox-inner">
+      <button class="lightbox-fechar" id="lb-fechar" aria-label="Fechar">✕</button>
+      <img loading="lazy" decoding="async" src="" alt="" id="lb-img">
+      <p class="lightbox-legenda" id="lb-legenda"></p>
+    </div>
+  </div>
+
+  <div class="rodape-desenhos">
+    <div>entre tempos · revista eletrônica</div>
+    <div class="carimbo">DESENHOS</div>
+  </div>
+
+  <script>
+    const cards = document.querySelectorAll('.card-desenho');
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lb-img');
+    const lbLeg = document.getElementById('lb-legenda');
+    const lbFechar = document.getElementById('lb-fechar');
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const src = card.dataset.img;
+        const titulo = card.dataset.titulo;
+        // Só abre lightbox se houver imagem
+        if (!src) return;
+        lbImg.src = src;
+        lbImg.alt = titulo;
+        lbLeg.textContent = titulo;
+        lightbox.classList.add('ativo');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function fecharLb() {
+      lightbox.classList.remove('ativo');
+      document.body.style.overflow = '';
+      lbImg.src = '';
+    }
+
+    lbFechar.addEventListener('click', fecharLb);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) fecharLb(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharLb(); });
+  </script>
+</body>
+
+</html>
