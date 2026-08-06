@@ -337,8 +337,6 @@
   <script type="module" src="../../../../../js/likes.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Reinicializa likes quando um poema se torna visível
-      // (os poemas aparecem após clique no envelope)
       document.querySelectorAll('.envelope').forEach(env => {
         env.addEventListener('click', () => setTimeout(() => window.initLikes(), 50));
       });
