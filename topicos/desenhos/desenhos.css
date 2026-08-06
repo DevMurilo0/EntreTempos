@@ -42,6 +42,8 @@ body::before {
    (ambas já position:relative), então ficam coladas nesses blocos
    em vez de espalhadas pela altura total da página. */
 
+
+
 .img-deco {
   position: absolute;
   filter: drop-shadow(3px 4px 10px rgba(0, 0, 0, 0.3)) sepia(10%);
