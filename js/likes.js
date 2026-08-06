@@ -102,27 +102,35 @@ async function handleClick(btn, id) {
   }
 }
 
-async function setupButton(btn) {
+function setupButton(btn) {
   const id = btn.dataset.likeId;
 
-  // estado inicial: já curtiu nesse dispositivo/uid?
-  const uRef = userLikeRef(id, currentUid);
-  const likedSnap = await getDoc(uRef);
-  renderButton(btn, 0, likedSnap.exists());
-
-  // escuta o total em tempo real — se outra pessoa curtir, o número
-  // atualiza sozinho na tela, sem precisar dar refresh
-  const pRef = postRef(id);
-  const unsub = onSnapshot(pRef, (snap) => {
-    const total = snap.exists() ? (snap.data().total || 0) : 0;
-    renderButton(btn, total, btn.classList.contains('liked'));
-  });
-  unsubscribers.set(id, unsub);
-
+  // registra o clique JÁ, antes de qualquer chamada assíncrona.
+  // assim, mesmo que getDoc/onSnapshot falhem (ex: regra do Firestore
+  // ainda não publicada), o botão continua clicável.
   btn.addEventListener('click', (e) => {
     e.stopPropagation(); // não propaga pro card (lightbox etc.)
     handleClick(btn, id);
   });
+
+  // estado inicial: já curtiu nesse dispositivo/uid?
+  const uRef = userLikeRef(id, currentUid);
+  getDoc(uRef)
+    .then((likedSnap) => renderButton(btn, 0, likedSnap.exists()))
+    .catch((err) => console.error(`[likes] falha ao checar curtida de "${id}":`, err));
+
+  // escuta o total em tempo real — se outra pessoa curtir, o número
+  // atualiza sozinho na tela, sem precisar dar refresh
+  const pRef = postRef(id);
+  const unsub = onSnapshot(
+    pRef,
+    (snap) => {
+      const total = snap.exists() ? (snap.data().total || 0) : 0;
+      renderButton(btn, total, btn.classList.contains('liked'));
+    },
+    (err) => console.error(`[likes] falha ao escutar total de "${id}":`, err)
+  );
+  unsubscribers.set(id, unsub);
 }
 
 /**
