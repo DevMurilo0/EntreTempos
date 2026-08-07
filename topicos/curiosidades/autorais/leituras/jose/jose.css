@@ -1,31 +1,16 @@
-/* =============================================================
-   LEITURA.CSS — Entre Tempos · Página de leitura de UMA curiosidade
-   =============================================================
-
-   COMO FUNCIONA ESTA PÁGINA:
-
-   1) CABEÇALHO DE ABERTURA (.curiosidade-abertura)
-      Foto/imagem da pessoa ou da curiosidade do lado esquerdo,
-      e do lado direito o nome/título + um resumo introdutório.
-
-   2) CORPO DO TEXTO (.curiosidade-corpo)
-      Uma sequência de blocos que você pode repetir e reordenar
-      livremente: blocos de IMAGEM/VÍDEO (.bloco-midia) e blocos
-      de TEXTO (.bloco-texto), indo um depois do outro, como num
-      artigo de revista.
-
-   Tudo que você precisa editar está comentado dentro do arquivo
-   HTML (leitura-exemplo.html). Este CSS só cuida da aparência —
-   normalmente você não precisa tocar aqui, a menos que queira
-   mudar cores, espaçamentos ou tamanhos.
-   ============================================================= */
+/* =============================================
+   PESSOA.CSS — Entre Tempos · Desenhos de UMA pessoa
+   ============================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Bebas+Neue&family=Special+Elite&family=Dancing+Script:wght@400;600&family=IM+Fell+English:ital@0;1&display=swap');
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
-  position: relative;
   background: #f2e8d5;
   font-family: 'Special Elite', serif;
   min-height: 100vh;
@@ -42,7 +27,7 @@ body::before {
   z-index: 0;
 }
 
-/* ── HEADER / "<- sair" ── */
+/* ── HEADER ── */
 header {
   position: relative;
   z-index: 10;
@@ -59,73 +44,82 @@ header a {
   letter-spacing: 1px;
   transition: color 0.2s;
 }
-header a:hover { color: #c0392b; }
 
-/* ══════════════════════════════════════════
-   ABERTURA — imagem + nome/título + resumo
-   ══════════════════════════════════════════ */
+header a:hover {
+  color: #c0392b;
+}
 
-.curiosidade-abertura {
+/* ── CABEÇALHO DA PESSOA ── */
+.pessoa-section {
   position: relative;
   z-index: 5;
   display: flex;
   align-items: flex-start;
   gap: 50px;
   max-width: 900px;
-  margin: 40px auto 0;
+  margin: 40px auto 30px;
   padding: 0 40px;
 }
 
-.foto-curiosidade {
-  width: clamp(160px, 22vw, 260px);
+.foto-pessoa {
+  width: clamp(170px, 22vw, 240px);
   height: auto;
   flex-shrink: 0;
-  filter: drop-shadow(4px 6px 14px rgba(0,0,0,0.35)) sepia(15%);
+  filter: drop-shadow(4px 6px 14px rgba(0, 0, 0, 0.35)) sepia(15%);
   transform: rotate(-2deg);
   transition: transform 0.3s ease;
 }
-.foto-curiosidade:hover { transform: rotate(0deg) scale(1.02); }
 
-/* placeholder enquanto a imagem real não é adicionada
-   (mesmo padrão usado nos cards das listas) */
-.foto-curiosidade.vazio {
-  width: clamp(160px, 22vw, 260px);
-  aspect-ratio: 3 / 4;
-  background: #e8dcc0;
-  border: 2px dashed #c4a96b;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  text-align: center;
-  font-family: 'IM Fell English', serif;
-  font-style: italic;
-  font-size: 13px;
-  color: #8c7c5e;
-  padding: 0 16px;
+.foto-pessoa:hover {
+  transform: rotate(0deg) scale(1.02);
 }
 
-.curiosidade-abertura-info {
+.pessoa-info {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding-top: 6px;
+  gap: 8px;
+  padding-top: 10px;
 }
 
-.curiosidade-abertura-titulo {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  font-size: clamp(28px, 4vw, 44px);
+.pessoa-nome {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(34px, 5vw, 56px);
   color: #1a1a1a;
-  line-height: 1.15;
+  letter-spacing: 4px;
+  line-height: 1;
+  border-left: 5px solid #c0392b;
+  padding-left: 16px;
 }
 
-.curiosidade-abertura-resumo {
+.pessoa-cargo {
+  font-family: 'Special Elite', serif;
+  font-size: 13px;
+  color: #8c3b3b;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding-left: 21px;
+  font-style: italic;
+}
+
+.pessoa-bio {
   font-family: 'IM Fell English', serif;
-  font-size: clamp(15px, 1.6vw, 18px);
+  font-size: clamp(14px, 1.5vw, 17px);
   color: #3e3228;
-  line-height: 1.85;
+  line-height: 1.8;
   text-align: justify;
+  margin-top: 4px;
+  padding-left: 21px;
+  max-width: 560px;
+}
+
+.contador-desenhos {
+  font-family: 'Special Elite', serif;
+  font-size: 12px;
+  color: #7a6a50;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding-left: 21px;
+  margin-top: 4px;
 }
 
 /* ── DIVISOR ── */
@@ -133,99 +127,162 @@ header a:hover { color: #c0392b; }
   position: relative;
   z-index: 5;
   width: 80%;
-  margin: 36px auto;
+  margin: 10px auto 60px;
   height: 2px;
   background: linear-gradient(to right, transparent, #c0392b, #c4a96b, #c0392b, transparent);
 }
 
 /* ══════════════════════════════════════════
-   CORPO DO TEXTO — blocos de mídia e de texto,
-   intercalados na ordem em que aparecem no HTML
+   GALERIA DE DESENHOS — alternados, grandes
    ══════════════════════════════════════════ */
 
-.curiosidade-corpo {
+.galeria {
   position: relative;
   z-index: 5;
-  max-width: 760px;
+  max-width: 860px;
   margin: 0 auto;
-  padding: 0 40px 100px;
+  padding: 0 20px 120px;
 
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+  /* dois por linha, meio bagunçados */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 18px;
 }
 
-/* bloco de imagem ou vídeo */
-.bloco-midia {
-  width: 100%;
-}
-
-.bloco-midia img,
-.bloco-midia video,
-.bloco-midia iframe {
-  width: 100%;
-  height: auto;
-  display: block;
-  border: 6px solid #fff;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.28);
-}
-
-/* iframe (ex.: vídeo do YouTube) precisa de proporção fixa */
-.bloco-midia.video-embed {
+/* ── CARD DE DESENHO ── */
+.card-desenho {
   position: relative;
-  width: 100%;
-  padding-top: 56.25%; /* proporção 16:9 */
-}
-.bloco-midia.video-embed iframe {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: 6px solid #fff;
+  cursor: pointer;
+
+  /* papel envelhecido */
+  background-color: #ede4cc;
+  background-image:
+    url('https://www.transparenttextures.com/patterns/paper-fibers.png'),
+    url('https://www.transparenttextures.com/patterns/beige-paper.png');
+
+  padding: 18px 18px 14px;
+
+  box-shadow:
+    0 8px 28px rgba(0, 0, 0, 0.24),
+    inset 0 0 50px rgba(120, 80, 10, 0.12);
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* placeholder enquanto a mídia real não é adicionada */
-.bloco-midia .midia-vazia {
+/* alternância vertical — itens pares sobem, ímpares descem */
+.card-desenho:nth-child(odd) {
+  margin-top: 0px;
+  transform: rotate(-1.2deg);
+}
+
+.card-desenho:nth-child(even) {
+  margin-top: 40px;
+  transform: rotate(1.4deg);
+}
+
+.card-desenho:nth-child(3) {
+  transform: rotate(-0.6deg);
+}
+
+.card-desenho:nth-child(4) {
+  transform: rotate(2.0deg);
+  margin-top: 50px;
+}
+
+.card-desenho:nth-child(5) {
+  transform: rotate(-1.8deg);
+  margin-top: -10px;
+}
+
+.card-desenho:nth-child(6) {
+  transform: rotate(0.8deg);
+  margin-top: 35px;
+}
+
+.card-desenho:hover {
+  transform: rotate(0deg) scale(1.03) !important;
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.32);
+  z-index: 10;
+}
+
+/* ── IMAGEM DENTRO DO CARD ── */
+.card-desenho .quadro {
   width: 100%;
-  aspect-ratio: 16 / 9;
-  background: #e8dcc0;
-  border: 2px dashed #c4a96b;
+  aspect-ratio: 3 / 4;
+  background: #fff;
+  border: 8px solid #fff;
+  box-shadow:
+    0 3px 12px rgba(0, 0, 0, 0.22),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'IM Fell English', serif;
-  font-style: italic;
-  font-size: 16px;
-  color: #8c7c5e;
 }
 
-.bloco-midia .legenda-midia {
+.card-desenho .quadro img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.card-desenho:hover .quadro img {
+  transform: scale(1.04);
+}
+
+/* Placeholder vazio */
+.card-desenho .quadro.vazio {
+  background: #e8dcc0;
+  border-color: #c4a96b;
+  border-style: dashed;
+}
+
+.card-desenho .quadro.vazio span {
+  font-family: 'IM Fell English', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: #8c7c5e;
+  text-align: center;
+  padding: 0 12px;
+}
+
+/* ── LEGENDA ABAIXO DO QUADRO ── */
+.card-desenho .card-titulo {
+  font-family: 'Dancing Script', cursive;
+  font-weight: 600;
+  font-size: clamp(14px, 2vw, 18px);
+  color: #1a0e04;
   margin-top: 10px;
   text-align: center;
-  font-family: 'Dancing Script', cursive;
-  font-size: 16px;
-  color: #7a6a50;
 }
 
-/* bloco de texto */
-.bloco-texto p {
-  font-family: 'IM Fell English', serif;
-  font-size: clamp(15px, 1.6vw, 18px);
-  color: #3e3228;
-  line-height: 1.9;
-  text-align: justify;
-  margin-bottom: 16px;
+.card-desenho .card-num {
+  font-family: 'Caveat', cursive;
+  font-size: 11px;
+  color: #9a7c5a;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 2px;
 }
 
-.bloco-texto p:last-child { margin-bottom: 0; }
-
-.bloco-texto strong {
-  color: #8c3b3b;
-  font-style: italic;
+/* dobra de canto */
+.card-desenho::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 22px 22px 0;
+  border-color: transparent #f2e8d5 transparent transparent;
 }
 
 /* ── RODAPÉ ── */
-.rodape-curiosidade {
+.rodape-desenhos {
   position: relative;
   z-index: 5;
   text-align: center;
@@ -250,88 +307,238 @@ header a:hover { color: #c0392b; }
   margin-top: 10px;
 }
 
+/* ══════════════════════════════════════════
+   LIGHTBOX — clicou no card, abre em tela cheia
+   ══════════════════════════════════════════ */
+
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(10, 7, 3, 0.88);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  cursor: zoom-out;
+}
+
+.lightbox.ativo {
+  display: flex;
+  animation: lbFadeIn 0.25s ease;
+}
+
+@keyframes lbFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.lightbox-inner {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  cursor: default;
+  animation: lbZoomIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes lbZoomIn {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.lightbox-inner img {
+  display: block;
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+}
+
+.lightbox-fechar {
+  position: absolute;
+  top: -36px;
+  right: 0;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 28px;
+  cursor: pointer;
+  line-height: 1;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.lightbox-fechar:hover {
+  opacity: 1;
+}
+
+.lightbox-legenda {
+  margin-top: 12px;
+  text-align: center;
+  font-family: 'Dancing Script', cursive;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* ══════════════════════════════════════════
+   BOTÃO DE CURTIDA — .btn-like
+   ══════════════════════════════════════════ */
+
+.btn-like {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: 1.5px solid #c4a96b;
+  border-radius: 20px;
+  padding: 3px 10px 3px 8px;
+  cursor: pointer;
+  font-family: 'Special Elite', serif;
+  font-size: 13px;
+  color: #7a6a50;
+  letter-spacing: 1px;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+  margin-top: 6px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn-like:hover {
+  color: #c0392b;
+  border-color: #c0392b;
+  background: rgba(192, 57, 43, 0.06);
+}
+
+.btn-like.liked {
+  color: #c0392b;
+  border-color: #c0392b;
+  background: rgba(192, 57, 43, 0.08);
+}
+
+.like-icon {
+  font-size: 15px;
+  line-height: 1;
+  transition: transform 0.15s ease;
+}
+
+.btn-like.liked .like-icon {
+  color: #c0392b;
+}
+
+.like-count {
+  font-size: 12px;
+  min-width: 12px;
+  text-align: center;
+}
+
+/* Animação de bounce ao curtir */
+@keyframes likeBump {
+  0% {
+    transform: scale(1);
+  }
+
+  35% {
+    transform: scale(1.35);
+  }
+
+  60% {
+    transform: scale(0.9);
+  }
+
+  80% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.btn-like.like-bump .like-icon {
+  animation: likeBump 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
 /* ── MOBILE ── */
 @media (max-width: 600px) {
-  .curiosidade-abertura {
+  .pessoa-section {
     flex-direction: column;
     align-items: center;
-    gap: 22px;
+    gap: 20px;
     padding: 0 20px;
     text-align: center;
   }
 
-  .foto-curiosidade,
-  .foto-curiosidade.vazio {
-    width: clamp(150px, 55vw, 200px);
+  .foto-pessoa {
+    width: clamp(150px, 52vw, 200px);
   }
 
-  .curiosidade-abertura-titulo,
-  .curiosidade-abertura-resumo {
+  .pessoa-nome {
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .pessoa-cargo,
+  .pessoa-bio,
+  .contador-desenhos {
+    padding-left: 0;
+  }
+
+  .pessoa-bio {
     text-align: left;
+    max-width: 100%;
   }
 
-  .curiosidade-corpo {
-    padding: 0 18px 80px;
-    gap: 24px;
+  .galeria {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 12px;
+    padding: 0 10px 80px;
   }
-}
 
-/* ══════════════════════════════════════════
-   IMAGENS DECORATIVAS — espalhadas pela página
-   de forma "aleatória", atrás do texto, sem
-   atrapalhar a leitura. Usa mix-blend-mode para
-   o fundo branco dos desenhos sumir sobre o papel.
-   ══════════════════════════════════════════ */
-
-.decor-imagens {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.decor-img {
-  position: absolute;
-  width: clamp(70px, 9vw, 150px);
-  height: auto;
-  opacity: 0.85;
-  mix-blend-mode: multiply;
-  filter: sepia(20%) contrast(0.95);
-}
-
-.d1 { top: 2%;   left: 1.5%;  width: clamp(70px, 8vw, 130px);  transform: rotate(-12deg); }
-.d2 { top: 12%;  right: 2%;   width: clamp(80px, 9vw, 150px);  transform: rotate(9deg); }
-.d3 { top: 26%;  left: 0.5%;  width: clamp(65px, 7vw, 120px);  transform: rotate(6deg); }
-.d4 { top: 38%;  right: 1%;   width: clamp(75px, 8vw, 135px);  transform: rotate(-8deg); }
-.d5 { top: 52%;  left: 2%;    width: clamp(70px, 9vw, 145px);  transform: rotate(14deg); }
-.d6 { top: 64%;  right: 2.5%; width: clamp(65px, 7vw, 120px);  transform: rotate(-6deg); }
-.d7 { top: 78%;  left: 1%;    width: clamp(80px, 9vw, 150px);  transform: rotate(10deg); }
-.d8 { top: 90%;  right: 1.5%; width: clamp(70px, 8vw, 130px);  transform: rotate(-10deg); }
-
-/* ── MOBILE: imagens menores, mais discretas, coladas
-      às bordas para não brigar com o texto ── */
-@media (max-width: 900px) {
-  .decor-img {
-    opacity: 0.6;
-    width: clamp(55px, 20vw, 95px);
+  /* no mobile mantém alternância mas mais sutil */
+  .card-desenho:nth-child(odd) {
+    margin-top: 0;
+    transform: rotate(-1deg);
   }
-  .d1 { top: 3%;   left: -8px; }
-  .d2 { top: 15%;  right: -10px; }
-  .d3 { top: 29%;  left: -12px; }
-  .d4 { top: 41%;  right: -8px; }
-  .d5 { top: 55%;  left: -10px; }
-  .d6 { top: 67%;  right: -12px; }
-  .d7 { top: 81%;  left: -8px; }
-  .d8 { top: 93%;  right: -10px; }
-}
 
-/* ── CELULARES MUITO PEQUENOS: reduz a quantidade
-      de imagens para não poluir a tela ── */
-@media (max-width: 480px) {
-  .decor-img {
-    width: clamp(50px, 24vw, 80px);
-    opacity: 0.5;
+  .card-desenho:nth-child(even) {
+    margin-top: 28px;
+    transform: rotate(1.2deg);
   }
-  .d2, .d4, .d6, .d8 { display: none; }
+
+  .card-desenho:nth-child(3) {
+    transform: rotate(-0.5deg);
+    margin-top: 0;
+  }
+
+  .card-desenho:nth-child(4) {
+    transform: rotate(1.5deg);
+    margin-top: 32px;
+  }
+
+  .card-desenho:nth-child(5) {
+    transform: rotate(-1.2deg);
+    margin-top: 0;
+  }
+
+  .card-desenho:nth-child(6) {
+    transform: rotate(0.6deg);
+    margin-top: 24px;
+  }
+
+  .card-desenho .card-titulo {
+    font-size: 13px;
+  }
 }

@@ -22,7 +22,11 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Bebas+Neue&family=Special+Elite&family=Dancing+Script:wght@400;600&family=IM+Fell+English:ital@0;1&display=swap');
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
   position: relative;
@@ -59,7 +63,10 @@ header a {
   letter-spacing: 1px;
   transition: color 0.2s;
 }
-header a:hover { color: #c0392b; }
+
+header a:hover {
+  color: #c0392b;
+}
 
 /* ══════════════════════════════════════════
    ABERTURA — imagem + nome/título + resumo
@@ -80,11 +87,14 @@ header a:hover { color: #c0392b; }
   width: clamp(160px, 22vw, 260px);
   height: auto;
   flex-shrink: 0;
-  filter: drop-shadow(4px 6px 14px rgba(0,0,0,0.35)) sepia(15%);
+  filter: drop-shadow(4px 6px 14px rgba(0, 0, 0, 0.35)) sepia(15%);
   transform: rotate(-2deg);
   transition: transform 0.3s ease;
 }
-.foto-curiosidade:hover { transform: rotate(0deg) scale(1.02); }
+
+.foto-curiosidade:hover {
+  transform: rotate(0deg) scale(1.02);
+}
 
 /* placeholder enquanto a imagem real não é adicionada
    (mesmo padrão usado nos cards das listas) */
@@ -167,15 +177,17 @@ header a:hover { color: #c0392b; }
   height: auto;
   display: block;
   border: 6px solid #fff;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.28);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
 }
 
 /* iframe (ex.: vídeo do YouTube) precisa de proporção fixa */
 .bloco-midia.video-embed {
   position: relative;
   width: 100%;
-  padding-top: 56.25%; /* proporção 16:9 */
+  padding-top: 56.25%;
+  /* proporção 16:9 */
 }
+
 .bloco-midia.video-embed iframe {
   position: absolute;
   inset: 0;
@@ -207,6 +219,80 @@ header a:hover { color: #c0392b; }
   color: #7a6a50;
 }
 
+/* ══════════════════════════════════════════
+   BOTÃO DE CURTIDA — embaixo de cada vídeo/imagem
+   ══════════════════════════════════════════ */
+
+.bloco-midia .btn-like {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: 1.5px solid #c4a96b;
+  border-radius: 20px;
+  padding: 4px 12px 4px 9px;
+  cursor: pointer;
+  font-family: 'Special Elite', serif;
+  font-size: 13px;
+  color: #7a6a50;
+  letter-spacing: 1px;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+  margin-top: 10px;
+}
+
+.bloco-midia .btn-like:hover {
+  color: #c0392b;
+  border-color: #c0392b;
+  background: rgba(192, 57, 43, 0.06);
+}
+
+.bloco-midia .btn-like.liked {
+  color: #c0392b;
+  border-color: #c0392b;
+  background: rgba(192, 57, 43, 0.08);
+}
+
+.bloco-midia .like-icon {
+  font-size: 15px;
+  line-height: 1;
+}
+
+.bloco-midia .btn-like.liked .like-icon {
+  color: #c0392b;
+}
+
+.bloco-midia .like-count {
+  font-size: 12px;
+  min-width: 12px;
+  text-align: center;
+}
+
+@keyframes likeBump {
+  0% {
+    transform: scale(1);
+  }
+
+  35% {
+    transform: scale(1.35);
+  }
+
+  60% {
+    transform: scale(0.9);
+  }
+
+  80% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.bloco-midia .btn-like.like-bump .like-icon {
+  animation: likeBump 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
 /* bloco de texto */
 .bloco-texto p {
   font-family: 'IM Fell English', serif;
@@ -217,7 +303,9 @@ header a:hover { color: #c0392b; }
   margin-bottom: 16px;
 }
 
-.bloco-texto p:last-child { margin-bottom: 0; }
+.bloco-texto p:last-child {
+  margin-bottom: 0;
+}
 
 .bloco-texto strong {
   color: #8c3b3b;
@@ -300,14 +388,61 @@ header a:hover { color: #c0392b; }
   filter: sepia(20%) contrast(0.95);
 }
 
-.d1 { top: 2%;   left: 1.5%;  width: clamp(70px, 8vw, 130px);  transform: rotate(-12deg); }
-.d2 { top: 12%;  right: 2%;   width: clamp(80px, 9vw, 150px);  transform: rotate(9deg); }
-.d3 { top: 26%;  left: 0.5%;  width: clamp(65px, 7vw, 120px);  transform: rotate(6deg); }
-.d4 { top: 38%;  right: 1%;   width: clamp(75px, 8vw, 135px);  transform: rotate(-8deg); }
-.d5 { top: 52%;  left: 2%;    width: clamp(70px, 9vw, 145px);  transform: rotate(14deg); }
-.d6 { top: 64%;  right: 2.5%; width: clamp(65px, 7vw, 120px);  transform: rotate(-6deg); }
-.d7 { top: 78%;  left: 1%;    width: clamp(80px, 9vw, 150px);  transform: rotate(10deg); }
-.d8 { top: 90%;  right: 1.5%; width: clamp(70px, 8vw, 130px);  transform: rotate(-10deg); }
+.d1 {
+  top: 2%;
+  left: 1.5%;
+  width: clamp(70px, 8vw, 130px);
+  transform: rotate(-12deg);
+}
+
+.d2 {
+  top: 12%;
+  right: 2%;
+  width: clamp(80px, 9vw, 150px);
+  transform: rotate(9deg);
+}
+
+.d3 {
+  top: 26%;
+  left: 0.5%;
+  width: clamp(65px, 7vw, 120px);
+  transform: rotate(6deg);
+}
+
+.d4 {
+  top: 38%;
+  right: 1%;
+  width: clamp(75px, 8vw, 135px);
+  transform: rotate(-8deg);
+}
+
+.d5 {
+  top: 52%;
+  left: 2%;
+  width: clamp(70px, 9vw, 145px);
+  transform: rotate(14deg);
+}
+
+.d6 {
+  top: 64%;
+  right: 2.5%;
+  width: clamp(65px, 7vw, 120px);
+  transform: rotate(-6deg);
+}
+
+.d7 {
+  top: 78%;
+  left: 1%;
+  width: clamp(80px, 9vw, 150px);
+  transform: rotate(10deg);
+}
+
+.d8 {
+  top: 90%;
+  right: 1.5%;
+  width: clamp(70px, 8vw, 130px);
+  transform: rotate(-10deg);
+}
 
 /* ── MOBILE: imagens menores, mais discretas, coladas
       às bordas para não brigar com o texto ── */
@@ -316,14 +451,46 @@ header a:hover { color: #c0392b; }
     opacity: 0.6;
     width: clamp(55px, 20vw, 95px);
   }
-  .d1 { top: 3%;   left: -8px; }
-  .d2 { top: 15%;  right: -10px; }
-  .d3 { top: 29%;  left: -12px; }
-  .d4 { top: 41%;  right: -8px; }
-  .d5 { top: 55%;  left: -10px; }
-  .d6 { top: 67%;  right: -12px; }
-  .d7 { top: 81%;  left: -8px; }
-  .d8 { top: 93%;  right: -10px; }
+
+  .d1 {
+    top: 3%;
+    left: -8px;
+  }
+
+  .d2 {
+    top: 15%;
+    right: -10px;
+  }
+
+  .d3 {
+    top: 29%;
+    left: -12px;
+  }
+
+  .d4 {
+    top: 41%;
+    right: -8px;
+  }
+
+  .d5 {
+    top: 55%;
+    left: -10px;
+  }
+
+  .d6 {
+    top: 67%;
+    right: -12px;
+  }
+
+  .d7 {
+    top: 81%;
+    left: -8px;
+  }
+
+  .d8 {
+    top: 93%;
+    right: -10px;
+  }
 }
 
 /* ── CELULARES MUITO PEQUENOS: reduz a quantidade
@@ -333,5 +500,11 @@ header a:hover { color: #c0392b; }
     width: clamp(50px, 24vw, 80px);
     opacity: 0.5;
   }
-  .d2, .d4, .d6, .d8 { display: none; }
+
+  .d2,
+  .d4,
+  .d6,
+  .d8 {
+    display: none;
+  }
 }

@@ -4,203 +4,346 @@
 <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Curiosidade José | Entre Tempos</title>
+        <title>José — Curiosidade | Entre Tempos</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Playfair+Display:ital,wght@0,700;1,700&family=Dancing+Script:wght@400;600&display=swap"
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Caveat:wght@400;600&family=Dancing+Script:wght@400;600&display=swap"
                 rel="stylesheet">
         <link rel="stylesheet" href="jose.css">
 </head>
 
 <body>
-        <!-- Imagens decorativas espalhadas pela página, de forma aleatória e responsiva.
-             Não interferem na leitura (pointer-events: none) e se reorganizam no CSS
-             para telas de celular. -->
-
-
-        <!--
-        <div class="decor-imagens" aria-hidden="true">
-                <img loading="lazy" decoding="async" src="decor-1.webp" class="decor-img d1" alt="">
-                <img loading="lazy" decoding="async" src="decor-2.webp" class="decor-img d2" alt="">
-                <img loading="lazy" decoding="async" src="decor-3.webp" class="decor-img d3" alt="">
-                <img loading="lazy" decoding="async" src="decor-4.webp" class="decor-img d4" alt="">
-                <img loading="lazy" decoding="async" src="decor-5.webp" class="decor-img d5" alt="">
-                <img loading="lazy" decoding="async" src="decor-6.webp" class="decor-img d6" alt="">
-                <img loading="lazy" decoding="async" src="decor-7.webp" class="decor-img d7" alt="">
-                <img loading="lazy" decoding="async" src="decor-8.webp" class="decor-img d8" alt="">
-        </div>
--->
-
-
-
         <header>
                 <a href="../../autorais.html">← sair</a>
         </header>
-        <section class="curiosidade-abertura">
-                <!-- Imagem colocada aqui. Se quiser trocar depois, é só mudar o "src". -->
-                <img loading="lazy" decoding="async" src="José.webp"
-                        alt="Chaveiros de biscuit em formato de Sonic e Tails" class="foto-curiosidade">
-                <div class="curiosidade-abertura-info">
-                        <h1 class="curiosidade-abertura-titulo">José Gleidson de Farias</h1>
-                        <p class="curiosidade-abertura-resumo">
-                                Sou José Gleidson de Farias, tenho 19 anos e sou aluno do EREMPAF.<br><br>
-                                Eu comecei a fazer bonecos com massa de modelar, e foi em um dia
-                                que a minha avó descobriu que existia a massa de biscuit. Dai comecei
+
+        <section class="pessoa-section">
+                <img loading="lazy" decoding="async" src="José.webp" alt="José" class="foto-pessoa">
+                <div class="pessoa-info">
+                        <h2 class="pessoa-nome">José Gleidson de Farias</h2>
+                        <p class="pessoa-cargo">escultor</p>
+                        <p class="pessoa-bio">Sou José Gleidson de Farias, tenho 19 anos e sou aluno do EREMPAF.</p>
+                        <p class="pessoa-bio">Eu comecei a fazer bonecos com massa de modelar, e foi em um dia
+                                que a minha avó descobriu que existia a massa de biscuit. Daí comecei
                                 a fazer minhas esculturas, eu não me lembro qual foi a minha primeira
                                 escultura de biscuit, mas eu me lembro da minha primeira escultura de
                                 massa de modelar, tinha sido um Digimon vermelho que usava fones de ouvido.
-                                Eu me sinto muito bem modelando os bonecos.
-                        </p>
+                                Eu me sinto muito bem modelando os bonecos.</p>
+                        <p class="contador-desenhos">18 esculturas</p>
                 </div>
         </section>
+
         <div class="divisor"></div>
-        <section class="curiosidade-corpo">
-                <!-- ── CHAVEIROS SONIC & TAILS ── -->
-                <div class="bloco-texto">
-                        <p>[TEXTO PENDENTE — sobre os chaveiros de Sonic e Tails]</p>
+
+        <!-- GALERIA — adicione mais .card-desenho conforme necessário.
+     Para inserir imagem: troque <span>peça em breve</span> por
+     <img loading="lazy" decoding="async" src="jose-N.webp" alt="título"> e remova a classe "vazio" do .quadro -->
+        <section class="galeria">
+
+                <div class="card-desenho" data-titulo="Chaveiros de Sonic e Tails" data-img="jose-1.webp">
+                        <div class="quadro">
+                                <img loading="lazy" decoding="async" src="jose-1.webp"
+                                        alt="Chaveiros de Sonic e Tails em biscuit">
+                        </div>
+                        <p class="card-titulo">chaveiros de Sonic e Tails</p>
+                        <p class="card-num">I</p>
+                        <button class="btn-like" data-like-id="jose-chaveiros-de-sonic-e-tails" aria-label="Curtir peça"
+                                aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
-                <div class="bloco-midia">
-                        <img src="jose-1.webp" alt="Chaveiros de Sonic e Tails em biscuit">
-                        <p class="legenda-midia">chaveiros de Sonic e Tails</p>
+
+                <div class="card-desenho" data-titulo="Personagem abelha, em produção" data-img="jose-2.webp">
+                        <div class="quadro">
+                                <img loading="lazy" decoding="async" src="jose-2.webp"
+                                        alt="Figura de abelha antropomórfica em processo de pintura">
+                        </div>
+                        <p class="card-titulo">personagem abelha, em produção</p>
+                        <p class="card-num">II</p>
+                        <button class="btn-like" data-like-id="jose-personagem-abelha-em-producao"
+                                aria-label="Curtir peça" aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
-                <!-- ── PERSONAGEM ABELHA ── -->
-                <div class="bloco-texto">
-                        <p>[TEXTO PENDENTE — sobre a personagem abelha em processo de pintura]</p>
+
+                <div class="card-desenho" data-titulo="Trio de personagens" data-img="jose-3.webp">
+                        <div class="quadro">
+                                <img loading="lazy" decoding="async" src="jose-3.webp"
+                                        alt="Três bonequinhos estilizados em pé lado a lado">
+                        </div>
+                        <p class="card-titulo">trio de personagens</p>
+                        <p class="card-num">III</p>
+                        <button class="btn-like" data-like-id="jose-trio-de-personagens" aria-label="Curtir peça"
+                                aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
-                <div class="bloco-midia">
-                        <img src="jose-2.webp" alt="Figura de abelha antropomórfica em processo de pintura">
-                        <p class="legenda-midia">personagem abelha, em produção</p>
+
+                <div class="card-desenho" data-titulo="Ratinhos e patinhos" data-img="jose-4.webp">
+                        <div class="quadro">
+                                <img loading="lazy" decoding="async" src="jose-4.webp"
+                                        alt="Miniaturas de ratinhos brancos e patinhos amarelos">
+                        </div>
+                        <p class="card-titulo">ratinhos e patinhos</p>
+                        <p class="card-num">IV</p>
+                        <button class="btn-like" data-like-id="jose-ratinhos-e-patinhos" aria-label="Curtir peça"
+                                aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
-                <!-- ── TRIO DE PERSONAGENS ── -->
-                <div class="bloco-texto">
-                        <p>[TEXTO PENDENTE — sobre o trio de personagens estilizados]</p>
+
+                <div class="card-desenho" data-titulo="Dupla de bonecos" data-img="jose-5.webp">
+                        <div class="quadro">
+                                <img loading="lazy" decoding="async" src="jose-5.webp"
+                                        alt="Dois bonequinhos, um de cachecol amarelo e outro de laço roxo">
+                        </div>
+                        <p class="card-titulo">dupla de bonecos</p>
+                        <p class="card-num">V</p>
+                        <button class="btn-like" data-like-id="jose-dupla-de-bonecos" aria-label="Curtir peça"
+                                aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
-                <div class="bloco-midia">
-                        <img src="jose-3.webp" alt="Três bonequinhos estilizados em pé lado a lado">
-                        <p class="legenda-midia">trio de personagens</p>
+
+                <div class="card-desenho" data-titulo="Leão torcedor do Sport" data-img="jose-6.webp">
+                        <div class="quadro">
+                                <img loading="lazy" decoding="async" src="jose-6.webp"
+                                        alt="Leão antropomórfico segurando bandeira do Sport Recife">
+                        </div>
+                        <p class="card-titulo">leão torcedor do Sport</p>
+                        <p class="card-num">VI</p>
+                        <button class="btn-like" data-like-id="jose-leao-torcedor-do-sport" aria-label="Curtir peça"
+                                aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
-                <!-- ── RATINHOS E PATINHOS ── -->
-                <div class="bloco-texto">
-                        <p>[TEXTO PENDENTE — sobre os ratinhos e patinhos em miniatura]</p>
+
+                <div class="card-desenho" data-titulo="Leão torcedor do Sport, outro ângulo" data-img="jose-12.webp">
+                        <div class="quadro">
+                                <img loading="lazy" decoding="async" src="jose-12.webp"
+                                        alt="Leão antropomórfico segurando bandeira do Sport Recife, outro ângulo">
+                        </div>
+                        <p class="card-titulo">leão torcedor do Sport, outro ângulo</p>
+                        <p class="card-num">VII</p>
+                        <button class="btn-like" data-like-id="jose-leao-torcedor-do-sport-outro-angulo"
+                                aria-label="Curtir peça" aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
-                <div class="bloco-midia">
-                        <img src="jose-4.webp" alt="Miniaturas de ratinhos brancos e patinhos amarelos">
-                        <p class="legenda-midia">ratinhos e patinhos</p>
+
+                <div class="card-desenho" data-titulo="Raposinha" data-img="jose-7.webp">
+                        <div class="quadro">
+                                <img loading="lazy" decoding="async" src="jose-7.webp"
+                                        alt="Raposinha laranja e branca sentada">
+                        </div>
+                        <p class="card-titulo">raposinha</p>
+                        <p class="card-num">VIII</p>
+                        <button class="btn-like" data-like-id="jose-raposinha" aria-label="Curtir peça"
+                                aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
-                <!-- ── DUPLA DE BONECOS ── -->
-                <div class="bloco-texto">
-                        <p>[TEXTO PENDENTE — sobre a dupla de bonecos com cachecol e laço]</p>
+
+                <div class="card-desenho" data-titulo="Inspirado em Steven Universe" data-img="jose-8.webp">
+                        <div class="quadro">
+                                <img loading="lazy" decoding="async" src="jose-8.webp"
+                                        alt="Bonequinho com escudo rosa, inspirado em Steven Universe">
+                        </div>
+                        <p class="card-titulo">inspirado em Steven Universe</p>
+                        <p class="card-num">IX</p>
+                        <button class="btn-like" data-like-id="jose-inspirado-em-steven-universe"
+                                aria-label="Curtir peça" aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
-                <div class="bloco-midia">
-                        <img src="jose-5.webp" alt="Dois bonequinhos, um de cachecol amarelo e outro de laço roxo">
-                        <p class="legenda-midia">dupla de bonecos</p>
+
+                <div class="card-desenho" data-titulo="Pingente All Might" data-img="jose-9.webp">
+                        <div class="quadro">
+                                <img loading="lazy" decoding="async" src="jose-9.webp"
+                                        alt="Pingente do personagem All Might">
+                        </div>
+                        <p class="card-titulo">pingente All Might</p>
+                        <p class="card-num">X</p>
+                        <button class="btn-like" data-like-id="jose-pingente-all-might" aria-label="Curtir peça"
+                                aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
-                <!-- ── LEÃO TORCEDOR DO SPORT ── -->
-                <div class="bloco-texto">
-                        <p>[TEXTO PENDENTE — sobre o leão torcedor com a bandeira do Sport]</p>
+
+                <div class="card-desenho" data-titulo="Mais ratinhos e patinhos" data-img="jose-10.webp">
+                        <div class="quadro">
+                                <img loading="lazy" decoding="async" src="jose-10.webp"
+                                        alt="Outra fileira de ratinhos e patinhos em miniatura">
+                        </div>
+                        <p class="card-titulo">mais ratinhos e patinhos</p>
+                        <p class="card-num">XI</p>
+                        <button class="btn-like" data-like-id="jose-mais-ratinhos-e-patinhos" aria-label="Curtir peça"
+                                aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
-                <div class="bloco-midia">
-                        <img src="jose-6.webp" alt="Leão antropomórfico segurando bandeira do Sport Recife">
-                        <p class="legenda-midia">leão torcedor do Sport</p>
+
+                <div class="card-desenho" data-titulo="Capivaras com laranja na cabeça" data-img="jose-11.webp">
+                        <div class="quadro">
+                                <img loading="lazy" decoding="async" src="jose-11.webp"
+                                        alt="Grupo de capivaras em miniatura com laranjas na cabeça">
+                        </div>
+                        <p class="card-titulo">capivaras com laranja na cabeça</p>
+                        <p class="card-num">XII</p>
+                        <button class="btn-like" data-like-id="jose-capivaras-com-laranja-na-cabeca"
+                                aria-label="Curtir peça" aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
-                <div class="bloco-midia">
-                        <img src="jose-12.webp"
-                                alt="Leão antropomórfico segurando bandeira do Sport Recife, outro ângulo">
-                        <p class="legenda-midia">leão torcedor do Sport, outro ângulo</p>
+
+                <div class="card-desenho" data-titulo="Personagem de estilo sombrio" data-img="jose-13.webp">
+                        <div class="quadro">
+                                <img loading="lazy" decoding="async" src="jose-13.webp"
+                                        alt="Bonequinha de estilo sombrio com olhos em X">
+                        </div>
+                        <p class="card-titulo">personagem de estilo sombrio</p>
+                        <p class="card-num">XIII</p>
+                        <button class="btn-like" data-like-id="jose-personagem-de-estilo-sombrio"
+                                aria-label="Curtir peça" aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
-                <!-- ── RAPOSINHA ── -->
-                <div class="bloco-texto">
-                        <p>[TEXTO PENDENTE — sobre a raposinha sentada]</p>
+
+                <div class="card-desenho" data-titulo="Caranguejo" data-img="jose-14.webp">
+                        <div class="quadro">
+                                <img loading="lazy" decoding="async" src="jose-14.webp"
+                                        alt="Caranguejo laranja em miniatura">
+                        </div>
+                        <p class="card-titulo">caranguejo</p>
+                        <p class="card-num">XIV</p>
+                        <button class="btn-like" data-like-id="jose-caranguejo" aria-label="Curtir peça"
+                                aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
-                <div class="bloco-midia">
-                        <img src="jose-7.webp" alt="Raposinha laranja e branca sentada">
-                        <p class="legenda-midia">raposinha</p>
+
+                <div class="card-desenho" data-titulo="Gatinho siamês" data-img="jose-15.webp">
+                        <div class="quadro">
+                                <img loading="lazy" decoding="async" src="jose-15.webp" alt="Gatinho siamês sentado">
+                        </div>
+                        <p class="card-titulo">gatinho siamês</p>
+                        <p class="card-num">XV</p>
+                        <button class="btn-like" data-like-id="jose-gatinho-siames" aria-label="Curtir peça"
+                                aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
-                <!-- ── STEVEN UNIVERSE ── -->
-                <div class="bloco-texto">
-                        <p>[TEXTO PENDENTE — sobre a figura inspirada em Steven Universe]</p>
+
+                <div class="card-desenho" data-titulo="Criatura de braços longos" data-img="jose-16.webp">
+                        <div class="quadro">
+                                <img loading="lazy" decoding="async" src="jose-16.webp"
+                                        alt="Criatura prateada de braços longos, estilo criativo">
+                        </div>
+                        <p class="card-titulo">criatura de braços longos</p>
+                        <p class="card-num">XVI</p>
+                        <button class="btn-like" data-like-id="jose-criatura-de-bracos-longos" aria-label="Curtir peça"
+                                aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
-                <div class="bloco-midia">
-                        <img src="jose-8.webp" alt="Bonequinho com escudo rosa, inspirado em Steven Universe">
-                        <p class="legenda-midia">inspirado em Steven Universe</p>
+
+                <div class="card-desenho" data-titulo="Bonecos em preto e branco" data-img="jose-17.webp">
+                        <div class="quadro">
+                                <img loading="lazy" decoding="async" src="jose-17.webp"
+                                        alt="Dupla de bonecos articulados em preto e branco">
+                        </div>
+                        <p class="card-titulo">bonecos em preto e branco</p>
+                        <p class="card-num">XVII</p>
+                        <button class="btn-like" data-like-id="jose-bonecos-em-preto-e-branco" aria-label="Curtir peça"
+                                aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
-                <!-- ── ALL MIGHT ── -->
-                <div class="bloco-texto">
-                        <p>[TEXTO PENDENTE — sobre o pingente do All Might]</p>
-                </div>
-                <div class="bloco-midia">
-                        <img src="jose-9.webp" alt="Pingente do personagem All Might">
-                        <p class="legenda-midia">pingente All Might</p>
-                </div>
-                <!-- ── MAIS RATINHOS E PATINHOS ── -->
-                <div class="bloco-texto">
-                        <p>[TEXTO PENDENTE — sobre outra leva de ratinhos e patinhos]</p>
-                </div>
-                <div class="bloco-midia">
-                        <img src="jose-10.webp" alt="Outra fileira de ratinhos e patinhos em miniatura">
-                        <p class="legenda-midia">mais ratinhos e patinhos</p>
-                </div>
-                <!-- ── CAPIVARAS ── -->
-                <div class="bloco-texto">
-                        <p>[TEXTO PENDENTE — sobre o grupo de capivaras com laranjas na cabeça]</p>
-                </div>
-                <div class="bloco-midia">
-                        <img src="jose-11.webp" alt="Grupo de capivaras em miniatura com laranjas na cabeça">
-                        <p class="legenda-midia">capivaras com laranja na cabeça</p>
-                </div>
-                <!-- ── PERSONAGEM SOMBRIA/HALLOWEEN ── -->
-                <div class="bloco-texto">
-                        <p>[TEXTO PENDENTE — sobre a personagem de estilo mais sombrio]</p>
-                </div>
-                <div class="bloco-midia">
-                        <img src="jose-13.webp" alt="Bonequinha de estilo sombrio com olhos em X">
-                        <p class="legenda-midia">personagem de estilo sombrio</p>
-                </div>
-                <!-- ── CARANGUEJO ── -->
-                <div class="bloco-texto">
-                        <p>[TEXTO PENDENTE — sobre o caranguejo]</p>
-                </div>
-                <div class="bloco-midia">
-                        <img src="jose-14.webp" alt="Caranguejo laranja em miniatura">
-                        <p class="legenda-midia">caranguejo</p>
-                </div>
-                <!-- ── GATINHO SIAMÊS ── -->
-                <div class="bloco-texto">
-                        <p>[TEXTO PENDENTE — sobre o gatinho siamês]</p>
-                </div>
-                <div class="bloco-midia">
-                        <img src="jose-15.webp" alt="Gatinho siamês sentado">
-                        <p class="legenda-midia">gatinho siamês</p>
-                </div>
-                <!-- ── CRIATURA PRATEADA ── -->
-                <div class="bloco-texto">
-                        <p>[TEXTO PENDENTE — sobre a criatura prateada de braços longos]</p>
-                </div>
-                <div class="bloco-midia">
-                        <img src="jose-16.webp" alt="Criatura prateada de braços longos, estilo criativo">
-                        <p class="legenda-midia">criatura de braços longos</p>
-                </div>
-                <!-- ── BONECOS PRETO E BRANCO ── -->
-                <div class="bloco-texto">
-                        <p>[TEXTO PENDENTE — sobre a dupla de bonecos em preto e branco]</p>
-                </div>
-                <div class="bloco-midia">
-                        <img src="jose-17.webp" alt="Dupla de bonecos articulados em preto e branco">
-                        <p class="legenda-midia">bonecos em preto e branco</p>
-                </div>
-                <!-- ── ANIMATRÔNICO DOURADO ── -->
-                <div class="bloco-texto">
-                        <p>[TEXTO PENDENTE — sobre a figura de animatrônico dourado]</p>
-                </div>
-                <div class="bloco-midia">
-                        <img src="jose-18.webp" alt="Figura articulada de animatrônico dourado, estilo FNAF">
-                        <p class="legenda-midia">animatrônico dourado</p>
+
+                <div class="card-desenho" data-titulo="Animatrônico dourado" data-img="jose-18.webp">
+                        <div class="quadro">
+                                <img loading="lazy" decoding="async" src="jose-18.webp"
+                                        alt="Figura articulada de animatrônico dourado, estilo FNAF">
+                        </div>
+                        <p class="card-titulo">animatrônico dourado</p>
+                        <p class="card-num">XVIII</p>
+                        <button class="btn-like" data-like-id="jose-animatronico-dourado" aria-label="Curtir peça"
+                                aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
 
         </section>
-        <div class="rodape-curiosidade">
+
+        <!-- LIGHTBOX -->
+        <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+                <div class="lightbox-inner">
+                        <button class="lightbox-fechar" id="lb-fechar" aria-label="Fechar">✕</button>
+                        <img loading="lazy" decoding="async" src="" alt="" id="lb-img">
+                        <p class="lightbox-legenda" id="lb-legenda"></p>
+                </div>
+        </div>
+
+        <div class="rodape-desenhos">
                 <div>entre tempos · revista eletrônica</div>
                 <div class="carimbo">curiosidades</div>
         </div>
+
+        <script>
+                const cards = document.querySelectorAll('.card-desenho');
+                const lightbox = document.getElementById('lightbox');
+                const lbImg = document.getElementById('lb-img');
+                const lbLeg = document.getElementById('lb-legenda');
+                const lbFechar = document.getElementById('lb-fechar');
+
+                cards.forEach(card => {
+                        card.addEventListener('click', () => {
+                                const src = card.dataset.img;
+                                const titulo = card.dataset.titulo;
+                                // Só abre lightbox se houver imagem
+                                if (!src) return;
+                                lbImg.src = src;
+                                lbImg.alt = titulo;
+                                lbLeg.textContent = titulo;
+                                lightbox.classList.add('ativo');
+                                document.body.style.overflow = 'hidden';
+                        });
+                });
+
+                function fecharLb() {
+                        lightbox.classList.remove('ativo');
+                        document.body.style.overflow = '';
+                        lbImg.src = '';
+                }
+
+                lbFechar.addEventListener('click', fecharLb);
+                lightbox.addEventListener('click', e => { if (e.target === lightbox) fecharLb(); });
+                document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharLb(); });
+        </script>
+
+        <script type="module" src="../../../../../js/likes.js"></script>
+        <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                        window.initLikes();
+                });
+        </script>
 </body>
 
 </html>

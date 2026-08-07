@@ -35,7 +35,8 @@
                 <div class="curiosidade-abertura-info">
                         <h1 class="curiosidade-abertura-titulo">Ruan Miguel Torres</h1>
                         <p class="curiosidade-abertura-resumo">
-                                "Sei lá, eu jogo jogos difíceis, e de vez em quando posto isso nas redes sociais, faço desafios de não tomar dano e gasto muitas horas e paciência pra derrotar chefes -_-"
+                                "Sei lá, eu jogo jogos difíceis, e de vez em quando posto isso nas redes sociais, faço
+                                desafios de não tomar dano e gasto muitas horas e paciência pra derrotar chefes -_-"
                         </p>
                 </div>
         </section>
@@ -47,24 +48,44 @@
                 </div>
                 <div class="bloco-midia">
                         <video src="../../img/videos/elden-ring-1.mp4" controls preload="metadata"></video>
+                        <button class="btn-like" data-like-id="ruan-elden-ring-1" aria-label="Curtir vídeo"
+                                aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
                 <div class="bloco-texto">
                         <p>[TEXTO PENDENTE — Elden Ring 2]</p>
                 </div>
                 <div class="bloco-midia">
                         <video src="../../img/videos/elden-ring-2.mp4" controls preload="metadata"></video>
+                        <button class="btn-like" data-like-id="ruan-elden-ring-2" aria-label="Curtir vídeo"
+                                aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
                 <div class="bloco-texto">
                         <p>[TEXTO PENDENTE — Elden Ring 3]</p>
                 </div>
                 <div class="bloco-midia">
                         <video src="../../img/videos/elden-ring-3.mp4" controls preload="metadata"></video>
+                        <button class="btn-like" data-like-id="ruan-elden-ring-3" aria-label="Curtir vídeo"
+                                aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
                 <div class="bloco-texto">
                         <p>[TEXTO PENDENTE — Elden Ring 4]</p>
                 </div>
                 <div class="bloco-midia">
                         <video src="../../img/videos/elden-ring-4.mp4" controls preload="metadata"></video>
+                        <button class="btn-like" data-like-id="ruan-elden-ring-4" aria-label="Curtir vídeo"
+                                aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
                 <!-- ── GOD OF WAR ── -->
                 <div class="bloco-texto">
@@ -72,6 +93,11 @@
                 </div>
                 <div class="bloco-midia">
                         <video src="../../img/videos/god-of-war.mp4" controls preload="metadata"></video>
+                        <button class="btn-like" data-like-id="ruan-god-of-war" aria-label="Curtir vídeo"
+                                aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
                 <!-- ── HOLLOW KNIGHT ── -->
                 <div class="bloco-texto">
@@ -79,12 +105,22 @@
                 </div>
                 <div class="bloco-midia">
                         <video src="../../img/videos/hollow-knight-panteao.mp4" controls preload="metadata"></video>
+                        <button class="btn-like" data-like-id="ruan-hollow-knight-panteao" aria-label="Curtir vídeo"
+                                aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
                 <div class="bloco-texto">
                         <p>[TEXTO PENDENTE — Hollow Knight Radiance]</p>
                 </div>
                 <div class="bloco-midia">
                         <video src="../../img/videos/hollow-knight-radiance.mp4" controls preload="metadata"></video>
+                        <button class="btn-like" data-like-id="ruan-hollow-knight-radiance" aria-label="Curtir vídeo"
+                                aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
                 <!-- ── THE LAST OF US 2 ── -->
                 <div class="bloco-texto">
@@ -92,6 +128,11 @@
                 </div>
                 <div class="bloco-midia">
                         <video src="../../img/videos/the-last-of-us-2-1.mp4" controls preload="metadata"></video>
+                        <button class="btn-like" data-like-id="ruan-the-last-of-us-2-1" aria-label="Curtir vídeo"
+                                aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
                 <!-- ── FOR HONOR ── -->
                 <div class="bloco-texto">
@@ -99,6 +140,11 @@
                 </div>
                 <div class="bloco-midia">
                         <video src="../../img/videos/for-honor.mp4" controls preload="metadata"></video>
+                        <button class="btn-like" data-like-id="ruan-for-honor" aria-label="Curtir vídeo"
+                                aria-pressed="false">
+                                <span class="like-icon">♡</span>
+                                <span class="like-count">0</span>
+                        </button>
                 </div>
 
         </section>
@@ -106,6 +152,16 @@
                 <div>entre tempos · revista eletrônica</div>
                 <div class="carimbo">curiosidades</div>
         </div>
+
+        <script type="module" src="../../../../../js/likes.js"></script>
+        <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                        document.querySelectorAll('.envelope').forEach(env => {
+                                env.addEventListener('click', () => setTimeout(() => window.initLikes(), 50));
+                        });
+                        window.initLikes();
+                });
+        </script>
 </body>
 
 </html>
