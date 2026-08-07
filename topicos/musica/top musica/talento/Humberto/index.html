@@ -27,20 +27,20 @@
     <!-- TROQUE A IMAGEM:
        <img loading="lazy" decoding="async" src="../img/placeholder-retrato.svg" alt="Aluno 1" class="foto-musica">
        (remova a classe "vazio" do placeholder abaixo quando adicionar a foto real) -->
-    <div <img loading="lazy" decoding="async" src="beto.webp" alt="Aluno 1" class="foto-musica">
+    <img loading="lazy" decoding="async" src="beto.webp" alt="Humberto Gonçalves" class="foto-musica">
 
-      <div class="musica-abertura-info">
-        <!-- TROQUE O TÍTULO -->
-        <h1 class="musica-abertura-titulo">Humberto Gonçalves de Carvalho Sobrinho</h1>
+    <div class="musica-abertura-info">
+      <!-- TROQUE O TÍTULO -->
+      <h1 class="musica-abertura-titulo">Humberto Gonçalves de Carvalho Sobrinho</h1>
 
-        <!-- TROQUE O RESUMO — um parágrafo curto de introdução -->
-        <p class="musica-abertura-resumo">
-          Me chamo Humberto, tenho 18 anos e sou estudante do EREMPAF no 3º D.
-          Sou extrovertido, curto futebol, fazer amizades e o principal, música.
-          Venho de uma família que ama música, ao qual acabei puxando essa paixão.
-          Atualmente toco violão e guitarra, e será o que eu mostrarei por aqui :D
-        </p>
-      </div>
+      <!-- TROQUE O RESUMO — um parágrafo curto de introdução -->
+      <p class="musica-abertura-resumo">
+        Me chamo Humberto, tenho 18 anos e sou estudante do EREMPAF no 3º D.
+        Sou extrovertido, curto futebol, fazer amizades e o principal, música.
+        Venho de uma família que ama música, ao qual acabei puxando essa paixão.
+        Atualmente toco violão e guitarra, e será o que eu mostrarei por aqui :D
+      </p>
+    </div>
 
   </section>
 
@@ -88,6 +88,10 @@
     <div class="bloco-midia">
       <video src="01.mp4" controls loop playsinline></video>
       <p class="legenda-midia"> Menino Bonito </p>
+      <button class="btn-like" data-like-id="humberto-menino-bonito" aria-label="Curtir vídeo" aria-pressed="false">
+        <span class="like-icon">♡</span>
+        <span class="like-count">0</span>
+      </button>
     </div>
 
     <!-- ── BLOCO DE TEXTO (outro, depois da imagem) ── -->
@@ -111,6 +115,10 @@
     <!-- Troque "NOME_DO_VIDEO.mp4" pelo nome do arquivo de vídeo -->
     <div class="bloco-midia">
       <video src="NOME_DO_VIDEO.mp4" controls loop playsinline></video>
+      <button class="btn-like" data-like-id="humberto-video-2" aria-label="Curtir vídeo" aria-pressed="false">
+        <span class="like-icon">♡</span>
+        <span class="like-count">0</span>
+      </button>
     </div>
 
     <!-- ── ÚLTIMO BLOCO DE TEXTO (fechamento) ── -->
@@ -129,6 +137,12 @@
     <div class="carimbo">musicas</div>
   </div>
 
+  <script type="module" src="../../../../../js/likes.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.initLikes();
+    });
+  </script>
 </body>
 
 </html>

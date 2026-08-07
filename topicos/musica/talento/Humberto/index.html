@@ -88,6 +88,10 @@
     <div class="bloco-midia">
       <video src="01.mp4" controls loop playsinline></video>
       <p class="legenda-midia"> Menino Bonito </p>
+      <button class="btn-like" data-like-id="humberto-menino-bonito" aria-label="Curtir vídeo" aria-pressed="false">
+        <span class="like-icon">♡</span>
+        <span class="like-count">0</span>
+      </button>
     </div>
 
     <!-- ── BLOCO DE TEXTO (outro, depois da imagem) ── -->
@@ -111,6 +115,10 @@
     <!-- Troque "NOME_DO_VIDEO.mp4" pelo nome do arquivo de vídeo -->
     <div class="bloco-midia">
       <video src="NOME_DO_VIDEO.mp4" controls loop playsinline></video>
+      <button class="btn-like" data-like-id="humberto-video-2" aria-label="Curtir vídeo" aria-pressed="false">
+        <span class="like-icon">♡</span>
+        <span class="like-count">0</span>
+      </button>
     </div>
 
     <!-- ── ÚLTIMO BLOCO DE TEXTO (fechamento) ── -->
@@ -129,6 +137,12 @@
     <div class="carimbo">musicas</div>
   </div>
 
+  <script type="module" src="../../../../js/likes.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.initLikes();
+    });
+  </script>
 </body>
 
 </html>

@@ -274,3 +274,73 @@ header a:hover { color: #c0392b; }
     gap: 24px;
   }
 }
+
+/* ══════════════════════════════════════════
+   BOTÃO DE CURTIDA — .btn-like
+   ══════════════════════════════════════════ */
+
+.bloco-midia {
+  text-align: center;
+}
+
+.btn-like {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: 1.5px solid #c4a96b;
+  border-radius: 20px;
+  padding: 3px 10px 3px 8px;
+  cursor: pointer;
+  font-family: 'Special Elite', serif;
+  font-size: 13px;
+  color: #7a6a50;
+  letter-spacing: 1px;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+}
+
+.btn-like:hover {
+  color: #c0392b;
+  border-color: #c0392b;
+  background: rgba(192, 57, 43, 0.06);
+}
+
+.btn-like.liked {
+  color: #c0392b;
+  border-color: #c0392b;
+  background: rgba(192, 57, 43, 0.08);
+}
+
+.like-icon {
+  font-size: 15px;
+  line-height: 1;
+  transition: transform 0.15s ease;
+}
+
+.btn-like.liked .like-icon {
+  color: #c0392b;
+}
+
+.like-count {
+  font-size: 12px;
+  min-width: 12px;
+  text-align: center;
+}
+
+/* Animação de bounce ao curtir */
+@keyframes likeBump {
+  0%   { transform: scale(1); }
+  35%  { transform: scale(1.35); }
+  60%  { transform: scale(0.9); }
+  80%  { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.btn-like.like-bump .like-icon {
+  animation: likeBump 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
