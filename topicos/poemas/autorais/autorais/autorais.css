@@ -38,7 +38,7 @@ body::after {
   left: 0;
   width: 380px;
   height: 480px;
-  background-image: url('../img/coracao-flamejante.png');
+  background-image: url('../img/coracao-flamejante.webp');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: bottom left;
@@ -51,7 +51,7 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: url('https://www.transparenttextures.com/patterns/aged-paper.png');
+  background: url('https://www.transparenttextures.com/patterns/aged-paper.webp');
   opacity: 0.4;
   pointer-events: none;
   z-index: 0;

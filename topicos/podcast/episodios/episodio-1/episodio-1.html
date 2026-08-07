@@ -18,12 +18,12 @@
   </header>
 
   <!-- FAIXA "MESA DO PODCAST" — mesma imagem em todos os episódios,
-       coloque o arquivo em podcast/img/mesa-podcast.jpg. Enquanto essa
+       coloque o arquivo em podcast/img/mesa-podcast.webp. Enquanto essa
        foto não existir, o onerror abaixo ativa a classe "sem-foto" e a
        faixa vira uma vinheta só com tipografia (ver .faixa-vinheta no
        episodio.css) — assim que a foto for colocada, ela some sozinha. -->
   <div class="faixa-mesa">
-    <img src="../../img/mesa-podcast.jpg" alt="Mesa de gravação do podcast Entre Tempos"
+    <img src="../../img/mesa-podcast.webp" alt="Mesa de gravação do podcast Entre Tempos"
       onerror="this.parentElement.classList.add('sem-foto')">
     <span class="faixa-legenda">podcast entre tempos</span>
 
@@ -39,7 +39,7 @@
        desta mesma pasta (episodios/episodio-1/). O poster é a imagem que
        aparece antes de dar play. -->
   <section class="episodio-video">
-    <video controls preload="metadata" poster="capa.jpg">
+    <video controls preload="metadata" poster="capa.webp">
       <source src="episodio-1.mp4" type="video/mp4">
     </video>
   </section>
@@ -75,7 +75,7 @@
       <!-- Carrossel horizontal de fotos do episódio (arrasta pro lado).
            Pra adicionar fotos reais: troque cada
            <div class="foto-galeria placeholder"> por
-           <div class="foto-galeria"><img src="foto1.jpg" alt=""></div>,
+           <div class="foto-galeria"><img src="foto1.webp" alt=""></div>,
            colocando os arquivos dentro desta mesma pasta. Use fotos na
            horizontal (paisagem) — é esse formato que o carrossel espera.
            Pode adicionar quantas quiser, o scroll se ajusta sozinho. -->

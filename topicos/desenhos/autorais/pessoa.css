@@ -17,7 +17,7 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: url('https://www.transparenttextures.com/patterns/aged-paper.png');
+  background: url('https://www.transparenttextures.com/patterns/aged-paper.webp');
   opacity: 0.4;
   pointer-events: none;
   z-index: 0;
@@ -147,8 +147,8 @@ header a:hover { color: #c0392b; }
   /* papel envelhecido */
   background-color: #ede4cc;
   background-image:
-    url('https://www.transparenttextures.com/patterns/paper-fibers.png'),
-    url('https://www.transparenttextures.com/patterns/beige-paper.png');
+    url('https://www.transparenttextures.com/patterns/paper-fibers.webp'),
+    url('https://www.transparenttextures.com/patterns/beige-paper.webp');
 
   padding: 18px 18px 14px;
 

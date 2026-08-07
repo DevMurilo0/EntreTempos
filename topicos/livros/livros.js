@@ -36,7 +36,7 @@ const livrosPorMes = {
       titulo: "A Metamorfose",
       autor: "Franz Kafka",
       descricao: "Gregor Samsa acorda transformado em um enorme inseto e passa a enfrentar o isolamento, o preconceito e a incompreensão da própria família. A obra é um dos maiores clássicos da literatura mundial e aborda temas como alienação, identidade e condição humana.",
-      capa: "img_livros/metamorfose.jpg",
+      capa: "img_livros/metamorfose.webp",
       link: "https://colegiocngparanagua.com.br/wp-content/uploads/2021/02/A-METAMORFOSE.pdf",
       linkTexto: "Ler"
     },
@@ -44,7 +44,7 @@ const livrosPorMes = {
       titulo: "A Volta ao Mundo em 80 Dias",
       autor: "Júlio Verne",
       descricao: "O excêntrico inglês Phileas Fogg aposta que consegue dar a volta ao mundo em apenas 80 dias. Ao lado de seu fiel criado Passepartout, ele embarca em uma aventura repleta de desafios, imprevistos e descobertas através de diferentes países e culturas.",
-      capa: "img_livros/80dias.jpg",
+      capa: "img_livros/80dias.webp",
       link: "https://www.netmundi.org/home/wp-content/uploads/2020/10/A-volta-ao-mundo-em-80-dias-julio-verne.pdf",
       linkTexto: "Ler"
     },
@@ -52,7 +52,7 @@ const livrosPorMes = {
       titulo: "Blecaute",
       autor: "Marcelo Rubens Paiva",
       descricao: "Três amigos ficam presos numa caverna depois de uma enchente. Quando saem, descobrem que todo mundo no mundo virou tipo estátua, parado, duro, sem vida. Eles parecem ser os únicos sobreviventes do planeta O livro acompanha a jornada desses três enquanto tentam sobreviver e entender o que aconteceu, e como isso vai mexendo com a cabeça e com a relação entre eles.",
-      capa: "img_livros/blecaute.jpg",
+      capa: "img_livros/blecaute.webp",
       link: "https://bibliopedra.wordpress.com/wp-content/uploads/2015/09/blecaute-marcelo-rubens-paiva.pdf",
       linkTexto: "Ler"
     },
@@ -60,7 +60,7 @@ const livrosPorMes = {
       titulo: "O Retrato de Dorian Gray",
       autor: "Oscar Wilde",
       descricao: "Dorian Gray deseja permanecer eternamente jovem enquanto um retrato envelhece em seu lugar. À medida que mergulha em uma vida de excessos e corrupção moral, apenas a pintura revela as consequências de seus atos.",
-      capa: "img_livros/retrato.jpg",
+      capa: "img_livros/retrato.webp",
       link: "https://www.jaimemoniz.com/images/docs/recursos/Oscar-Wilde-livro.pdf",
       linkTexto: "Ler"
     },
@@ -68,7 +68,7 @@ const livrosPorMes = {
       titulo: "O Pequeno Príncipe",
       autor: "Antoine de Saint-Exupéry",
       descricao: "Um piloto perdido no deserto encontra um pequeno príncipe vindo de outro planeta. Por meio de encontros e reflexões poéticas, a obra aborda amizade, amor, infância, solidão e os valores essenciais da vida.",
-      capa: "img_livros/pequenoprincipe.jpg",
+      capa: "img_livros/pequenoprincipe.webp",
       link: "https://osaberdigital.com.br/wp-content/uploads/2024/11/O-Pequeno-Principe-Saint-Exupery-Zahar.pdf",
       linkTexto: "Ler"
     }
@@ -82,7 +82,7 @@ const livrosPorMes = {
       titulo: "Nome do livro",
       autor: "Nome do autor",
       descricao: "Descrição do livro que vai aparecer no pop-up.",
-      capa: "img/nome-da-capa.jpg",
+      capa: "img/nome-da-capa.webp",
       link: "https://link-para-baixar-ou-comprar.com",
       linkTexto: "Baixar PDF"
     }
@@ -90,7 +90,7 @@ const livrosPorMes = {
   */
 };
 
-const CAPA_PADRAO = "img/capa_destaque.png";
+const CAPA_PADRAO = "img/capa_destaque.webp";
 
 const mesAtual = new Date().getMonth(); // 0–11
 let mesIndex = mesAtual;

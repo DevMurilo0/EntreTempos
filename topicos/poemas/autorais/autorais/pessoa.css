@@ -37,7 +37,7 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: url('https://www.transparenttextures.com/patterns/aged-paper.png');
+  background: url('https://www.transparenttextures.com/patterns/aged-paper.webp');
   opacity: 0.4;
   pointer-events: none;
   z-index: 0;
@@ -186,8 +186,8 @@ header a:hover { color: #c0392b; }
     radial-gradient(ellipse at 30% 90%, rgba(110,75,15,0.15) 0%, transparent 28%),
     radial-gradient(ellipse at 75% 40%, rgba(200,160,70,0.12) 0%, transparent 35%),
     /* textura de fibras reais de papel */
-    url('https://www.transparenttextures.com/patterns/paper-fibers.png'),
-    url('https://www.transparenttextures.com/patterns/beige-paper.png');
+    url('https://www.transparenttextures.com/patterns/paper-fibers.webp'),
+    url('https://www.transparenttextures.com/patterns/beige-paper.webp');
 
   box-shadow:
     0 6px 28px rgba(0,0,0,0.26),
@@ -414,7 +414,7 @@ header a:hover { color: #c0392b; }
 
   /* textura de papel */
   background-image:
-    url('https://www.transparenttextures.com/patterns/beige-paper.png');
+    url('https://www.transparenttextures.com/patterns/beige-paper.webp');
 }
 
 /* Aba superior do envelope (triângulo) */

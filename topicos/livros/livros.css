@@ -50,7 +50,7 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: url('https://www.transparenttextures.com/patterns/aged-paper.png');
+  background: url('https://www.transparenttextures.com/patterns/aged-paper.webp');
   opacity: 0.25;
   pointer-events: none;
   z-index: 0;
@@ -424,7 +424,7 @@ header a:hover { color: #c0392b; }
 .modal-livro-caixa {
   position: relative;
   background-color: #f2e8d5;
-  background-image: url('https://www.transparenttextures.com/patterns/aged-paper.png');
+  background-image: url('https://www.transparenttextures.com/patterns/aged-paper.webp');
   max-width: 640px;
   width: 100%;
   max-height: 88vh;
