@@ -34,48 +34,73 @@
     </p>
   </section>
 
-  <!-- BUSCA — filtra os cards abaixo por nome ou por descrição, em tempo real -->
+  <!-- BUSCA — filtra os cards em tempo real por nome, apelidos, assunto, tags ou podcast -->
   <div class="busca-podcast">
     <label for="campo-busca">Pesquisar</label>
-    <input type="text" id="campo-busca" placeholder="nome do entrevistado ou assunto...">
+    <input type="text" id="campo-busca" placeholder="Nome do entrevistado, apelido, assunto, podcast...">
     <p class="busca-vazio" id="busca-vazio">Nenhum episódio encontrado.</p>
   </div>
 
   <!-- LISTA DE EPISÓDIOS
-     Para adicionar um episódio: copie o <a class="card-episodio"> inteiro
-     (o exemplo, não o "vazio"), preencha data-nome/data-descricao (usados
-     pela busca), troque foto/cargo/EP/descrição/entrevistadores e o href.
-     Pra criar a página completa: copie a pasta episodios/episodio-1/,
-     renomeie (ex.: episodios/episodio-2/) e edite o conteúdo de dentro
-     (está tudo comentado lá). -->
+     Para adicionar um episódio futuro: copie um dos blocos <a class="card-episodio"> abaixo.
+     Preencha os atributos data-* conforme necessário:
+     - data-nome: Nome do entrevistado
+     - data-outros-nomes: Apelidos, sobrenomes ou nomes alternativos (ex: "Jão, Joazinho, Silva")
+     - data-descricao: Resumo do episódio / assuntos tratados
+     - data-tags: Palavras-chave do episódio
+     - data-podcast: Nome do podcast/série
+     A busca aceita maiúsculas, minúsculas, palavras com ou sem acento, apelidos e trechos do texto. -->
   <section class="lista-episodios" id="lista-episodios">
 
-    <!-- EXEMPLO DE EPISÓDIO PUBLICADO -->
-    <a href="episodios/episodio-1/episodio-1.html" class="card-episodio" data-nome="Danilo"
-      data-descricao="séries games época de escola professor de matemática">
+    <!-- EXEMPLO DE EPISÓDIO 01 -->
+    <a href="episodios/episodio-1/episodio-1.html" class="card-episodio" 
+       data-nome="Danilo" 
+       data-outros-nomes="Dan, Danilão, Prof. Danilo"
+       data-descricao="séries games época de escola professor de matemática" 
+       data-tags="matemática games jogos escola"
+       data-podcast="Entre Tempos Podcast">
       <div class="topo-card">
-        <!-- Enquanto não tiver foto real do convidado, fica assim (iniciais).
-             Quando tiver: <div class="capa-episodio"><img src="../../img/danilo.webp" alt=""></div> -->
-        <div class="capa-episodio placeholder">JS</div>
+        <div class="capa-episodio placeholder">DN</div>
 
         <div class="info-card">
           <div class="etiquetas">
             <span class="badge-cargo">Professor</span>
             <span class="badge-episodio">EP: 01</span>
           </div>
-          <h1 class="nome-convidado">Danilo (O melhor) 67</h1>
+          <h1 class="nome-convidado">Danilo (O melhor)</h1>
           <p class="descricao-episodio">
-            [DESCRIÇÃO PENDENTE — um resumo curto e convidativo do episódio,
-            contando o suficiente pra despertar curiosidade sem entregar tudo.]
+            Um papo super descontraído sobre séries, games, histórias da época de escola e bastidores das aulas de matemática.
           </p>
         </div>
       </div>
       <p class="entrevistadores">entrevistadores: [Nome] [Nome]</p>
     </a>
 
-    <!-- CARD "EM BREVE" — deixe um ou mais no fim da lista pra sinalizar
-       episódio vindo por aí. Pra publicar de verdade, copie o card do
-       exemplo acima em vez deste. -->
+    <!-- EXEMPLO DE EPISÓDIO 02 (JOÃO) -->
+    <a href="#" class="card-episodio" 
+       data-nome="João" 
+       data-outros-nomes="Joao, Joazinho, Jão, João Silva, Professor João"
+       data-descricao="história filosofia educação bate papo entre tempos" 
+       data-tags="filosofia história escola cultura"
+       data-podcast="Entre Tempos Podcast">
+      <div class="topo-card">
+        <div class="capa-episodio placeholder">JS</div>
+
+        <div class="info-card">
+          <div class="etiquetas">
+            <span class="badge-cargo">Convidado</span>
+            <span class="badge-episodio">EP: 02</span>
+          </div>
+          <h1 class="nome-convidado">João Silva</h1>
+          <p class="descricao-episodio">
+            Conversa sobre educação, projetos culturais da escola e reflexões sobre o futuro dos estudantes.
+          </p>
+        </div>
+      </div>
+      <p class="entrevistadores">entrevistadores: [Nome] [Nome]</p>
+    </a>
+
+    <!-- CARD "EM BREVE" -->
     <div class="card-episodio vazio">
       <p>Próximo episódio em breve…</p>
     </div>
@@ -88,26 +113,56 @@
   </div>
 
   <script>
-    // Busca simples: mostra só os cards cujo nome ou descrição batem com
-    // o que foi digitado. Cards "vazio" (sem data-nome) ficam sempre visíveis.
+    // Função para remover acentos e converter para minúsculas
+    function removerAcentos(str) {
+      if (!str) return '';
+      return str
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase();
+    }
+
     const campoBusca = document.getElementById('campo-busca');
-    const cards = document.querySelectorAll('#lista-episodios .card-episodio[data-nome]');
     const avisoVazio = document.getElementById('busca-vazio');
 
-    campoBusca.addEventListener('input', () => {
-      const termo = campoBusca.value.trim().toLowerCase();
-      let algumVisivel = false;
+    function filtrarEpisodios() {
+      const termoDigitado = campoBusca.value.trim();
+      const termoNormalizado = removerAcentos(termoDigitado);
+      const palavrasChave = termoNormalizado.split(/\s+/).filter(Boolean);
+
+      // Busca dinamicamente os cards de episódios (atuais e futuros)
+      const cards = document.querySelectorAll('#lista-episodios .card-episodio:not(.vazio)');
+      let encontrouAlgum = false;
 
       cards.forEach((card) => {
-        const nome = card.dataset.nome || '';
-        const descricao = card.dataset.descricao || '';
-        const bate = nome.includes(termo) || descricao.includes(termo);
-        card.style.display = bate ? '' : 'none';
-        if (bate) algumVisivel = true;
+        if (palavrasChave.length === 0) {
+          card.style.display = '';
+          encontrouAlgum = true;
+          return;
+        }
+
+        // Junta todo o conteúdo visível no card
+        const textoVisivel = card.textContent || '';
+        
+        // Junta todos os atributos data-* presentes no card (data-nome, data-outros-nomes, data-descricao, data-tags, data-podcast, etc.)
+        const dadosExtra = Object.values(card.dataset).join(' ');
+        
+        // Texto consolidado para busca insensível a acentos e maiúsculas/minúsculas
+        const textoCompleto = removerAcentos(textoVisivel + ' ' + dadosExtra);
+
+        // O card bate se TODAS as palavras digitadas pelo usuário estiverem presentes no texto do card
+        const corresponde = palavrasChave.every(palavra => textoCompleto.includes(palavra));
+
+        card.style.display = corresponde ? '' : 'none';
+        if (corresponde) encontrouAlgum = true;
       });
 
-      avisoVazio.style.display = (!algumVisivel && termo !== '') ? 'block' : 'none';
-    });
+      if (avisoVazio) {
+        avisoVazio.style.display = (!encontrouAlgum && palavrasChave.length > 0) ? 'block' : 'none';
+      }
+    }
+
+    campoBusca.addEventListener('input', filtrarEpisodios);
   </script>
 
 </body>
