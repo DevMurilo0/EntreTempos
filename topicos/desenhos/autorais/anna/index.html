@@ -134,8 +134,15 @@
     document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharLb(); });
   </script>
 
-  <script src="../../../../js/likes.js"></script>
-  <script>initLikes();</script>
+  <script type="module" src="../../../../../js/likes.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.envelope').forEach(env => {
+        env.addEventListener('click', () => setTimeout(() => window.initLikes(), 50));
+      });
+      window.initLikes();
+    });
+  </script>
 </body>
 
 </html>

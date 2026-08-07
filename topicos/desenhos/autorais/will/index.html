@@ -49,6 +49,10 @@
       </div>
       <p class="card-titulo">desenho 1</p>
       <p class="card-num">I</p>
+      <button class="btn-like" data-like-id="desenho-will-1" aria-label="Curtir desenho 1" aria-pressed="false">
+        <span class="like-icon">♡</span>
+        <span class="like-count">0</span>
+      </button>
     </div>
 
     <div class="card-desenho" data-titulo="Desenho II" data-img="1.webp">
@@ -57,6 +61,10 @@
       </div>
       <p class="card-titulo">desenho 2</p>
       <p class="card-num">II</p>
+      <button class="btn-like" data-like-id="desenho-will-2" aria-label="Curtir desenho 2" aria-pressed="false">
+        <span class="like-icon">♡</span>
+        <span class="like-count">0</span>
+      </button>
     </div>
 
     <div class="card-desenho" data-titulo="Desenho III" data-img="2.webp">
@@ -65,6 +73,10 @@
       </div>
       <p class="card-titulo">desenho 3</p>
       <p class="card-num">III</p>
+      <button class="btn-like" data-like-id="desenho-will-3" aria-label="Curtir desenho 3" aria-pressed="false">
+        <span class="like-icon">♡</span>
+        <span class="like-count">0</span>
+      </button>
     </div>
 
     <div class="card-desenho" data-titulo="Desenho IV" data-img="3.webp">
@@ -73,6 +85,10 @@
       </div>
       <p class="card-titulo">desenho 4</p>
       <p class="card-num">IV</p>
+      <button class="btn-like" data-like-id="desenho-will-4" aria-label="Curtir desenho 4" aria-pressed="false">
+        <span class="like-icon">♡</span>
+        <span class="like-count">0</span>
+      </button>
     </div>
 
     <div class="card-desenho" data-titulo="Desenho V" data-img="4.webp">
@@ -81,6 +97,10 @@
       </div>
       <p class="card-titulo">desenho 5</p>
       <p class="card-num">V</p>
+      <button class="btn-like" data-like-id="desenho-will-5" aria-label="Curtir desenho 5" aria-pressed="false">
+        <span class="like-icon">♡</span>
+        <span class="like-count">0</span>
+      </button>
     </div>
 
     <div class="card-desenho" data-titulo="Desenho VI" data-img="5.webp">
@@ -89,6 +109,10 @@
       </div>
       <p class="card-titulo">desenho 6</p>
       <p class="card-num">VI</p>
+      <button class="btn-like" data-like-id="desenho-will-6" aria-label="Curtir desenho 6" aria-pressed="false">
+        <span class="like-icon">♡</span>
+        <span class="like-count">0</span>
+      </button>
     </div>
 
     <div class="card-desenho" data-titulo="Desenho VII" data-img="6.webp">
@@ -97,6 +121,10 @@
       </div>
       <p class="card-titulo">desenho 7</p>
       <p class="card-num">VII</p>
+      <button class="btn-like" data-like-id="desenho-will-7" aria-label="Curtir desenho 7" aria-pressed="false">
+        <span class="like-icon">♡</span>
+        <span class="like-count">0</span>
+      </button>
     </div>
 
     <div class="card-desenho" data-titulo="Desenho VIII" data-img="7.webp">
@@ -105,6 +133,10 @@
       </div>
       <p class="card-titulo">desenho 8</p>
       <p class="card-num">VIII</p>
+      <button class="btn-like" data-like-id="desenho-will-8" aria-label="Curtir desenho 8" aria-pressed="false">
+        <span class="like-icon">♡</span>
+        <span class="like-count">0</span>
+      </button>
     </div>
 
     <div class="card-desenho" data-titulo="Desenho IX" data-img="8.webp">
@@ -113,6 +145,10 @@
       </div>
       <p class="card-titulo">desenho 9</p>
       <p class="card-num">IX</p>
+      <button class="btn-like" data-like-id="desenho-will-9" aria-label="Curtir desenho 9" aria-pressed="false">
+        <span class="like-icon">♡</span>
+        <span class="like-count">0</span>
+      </button>
     </div>
 
     <div class="card-desenho" data-titulo="Desenho X" data-img="9.webp">
@@ -121,6 +157,10 @@
       </div>
       <p class="card-titulo">desenho 10</p>
       <p class="card-num">X</p>
+      <button class="btn-like" data-like-id="desenho-will-10" aria-label="Curtir desenho 10" aria-pressed="false">
+        <span class="like-icon">♡</span>
+        <span class="like-count">0</span>
+      </button>
     </div>
 
   </section>
@@ -169,6 +209,16 @@
     lbFechar.addEventListener('click', fecharLb);
     lightbox.addEventListener('click', e => { if (e.target === lightbox) fecharLb(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharLb(); });
+  </script>
+
+  <script type="module" src="../../../../../js/likes.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.envelope').forEach(env => {
+        env.addEventListener('click', () => setTimeout(() => window.initLikes(), 50));
+      });
+      window.initLikes();
+    });
   </script>
 </body>
 
