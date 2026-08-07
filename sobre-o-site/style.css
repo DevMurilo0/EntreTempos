@@ -768,49 +768,50 @@ img.foto-pessoa,
        DAVI arruma as posições dos teus negocios no celular
        já arrumei irmao, relaxa */
     .deco-gaita {
-        top: 220px;
-        left: -10px;
-        width: 80px;
+        top: 5px;
+        left: 300px;
+        width: 90px;
     }
 
     .deco-java {
         top: -30px;
-        right: -10px;
-        width: 60px;
+        right: 46px;
+        width: 90px;
     }
 
     .deco-hornet {
-        top: -15px;
-        left: -8%;
+        top: 280px;
+        left: 90px;
         width: 70px;
     }
 
     .deco-archlinux {
-        bottom: 20%;
-        left: -5px;
+        top: 390px;
+        left: 300px;
         width: 65px;
+        rotate: 16deg;
     }
 
     .deco-github {
-        bottom: 30%;
-        left: 28%;
+        top: 480px;
+        left: 210px;
         width: 70px;
     }
 
     .deco-camera {
-        bottom: -10px;
-        right: 5px;
+        bottom: 324px;
+        right: 320px;
         width: 80px;
     }
 
     .deco-coracoes {
-        top: 240px;
-        right: 5px;
-        width: 70px;
+        top: 200px;
+        right: 220px;
+        width: 90px;
     }
 
     .deco-deadpool {
-        bottom: -10px;
+        top: -36px;
         left: 10px;
         width: 100px;
     }
