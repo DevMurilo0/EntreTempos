@@ -570,6 +570,83 @@ img.foto-pessoa,
     transform: rotate(1deg);
 }
 
+/* ── DECORAÇÕES DA ANNA ──
+   mesma ideia dos cards do Murilo e do Davi, agora com as coisas
+   que combinam com a Anna: luminária de livros, snoopy com vinil,
+   guitarra, símbolo dos vagalumes, sol-e-lua e nuvem */
+.deco-luminaria {
+    top: -70px;
+    left: -70px;
+    width: 130px;
+    transform: rotate(-8deg);
+}
+
+.deco-snoopy {
+    top: -25px;
+    right: 610px;
+    width: 130px;
+    transform: rotate(6deg);
+}
+
+.deco-guitarra {
+    top: 210px;
+    left: 500px;
+    width: 140px;
+    transform: rotate(10deg);
+}
+
+.deco-vagalume {
+    bottom: 100px;
+    right: -70px;
+    width: 110px;
+    transform: rotate(-4deg);
+}
+
+.deco-sollua {
+    bottom: -15px;
+    left: 210px;
+    width: 100px;
+    transform: rotate(-6deg);
+}
+
+.deco-nuvem {
+    bottom: -25px;
+    right: 230px;
+    width: 150px;
+    transform: rotate(3deg);
+}
+
+/* ── DECORAÇÕES DA CÍCERA ──
+   mesma ideia dos cards anteriores: gato em cima dos livros,
+   rosto ondulado, retrato com pássaros/nuvens e as bocas */
+.deco-gatolivros {
+    top: -60px;
+    right: -80px;
+    width: 130px;
+    transform: rotate(6deg);
+}
+
+.deco-rostoondulado {
+    top: 40px;
+    left: -70px;
+    width: 90px;
+    transform: rotate(-5deg);
+}
+
+.deco-passaros {
+    bottom: 60px;
+    left: 480px;
+    width: 140px;
+    transform: rotate(-4deg);
+}
+
+.deco-bocas {
+    bottom: -30px;
+    right: 120px;
+    width: 110px;
+    transform: rotate(5deg);
+}
+
 /* ── 8. GUIA DE CONTEÚDOS ──
    os cards dos topicos (filmes, poemas, livros...) */
 .guia-conteudos {
@@ -814,5 +891,68 @@ img.foto-pessoa,
         top: -36px;
         left: 10px;
         width: 100px;
+    }
+
+    /* decorações da Anna no mobile — mesma distribuição espacial,
+       só encolhendo, igual foi feito pro Murilo e pro Davi */
+    .deco-luminaria {
+        top: -18px;
+        left: -8px;
+        width: 80px;
+    }
+
+    .deco-snoopy {
+        top: -35px;
+        right: -10px;
+        width: 85px;
+    }
+
+    .deco-guitarra {
+        top: 260px;
+        left: 250px;
+        width: 90px;
+    }
+
+    .deco-vagalume {
+        bottom: 30%;
+        right: 4px;
+        width: 75px;
+    }
+
+    .deco-sollua {
+        bottom: -14px;
+        left: 60px;
+        width: 65px;
+    }
+
+    .deco-nuvem {
+        bottom: -20px;
+        right: 100px;
+        width: 95px;
+    }
+
+    /* decorações da Cícera no mobile — mesma distribuição espacial */
+    .deco-gatolivros {
+        top: -20px;
+        right: -6px;
+        width: 80px;
+    }
+
+    .deco-rostoondulado {
+        top: 60px;
+        left: -6px;
+        width: 60px;
+    }
+
+    .deco-passaros {
+        bottom: 25%;
+        left: 220px;
+        width: 85px;
+    }
+
+    .deco-bocas {
+        bottom: -18px;
+        right: 60px;
+        width: 75px;
     }
 }

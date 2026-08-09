@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+  <title>Musicas de Bruno | Entre Tempos</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Playfair+Display:ital,wght@0,700;1,700&family=Dancing+Script:wght@400;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+
+  <header>
+    <a href="../talento.html">← sair</a>
+  </header>
+
+  <section class="musica-abertura">
+
+    <!-- TROQUE A IMAGEM:
+       <img loading="lazy" decoding="async" src="../img/placeholder-retrato.svg" alt="Aluno 1" class="foto-musica">
+       (remova a classe "vazio" do placeholder abaixo quando adicionar a foto real) -->
+    <img loading="lazy" decoding="async" src="bruno.webp" alt="Bruno Vital" class="foto-musica">
+
+    <div class="musica-abertura-info">
+      <!-- TROQUE O TÍTULO -->
+      <h1 class="musica-abertura-titulo">Bruno Vital</h1>
+
+      <!-- TROQUE O RESUMO — um parágrafo curto de introdução -->
+      <p class="musica-abertura-resumo">
+        Estudante de Ciências Biológicas, com interesse em diferentes áreas da ciência,
+        especialmente Neurociência, Oncologia e Biologia Celular. Também tenho grande interesse
+        por música, buscando compreender cada vez mais sobre harmonia e teoria musical. No tempo
+        livre, gosto de cozinhar, ler e acompanhar séries, filmes, histórias em quadrinhos e outros
+        conteúdos do universo nerd. Sou uma pessoa curiosa, que gosta de aprender e ampliar meus
+        conhecimentos em diferentes áreas.
+      </p>
+    </div>
+
+  </section>
+
+  <div class="divisor"></div>
+
+  <!-- ══════════════════════════════════════════════════════════
+     4) CORPO DO TEXTO — a partir daqui você monta o conteúdo
+     livremente, intercalando blocos de IMAGEM/VÍDEO e blocos
+     de TEXTO na ordem que quiser. Copie e cole os blocos de
+     exemplo abaixo quantas vezes precisar.
+     ══════════════════════════════════════════════════════════ -->
+  <section class="musica-corpo">
+
+    <!-- ── BLOCO DE VÍDEO 1 ──
+       Troque "01.webm" pelo nome real do arquivo, se for diferente. -->
+    <div class="bloco-midia">
+      <video src="ocean.mp4" controls loop playsinline></video>
+      <button class="btn-like" data-like-id="bruno-video-1" aria-label="Curtir vídeo" aria-pressed="false">
+        <span class="like-icon">♡</span>
+        <span class="like-count">0</span>
+      </button>
+    </div>
+
+    <!-- ── BLOCO DE VÍDEO 2 ── -->
+    <div class="bloco-midia">
+      <video src="tnt.mp4" controls loop playsinline></video>
+      <button class="btn-like" data-like-id="bruno-video-2" aria-label="Curtir vídeo" aria-pressed="false">
+        <span class="like-icon">♡</span>
+        <span class="like-count">0</span>
+      </button>
+    </div>
+
+    <!-- ── BLOCO DE VÍDEO 3 ── -->
+    <div class="bloco-midia">
+      <video src="back.mp4" controls loop playsinline></video>
+      <button class="btn-like" data-like-id="bruno-video-3" aria-label="Curtir vídeo" aria-pressed="false">
+        <span class="like-icon">♡</span>
+        <span class="like-count">0</span>
+      </button>
+    </div>
+
+  </section>
+
+  <div class="rodape-musica">
+    <div>entre tempos · revista eletrônica</div>
+    <div class="carimbo">musicas</div>
+  </div>
+
+  <script type="module" src="../../../../js/likes.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.initLikes();
+    });
+  </script>
+</body>
+
+</html>
