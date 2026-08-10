@@ -815,8 +815,8 @@ img.foto-pessoa,
     }
 
     .deco-dados {
-        top: 420px;
-        left: 310px;
+        top: 480px;
+        left: 280px;
         width: clamp(95px, 9.8vw, 75px);
         transform: rotate(-8deg);
     }
@@ -829,17 +829,17 @@ img.foto-pessoa,
     }
 
     .deco-gato {
-        bottom: 160px;
-        left: 50px;
-        width: clamp(108px, 11.1vw, 85px);
+        bottom: 200px;
+        left: 30px;
+        width: clamp(120px, 11.1vw, 85px);
         transform: rotate(10deg) scaleX(-1);
     }
 
     .deco-linux {
-        top: 220px;
-        left: -12px;
-        width: clamp(35px, 7.8vw, 60px);
-        transform: rotate(-6deg);
+        top: 330px;
+        left: 100px;
+        width: clamp(90px, 7.8vw, 60px);
+        transform: rotate(27deg);
     }
 
     /* ── DECORAÇÕES DO DAVI NO MOBILE ── */
@@ -865,14 +865,14 @@ img.foto-pessoa,
     }
 
     .deco-archlinux {
-        top: 380px;
-        left: 350px;
+        top: 400px;
+        left: 300px;
         width: clamp(65px, 8.5vw, 65px);
         transform: rotate(10deg);
     }
 
     .deco-github {
-        top: 430px;
+        top: 470px;
         left: 205px;
         width: clamp(95px, 9.1vw, 70px);
         transform: rotate(-11deg);
