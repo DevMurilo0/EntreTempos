@@ -851,44 +851,44 @@ img.foto-pessoa,
     }
 
     .deco-java {
-        top: -25px;
+        top: px;
         right: 10px;
-        width: clamp(38px, 11.1vw, 85px);
+        width: clamp(px, 11.1vw, 85px);
         transform: rotate(-8deg);
     }
 
     .deco-hornet {
-        top: 210px;
-        right: -10px;
-        width: clamp(35px, 9.8vw, 75px);
+        top: 230px;
+        left: 90px;
+        width: clamp(75px, 9.8vw, 75px);
         transform: rotate(5deg);
     }
 
     .deco-archlinux {
-        top: 280px;
-        left: -12px;
-        width: clamp(35px, 8.5vw, 65px);
-        transform: rotate(-10deg);
+        top: 380px;
+        left: 380px;
+        width: clamp(65px, 8.5vw, 65px);
+        transform: rotate(10deg);
     }
 
     .deco-github {
-        bottom: -15px;
-        left: 15px;
-        width: clamp(35px, 9.1vw, 70px);
+        top: 430px;
+        left: 155px;
+        width: clamp(95px, 9.1vw, 70px);
         transform: rotate(-11deg);
     }
 
     .deco-camera {
-        bottom: -20px;
-        right: -10px;
-        width: clamp(38px, 11.1vw, 85px);
+        top: 180px;
+        left: -40px;
+        width: clamp(108px, 11.1vw, 85px);
         transform: rotate(0deg);
     }
 
     .deco-coracoes {
-        top: 140px;
-        right: -8px;
-        width: clamp(35px, 9.8vw, 75px);
+        top: 180px;
+        left: 30px;
+        width: clamp(95px, 9.8vw, 75px);
         transform: rotate(7deg);
     }
 
@@ -900,14 +900,6 @@ img.foto-pessoa,
     }
 
     /* ── DECORAÇÕES DA ANNA VITÓRIA NO MOBILE ── */
-    .deco-luminaria {
-        top: -30px;
-        left: -10px;
-        right: auto;
-        bottom: auto;
-        width: clamp(65px, 18vw, 85px);
-        transform: rotate(-8deg);
-    }
 
     .deco-snoopy {
         top: -25px;
