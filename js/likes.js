@@ -71,6 +71,22 @@ async function handleClick(btn, id) {
   btn.dataset.animating = '1';
   btn.disabled = true;
 
+  const state = btn._likeState;
+  // se ainda não sabemos o estado real (getDoc inicial não voltou),
+  // usa o que está na tela como melhor palpite
+  const wasLiked = state && state.liked !== null ? state.liked : btn.classList.contains('liked');
+  const nextLiked = !wasLiked;
+
+  // atualização otimista: destaca/desmarca na hora, sem esperar o Firestore
+  if (state) {
+    state.liked = nextLiked;
+    state.total = Math.max(0, state.total + (nextLiked ? 1 : -1));
+    renderButton(btn, state.total, nextLiked);
+  } else {
+    renderButton(btn, 0, nextLiked);
+  }
+  if (nextLiked) bump(btn);
+
   try {
     const uRef = userLikeRef(id, currentUid);
     const pRef = postRef(id);
@@ -92,10 +108,14 @@ async function handleClick(btn, id) {
       }
       await setDoc(uRef, { curtiuEm: Date.now() });
     }
-
-    bump(btn);
   } catch (err) {
     console.error('Erro ao curtir:', err);
+    // deu erro de verdade: desfaz a atualização otimista
+    if (state) {
+      state.liked = wasLiked;
+      state.total = Math.max(0, state.total + (wasLiked ? 1 : -1));
+      renderButton(btn, state.total, wasLiked);
+    }
   } finally {
     delete btn.dataset.animating;
     btn.disabled = false;
@@ -113,10 +133,18 @@ function setupButton(btn) {
     handleClick(btn, id);
   });
 
+  // estado próprio do botão (não depender da classe do DOM, que pode
+  // ser lida/escrita fora de ordem pelas duas chamadas assíncronas abaixo)
+  const state = { liked: null, total: 0 };
+  btn._likeState = state; // acessível também pelo handleClick, pra atualização otimista
+
   // estado inicial: já curtiu nesse dispositivo/uid?
   const uRef = userLikeRef(id, currentUid);
   getDoc(uRef)
-    .then((likedSnap) => renderButton(btn, 0, likedSnap.exists()))
+    .then((likedSnap) => {
+      state.liked = likedSnap.exists();
+      renderButton(btn, state.total, state.liked);
+    })
     .catch((err) => console.error(`[likes] falha ao checar curtida de "${id}":`, err));
 
   // escuta o total em tempo real — se outra pessoa curtir, o número
@@ -125,8 +153,10 @@ function setupButton(btn) {
   const unsub = onSnapshot(
     pRef,
     (snap) => {
-      const total = snap.exists() ? (snap.data().total || 0) : 0;
-      renderButton(btn, total, btn.classList.contains('liked'));
+      state.total = snap.exists() ? (snap.data().total || 0) : 0;
+      // só renderiza o "liked" quando já sabemos o valor real (evita
+      // sobrescrever com falso enquanto o getDoc acima ainda não voltou)
+      renderButton(btn, state.total, state.liked === null ? btn.classList.contains('liked') : state.liked);
     },
     (err) => console.error(`[likes] falha ao escutar total de "${id}":`, err)
   );
