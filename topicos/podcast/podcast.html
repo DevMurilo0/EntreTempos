@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Podcast - Entre Tempos</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="icon" href="../../img/amp.png" type="image/png">
   <link
     href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Playfair+Display:ital,wght@0,700;1,700&family=Dancing+Script:wght@400;600&display=swap"
     rel="stylesheet">
@@ -53,12 +54,10 @@
   <section class="lista-episodios" id="lista-episodios">
 
     <!-- EXEMPLO DE EPISÓDIO 01 -->
-    <a href="episodios/episodio-1/episodio-1.html" class="card-episodio" 
-       data-nome="Danilo" 
-       data-outros-nomes="Dan, Danilão, Prof. Danilo"
-       data-descricao="séries games época de escola professor de matemática" 
-       data-tags="matemática games jogos escola"
-       data-podcast="Entre Tempos Podcast">
+    <a href="episodios/episodio-1/episodio-1.html" class="card-episodio" data-nome="Danilo"
+      data-outros-nomes="Dan, Danilão, Prof. Danilo"
+      data-descricao="séries games época de escola professor de matemática" data-tags="matemática games jogos escola"
+      data-podcast="Entre Tempos Podcast">
       <div class="topo-card">
         <div class="capa-episodio placeholder">DN</div>
 
@@ -69,7 +68,8 @@
           </div>
           <h1 class="nome-convidado">Danilo (O melhor)</h1>
           <p class="descricao-episodio">
-            Um papo super descontraído sobre séries, games, histórias da época de escola e bastidores das aulas de matemática.
+            Um papo super descontraído sobre séries, games, histórias da época de escola e bastidores das aulas de
+            matemática.
           </p>
         </div>
       </div>
@@ -77,12 +77,10 @@
     </a>
 
     <!-- EXEMPLO DE EPISÓDIO 02 (JOÃO) -->
-    <a href="#" class="card-episodio" 
-       data-nome="João" 
-       data-outros-nomes="Joao, Joazinho, Jão, João Silva, Professor João"
-       data-descricao="história filosofia educação bate papo entre tempos" 
-       data-tags="filosofia história escola cultura"
-       data-podcast="Entre Tempos Podcast">
+    <a href="#" class="card-episodio" data-nome="João"
+      data-outros-nomes="Joao, Joazinho, Jão, João Silva, Professor João"
+      data-descricao="história filosofia educação bate papo entre tempos" data-tags="filosofia história escola cultura"
+      data-podcast="Entre Tempos Podcast">
       <div class="topo-card">
         <div class="capa-episodio placeholder">JS</div>
 
@@ -143,10 +141,10 @@
 
         // Junta todo o conteúdo visível no card
         const textoVisivel = card.textContent || '';
-        
+
         // Junta todos os atributos data-* presentes no card (data-nome, data-outros-nomes, data-descricao, data-tags, data-podcast, etc.)
         const dadosExtra = Object.values(card.dataset).join(' ');
-        
+
         // Texto consolidado para busca insensível a acentos e maiúsculas/minúsculas
         const textoCompleto = removerAcentos(textoVisivel + ' ' + dadosExtra);
 
