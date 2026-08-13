@@ -257,6 +257,11 @@ header a:hover {
 
 /* Júlio — imagem sem borda polaroid embutida, aumentar para equiparar visualmente */
 .foto-nav-4 {
+  width: clamp(150px, 30vw, 250px);
+}
+
+/* Rhuan — mesmo tamanho do Júlio, para ficar equiparado aos demais */
+.foto-nav-5 {
   width: clamp(220px, 30vw, 320px);
 }
 
@@ -343,6 +348,10 @@ header a:hover {
   }
 
   .foto-nav-4 {
+    width: clamp(140px, 72vw, 220px);
+  }
+
+  .foto-nav-5 {
     width: clamp(190px, 72vw, 260px);
   }
 

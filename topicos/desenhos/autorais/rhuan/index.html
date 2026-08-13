@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rhuan — Desenhos | Entre Tempos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="icon" href="../../../../img/amp.png" type="image/png">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Caveat:wght@400;600&family=Dancing+Script:wght@400;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../pessoa.css">
+  <style>
+    /* Foto do Rhuan maior — equiparada (ou um pouco acima) da foto de navegação em autorais */
+    .foto-pessoa {
+      width: clamp(240px, 32vw, 340px);
+    }
+    @media (max-width: 600px) {
+      .foto-pessoa {
+        width: clamp(200px, 62vw, 280px);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a href="../autorais.html">← Voltar para Autorais</a>
+  </header>
+
+  <section class="pessoa-section">
+    <img loading="lazy" decoding="async" src="img/rhuanfoto.webp" alt="Rhuan" class="foto-pessoa">
+    <div class="pessoa-info">
+      <h2 class="pessoa-nome">Rhuan</h2>
+      <p class="pessoa-cargo">artista</p>
+      <p class="pessoa-bio">Eae, sou Rhuan, tenho 17 anos e estou terminando o terceiro ano do Ensino médio. Eu
+        curto diversas coisas do universo rap geek/nerd, ouvir músicas, jogar e também converso sobre várias
+        coisa, mais o principal de tudo isso é desenhar.
+        Um dia eu ainda quero ser o cirurgião Cardiovascular para poder salvar diversas vidas por aí e dar uma
+        vida melhor para mim e pros meus pais. Eu, por agora só quero uma vida tranquila, trazer felicidade aos
+        que estão ao meu redor, ter momentos com as pessoas que eu mais confio, sem incomodar ninguém, é claro.</p>
+      <p class="contador-desenhos">4 desenhos</p>
+    </div>
+  </section>
+
+  <div class="divisor"></div>
+
+  <!-- GALERIA -->
+  <section class="galeria">
+
+    <div class="card-desenho" data-titulo="Desenho I" data-img="img/desenho1.webp">
+      <div class="quadro">
+        <img loading="lazy" decoding="async" src="img/desenho1.webp" alt="Desenho I">
+      </div>
+      <p class="card-titulo">desenho 1</p>
+      <p class="card-num">I</p>
+      <button class="btn-like" data-like-id="desenho-rhuan-1" aria-label="Curtir desenho 1" aria-pressed="false">
+        <span class="like-icon">♡</span>
+        <span class="like-count">0</span>
+      </button>
+    </div>
+
+    <div class="card-desenho" data-titulo="Desenho II" data-img="img/desenho2.webp">
+      <div class="quadro">
+        <img loading="lazy" decoding="async" src="img/desenho2.webp" alt="Desenho II">
+      </div>
+      <p class="card-titulo">desenho 2</p>
+      <p class="card-num">II</p>
+      <button class="btn-like" data-like-id="desenho-rhuan-2" aria-label="Curtir desenho 2" aria-pressed="false">
+        <span class="like-icon">♡</span>
+        <span class="like-count">0</span>
+      </button>
+    </div>
+
+    <div class="card-desenho" data-titulo="Desenho III" data-img="img/desenho3.webp">
+      <div class="quadro">
+        <img loading="lazy" decoding="async" src="img/desenho3.webp" alt="Desenho III">
+      </div>
+      <p class="card-titulo">desenho 3</p>
+      <p class="card-num">III</p>
+      <button class="btn-like" data-like-id="desenho-rhuan-3" aria-label="Curtir desenho 3" aria-pressed="false">
+        <span class="like-icon">♡</span>
+        <span class="like-count">0</span>
+      </button>
+    </div>
+
+    <div class="card-desenho" data-titulo="Desenho IV" data-img="img/desenho4.webp">
+      <div class="quadro">
+        <img loading="lazy" decoding="async" src="img/desenho4.webp" alt="Desenho IV">
+      </div>
+      <p class="card-titulo">desenho 4</p>
+      <p class="card-num">IV</p>
+      <button class="btn-like" data-like-id="desenho-rhuan-4" aria-label="Curtir desenho 4" aria-pressed="false">
+        <span class="like-icon">♡</span>
+        <span class="like-count">0</span>
+      </button>
+    </div>
+
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+    <div class="lightbox-inner">
+      <button class="lightbox-fechar" id="lb-fechar" aria-label="Fechar">✕</button>
+      <img loading="lazy" decoding="async" src="" alt="" id="lb-img">
+      <p class="lightbox-legenda" id="lb-legenda"></p>
+    </div>
+  </div>
+
+  <div class="rodape-desenhos">
+    <div>entre tempos · revista eletrônica</div>
+    <div class="carimbo">DESENHOS</div>
+  </div>
+
+  <script>
+    const cards = document.querySelectorAll('.card-desenho');
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lb-img');
+    const lbLeg = document.getElementById('lb-legenda');
+    const lbFechar = document.getElementById('lb-fechar');
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const src = card.dataset.img;
+        const titulo = card.dataset.titulo;
+        // Só abre lightbox se houver imagem
+        if (!src) return;
+        lbImg.src = src;
+        lbImg.alt = titulo;
+        lbLeg.textContent = titulo;
+        lightbox.classList.add('ativo');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function fecharLb() {
+      lightbox.classList.remove('ativo');
+      document.body.style.overflow = '';
+      lbImg.src = '';
+    }
+
+    lbFechar.addEventListener('click', fecharLb);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) fecharLb(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharLb(); });
+  </script>
+
+  <script type="module" src="../../../../../js/likes.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.envelope').forEach(env => {
+        env.addEventListener('click', () => setTimeout(() => window.initLikes(), 50));
+      });
+      window.initLikes();
+    });
+  </script>
+</body>
+
+</html>

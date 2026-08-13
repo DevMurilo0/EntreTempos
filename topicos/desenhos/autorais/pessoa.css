@@ -351,18 +351,18 @@ header a:hover { color: #c0392b; }
 .btn-like {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
   background: none;
-  border: 1.5px solid #c4a96b;
-  border-radius: 20px;
-  padding: 3px 10px 3px 8px;
+  border: 2px solid #c4a96b;
+  border-radius: 26px;
+  padding: 7px 16px 7px 12px;
   cursor: pointer;
   font-family: 'Special Elite', serif;
-  font-size: 13px;
+  font-size: 16px;
   color: #7a6a50;
   letter-spacing: 1px;
-  transition: color 0.2s, border-color 0.2s, background 0.2s;
-  margin-top: 6px;
+  transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.2s;
+  margin-top: 8px;
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
@@ -372,6 +372,7 @@ header a:hover { color: #c0392b; }
   color: #c0392b;
   border-color: #c0392b;
   background: rgba(192, 57, 43, 0.06);
+  transform: scale(1.05);
 }
 
 .btn-like.liked {
@@ -381,7 +382,7 @@ header a:hover { color: #c0392b; }
 }
 
 .like-icon {
-  font-size: 15px;
+  font-size: 22px;
   line-height: 1;
   transition: transform 0.15s ease;
 }
@@ -391,8 +392,8 @@ header a:hover { color: #c0392b; }
 }
 
 .like-count {
-  font-size: 12px;
-  min-width: 12px;
+  font-size: 15px;
+  min-width: 14px;
   text-align: center;
 }
 
