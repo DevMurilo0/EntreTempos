@@ -114,16 +114,9 @@
       position: relative;
     }
 
-    /* foto menor que o padrão, com bordas retas — sombra restaurada */
+    /* foto menor que o padrão, com bordas retas (sem torn/rounded) */
     .foto-pessoa {
       width: clamp(160px, 20vw, 240px);
-      filter: drop-shadow(4px 6px 14px rgba(0, 0, 0, 0.35)) sepia(15%);
-      transform: rotate(-2deg);
-    }
-
-    .foto-pessoa:hover {
-      filter: drop-shadow(4px 6px 14px rgba(0, 0, 0, 0.35)) sepia(15%);
-      transform: rotate(0deg) scale(1.02);
     }
 
     /* ── FOLHA DO POEMA — textura de jornal, só pra este poeta ── */
@@ -301,7 +294,7 @@
           E no papel marcava cada traço do que sentia.
         </p>
       </div>
-      <p class="poema-assinatura">— Miró da Muribeca</p>
+      <p class="poema-assinatura">— Por Anna Vitoria</p>
     </article>
 
   </div>

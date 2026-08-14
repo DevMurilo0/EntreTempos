@@ -79,17 +79,18 @@
       opacity: 0.9;
     }
 
-    /* Miró — foto menor que o padrão, sombra restaurada */
+    /* Miró — foto menor que o padrão, com bordas retas (sem torn/rounded) */
+    /* Miró — foto menor, sem sombra, sem sepia, sem qualquer alteração visual */
     .foto-nav-3 {
       width: clamp(160px, 20vw, 240px);
     }
 
     .foto-nav-3 img {
-      filter: drop-shadow(4px 6px 14px rgba(0, 0, 0, 0.35)) sepia(15%);
+      filter: none;
     }
 
     .foto-nav-3:hover img {
-      transform: scale(1.03) rotate(-1deg);
+      transform: none;
     }
 
     .page-titulo,
