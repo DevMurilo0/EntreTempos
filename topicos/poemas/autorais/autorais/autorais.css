@@ -11,7 +11,8 @@ html {
 body {
   overflow-x: hidden;
   width: 100%;
-  position: relative; /* garante que os absolutos sejam contidos aqui */
+  position: relative;
+  /* garante que os absolutos sejam contidos aqui */
 }
 
 
@@ -75,7 +76,9 @@ header a {
   transition: color 0.2s;
 }
 
-header a:hover { color: #c0392b; }
+header a:hover {
+  color: #c0392b;
+}
 
 /* ── TÍTULO ── */
 .page-titulo {
@@ -129,7 +132,7 @@ header a:hover { color: #c0392b; }
   width: clamp(190px, 26vw, 310px);
   height: auto;
   flex-shrink: 0;
-  filter: drop-shadow(4px 6px 14px rgba(0,0,0,0.35)) sepia(15%);
+  filter: drop-shadow(4px 6px 14px rgba(0, 0, 0, 0.35)) sepia(15%);
   transform: rotate(-2deg);
   transition: transform 0.3s ease;
 }
@@ -208,7 +211,7 @@ header a:hover { color: #c0392b; }
   display: block;
   object-fit: contain;
   background: transparent;
-  filter: drop-shadow(4px 6px 14px rgba(0,0,0,0.35)) sepia(15%);
+  filter: drop-shadow(4px 6px 14px rgba(0, 0, 0, 0.35)) sepia(15%);
   transition: transform 0.35s ease;
 }
 
@@ -258,7 +261,7 @@ header a:hover { color: #c0392b; }
   width: 220px;
   transform: rotate(5deg);
   opacity: 0.9;
-  filter: drop-shadow(4px 8px 16px rgba(0,0,0,0.25));
+  filter: drop-shadow(4px 8px 16px rgba(0, 0, 0, 0.25));
 }
 
 /* pena-mao — esquerda, altura da seção de apresentação */
@@ -268,7 +271,7 @@ header a:hover { color: #c0392b; }
   width: 190px;
   transform: rotate(-8deg);
   opacity: 0.95;
-  filter: drop-shadow(3px 5px 10px rgba(0,0,0,0.25));
+  filter: drop-shadow(3px 5px 10px rgba(0, 0, 0, 0.25));
 }
 
 /* rosa-seca — esquerda, em cima da seção de fotos de navegação */
@@ -287,7 +290,7 @@ header a:hover { color: #c0392b; }
   width: 170px;
   transform: rotate(6deg);
   opacity: 0.9;
-  filter: drop-shadow(3px 6px 12px rgba(0,0,0,0.2));
+  filter: drop-shadow(3px 6px 12px rgba(0, 0, 0, 0.2));
 }
 
 /* ── RODAPÉ ── */

@@ -207,7 +207,7 @@
         </p>
       </div>
       <p class="poema-assinatura">— Anna Vitoria</p>
-      <button class="btn-like" data-like-id="poema-anna-1" aria-label="Curtir poema" aria-pressed="false">
+      <button class="btn-like" data-like-id="poema-autoral-anna-1" aria-label="Curtir poema" aria-pressed="false">
         <span class="like-icon">♡</span>
         <span class="like-count">0</span>
       </button>
@@ -216,14 +216,9 @@
 
 
 
-
-
-
-
-
     <article class="poema" id="poema-2">
       <p class="poema-numero">Poema II</p>
-      <h3 class="poema-titulo">Metamorfose</h3>
+      <h3 class="poema-titulo">Metamorfose o</h3>
       <p class="poema-data">escrito em — 2026</p>
       <div class="poema-texto">
         <p>
@@ -268,7 +263,7 @@
 
       </div>
       <p class="poema-assinatura">— Anna Vitoria</p>
-      <button class="btn-like" data-like-id="poema-anna-2" aria-label="Curtir poema" aria-pressed="false">
+      <button class="btn-like" data-like-id="poema-autoral-anna-2" aria-label="Curtir poema" aria-pressed="false">
         <span class="like-icon">♡</span>
         <span class="like-count">0</span>
       </button>
@@ -336,12 +331,7 @@
 
   <script type="module" src="../../../../../js/likes.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('.envelope').forEach(env => {
-        env.addEventListener('click', () => setTimeout(() => window.initLikes(), 50));
-      });
-      window.initLikes();
-    });
+    document.addEventListener('DOMContentLoaded', () => window.initLikes());
   </script>
 </body>
 
