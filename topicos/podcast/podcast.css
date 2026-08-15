@@ -117,8 +117,8 @@ header a:hover::after {
 .page-titulo .subtitulo::before {
   content: "";
   display: inline-block;
-  width: 7px;
-  height: 7px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background: var(--vermelho);
   animation: pulso-onair 1.8s ease-in-out infinite;
@@ -684,7 +684,7 @@ header a:hover::after {
   text-align: center;
 }
 
-/* assinatura final */
+/* assinatura final — texto ao lado da foto */
 .bastidores-assinatura {
   position: relative;
   z-index: 5;
@@ -695,12 +695,36 @@ header a:hover::after {
   border-top: 1px dashed var(--dourado);
 }
 
+.assinatura-conteudo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  padding-top: 22px;
+  flex-wrap: wrap;
+}
+
+.assinatura-texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.assinatura-foto-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
 .bastidores-assinatura p {
   font-family: 'Special Elite', serif;
   font-size: 13px;
   letter-spacing: 1px;
   color: var(--marrom);
-  padding-top: 18px;
+  max-width: 280px;
+  text-align: left;
 }
 
 .bastidores-assinatura strong {
@@ -709,10 +733,10 @@ header a:hover::after {
 
 .bastidores-assinatura .assinatura-foto {
   display: block;
-  width: clamp(130px, 18vw, 190px);
+  width: clamp(110px, 15vw, 150px);
   max-width: 100%;
   height: auto;
-  margin: 22px auto 6px;
+  flex-shrink: 0;
   filter: drop-shadow(4px 6px 14px rgba(0, 0, 0, 0.3));
   transform: rotate(-2deg);
   transition: transform 0.3s ease;
@@ -720,6 +744,162 @@ header a:hover::after {
 
 .bastidores-assinatura .assinatura-foto:hover {
   transform: rotate(0deg) scale(1.03);
+}
+
+/* ── SELO DE INSTAGRAM — mesmo espírito do usado em "Sobre o Site" ── */
+.instagram-selo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border: 2px solid var(--vermelho);
+  border-radius: 3px;
+  font-family: 'Special Elite', serif;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  color: var(--vermelho);
+  text-decoration: none;
+  transform: rotate(-1deg);
+  transition: all 0.2s ease;
+}
+
+.instagram-selo::before {
+  content: "IG";
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 10px;
+  letter-spacing: 1px;
+  border-right: 1px solid currentColor;
+  padding-right: 6px;
+}
+
+.instagram-selo:hover {
+  background: var(--vermelho);
+  color: #fffdf7;
+  transform: rotate(0deg) scale(1.04);
+}
+
+/* ══════════════════════════════════════════
+   EQUIPE — entrevistadores e produtores/técnicos
+   ══════════════════════════════════════════ */
+.bastidores-equipe {
+  position: relative;
+  z-index: 5;
+  max-width: 780px;
+  margin: 0 auto 10px;
+  padding: 10px 30px 0;
+}
+
+.equipe-titulo {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-style: italic;
+  font-size: clamp(24px, 3vw, 30px);
+  color: var(--texto-escuro);
+  text-align: center;
+  margin-bottom: 34px;
+}
+
+.equipe-grupo {
+  margin-bottom: 40px;
+}
+
+.equipe-subtitulo {
+  display: inline-block;
+  font-family: 'Special Elite', serif;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--vermelho);
+  border-bottom: 2px solid var(--vermelho);
+  padding-bottom: 4px;
+  margin: 0 auto 22px;
+}
+
+.equipe-grupo {
+  text-align: center;
+}
+
+.equipe-grade {
+  display: flex;
+  justify-content: center;
+  gap: 26px;
+  flex-wrap: wrap;
+}
+
+.equipe-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: clamp(140px, 26vw, 190px);
+}
+
+.equipe-card:nth-child(odd) .equipe-foto {
+  transform: rotate(-2deg);
+}
+
+.equipe-card:nth-child(even) .equipe-foto {
+  transform: rotate(2deg);
+}
+
+.equipe-card:hover .equipe-foto {
+  transform: rotate(0deg) scale(1.03);
+}
+
+.equipe-foto {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  filter: drop-shadow(4px 6px 14px rgba(0, 0, 0, 0.35));
+  transition: transform 0.3s ease;
+  margin-bottom: 16px;
+}
+
+.equipe-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* placeholder — usado até a foto real ser adicionada */
+.equipe-foto.placeholder {
+  background: linear-gradient(150deg, #cfc6b0, #b8ac91 60%, #9e9277);
+  position: relative;
+}
+
+.equipe-foto.placeholder::after {
+  content: "?";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 42px;
+  color: #fffdf7;
+  opacity: 0.85;
+}
+
+.equipe-nome {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--texto-escuro);
+  text-align: center;
+}
+
+.equipe-funcao {
+  font-family: 'Special Elite', serif;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--marrom);
+  text-align: center;
+  margin-top: 4px;
+}
+
+.equipe-card .instagram-selo {
+  margin-top: 12px;
 }
 
 /* decorações reaproveitadas, reposicionadas pro contexto da página */
@@ -767,6 +947,27 @@ header a:hover::after {
 
   .bastidores-conteudo .img-deco {
     display: none;
+  }
+
+  .assinatura-conteudo {
+    flex-direction: column;
+  }
+
+  .assinatura-texto {
+    align-items: center;
+  }
+
+  .bastidores-assinatura p {
+    text-align: center;
+    max-width: none;
+  }
+
+  .equipe-card {
+    width: clamp(130px, 40vw, 170px);
+  }
+
+  .equipe-grade {
+    gap: 18px;
   }
 
   .page-titulo h1 {
