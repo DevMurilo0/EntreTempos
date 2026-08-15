@@ -55,27 +55,67 @@
   </div>
 
   <!-- LISTA DE EPISÓDIOS
-     Os cards são montados dinamicamente a partir da coleção "podcasts" no
-     Firestore (ver js/podcast-data.js) — o vídeo em si mora na Cloudinary,
-     aqui só chegam os metadados. Pra adicionar um episódio novo, NÃO mexa
-     neste HTML: crie um documento novo na coleção "podcasts" (ver
-     docs-entretempos/08-podcast-cloudinary-firestore.md pro passo a passo
-     e o formato exato dos campos). -->
+     Para adicionar um episódio futuro: copie um dos blocos <a class="card-episodio"> abaixo.
+     Preencha os atributos data-* conforme necessário:
+     - data-nome: Nome do entrevistado
+     - data-outros-nomes: Apelidos, sobrenomes ou nomes alternativos (ex: "Jão, Joazinho, Silva")
+     - data-descricao: Resumo do episódio / assuntos tratados
+     - data-tags: Palavras-chave do episódio
+     - data-podcast: Nome do podcast/série
+     A busca aceita maiúsculas, minúsculas, palavras com ou sem acento, apelidos e trechos do texto. -->
   <section class="lista-episodios" id="lista-episodios">
 
-    <!-- estado de carregamento — some assim que os episódios chegam -->
-    <p id="estado-carregando"
-      style="display:block; text-align:center; font-family:'IM Fell English', serif; font-style:italic; color:var(--marrom); padding:20px 0;">
-      Carregando episódios…
-    </p>
-    <!-- estado de erro — só aparece se a busca ao Firestore falhar -->
-    <p id="estado-erro"
-      style="display:none; text-align:center; font-family:'IM Fell English', serif; font-style:italic; color:var(--marrom); padding:20px 0;">
-      Não foi possível carregar os episódios agora. Tenta recarregar a página.
-    </p>
-    <!-- estado vazio (coleção sem nenhum episódio ainda) -->
-    <div class="card-episodio vazio" id="estado-vazio" style="display:none;">
-      <p>Nenhum episódio publicado ainda — em breve por aqui.</p>
+
+
+
+    <a href="episodios/episodio-1/episodio-1.html" class="card-episodio" data-nome="João"
+      data-outros-nomes="Ayrton, Matheus, ayrton, mateus, matheus"
+      data-descricao="história filosofia educação bate papo entre tempos" data-tags="filosofia história escola cultura"
+      data-podcast="Entre Tempos Podcast">
+      <div class="topo-card">
+        <div class="capa-episodio placeholder">JS</div>
+
+        <div class="info-card">
+          <div class="etiquetas">
+            <span class="badge-cargo">Professor</span>
+            <span class="badge-episodio">EP: 01</span>
+          </div>
+          <h1 class="nome-convidado">Ayrton Matheus (A lenda)</h1>
+          <p class="descricao-episodio">
+            Tentando desesperadamente fazer Ayrton dar uma gargalhada <br>(Muita Aura para a seriedade dele)
+          </p>
+        </div>
+      </div>
+      <p class="entrevistadores">entrevistadores: Wingrison e Kezia</p>
+    </a>
+
+
+
+    <!-- EXEMPLO DE EPISÓDIO 01 -->
+    <a href="episodios/episodio-2/episodio-2.html" class="card-episodio" data-nome="Danilo"
+      data-outros-nomes="Dan, Danilão, Prof. Danilo"
+      data-descricao="séries games época de escola professor de matemática" data-tags="matemática games jogos escola"
+      data-podcast="Entre Tempos Podcast">
+      <div class="topo-card">
+        <div class="capa-episodio placeholder">DN</div>
+
+        <div class="info-card">
+          <div class="etiquetas">
+            <span class="badge-cargo">Professor</span>
+            <span class="badge-episodio">EP: 02</span>
+          </div>
+          <h1 class="nome-convidado">Danilo (O melhor)</h1>
+          <p class="descricao-episodio">
+            Um papo super descontraído sobre séries, games, histórias da época de escola e bastidores das aulas de
+            matemática.
+          </p>
+        </div>
+      </div>
+      <p class="entrevistadores">entrevistadores: [Nome] [Nome]</p>
+    </a>
+    <!-- CARD "EM BREVE" -->
+    <div class="card-episodio vazio">
+      <p>Próximo episódio em breve…</p>
     </div>
 
     <!-- decorações ao redor da lista de episódios -->
@@ -141,90 +181,6 @@
     }
 
     campoBusca.addEventListener('input', filtrarEpisodios);
-  </script>
-
-  <!-- Busca os episódios no Firestore e monta os cards. Módulo separado
-       do script de busca acima porque import/export só funciona em
-       type="module". -->
-  <script type="module">
-    import { listarEpisodios } from '../../js/podcast-data.js';
-
-    const lista = document.getElementById('lista-episodios');
-    const estadoCarregando = document.getElementById('estado-carregando');
-    const estadoErro = document.getElementById('estado-erro');
-    const estadoVazio = document.getElementById('estado-vazio');
-
-    // pega as iniciais do nome pro placeholder circular (ex: "Ayrton Matheus" -> "AM")
-    function iniciaisDe(nome) {
-      if (!nome) return '?';
-      const partes = nome.trim().split(/\s+/).filter(Boolean);
-      const iniciais = partes.slice(0, 2).map((p) => p[0]).join('');
-      return iniciais.toUpperCase() || '?';
-    }
-
-    function escapar(texto) {
-      const div = document.createElement('div');
-      div.textContent = texto ?? '';
-      return div.innerHTML;
-    }
-
-    function montarCard(ep) {
-      const a = document.createElement('a');
-      a.href = `episodios/episodio.html?id=${encodeURIComponent(ep.id)}`;
-      a.className = 'card-episodio';
-      a.dataset.nome = ep.nome || '';
-      a.dataset.outrosNomes = ep.buscaOutrosNomes || '';
-      a.dataset.descricao = ep.descricaoCard || ep.descricao || '';
-      a.dataset.tags = ep.buscaTags || '';
-      a.dataset.podcast = ep.podcastNome || 'Entre Tempos Podcast';
-
-      const nomesEntrevistadores = Array.isArray(ep.entrevistadores)
-        ? ep.entrevistadores.map((e) => (typeof e === 'string' ? e : e.nome)).filter(Boolean)
-        : [];
-
-      a.innerHTML = `
-        <div class="topo-card">
-          <div class="capa-episodio ${ep.thumbnailUrl ? '' : 'placeholder'}">
-            ${ep.thumbnailUrl
-              ? `<img loading="lazy" decoding="async" src="${escapar(ep.thumbnailUrl)}" alt="">`
-              : iniciaisDe(ep.nome)}
-          </div>
-          <div class="info-card">
-            <div class="etiquetas">
-              <span class="badge-cargo">${escapar(ep.cargo || 'Convidado')}</span>
-              <span class="badge-episodio">EP: ${escapar(ep.episodio || ep.ordem || '')}</span>
-            </div>
-            <h1 class="nome-convidado">${escapar(ep.nome || 'Episódio')}</h1>
-            <p class="descricao-episodio">${escapar(ep.descricaoCard || ep.descricao || '')}</p>
-          </div>
-        </div>
-        <p class="entrevistadores">entrevistadores: ${escapar(nomesEntrevistadores.join(' e ') || 'em breve')}</p>
-      `;
-      return a;
-    }
-
-    (async () => {
-      const episodios = await listarEpisodios();
-
-      estadoCarregando.style.display = 'none';
-
-      if (episodios === null) {
-        estadoErro.style.display = 'block';
-        return;
-      }
-
-      if (episodios.length === 0) {
-        estadoVazio.style.display = '';
-        return;
-      }
-
-      // insere os cards antes das decorações, que precisam continuar
-      // sendo os últimos elementos do <section> pra posicionamento CSS
-      const primeiraDecoracao = lista.querySelector('.img-deco');
-      episodios.forEach((ep) => {
-        lista.insertBefore(montarCard(ep), primeiraDecoracao);
-      });
-    })();
   </script>
 
 </body>
