@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="titulo-pagina">Episódio | Pod Aula Vaga</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="icon" href="../../../img/amp.png" type="image/png">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Playfair+Display:ital,wght@0,700;1,700&family=Dancing+Script:wght@400;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="episodio.css">
+</head>
+
+<body>
+  <header>
+    <a href="../podcast.html">← sair</a>
+  </header>
+
+  <!-- FAIXA "MESA DO PODCAST" — mesma imagem em todos os episódios.
+       Coloque o arquivo em topicos/podcast/img/mesa-podcast.webp; enquanto
+       não existir, o onerror abaixo ativa a vinheta tipográfica sozinha. -->
+  <div class="faixa-mesa">
+    <img src="../img/mesa-podcast.webp" alt="Mesa de gravação do podcast Entre Tempos"
+      onerror="this.parentElement.classList.add('sem-foto')">
+    <span class="faixa-legenda">podcast entre tempos</span>
+
+    <div class="faixa-vinheta">
+      <div class="mic">🎙</div>
+      <h2>PodCast<br> Pod Aula Vaga</h2>
+    </div>
+  </div>
+
+  <!-- Estado de carregamento — some assim que o episódio é encontrado. -->
+  <p id="estado-carregando" style="text-align:center; padding:40px 20px; font-family:'IM Fell English', serif; color:#7a6a50;">
+    Carregando episódio…
+  </p>
+
+  <!-- Estado de erro / episódio não encontrado. -->
+  <div id="estado-erro" style="display:none; text-align:center; padding:40px 20px;">
+    <p style="font-family:'IM Fell English', serif; color:#7a6a50; margin-bottom:16px;">
+      Não foi possível encontrar este episódio.
+    </p>
+    <a href="../podcast.html" style="font-family:'Special Elite', serif; color:#c0392b;">← Voltar pros episódios</a>
+  </div>
+
+  <!-- Conteúdo real do episódio — fica escondido até os dados chegarem. -->
+  <div id="conteudo-episodio" style="display:none;">
+
+    <!-- VÍDEO DO EPISÓDIO — src/poster vêm da Cloudinary via Firestore. -->
+    <section class="episodio-video">
+      <video id="video-episodio" controls preload="metadata">
+        <source id="video-fonte" src="" type="video/mp4">
+      </video>
+    </section>
+
+    <section class="episodio-info">
+      <div class="capa-episodio placeholder" id="capa-convidado"></div>
+      <div>
+        <div class="etiquetas">
+          <span class="badge-cargo" id="badge-cargo"></span>
+          <span class="badge-episodio" id="badge-episodio"></span>
+        </div>
+        <h1 id="nome-convidado"></h1>
+      </div>
+    </section>
+
+    <div class="divisor"></div>
+
+    <section class="episodio-corpo">
+
+      <div class="bloco-texto">
+        <h2>Sobre a conversa</h2>
+        <p id="descricao-completa"></p>
+      </div>
+
+      <!-- Bloco de bastidores — só aparece se o episódio tiver fotos
+           cadastradas no campo "fotosBastidores" do Firestore. -->
+      <div class="bloco-galeria" id="bloco-galeria" style="display:none;">
+        <h2>Bastidores</h2>
+        <div class="carrossel-galeria" id="carrossel-galeria"></div>
+      </div>
+
+      <div class="bloco-entrevistadores" id="bloco-entrevistadores" style="display:none;">
+        <h2>Entrevistadores</h2>
+        <div class="grade-entrevistadores" id="grade-entrevistadores"></div>
+      </div>
+
+      <div class="bloco-creditos" id="bloco-creditos"></div>
+
+    </section>
+  </div>
+
+  <div class="rodape-podcast">
+    <div>entre tempos · revista eletrônica</div>
+    <div class="carimbo">podcast</div>
+  </div>
+
+  <script type="module">
+    import { buscarEpisodio } from '../../../js/podcast-data.js';
+
+    function escapar(texto) {
+      const div = document.createElement('div');
+      div.textContent = texto ?? '';
+      return div.innerHTML;
+    }
+
+    function iniciaisDe(nome) {
+      if (!nome) return '?';
+      const partes = nome.trim().split(/\s+/).filter(Boolean);
+      const iniciais = partes.slice(0, 2).map((p) => p[0]).join('');
+      return iniciais.toUpperCase() || '?';
+    }
+
+    function formatarData(dataISO) {
+      if (!dataISO) return '';
+      const [ano, mes, dia] = dataISO.split('-');
+      if (!ano || !mes || !dia) return dataISO;
+      return `${dia}/${mes}/${ano}`;
+    }
+
+    function montarGaleria(fotos) {
+      const bloco = document.getElementById('bloco-galeria');
+      const carrossel = document.getElementById('carrossel-galeria');
+      if (!Array.isArray(fotos) || fotos.length === 0) return;
+
+      carrossel.innerHTML = fotos.map((url) => `
+        <div class="foto-galeria">
+          <img loading="lazy" decoding="async" src="${escapar(url)}" alt="">
+        </div>
+      `).join('');
+      bloco.style.display = '';
+    }
+
+    function montarEntrevistadores(entrevistadores) {
+      const bloco = document.getElementById('bloco-entrevistadores');
+      const grade = document.getElementById('grade-entrevistadores');
+      if (!Array.isArray(entrevistadores) || entrevistadores.length === 0) return;
+
+      grade.innerHTML = entrevistadores.map((e) => {
+        const nome = typeof e === 'string' ? e : (e.nome || '');
+        const foto = typeof e === 'string' ? null : e.foto;
+        return `
+          <div class="entrevistador">
+            <div class="foto-entrevistador ${foto ? '' : 'placeholder'}">
+              ${foto ? `<img loading="lazy" decoding="async" src="${escapar(foto)}" alt="">` : escapar(nome[0] || '?')}
+            </div>
+            <span>${escapar(nome)}</span>
+          </div>
+        `;
+      }).join('');
+      bloco.style.display = '';
+    }
+
+    function preencherPagina(ep) {
+      document.getElementById('titulo-pagina').textContent = `Episódio ${ep.episodio || ''} — ${ep.nome || ''} | Pod Aula Vaga`;
+
+      const video = document.getElementById('video-episodio');
+      const fonte = document.getElementById('video-fonte');
+      fonte.src = ep.videoUrl || '';
+      if (ep.thumbnailUrl) video.setAttribute('poster', ep.thumbnailUrl);
+      video.load();
+
+      const capa = document.getElementById('capa-convidado');
+      if (ep.fotoConvidado) {
+        capa.classList.remove('placeholder');
+        capa.innerHTML = `<img loading="lazy" decoding="async" src="${escapar(ep.fotoConvidado)}" alt="">`;
+      } else {
+        capa.textContent = iniciaisDe(ep.nome);
+      }
+
+      document.getElementById('badge-cargo').textContent = ep.cargo || 'Convidado';
+      document.getElementById('badge-episodio').textContent = `EP: ${ep.episodio || ep.ordem || ''}`;
+      document.getElementById('nome-convidado').textContent = ep.nome || '';
+      document.getElementById('descricao-completa').textContent =
+        ep.descricaoCompleta || ep.descricaoCard || ep.descricao || 'Descrição em breve.';
+
+      montarGaleria(ep.fotosBastidores);
+      montarEntrevistadores(ep.entrevistadores);
+
+      const creditos = document.getElementById('bloco-creditos');
+      const partesCredito = [];
+      if (ep.dataPublicacao) partesCredito.push(`Gravado em: ${formatarData(ep.dataPublicacao)}`);
+      if (ep.duracao) partesCredito.push(`Duração: ${ep.duracao}`);
+      creditos.innerHTML = partesCredito.map((p) => `<div>${escapar(p)}</div>`).join('');
+
+      document.getElementById('estado-carregando').style.display = 'none';
+      document.getElementById('conteudo-episodio').style.display = '';
+    }
+
+    (async () => {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+      const ep = await buscarEpisodio(id);
+
+      if (!ep) {
+        document.getElementById('estado-carregando').style.display = 'none';
+        document.getElementById('estado-erro').style.display = 'block';
+        return;
+      }
+
+      preencherPagina(ep);
+    })();
+  </script>
+</body>
+
+</html>
