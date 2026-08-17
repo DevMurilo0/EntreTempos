@@ -198,9 +198,10 @@ async function garantirLikedIdsDoUsuario() {
       });
       likedIdsDoUsuario = ids;
     } catch (err) {
-      console.error('[likes] falha ao buscar curtidas do usuário em lote:', err);
+      console.error('[likes debug] FALHOU a busca. code:', err.code, '| message:', err.message, err);
       likedIdsDoUsuario = new Set(); // segue sem travar a página
     }
+    console.log('[likes debug] posts que o Firestore acha que este uid já curtiu:', likedIdsDoUsuario ? [...likedIdsDoUsuario] : null);
     return likedIdsDoUsuario;
   })();
 
@@ -306,6 +307,10 @@ signInAnonymously(auth).catch((err) => {
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
+    const uidAnterior = localStorage.getItem('_debug_likes_uid');
+    console.log('[likes debug] uid atual:', user.uid, '| uid da visita anterior:', uidAnterior, '| MUDOU?', uidAnterior !== null && uidAnterior !== user.uid);
+    localStorage.setItem('_debug_likes_uid', user.uid);
+
     currentUid = user.uid;
     resolveUidReady();
   }
