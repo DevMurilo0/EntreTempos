@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mário Quintana — Poemas | Entre Tempos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Caveat:wght@400;600&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../pessoa.css">
+  <style>
+    /* ══════════════════════════════════════════
+       FRAGMENTOS DECORATIVOS — recortes espalhados
+       (mesmo padrão .decor usado em poemas.html / conhecidos.html)
+       ══════════════════════════════════════════ */
+    .decor {
+      position: absolute;
+      z-index: 3;
+      pointer-events: none;
+      user-select: none;
+      height: auto;
+      display: block;
+      max-width: none;
+    }
+
+    .decor-relogio {
+      top: -38px;
+      left: 2%;
+      width: clamp(170px, 6.5vw, 80px);
+      transform: rotate(-9deg);
+      opacity: 0.9;
+      filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.2));
+    }
+
+    .decor-coracao-flores {
+      top: -60px;
+      right: -15%;
+      width: clamp(150px, 6.5vw, 76px);
+      transform: rotate(7deg)
+    }
+
+    .decor-girassol {
+      bottom: -20px;
+      left: -160px;
+      width: clamp(200px, 6vw, 75px);
+      transform: rotate(-8deg);
+      opacity: 0.9;
+    }
+
+    .decor-lupa {
+      bottom: -30px;
+      right: 4%;
+      width: clamp(48px, 6vw, 78px);
+      transform: rotate(-10deg);
+      opacity: 0.85;
+      filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.2));
+    }
+
+    .decor-coracao-loveable {
+      top: 60px;
+      left: -32px;
+      width: clamp(48px, 6.5vw, 76px);
+      transform: rotate(5deg);
+      opacity: 0.9;
+    }
+
+    .decor-sapo {
+      top: -100px;
+      right: -24px;
+      width: clamp(205px, 7vw, 85px);
+      transform: rotate(7deg);
+      opacity: 0.9;
+    }
+
+    .decor-vaso {
+      top: -52px;
+      left: 4%;
+      width: clamp(48px, 6.2vw, 72px);
+      transform: rotate(-6deg);
+      opacity: 0.9;
+    }
+
+    .decor-mascara {
+      top: -30px;
+      left: 40%;
+      width: clamp(55px, 7vw, 88px);
+      transform: rotate(-5deg);
+      opacity: 0.85;
+    }
+
+    .decor-cartas {
+      top: -16px;
+      left: -50%;
+      width: clamp(400px, 7vw, 88px);
+      transform: rotate(-80deg);
+      opacity: 0.85;
+    }
+
+    .decor-gato {
+      bottom: -70px;
+      right: 2%;
+      width: clamp(42px, 5.5vw, 64px);
+      transform: rotate(5deg);
+      opacity: 0.9;
+    }
+
+    .pessoa-section,
+    .divisor,
+    .grade-envelopes,
+    .area-folha,
+    .rodape-poemas {
+      position: relative;
+    }
+
+    /* ── MOBILE: simplifica para não poluir telas pequenas ── */
+    @media (max-width: 600px) {
+      .decor-relogio   { width: clamp(34px, 12vw, 50px); top: -20px; left: 2%; }
+      .decor-coracao-flores { width: clamp(36px, 13vw, 52px); top: -14px; right: 4%; }
+      .decor-girassol  { display: none; }
+      .decor-lupa      { display: none; }
+      .decor-coracao-loveable { width: clamp(36px, 13vw, 52px); top: 30px; left: -10px; }
+      .decor-sapo      { width: clamp(40px, 14vw, 58px); top: -10px; right: -10px; }
+      .decor-vaso      { width: clamp(32px, 11vw, 46px); top: -30px; left: 2%; }
+      .decor-mascara   { width: clamp(34px, 12vw, 48px); top: -16px; left: 34%; }
+      .decor-cartas    { display: none; }
+      .decor-gato      { display: none; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <a href="../conhecidos.html">← Voltar para Poetas Conhecidos</a>
+</header>
+
+<section class="pessoa-section">
+  <img loading="lazy" decoding="async" src="../img-decor/relogio-bolso.webp" alt="" class="decor decor-relogio">
+  <img loading="lazy" decoding="async" src="../img-decor/coracao-loveable.webp" alt="" class="decor decor-coracao-loveable">
+  <img loading="lazy" decoding="async" src="mario.webp" alt="Mário Quintana" class="foto-pessoa">
+  <div class="pessoa-info">
+    <h2 class="pessoa-nome">Mário Quintana</h2>
+    <p class="pessoa-cargo">poeta · tradutor · cronista</p>
+    <p class="pessoa-bio">
+      Mário Quintana (1906–1994) nasceu em Alegrete, no Rio Grande do Sul,
+      e tornou-se um dos poetas mais amados do Brasil. Sua poesia é conhecida
+      pela leveza, pelo humor suave e pela capacidade de encontrar o extraordinário
+      nas coisas mais simples do cotidiano — uma janela, um sonho, o tempo que passa.
+    </p>
+    <p class="pessoa-bio">
+      Tradutor consagrado de Marcel Proust e outros clássicos, Quintana viveu
+      décadas no lendário Hotel Majestic de Porto Alegre, de onde observava
+      o mundo e o transformava em versos. Sua obra continua sendo descoberta
+      e redescoberta por quem busca poesia que fala diretamente ao coração.
+    </p>
+    <p class="contador-poemas">2 poemas</p>
+  </div>
+  <img loading="lazy" decoding="async" src="../img-decor/coracao-flores.webp" alt="" class="decor decor-coracao-flores">
+  <img loading="lazy" decoding="async" src="../img-decor/girassol.webp" alt="" class="decor decor-girassol">
+  <img loading="lazy" decoding="async" src="../img-decor/lupa.webp" alt="" class="decor decor-lupa">
+</section>
+
+<div class="divisor">
+  <img loading="lazy" decoding="async" src="../img-decor/sapo-mago.webp" alt="" class="decor decor-sapo">
+</div>
+
+<!-- GRID DE ENVELOPES -->
+<section class="grade-envelopes">
+  <img loading="lazy" decoding="async" src="../img-decor/vaso-rosas.webp" alt="" class="decor decor-vaso">
+  <img loading="lazy" decoding="async" src="../img-decor/mascara-teatro.webp" alt="" class="decor decor-mascara">
+  <img loading="lazy" decoding="async" src="../img-decor/cartas-baralho.webp" alt="" class="decor decor-cartas">
+  <img loading="lazy" decoding="async" src="../img-decor/gato-banjo.webp" alt="" class="decor decor-gato">
+
+  <button class="envelope" data-alvo="poema-1">
+    <span class="env-numero">I</span>
+    <span class="env-titulo">Canção</span>
+    <span class="env-aba"></span>
+  </button>
+
+  <button class="envelope" data-alvo="poema-2">
+    <span class="env-numero">II</span>
+    <span class="env-titulo">O Tempo</span>
+    <span class="env-aba"></span>
+  </button>
+
+</section>
+
+<!-- ÁREA DA FOLHA -->
+<div class="area-folha" id="area-folha" aria-live="polite">
+
+  <article class="poema" id="poema-1">
+    <p class="poema-numero">Poema I</p>
+    <h3 class="poema-titulo">Canção</h3>
+    <p class="poema-data">Mário Quintana</p>
+    <div class="poema-texto">
+      <p>
+        Eu te amo porque te amo.<br>
+        Não precisas ser amante,<br>
+        basta seres tu — distante,<br>
+        estranha, e mesmo, indiferente.
+      </p>
+      <p>
+        Eu te amo porque te amo.<br>
+        Amor é estado de graça<br>
+        e com amor não se compra<br>
+        nem se vende nem se passa.
+      </p>
+      <p>
+        Eu te amo porque te amo.<br>
+        Simplesmente. Sem mais nada.<br>
+        Nem por ser tu quem me amas,<br>
+        nem por nada, nem por nada.
+      </p>
+    </div>
+    <p class="poema-assinatura">— Mário Quintana</p>
+  </article>
+
+  <article class="poema" id="poema-2">
+    <p class="poema-numero">Poema II</p>
+    <h3 class="poema-titulo">O Tempo</h3>
+    <p class="poema-data">Mário Quintana</p>
+    <div class="poema-texto">
+      <p>
+        O tempo não para.<br>
+        Ele vai, ele vem,<br>
+        ele some, ele volta<br>
+        — não sei bem.
+      </p>
+      <p>
+        O que foi não voltará.<br>
+        O que há de vir<br>
+        ainda não chegou.<br>
+        Só existe o agora —<br>
+        e o agora já passou.
+      </p>
+      <p>
+        Por isso é que a gente<br>
+        deve viver depressa,<br>
+        amar sem medo,<br>
+        rir à toa,<br>
+        e deixar o tempo<br>
+        fazer o que ele tem que fazer.
+      </p>
+    </div>
+    <p class="poema-assinatura">— Mário Quintana</p>
+  </article>
+
+</div>
+
+<div class="rodape-poemas">
+  <div>entre tempos · revista eletrônica</div>
+  <div class="carimbo">POEMAS</div>
+</div>
+
+<script>
+  const envelopes = document.querySelectorAll('.envelope');
+  const poemas    = document.querySelectorAll('.poema');
+  const areaFolha = document.getElementById('area-folha');
+
+  poemas.forEach(p => p.classList.remove('visivel'));
+  areaFolha.classList.remove('aberta');
+
+  envelopes.forEach(env => {
+    env.addEventListener('click', () => {
+      const alvoId = env.dataset.alvo;
+      const jaAtivo = env.classList.contains('ativo');
+
+      envelopes.forEach(e => e.classList.remove('ativo'));
+
+      if (jaAtivo) {
+        poemas.forEach(p => {
+          p.classList.remove('visivel');
+          p.classList.add('saindo');
+          setTimeout(() => p.classList.remove('saindo'), 400);
+        });
+        areaFolha.classList.remove('aberta');
+        return;
+      }
+
+      env.classList.add('ativo');
+
+      const poemaAtivo = document.querySelector('.poema.visivel');
+      const poemaAlvo  = document.getElementById(alvoId);
+
+      if (poemaAtivo && poemaAtivo !== poemaAlvo) {
+        poemaAtivo.classList.remove('visivel');
+        poemaAtivo.classList.add('saindo');
+        setTimeout(() => {
+          poemaAtivo.classList.remove('saindo');
+          poemaAlvo.classList.add('visivel');
+        }, 280);
+      } else {
+        poemaAlvo.classList.add('visivel');
+      }
+
+      areaFolha.classList.add('aberta');
+    });
+  });
+</script>
+</body>
+</html>
