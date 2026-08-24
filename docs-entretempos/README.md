@@ -5,6 +5,8 @@ instalar — o site é HTML/CSS/JS puro, sem build, sem framework, sem
 Node. Isso aqui é o mapa do labirinto: pra que serve cada pasta, como
 as coisas se conectam e o que NÃO fazer quando for mexer.
 
+
+
 Se você chegou aqui sem contexto nenhum: **Entre Tempos** é a revista
 eletrônica dos alunos da EREMPAF (Gravatá-PE). Cada seção da revista
 (Poemas, Música, Filmes, Livros, Desenhos, Curiosidades, Podcast) é
