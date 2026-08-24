@@ -7,6 +7,68 @@ const meses = [
 ];
 
 const musicasPorMes = {
+  7: [ // Agosto (índice 0–11)
+    {
+      nome: "Vento Ventania",
+      artista: "Biquini Cavadão",
+      video: "",
+      descricao: "A música surge em um momento em que o Rock já havia passado por um boom, Vento Ventania deu um up e capturou um sentimento universal: a vontade de sumir em momentos de crise. O vento é uma personificação, a ele é pedido para que seja o guia de uma viagem sem roteiro, sem obrigações e sem, em alguns casos, passagens de volta. O compositor dessa letra, Bruno Gouveia, em homenagem ao filho de 2 anos e 10 meses que morreu em decorrência de um acidente de helicóptero, cantou essa música no dia do velório de Gabriel, o filho dele."
+    },
+    {
+      nome: "Zé Ninguém",
+      artista: "Biquini Cavadão",
+      video: "",
+      descricao: "Em 1990 o Brasil estava passando por um momento difícil e histórico, o confisco das poupanças pelo governo Fernando Collor de Melo. Cenário marcado por forte crise econômica, inflação alta, desilusão política e o contraste entre o que era dito oficialmente e a verdadeira realidade do povo brasileiro. A música já foi usada em protesto de esquerda e de direita."
+    },
+    {
+      nome: "Conselho",
+      artista: "Fundo de Quintal",
+      video: "",
+      descricao: "Você está na bad? Escuta o samba Conselho. A letra foi composta por Almir Guineto, em 1986, e nasceu de uma discussão criativa entre os autores. Essa música virou um verdadeiro hino contra o baixo astral."
+    },
+    {
+      nome: "Pra Melhorar",
+      artista: "Marisa Monte, Seu Jorge e Flor Maria",
+      video: "",
+      descricao: "A letra nasceu de um encontro musical nos Estados Unidos entre Marisa, Seu Jorge e a jovem Flor Maria Jorge, quando ela tinha apenas 12 anos. A mensagem central da letra fala sobre dias melhores, superação de tempestades e renovação da esperança."
+    },
+    {
+      nome: "Sol de Giz de Cera",
+      artista: "Emicida",
+      video: "",
+      descricao: "Homenagem lúdica à Estela, filha de Emicida. A letra retrata a paternidade ativa e imaginativa, onde o pai vira \"rei, pirata e samurai\" e enfrenta o dia a dia duro (\"Dom Quixote doidão, de espada na mão\") para voltar para casa com a filha. Um bom exemplo de intertextualidade com a obra literária \"Dom Quixote\", de Miguel de Cervantes."
+    },
+    {
+      nome: "Conversas de Botas Batidas",
+      artista: "Los Hermanos",
+      video: "",
+      descricao: "A letra foi inspirada no desabamento real do Hotel Linda do Rosário, no Rio de Janeiro, ocorrido em setembro de 2002. Minutos antes da queda, os estalos chamaram atenção dos moradores; o porteiro, preocupado, bateu de porta em porta para que todos saíssem. Nos escombros estavam os corpos de um casal abraçado, dois amantes que se encontravam às escondidas no hotel. Marcelo Camelo criou um diálogo entre os apaixonados ao ouvirem as batidas. A canção dialoga com a obra \"Linda do Rosário\", de Adriana Varejão, exposta em Brumadinho."
+    },
+    {
+      nome: "Só os Loucos Sabem",
+      artista: "Charlie Brown Jr.",
+      video: "",
+      descricao: "Inspirada na transformação de um amigo de longa data que mudou de vida ao encontrar paz espiritual, além de refletir a dualidade do próprio Chorão, que parecia durão por fora, mas era sensível por dentro. Ele recebeu a música em um show quando uma fã mostrou um folder do irmão dela, falecido e fã da banda. A história dessa e de outras letras de Chorão está no livro escrito por Gazon: \"Se não eu, quem vai fazer você feliz?\""
+    },
+    {
+      nome: "Manguetown",
+      artista: "Chico Science",
+      video: "",
+      descricao: "Manguetown é uma música de protesto contra a degradação dos mangues na cidade de Recife. O mangue serve de sustento para muitas famílias. Por meio da canção, Chico Science traduz em som e poesia a identidade, os contrastes e a realidade urbana periférica de Recife, retratada no trecho \"onde os urubus têm casa e eu não tenho asas\"."
+    },
+    {
+      nome: "Negro Drama",
+      artista: "Racionais MC's",
+      video: "",
+      descricao: "A letra retrata com crueza a realidade do negro no Brasil, unindo vivências de exclusão social, racismo, pobreza, violência urbana e a ascensão financeira conquistada por meio do rap."
+    },
+    {
+      nome: "Que País é Este",
+      artista: "Legião Urbana",
+      video: "",
+      descricao: "A letra faz uma crítica forte e irônica aos problemas políticos e sociais brasileiros que perpassam nosso país desde a época em que a música foi criada. Hoje é mais do que necessário ouvir essa canção para refletir sobre nosso papel em uma sociedade democrática, um papel que não deve ser passivo."
+    },
+  ],
   5: [ // Junho (índice 0–11)
     {
       nome: "Oração Ao Tempo",
