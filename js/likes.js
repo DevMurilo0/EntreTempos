@@ -39,6 +39,8 @@ import {
   setPersistence, browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
+
+
 const firebaseConfig = {
   apiKey: "AIzaSyCC_MH5a5WvD602F9Y7JnAzYpJow3i1axA",
   authDomain: "entretempos-27471.firebaseapp.com",
