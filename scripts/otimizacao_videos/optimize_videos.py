@@ -2,6 +2,8 @@ import os
 import sys
 import subprocess
 
+
+
 # Roda a partir da RAIZ do repositório (mesmo padrão do optimize_images.py):
 #
 #   Otimizar TODOS os vídeos do projeto:
