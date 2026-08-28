@@ -13,6 +13,7 @@
 <body>
   <header class="header-voltar">
     <a href="index.html">&#8592; Voltar</a>
+    <a href="faca-parte.html" class="btn-faca-parte">Faça parte!</a>
   </header>
   <div class="scene">
     <!-- LUA - a luona la no canto direito, da um clima demais -->
@@ -83,6 +84,30 @@
       scene.appendChild(wrap);
       scene.appendChild(tagWrap);
     });
+  </script>
+
+  <!-- animação de "carimbo" no botão Faça parte: espera o efeito
+       tocar antes de navegar pra próxima página -->
+  <script>
+    const btnFacaParte = document.querySelector('.btn-faca-parte');
+    if (btnFacaParte) {
+      btnFacaParte.addEventListener('click', function (e) {
+        e.preventDefault();
+        const destino = this.href;
+        const rect = this.getBoundingClientRect();
+
+        const anel = document.createElement('span');
+        anel.className = 'carimbo-anel';
+        anel.style.left = `${e.clientX - rect.left}px`;
+        anel.style.top = `${e.clientY - rect.top}px`;
+        this.appendChild(anel);
+        this.classList.add('carimbando');
+
+        setTimeout(() => {
+          window.location.href = destino;
+        }, 380);
+      });
+    }
   </script>
 </body>
 

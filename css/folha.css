@@ -34,6 +34,9 @@ body {
   padding: 18px 30px;
   border-bottom: 2px solid #c4a96b;
   background-color: #E8D5BC;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .header-voltar a {
@@ -47,6 +50,107 @@ body {
 
 .header-voltar a:hover {
   color: #c0392b;
+}
+
+/* ── FAÇA PARTE! ──
+   Estilo de selo/ticket perfurado, coladinho torto na tela
+   como o bilhete e as polaroids. Parado em repouso — só reage
+   ao toque: levanta como papel sendo pego, traço dourado desenha
+   embaixo do texto no hover, e no clique estoura um anel de tinta
+   a partir do ponto tocado, como batendo um carimbo. */
+.btn-faca-parte {
+  position: relative;
+  display: inline-block;
+  padding: 9px 22px;
+  background: #8c3b3b;
+  color: #fffdf7 !important;
+  font-family: Georgia, serif;
+  font-weight: bold;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 2px dashed rgba(255, 253, 247, 0.55);
+  border-radius: 3px;
+  box-shadow: 0 5px 14px rgba(140, 59, 59, 0.4);
+  transform: rotate(-2deg);
+  transition: transform 0.3s cubic-bezier(.34, 1.56, .64, 1), box-shadow 0.3s ease, background 0.25s ease;
+  overflow: hidden;
+}
+
+.btn-faca-parte::after {
+  content: "";
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 5px;
+  height: 2px;
+  background: #c4a96b;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+
+.btn-faca-parte:hover {
+  background: #6a2c2c !important;
+  color: #fffdf7 !important;
+  transform: rotate(0deg) translateY(-3px);
+  box-shadow: 0 12px 24px rgba(140, 59, 59, 0.55);
+}
+
+.btn-faca-parte:hover::after {
+  transform: scaleX(1);
+}
+
+.btn-faca-parte.carimbando {
+  animation: faca-parte-bater 0.4s ease;
+}
+
+@keyframes faca-parte-bater {
+  0% {
+    transform: rotate(0deg) translateY(-3px) scale(1);
+  }
+
+  35% {
+    transform: rotate(0deg) translateY(0) scale(0.93);
+  }
+
+  100% {
+    transform: rotate(0deg) translateY(-3px) scale(1);
+  }
+}
+
+/* anel de tinta: nasce no ponto do clique (posição via JS)
+   e estoura pra fora, sumindo — efeito de carimbo batendo */
+.carimbo-anel {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  margin-left: -7px;
+  margin-top: -7px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 253, 247, 0.75) 0%, rgba(255, 253, 247, 0) 70%);
+  pointer-events: none;
+  animation: carimbo-estourar 0.55s ease-out forwards;
+}
+
+@keyframes carimbo-estourar {
+  from {
+    transform: scale(0.4);
+    opacity: 1;
+  }
+
+  to {
+    transform: scale(7);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .btn-faca-parte.carimbando,
+  .carimbo-anel {
+    animation: none;
+  }
 }
 
 /* ── LUA ──

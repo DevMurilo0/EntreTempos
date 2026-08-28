@@ -1,0 +1,617 @@
+/* =============================================
+   FACA-PARTE.CSS — Entre Tempos · Faça Parte
+   Mesmo esqueleto visual das páginas de tópico
+   (título Bebas Neue gigante, layout assimétrico,
+   fragmentos decorativos espalhados e girados)
+   ============================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+body {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+    background: #f2e8d5;
+    font-family: 'Special Elite', serif;
+    min-height: 100vh;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: url('https://www.transparenttextures.com/patterns/aged-paper.webp');
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ── HEADER ── */
+header {
+    position: relative;
+    z-index: 10;
+    padding: 18px 30px;
+    border-bottom: 2px solid #c4a96b;
+}
+
+header a {
+    text-decoration: none;
+    color: #3e4a59;
+    font-weight: bold;
+    font-family: 'Special Elite', serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+    transition: color 0.2s;
+}
+
+header a:hover {
+    color: #c0392b;
+}
+
+/* ── TÍTULO ── */
+.page-titulo {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    padding: 30px 20px 10px;
+}
+
+.page-titulo h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(56px, 11vw, 120px);
+    color: #1a1a1a;
+    letter-spacing: 6px;
+    line-height: 1;
+    text-shadow: 4px 4px 0 #c4a96b;
+}
+
+/* entrada em "carimbo batendo": cai de cima meio torto e escala
+   além do tamanho final, depois assenta no lugar */
+.titulo-stamp {
+    animation: titulo-carimbar 0.7s cubic-bezier(.2, .8, .2, 1) both;
+}
+
+@keyframes titulo-carimbar {
+    0% {
+        opacity: 0;
+        transform: translateY(-40px) rotate(-6deg) scale(1.3);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translateY(4px) rotate(1deg) scale(0.97);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+}
+
+.page-titulo .subtitulo {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(20px, 2.6vw, 28px);
+    color: #8c3b3b;
+    margin-top: 6px;
+}
+
+.subtitulo-entra {
+    opacity: 0;
+    animation: subtitulo-surgir 0.6s ease-out 0.55s forwards;
+}
+
+@keyframes subtitulo-surgir {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.decor-coracao {
+    top: -4px;
+    right: 8%;
+    width: clamp(50px, 6vw, 80px);
+    transform: rotate(12deg);
+}
+
+/* flutuação suave e contínua nos elementos decorativos —
+   cada um com sua própria rotação de base (a mesma que já
+   tinham paradas) e duração levemente diferente, pra não
+   ficar tudo balançando sincronizado */
+.decor-coracao.flutua {
+    animation: flutuar-coracao 5s ease-in-out infinite;
+}
+
+@keyframes flutuar-coracao {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(12deg);
+    }
+
+    50% {
+        transform: translateY(-8px) rotate(16deg);
+    }
+}
+
+.decor-maorock.flutua {
+    animation: flutuar-maorock 4.2s ease-in-out infinite 0.3s;
+}
+
+@keyframes flutuar-maorock {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(-16deg);
+    }
+
+    50% {
+        transform: translateY(-8px) rotate(-12deg);
+    }
+}
+
+.decor-spray.flutua {
+    animation: flutuar-spray 5.6s ease-in-out infinite 0.6s;
+}
+
+@keyframes flutuar-spray {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(-10deg);
+    }
+
+    50% {
+        transform: translateY(-7px) rotate(-6deg);
+    }
+}
+
+.decor-bilhete.flutua {
+    animation: flutuar-bilhete 6.2s ease-in-out infinite 0.1s;
+}
+
+@keyframes flutuar-bilhete {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(8deg);
+    }
+
+    50% {
+        transform: translateY(-9px) rotate(11deg);
+    }
+}
+
+/* ── REVELAÇÃO AO ROLAR ──
+   blocos entram com fade + leve subida conforme aparecem na
+   tela (a classe "visivel" é adicionada via JS, no scroll).
+   Usa a propriedade "translate" (separada de "rotate") pra não
+   atropelar as rotações tortas que os cards já têm. */
+.reveal {
+    opacity: 0;
+    translate: 0 28px;
+    transition: opacity 0.65s ease, translate 0.65s cubic-bezier(.22, .68, 0, 1);
+}
+
+.reveal.visivel {
+    opacity: 1;
+    translate: 0 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .reveal,
+    .titulo-stamp,
+    .subtitulo-entra,
+    .decor.flutua {
+        opacity: 1;
+        animation: none;
+        transition: none;
+        translate: 0 0;
+    }
+}
+
+/* ── DIVISOR ── */
+.divisor {
+    position: relative;
+    z-index: 5;
+    width: 80%;
+    margin: 10px auto 30px;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #c0392b, #c4a96b, #c0392b, transparent);
+}
+
+.decor-maorock {
+    top: -30px;
+    left: 6%;
+    width: clamp(55px, 7vw, 85px);
+    transform: rotate(-16deg);
+}
+
+/* ── APRESENTAÇÃO — texto + figura ao lado, como o "stamp" de outras páginas ── */
+.apresentacao-section {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    align-items: flex-start;
+    gap: 50px;
+    max-width: 900px;
+    margin: 0 auto 40px;
+    padding: 0 40px;
+}
+
+.apresentacao-texto {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 10px;
+    flex: 1;
+}
+
+.apresentacao-texto p {
+    font-family: 'IM Fell English', serif;
+    font-size: clamp(15px, 1.6vw, 18px);
+    color: #3e3228;
+    line-height: 1.85;
+    text-align: justify;
+}
+
+.stamp-decor {
+    width: clamp(150px, 20vw, 230px);
+    height: auto;
+    flex-shrink: 0;
+    filter: drop-shadow(4px 6px 14px rgba(0, 0, 0, 0.3));
+    transform: rotate(4deg);
+    transition: transform 0.3s ease;
+}
+
+.stamp-decor:hover {
+    transform: scale(1.03) rotate(2deg);
+}
+
+.decor-spray {
+    bottom: -18px;
+    right: 4%;
+    width: clamp(60px, 8vw, 100px);
+    transform: rotate(-10deg);
+    opacity: 0.9;
+}
+
+/* ── O QUE VOCÊ PODE MANDAR — cards tortos, escalonados ── */
+.secao-manda {
+    position: relative;
+    z-index: 5;
+    max-width: 900px;
+    margin: 0 auto 20px;
+    padding: 0 40px;
+}
+
+.titulo-secao {
+    text-align: center;
+    margin-bottom: 34px;
+}
+
+.titulo-secao span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(24px, 3.4vw, 34px);
+    letter-spacing: 0.05em;
+    color: #8c3b3b;
+}
+
+.cards-manda {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px 26px;
+    justify-content: center;
+}
+
+.card-manda {
+    position: relative;
+    background: #fffdf7;
+    padding: 18px 20px 16px;
+    width: clamp(200px, 30%, 260px);
+    border-radius: 3px;
+    box-shadow: 3px 5px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-manda p {
+    font-family: 'IM Fell English', serif;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #3e3228;
+}
+
+.card-manda strong {
+    font-family: 'Special Elite', serif;
+    color: #8c3b3b;
+    font-style: italic;
+}
+
+.numero-card {
+    position: absolute;
+    top: -14px;
+    left: -10px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 34px;
+    color: #c4a96b;
+    opacity: 0.7;
+}
+
+.card-manda--1 {
+    rotate: -2deg;
+}
+
+.card-manda--2 {
+    rotate: 1.5deg;
+    margin-top: 18px;
+}
+
+.card-manda--3 {
+    rotate: -1deg;
+}
+
+.card-manda--4 {
+    rotate: 2deg;
+    margin-top: 10px;
+}
+
+.card-manda--5 {
+    rotate: -1.5deg;
+}
+
+.card-manda {
+    transition: rotate 0.25s ease, scale 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card-manda:hover {
+    rotate: 0deg;
+    scale: 1.05;
+    box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.22);
+}
+
+.obs-manda {
+    text-align: center;
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: #6d5c4d;
+    margin-top: 28px;
+}
+
+/* ── COMO FAZER PARTE ── */
+.secao-passos {
+    position: relative;
+    z-index: 5;
+    max-width: 700px;
+    margin: 0 auto 20px;
+    padding: 0 40px;
+}
+
+.lista-passos {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.passo {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+}
+
+.passo-numero {
+    flex-shrink: 0;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px;
+    color: #fffdf7;
+    background: #8c3b3b;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+.passo p {
+    font-family: 'IM Fell English', serif;
+    font-size: clamp(15px, 1.6vw, 18px);
+    color: #3e3228;
+    line-height: 1.6;
+    padding-top: 6px;
+}
+
+/* ── CONTATO ── */
+.secao-contato {
+    position: relative;
+    z-index: 5;
+    max-width: 900px;
+    margin: 20px auto 20px;
+    padding: 0 40px 20px;
+}
+
+.decor-bilhete {
+    position: absolute;
+    top: -50px;
+    right: 4%;
+    width: clamp(80px, 10vw, 130px);
+    transform: rotate(8deg);
+    filter: drop-shadow(3px 5px 10px rgba(0, 0, 0, 0.2));
+    opacity: 0.9;
+}
+
+.lista-pesquisadores {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+}
+
+.card-pesquisador {
+    background: #fffdf7;
+    border: 1px dashed #c4a96b;
+    border-radius: 4px;
+    padding: 26px 30px;
+    text-align: center;
+    width: clamp(220px, 40%, 280px);
+    box-shadow: 3px 5px 14px rgba(0, 0, 0, 0.12);
+    transition: rotate 0.3s ease, translate 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-pesquisador--1 {
+    rotate: -2deg;
+}
+
+.card-pesquisador--2 {
+    rotate: 2deg;
+    margin-top: 14px;
+}
+
+.card-pesquisador:hover {
+    rotate: 0deg;
+    translate: 0 -6px;
+    box-shadow: 6px 14px 26px rgba(0, 0, 0, 0.2);
+}
+
+.card-pesquisador h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 0.04em;
+    color: #3e3228;
+    margin-bottom: 6px;
+}
+
+.funcao-pesquisador {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: #6d5c4d;
+    margin-bottom: 14px;
+}
+
+.contato-pesquisador {
+    display: inline-block;
+    font-family: 'Special Elite', serif;
+    font-size: 14px;
+    color: #8c3b3b;
+    padding: 6px 16px;
+    border: 1px solid #8c3b3b;
+    border-radius: 20px;
+}
+
+/* ── RODAPÉ ── */
+.rodape-faca-parte {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    padding: 30px 20px 60px;
+    font-family: 'Special Elite', serif;
+    font-size: 12px;
+    color: #b0a090;
+    letter-spacing: 2px;
+    border-top: 1px solid #c4a96b;
+    margin-top: 40px;
+}
+
+.carimbo {
+    display: inline-block;
+    border: 3px solid #c0392b;
+    color: #c0392b;
+    padding: 4px 14px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 3px;
+    transform: rotate(-3deg);
+    opacity: 0.6;
+    margin-top: 10px;
+}
+
+/* ── FRAGMENTOS DECORATIVOS ── */
+.decor {
+    position: absolute;
+    z-index: 3;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 600px) {
+
+    .page-titulo h1 {
+        font-size: clamp(48px, 16vw, 76px);
+        letter-spacing: 3px;
+    }
+
+    .decor-coracao,
+    .decor-maorock,
+    .decor-spray,
+    .decor-bilhete {
+        display: none;
+    }
+
+    .apresentacao-section {
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+        padding: 0 20px;
+        text-align: center;
+    }
+
+    .stamp-decor {
+        width: clamp(130px, 45vw, 180px);
+        order: -1;
+    }
+
+    .apresentacao-texto p {
+        text-align: left;
+    }
+
+    .secao-manda,
+    .secao-passos,
+    .secao-contato {
+        padding: 0 20px;
+    }
+
+    .card-manda {
+        width: 100%;
+    }
+
+    .card-manda--1,
+    .card-manda--2,
+    .card-manda--3,
+    .card-manda--4,
+    .card-manda--5 {
+        transform: none;
+        margin-top: 0;
+    }
+
+    .lista-pesquisadores {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card-pesquisador {
+        width: 100%;
+    }
+
+    .card-pesquisador--1,
+    .card-pesquisador--2 {
+        transform: none;
+        margin-top: 0;
+    }
+}
