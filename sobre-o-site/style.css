@@ -570,8 +570,8 @@ img.foto-pessoa,
     transform: rotate(1deg);
 }
 
-/* ── DECORAÇÕES DA ANNA VITÓRIA ──
-   luminária, snoopy, guitarra, vagalume, sol/lua, nuvem */
+/* DECORAÇÕES DA ANNA VITÓRIA
+   luminaria, snoopy com vinil, guitarra, vagalume, sol e lua e nuvem */
 .deco-luminaria {
     top: -30px;
     left: -100px;
@@ -614,8 +614,8 @@ img.foto-pessoa,
     transform: rotate(3deg);
 }
 
-/* ── DECORAÇÕES DA CÍCERA RAMOS ──
-   gato com livros, rosto ondulado, retrato pássaros, bocas */
+/* DECORAÇÕES DA CÍCERA RAMOS
+   gato com livros, rosto ondulado, retrato de passaros e bocas */
 .deco-gatolivros {
     top: -40px;
     left: -100px;

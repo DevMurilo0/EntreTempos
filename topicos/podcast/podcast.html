@@ -15,7 +15,7 @@
 </head>
 
 <body>
-  <!-- Ajuste este link pra apontar pra página principal/índice do site. -->
+  <!-- botao pra voltar pro mapa da folha -->
   <header>
     <a href="../../folha.html">← Voltar</a>
   </header>
@@ -26,14 +26,13 @@
   </div>
   <div class="divisor"></div>
 
-  <!-- NAV DE ABAS — leva pra página de episódios (esta) e pra Bastidores,
-       onde contamos como o podcast surgiu e onde ele é gravado. -->
+  <!-- navegacao entre a lista de episodios e os bastidores das gravacoes -->
   <nav class="podcast-nav">
     <a href="podcast.html" class="podcast-nav-link ativo">Episódios</a>
     <a href="bastidores/bastidores.html" class="podcast-nav-link">Bastidores</a>
   </nav>
 
-  <!-- SEÇÃO APRESENTAÇÃO -->
+  <!-- apresentacao do podcast -->
   <section class="podcast-apresentacao">
     <h2>Um papo reto, sem microfone de mentira</h2>
     <p>
@@ -42,28 +41,20 @@
 
     </p>
 
-    <!-- decorações ao lado/dentro da apresentação -->
+    <!-- decoracoes de studio e microfone -->
     <img loading="lazy" decoding="async" src="img/on-air.webp" alt="" class="img-deco img-deco-onair">
     <img loading="lazy" decoding="async" src="img/gato-fone.webp" alt="" class="img-deco img-deco-gatofone">
     <img loading="lazy" decoding="async" src="img/wifi.webp" alt="" class="img-deco img-deco-wifi">
   </section>
 
-  <!-- BUSCA — filtra os cards em tempo real por nome, apelidos, assunto, tags ou podcast -->
+  <!-- campo de busca em tempo real pros episodios -->
   <div class="busca-podcast">
     <label for="campo-busca">Pesquisar</label>
     <input type="text" id="campo-busca" placeholder="Nome do entrevistado, apelido, assunto, podcast...">
     <p class="busca-vazio" id="busca-vazio">Nenhum episódio encontrado.</p>
   </div>
 
-  <!-- LISTA DE EPISÓDIOS
-     Para adicionar um episódio futuro: copie um dos blocos <a class="card-episodio"> abaixo.
-     Preencha os atributos data-* conforme necessário:
-     - data-nome: Nome do entrevistado
-     - data-outros-nomes: Apelidos, sobrenomes ou nomes alternativos (ex: "Jão, Joazinho, Silva")
-     - data-descricao: Resumo do episódio / assuntos tratados
-     - data-tags: Palavras-chave do episódio
-     - data-podcast: Nome do podcast/série
-     A busca aceita maiúsculas, minúsculas, palavras com ou sem acento, apelidos e trechos do texto. -->
+  <!-- lista dos episodios gravados -->
   <section class="lista-episodios" id="lista-episodios">
 
 

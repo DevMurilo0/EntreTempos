@@ -18,7 +18,7 @@
 
   <div class="pagina-livros">
 
-    <!-- Imagens decorativas — soltas na largura total da página -->
+    <!-- imagens decorativas espalhadas pelo topo e bordas -->
     <div class="deco-container">
       <img loading="lazy" decoding="async" src="img/deco_01.webp" alt="" class="img-deco img-deco-01">
       <img loading="lazy" decoding="async" src="img/deco_02.webp" alt="" class="img-deco img-deco-02">
@@ -27,7 +27,7 @@
       <img loading="lazy" decoding="async" src="img/deco_05.webp" alt="" class="img-deco img-deco-05">
     </div>
 
-    <!-- Símbolos de fundo -->
+    <!-- simbolos literarios flutuando no fundo -->
     <div class="simbolos-fundo">
       <span class="simbolo" style="top:10%;left:5%;animation-delay:0s">✦</span>
       <span class="simbolo" style="top:25%;left:90%;animation-delay:1s">❧</span>
@@ -37,6 +37,7 @@
       <span class="simbolo" style="top:38%;left:58%;animation-delay:3.5s">§</span>
     </div>
 
+    <!-- botao pra voltar pra folha -->
     <header>
       <a href="../../folha.html">← Voltar</a>
     </header>
@@ -51,10 +52,9 @@
 
       <div class="top10-wrapper">
 
-        <!-- LISTA TOP 10 -->
+        <!-- lista do top mensal recomendada pelos alunos -->
         <div class="top10-lista">
 
-          <!-- Navegação de mês -->
           <div class="nav-mes">
             <button class="seta-mes" id="seta-esq" aria-label="Mês anterior">&#8592;</button>
             <div class="top10-titulo">
@@ -64,22 +64,21 @@
             <button class="seta-mes" id="seta-dir" aria-label="Próximo mês">&#8594;</button>
           </div>
 
-          <!-- Lista gerada pelo JS -->
+          <!-- lista carregada via js -->
           <ul class="lista-livros" id="lista-livros"></ul>
 
         </div>
       </div>
     </div>
 
-  </div><!-- /.pagina-livros -->
+  </div>
 
   <div class="rodape-livros">
     <div>entre tempos · revista eletrônica</div>
     <div class="carimbo">LIVROS</div>
   </div>
 
-  <!-- MODAL — abre ao clicar em um livro da lista, mostra capa,
-     descrição e o link de download/compra daquele livro. -->
+  <!-- popup que abre ao clicar no livro pra ver resenha e link -->
   <div class="modal-livro-overlay" id="modal-livro" aria-hidden="true">
     <div class="modal-livro-caixa" role="dialog" aria-modal="true" aria-labelledby="modal-livro-titulo">
       <button class="modal-fechar" id="modal-fechar" aria-label="Fechar">&times;</button>
