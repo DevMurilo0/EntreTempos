@@ -557,11 +557,35 @@ header a:hover {
         letter-spacing: 3px;
     }
 
-    .decor-coracao,
-    .decor-maorock,
-    .decor-spray,
+    /* decorativos continuam visíveis, só menores e reposicionados
+       pra não brigar com o texto — a flutuação (translateY/rotate)
+       já funciona igual, porque essas propriedades continuam
+       controladas pelas @keyframes existentes */
+    .decor-coracao {
+        top: -8px;
+        right: 6%;
+        width: 42px;
+    }
+
+    .decor-maorock {
+        top: -22px;
+        left: 4%;
+        width: 46px;
+    }
+
+    .decor-spray {
+        top: -14px;
+        bottom: auto;
+        right: 4%;
+        left: auto;
+        width: 44px;
+        opacity: 0.85;
+    }
+
     .decor-bilhete {
-        display: none;
+        top: -34px;
+        right: 6%;
+        width: 62px;
     }
 
     .apresentacao-section {
