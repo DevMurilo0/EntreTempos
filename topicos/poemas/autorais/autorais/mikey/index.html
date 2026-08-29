@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mikey — Poemas | Entre Tempos</title>
+    <link rel="canonical" href="https://entretempos.vercel.app/topicos/poemas/autorais/autorais/mikey/index.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Caveat:wght@400;600&family=Dancing+Script:wght@400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../pessoa.css">
+</head>
+
+<body>
+    <header>
+        <a href="../autorais.html">← Voltar para Autorais</a>
+    </header>
+
+    <section class="pessoa-section">
+        <img loading="lazy" decoding="async" src="../../mikey.webp" alt="Mikey" class="foto-pessoa">
+        <div class="pessoa-info">
+            <h2 class="pessoa-nome">Mikey</h2>
+            <p class="pessoa-cargo">músico e poeta</p>
+            <p class="pessoa-bio">
+                Meu nome é Mikey, sou músico e poeta. Gosto de transformar o que sinto em poesia.
+                Nem sempre sei explicar o que passa na minha cabeça, então eu crio. Sou alguém
+                que sente muito e encontra na arte um jeito de me expressar.
+            </p>
+            <p class="pessoa-bio">
+                Ainda estou descobrindo quem sou, mas quero continuar crescendo e fazendo arte.
+            </p>
+            <p class="contador-poemas">1 poema</p>
+        </div>
+    </section>
+
+    <div class="divisor"></div>
+
+    <!-- GRID DE ENVELOPES -->
+    <section class="grade-envelopes">
+
+        <button class="envelope" data-alvo="poema-1">
+            <span class="env-numero">I</span>
+            <span class="env-titulo">A poesia pode matar?</span>
+            <span class="env-aba"></span>
+        </button>
+
+    </section>
+
+
+
+
+    <!-- ÁREA DA FOLHA — um único slot onde os poemas aparecem -->
+    <div class="area-folha" id="area-folha" aria-live="polite">
+
+        <article class="poema" id="poema-1">
+            <p class="poema-numero">Poema I</p>
+            <h3 class="poema-titulo">A poesia pode matar?</h3>
+            <p class="poema-data">escrito em — 2026</p>
+            <div class="poema-texto">
+                <p>
+                    Uma poesia doce<br>
+                    esconde um veneno sútio<br>
+                    mesmo nas palavrsa de romance.<br>
+                    A morte não é brutal,<br>
+                    e sim silenciosa<br>
+                    algo fora do normal.<br>
+                </p>
+                <p>
+                    Tão doce como uma flor<br>
+                    contando várias histórias de amor<br>
+                    mas em seus versos esconde uma gra<br>
+                    Algo tão profundo<br>
+                    que nem todo amor do mundo é capaz de esconder.<br>
+                </p>
+            </div>
+            <p class="poema-assinatura">— Mikey</p>
+            <button class="btn-like" data-like-id="poema-autoral-mikey-1" aria-label="Curtir poema"
+                aria-pressed="false">
+                <span class="like-icon">♡</span>
+                <span class="like-count">0</span>
+            </button>
+        </article>
+
+    </div>
+
+    <div class="rodape-poemas">
+        <div>entre tempos · revista eletrônica</div>
+        <div class="carimbo">POEMAS</div>
+    </div>
+
+    <script>
+        const envelopes = document.querySelectorAll('.envelope');
+        const poemas = document.querySelectorAll('.poema');
+        const areaFolha = document.getElementById('area-folha');
+
+        poemas.forEach(p => p.classList.remove('visivel'));
+        areaFolha.classList.remove('aberta');
+
+        envelopes.forEach(env => {
+            env.addEventListener('click', () => {
+                const alvoId = env.dataset.alvo;
+                const jaAtivo = env.classList.contains('ativo');
+
+                envelopes.forEach(e => e.classList.remove('ativo'));
+
+                if (jaAtivo) {
+                    poemas.forEach(p => {
+                        p.classList.remove('visivel');
+                        p.classList.add('saindo');
+                        setTimeout(() => p.classList.remove('saindo'), 400);
+                    });
+                    areaFolha.classList.remove('aberta');
+                    return;
+                }
+
+                env.classList.add('ativo');
+
+                const poemaAtivo = document.querySelector('.poema.visivel');
+                const poemaAlvo = document.getElementById(alvoId);
+
+                if (poemaAtivo && poemaAtivo !== poemaAlvo) {
+                    poemaAtivo.classList.remove('visivel');
+                    poemaAtivo.classList.add('saindo');
+                    setTimeout(() => {
+                        poemaAtivo.classList.remove('saindo');
+                        poemaAlvo.classList.add('visivel');
+                    }, 280);
+                } else {
+                    poemaAlvo.classList.add('visivel');
+                }
+
+                areaFolha.classList.add('aberta');
+            });
+        });
+    </script>
+
+    <script type="module" src="../../../../../js/likes.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => window.initLikes());
+    </script>
+</body>
+
+</html>
