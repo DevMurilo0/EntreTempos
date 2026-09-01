@@ -43,6 +43,45 @@ const filmesPorMes = {
 };
 
 
+/* =============================================
+   SISTEMA DE VOTOS — estilo Reddit
+   Cada voto fica salvo no localStorage do aparelho
+   (funciona por navegador/dispositivo, não é uma
+   conta global — cada telefone/PC guarda os seus).
+   ============================================= */
+const VOTOS_KEY = 'et_votos_filmes';
+
+function slugify(str) {
+  return (str || '')
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+}
+
+function carregarVotos() {
+  try { return JSON.parse(localStorage.getItem(VOTOS_KEY)) || {}; }
+  catch (e) { return {}; }
+}
+function salvarVotos(v) { localStorage.setItem(VOTOS_KEY, JSON.stringify(v)); }
+
+let votosState = carregarVotos();
+
+function votar(id, direcao) {
+  const atual = votosState[id] || { score: 0, meuVoto: 0 };
+  if (atual.meuVoto === direcao) {
+    // clicou de novo no mesmo botão -> remove o voto
+    atual.score -= direcao;
+    atual.meuVoto = 0;
+  } else {
+    atual.score += direcao - atual.meuVoto;
+    atual.meuVoto = direcao;
+  }
+  votosState[id] = atual;
+  salvarVotos(votosState);
+  renderizar();
+}
+
 const mesAtual = new Date().getMonth();
 let mesIndex = mesAtual;
 let filmeAberto = null;
@@ -86,14 +125,24 @@ function renderizar() {
   document.getElementById('mes-atual').textContent = meses[mesIndex];
   const lista = document.getElementById('lista-filmes');
   lista.innerHTML = '';
-  const filmes = filmesPorMes[mesIndex];
+  const filmesOriginal = filmesPorMes[mesIndex];
 
-  if (!filmes || filmes.length === 0) {
+  if (!filmesOriginal || filmesOriginal.length === 0) {
     const li = document.createElement('li');
     li.innerHTML = '<p class="vazio">Em breve os filmes deste mês!</p>';
     lista.appendChild(li);
     return;
   }
+
+  // cada filme recebe um id estável (mês + nome) pra guardar o voto dele
+  const filmes = filmesOriginal.map((f, i) => {
+    const id = `${mesIndex}-${slugify(f.nome)}`;
+    const v = votosState[id] || { score: 0, meuVoto: 0 };
+    return { ...f, id, ordemOriginal: i, score: v.score, meuVoto: v.meuVoto };
+  });
+
+  // ordena pelo placar (maior pro topo); empate mantém a ordem original
+  filmes.sort((a, b) => b.score - a.score || a.ordemOriginal - b.ordemOriginal);
 
   filmes.forEach((f, i) => {
     const li = document.createElement('li');
@@ -103,12 +152,26 @@ function renderizar() {
     if (clicavel) li.classList.add('clicavel');
 
     li.innerHTML = `
+      <div class="voto-coluna" data-id="${f.id}">
+        <button class="voto-btn voto-up ${f.meuVoto === 1 ? 'ativo' : ''}" aria-label="Votar a favor">▲</button>
+        <span class="voto-score">${f.score}</span>
+        <button class="voto-btn voto-down ${f.meuVoto === -1 ? 'ativo' : ''}" aria-label="Votar contra">▼</button>
+      </div>
       <span class="filme-num">${String(i + 1).padStart(2, '0')}</span>
       <div class="filme-info">
         <span class="filme-nome">${f.nome}</span>
         ${f.diretor ? `<span class="filme-dir">${f.diretor}</span>` : ''}
       </div>
     `;
+
+    li.querySelector('.voto-up').addEventListener('click', (e) => {
+      e.stopPropagation();
+      votar(f.id, 1);
+    });
+    li.querySelector('.voto-down').addEventListener('click', (e) => {
+      e.stopPropagation();
+      votar(f.id, -1);
+    });
 
     if (clicavel) li.addEventListener('click', () => abrirModal(f));
     lista.appendChild(li);

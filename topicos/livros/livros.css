@@ -687,3 +687,54 @@ header a:hover { color: #c0392b; }
 
 }
 /* ═══════ FIM — NÃO ADICIONE NADA DEPOIS DESTA LINHA ═══════ */
+/* =============================================
+   SISTEMA DE VOTOS — estilo Reddit
+   ============================================= */
+.voto-coluna {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 28px;
+  flex-shrink: 0;
+}
+
+.voto-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1;
+  color: #b0a090;
+  padding: 3px;
+  transition: color 0.15s, transform 0.15s;
+}
+
+.voto-btn:hover {
+  color: #c0392b;
+  transform: scale(1.2);
+}
+
+.voto-btn.voto-up.ativo {
+  color: #c0392b;
+}
+
+.voto-btn.voto-down.ativo {
+  color: #2980b9;
+}
+
+.voto-score {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 15px;
+  color: #4a3f2c;
+  min-width: 18px;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .voto-coluna { min-width: 34px; gap: 4px; }
+  .voto-btn { font-size: 20px; padding: 6px; }
+  .voto-btn:active { transform: scale(0.9); }
+  .voto-score { font-size: 17px; }
+}

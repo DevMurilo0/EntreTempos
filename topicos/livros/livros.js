@@ -92,6 +92,43 @@ const livrosPorMes = {
 
 const CAPA_PADRAO = "img/capa_destaque.webp";
 
+/* =============================================
+   SISTEMA DE VOTOS — estilo Reddit
+   Cada voto fica salvo no localStorage do aparelho
+   (por navegador/dispositivo, cada telefone/PC guarda o seu).
+   ============================================= */
+const VOTOS_KEY = 'et_votos_livros';
+
+function slugify(str) {
+  return (str || '')
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+}
+
+function carregarVotos() {
+  try { return JSON.parse(localStorage.getItem(VOTOS_KEY)) || {}; }
+  catch (e) { return {}; }
+}
+function salvarVotos(v) { localStorage.setItem(VOTOS_KEY, JSON.stringify(v)); }
+
+let votosState = carregarVotos();
+
+function votar(id, direcao) {
+  const atual = votosState[id] || { score: 0, meuVoto: 0 };
+  if (atual.meuVoto === direcao) {
+    atual.score -= direcao;
+    atual.meuVoto = 0;
+  } else {
+    atual.score += direcao - atual.meuVoto;
+    atual.meuVoto = direcao;
+  }
+  votosState[id] = atual;
+  salvarVotos(votosState);
+  renderizar();
+}
+
 const mesAtual = new Date().getMonth(); // 0–11
 let mesIndex = mesAtual;
 
@@ -143,14 +180,24 @@ function renderizar() {
   const lista = document.getElementById('lista-livros');
   lista.innerHTML = '';
 
-  const livros = livrosPorMes[mesIndex];
+  const livrosOriginal = livrosPorMes[mesIndex];
 
-  if (!livros || livros.length === 0) {
+  if (!livrosOriginal || livrosOriginal.length === 0) {
     const li = document.createElement('li');
     li.innerHTML = '<p class="vazio">Em breve os livros deste mês!</p>';
     lista.appendChild(li);
     return;
   }
+
+  // cada livro recebe um id estável (mês + título) pra guardar o voto dele
+  const livros = livrosOriginal.map((l, i) => {
+    const id = `${mesIndex}-${slugify(l.titulo)}`;
+    const v = votosState[id] || { score: 0, meuVoto: 0 };
+    return { ...l, id, ordemOriginal: i, score: v.score, meuVoto: v.meuVoto };
+  });
+
+  // ordena pelo placar (maior pro topo); empate mantém a ordem original
+  livros.sort((a, b) => b.score - a.score || a.ordemOriginal - b.ordemOriginal);
 
   livros.forEach((l, i) => {
     const num = String(i + 1).padStart(2, '0');
@@ -158,6 +205,11 @@ function renderizar() {
     li.classList.add('livro-item');
     li.style.animationDelay = `${i * 0.05}s`;
     li.innerHTML = `
+      <div class="voto-coluna" data-id="${l.id}">
+        <button class="voto-btn voto-up ${l.meuVoto === 1 ? 'ativo' : ''}" aria-label="Votar a favor">▲</button>
+        <span class="voto-score">${l.score}</span>
+        <button class="voto-btn voto-down ${l.meuVoto === -1 ? 'ativo' : ''}" aria-label="Votar contra">▼</button>
+      </div>
       <span class="livro-num">${num}</span>
       <div class="livro-info">
         <span class="livro-titulo">${l.titulo}</span>
@@ -165,6 +217,15 @@ function renderizar() {
       </div>
       <span class="livro-abrir">ver detalhes →</span>
     `;
+
+    li.querySelector('.voto-up').addEventListener('click', (e) => {
+      e.stopPropagation();
+      votar(l.id, 1);
+    });
+    li.querySelector('.voto-down').addEventListener('click', (e) => {
+      e.stopPropagation();
+      votar(l.id, -1);
+    });
 
     /* clicar no livro abre o pop-up com capa, descrição e link */
     li.addEventListener('click', () => abrirModal(l));
