@@ -531,8 +531,18 @@ header a:hover { color: #c0392b; }
   .top10-titulo .mes-label { font-size: 15px; }
 
   .musica-num     { font-size: 26px; min-width: 36px; }
-  .musica-nome    { font-size: 14px; }
-  .musica-artista { font-size: 11px; }
+  .musica-nome    {
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .musica-artista {
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
   .decoracao-direita {
     display: flex;
@@ -811,19 +821,36 @@ header a:hover { color: #c0392b; }
 }
 
 @media (max-width: 600px) {
-  .musica-item { flex-wrap: wrap; }
-  .musica-num { order: 1; }
-  .musica-info { order: 2; }
+  .musica-item {
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 6px;
+  }
+  .musica-num {
+    order: 1;
+    flex-shrink: 0;
+  }
+  .musica-info {
+    order: 2;
+    flex: 1 1 auto;
+    min-width: 0;
+    text-align: left;
+  }
   .voto-coluna {
     order: 3;
     flex-direction: row;
-    flex-basis: 100%;
-    justify-content: center;
-    min-width: 100%;
-    margin-top: 8px;
-    gap: 10px;
+    flex-basis: auto;
+    min-width: auto;
+    margin-top: 0;
+    margin-left: auto;
+    margin-right: 4px;
+    gap: 6px;
   }
-  .voto-btn { font-size: 20px; padding: 6px; }
+  .voto-btn { font-size: 18px; padding: 5px; }
   .voto-btn:active { transform: scale(0.9); }
-  .voto-score { font-size: 17px; }
+  .voto-score { font-size: 15px; }
+  .musica-toggle-icone {
+    order: 4;
+    margin-left: 0;
+  }
 }

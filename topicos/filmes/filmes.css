@@ -829,10 +829,16 @@ header a:hover {
 
   .filme-nome {
     font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .filme-dir {
     font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .modal-conteudo {
@@ -897,19 +903,32 @@ header a:hover {
 }
 
 @media (max-width: 600px) {
-  .filme-item { flex-wrap: wrap; }
-  .filme-num { order: 1; }
-  .filme-info { order: 2; }
+  .filme-item {
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 6px;
+  }
+  .filme-num {
+    order: 1;
+    flex-shrink: 0;
+  }
+  .filme-info {
+    order: 2;
+    flex: 1 1 auto;
+    min-width: 0;
+    text-align: left;
+  }
   .voto-coluna {
     order: 3;
     flex-direction: row;
-    flex-basis: 100%;
-    justify-content: center;
-    min-width: 100%;
-    margin-top: 8px;
-    gap: 10px;
+    flex-basis: auto;
+    min-width: auto;
+    margin-top: 0;
+    margin-left: auto;
+    margin-right: 4px;
+    gap: 6px;
   }
-  .voto-btn { font-size: 20px; padding: 6px; }
+  .voto-btn { font-size: 18px; padding: 5px; }
   .voto-btn:active { transform: scale(0.9); }
-  .voto-score { font-size: 17px; }
+  .voto-score { font-size: 15px; }
 }

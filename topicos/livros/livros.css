@@ -248,6 +248,9 @@ header a:hover { color: #c0392b; }
   font-size: 17px;
   color: #1a1a1a;
   font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .livro-autor {
@@ -256,6 +259,9 @@ header a:hover { color: #c0392b; }
   color: #7a6a50;
   font-style: italic;
   margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* indicador de que o item abre os detalhes ao clicar */
@@ -733,19 +739,32 @@ header a:hover { color: #c0392b; }
 }
 
 @media (max-width: 600px) {
-  .livro-item { flex-wrap: wrap; }
-  .livro-num { order: 1; }
-  .livro-info { order: 2; }
+  .livro-item {
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 6px;
+  }
+  .livro-num {
+    order: 1;
+    flex-shrink: 0;
+  }
+  .livro-info {
+    order: 2;
+    flex: 1 1 auto;
+    min-width: 0;
+    text-align: left;
+  }
   .voto-coluna {
     order: 3;
     flex-direction: row;
-    flex-basis: 100%;
-    justify-content: center;
-    min-width: 100%;
-    margin-top: 8px;
-    gap: 10px;
+    flex-basis: auto;
+    min-width: auto;
+    margin-top: 0;
+    margin-left: auto;
+    margin-right: 4px;
+    gap: 6px;
   }
-  .voto-btn { font-size: 20px; padding: 6px; }
+  .voto-btn { font-size: 18px; padding: 5px; }
   .voto-btn:active { transform: scale(0.9); }
-  .voto-score { font-size: 17px; }
+  .voto-score { font-size: 15px; }
 }
