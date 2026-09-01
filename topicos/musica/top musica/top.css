@@ -811,7 +811,18 @@ header a:hover { color: #c0392b; }
 }
 
 @media (max-width: 600px) {
-  .voto-coluna { min-width: 34px; gap: 4px; }
+  .musica-item { flex-wrap: wrap; }
+  .musica-num { order: 1; }
+  .musica-info { order: 2; }
+  .voto-coluna {
+    order: 3;
+    flex-direction: row;
+    flex-basis: 100%;
+    justify-content: center;
+    min-width: 100%;
+    margin-top: 8px;
+    gap: 10px;
+  }
   .voto-btn { font-size: 20px; padding: 6px; }
   .voto-btn:active { transform: scale(0.9); }
   .voto-score { font-size: 17px; }
