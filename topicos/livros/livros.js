@@ -115,14 +115,14 @@ function salvarVotos(v) { localStorage.setItem(VOTOS_KEY, JSON.stringify(v)); }
 
 let votosState = carregarVotos();
 
-function votar(id, direcao) {
+function votar(id) {
   const atual = votosState[id] || { score: 0, meuVoto: 0 };
-  if (atual.meuVoto === direcao) {
-    atual.score -= direcao;
+  if (atual.meuVoto === 1) {
+    atual.score -= 1;
     atual.meuVoto = 0;
   } else {
-    atual.score += direcao - atual.meuVoto;
-    atual.meuVoto = direcao;
+    atual.score += 1;
+    atual.meuVoto = 1;
   }
   votosState[id] = atual;
   salvarVotos(votosState);
@@ -208,7 +208,6 @@ function renderizar() {
       <div class="voto-coluna" data-id="${l.id}">
         <button class="voto-btn voto-up ${l.meuVoto === 1 ? 'ativo' : ''}" aria-label="Votar a favor">▲</button>
         <span class="voto-score">${l.score}</span>
-        <button class="voto-btn voto-down ${l.meuVoto === -1 ? 'ativo' : ''}" aria-label="Votar contra">▼</button>
       </div>
       <span class="livro-num">${num}</span>
       <div class="livro-info">
@@ -220,11 +219,7 @@ function renderizar() {
 
     li.querySelector('.voto-up').addEventListener('click', (e) => {
       e.stopPropagation();
-      votar(l.id, 1);
-    });
-    li.querySelector('.voto-down').addEventListener('click', (e) => {
-      e.stopPropagation();
-      votar(l.id, -1);
+      votar(l.id);
     });
 
     /* clicar no livro abre o pop-up com capa, descrição e link */

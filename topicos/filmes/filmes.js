@@ -67,15 +67,15 @@ function salvarVotos(v) { localStorage.setItem(VOTOS_KEY, JSON.stringify(v)); }
 
 let votosState = carregarVotos();
 
-function votar(id, direcao) {
+function votar(id) {
   const atual = votosState[id] || { score: 0, meuVoto: 0 };
-  if (atual.meuVoto === direcao) {
-    // clicou de novo no mesmo botão -> remove o voto
-    atual.score -= direcao;
+  if (atual.meuVoto === 1) {
+    // clicou de novo -> remove o voto
+    atual.score -= 1;
     atual.meuVoto = 0;
   } else {
-    atual.score += direcao - atual.meuVoto;
-    atual.meuVoto = direcao;
+    atual.score += 1;
+    atual.meuVoto = 1;
   }
   votosState[id] = atual;
   salvarVotos(votosState);
@@ -155,7 +155,6 @@ function renderizar() {
       <div class="voto-coluna" data-id="${f.id}">
         <button class="voto-btn voto-up ${f.meuVoto === 1 ? 'ativo' : ''}" aria-label="Votar a favor">▲</button>
         <span class="voto-score">${f.score}</span>
-        <button class="voto-btn voto-down ${f.meuVoto === -1 ? 'ativo' : ''}" aria-label="Votar contra">▼</button>
       </div>
       <span class="filme-num">${String(i + 1).padStart(2, '0')}</span>
       <div class="filme-info">
@@ -166,11 +165,7 @@ function renderizar() {
 
     li.querySelector('.voto-up').addEventListener('click', (e) => {
       e.stopPropagation();
-      votar(f.id, 1);
-    });
-    li.querySelector('.voto-down').addEventListener('click', (e) => {
-      e.stopPropagation();
-      votar(f.id, -1);
+      votar(f.id);
     });
 
     if (clicavel) li.addEventListener('click', () => abrirModal(f));

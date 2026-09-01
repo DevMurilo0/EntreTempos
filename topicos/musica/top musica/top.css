@@ -808,10 +808,6 @@ header a:hover { color: #c0392b; }
   color: #c0392b;
 }
 
-.voto-btn.voto-down.ativo {
-  color: #2980b9;
-}
-
 .voto-score {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 15px;
