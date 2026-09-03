@@ -1,6 +1,9 @@
 /* =============================================
-   LIVROS.JS — Entre Tempos · Navegação por Mês + Modal
+   LIVROS.JS — Entre Tempos · Navegação por Mês + Modal + Upvotes
    ============================================= */
+
+import { escutarUpvotes, alternarUpvote, jaVotou } from '../../js/upvotes.js';
+
 const meses = [
   "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
   "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
@@ -92,13 +95,6 @@ const livrosPorMes = {
 
 const CAPA_PADRAO = "img/capa_destaque.webp";
 
-/* =============================================
-   SISTEMA DE VOTOS — estilo Reddit
-   Cada voto fica salvo no localStorage do aparelho
-   (por navegador/dispositivo, cada telefone/PC guarda o seu).
-   ============================================= */
-const VOTOS_KEY = 'et_votos_livros';
-
 function slugify(str) {
   return (str || '')
     .toLowerCase()
@@ -107,30 +103,13 @@ function slugify(str) {
     .replace(/(^-|-$)/g, '');
 }
 
-function carregarVotos() {
-  try { return JSON.parse(localStorage.getItem(VOTOS_KEY)) || {}; }
-  catch (e) { return {}; }
-}
-function salvarVotos(v) { localStorage.setItem(VOTOS_KEY, JSON.stringify(v)); }
-
-let votosState = carregarVotos();
-
-function votar(id) {
-  const atual = votosState[id] || { score: 0, meuVoto: 0 };
-  if (atual.meuVoto === 1) {
-    atual.score -= 1;
-    atual.meuVoto = 0;
-  } else {
-    atual.score += 1;
-    atual.meuVoto = 1;
-  }
-  votosState[id] = atual;
-  salvarVotos(votosState);
-  renderizar();
-}
-
 const mesAtual = new Date().getMonth(); // 0–11
 let mesIndex = mesAtual;
+
+// caches locais por id: total de upvotes e se o usuário atual já votou
+const totaisAtuais = {};
+const votadoAtual = {};
+const votandoAgora = new Set();
 
 const modal = document.getElementById('modal-livro');
 const modalCapa = document.getElementById('modal-livro-capa');
@@ -175,39 +154,69 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') fecharModal();
 });
 
+/**
+ * Ordena os livros do mês por total de upvotes (maior primeiro).
+ * Em empate, mantém a ordem original cadastrada em livrosPorMes.
+ */
+function ordenarPorUpvotes(livros) {
+  return livros
+    .map((l, i) => ({ livro: l, i, total: totaisAtuais[l.id] ?? 0 }))
+    .sort((a, b) => b.total - a.total || a.i - b.i)
+    .map(x => x.livro);
+}
+
+async function votar(btn, id) {
+  if (votandoAgora.has(id)) return;
+  votandoAgora.add(id);
+  btn.disabled = true;
+
+  try {
+    votadoAtual[id] = await alternarUpvote(id);
+  } catch (err) {
+    console.error('[livros] erro ao votar:', id, err);
+  } finally {
+    votandoAgora.delete(id);
+    renderizar();
+  }
+}
+
 function renderizar() {
   document.getElementById('mes-atual').textContent = meses[mesIndex];
   const lista = document.getElementById('lista-livros');
   lista.innerHTML = '';
 
-  const livrosOriginal = livrosPorMes[mesIndex];
+  const livrosOriginais = livrosPorMes[mesIndex];
 
-  if (!livrosOriginal || livrosOriginal.length === 0) {
+  if (!livrosOriginais || livrosOriginais.length === 0) {
     const li = document.createElement('li');
     li.innerHTML = '<p class="vazio">Em breve os livros deste mês!</p>';
     lista.appendChild(li);
     return;
   }
 
-  // cada livro recebe um id estável (mês + título) pra guardar o voto dele
-  const livros = livrosOriginal.map((l, i) => {
-    const id = `${mesIndex}-${slugify(l.titulo)}`;
-    const v = votosState[id] || { score: 0, meuVoto: 0 };
-    return { ...l, id, ordemOriginal: i, score: v.score, meuVoto: v.meuVoto };
-  });
+  // cada livro recebe um id estável (mês + título) pra sincronizar o voto no Firestore
+  const livrosComId = livrosOriginais.map((l, i) => ({
+    ...l,
+    id: `${mesIndex}-${slugify(l.titulo)}`,
+    ordemOriginal: i
+  }));
 
-  // ordena pelo placar (maior pro topo); empate mantém a ordem original
-  livros.sort((a, b) => b.score - a.score || a.ordemOriginal - b.ordemOriginal);
+  const livros = ordenarPorUpvotes(livrosComId);
 
   livros.forEach((l, i) => {
     const num = String(i + 1).padStart(2, '0');
     const li = document.createElement('li');
     li.classList.add('livro-item');
     li.style.animationDelay = `${i * 0.05}s`;
+
+    const total = totaisAtuais[l.id] ?? 0;
+    const votado = !!votadoAtual[l.id];
+
     li.innerHTML = `
       <div class="voto-coluna" data-id="${l.id}">
-        <button class="voto-btn voto-up ${l.meuVoto === 1 ? 'ativo' : ''}" aria-label="Votar a favor">▲</button>
-        <span class="voto-score">${l.score}</span>
+        <button class="voto-btn voto-up${votado ? ' ativo' : ''}"
+          aria-label="Votar em ${l.titulo}" aria-pressed="${votado}" ${votandoAgora.has(l.id) ? 'disabled' : ''}>▲</button>
+        <span class="voto-score">${total}</span>
       </div>
       <span class="livro-num">${num}</span>
       <div class="livro-info">
@@ -217,26 +226,56 @@ function renderizar() {
       <span class="livro-abrir">ver detalhes →</span>
     `;
 
-    li.querySelector('.voto-up').addEventListener('click', (e) => {
+    const btnVoto = li.querySelector('.voto-up');
+    btnVoto.addEventListener('click', (e) => {
       e.stopPropagation();
-      votar(l.id);
+      votar(btnVoto, l.id);
     });
 
     /* clicar no livro abre o pop-up com capa, descrição e link */
-    li.addEventListener('click', () => abrirModal(l));
+    li.addEventListener('click', (e) => {
+      if (e.target.closest('.voto-coluna')) return;
+      abrirModal(l);
+    });
 
     lista.appendChild(li);
   });
 }
 
+/**
+ * Escuta em tempo real o total de upvotes de todos os livros do mês
+ * atual e confere se o usuário já votou em cada um. Sempre que um
+ * total mudar (voto próprio ou de outra pessoa), a lista é
+ * reordenada e redesenhada sozinha.
+ */
+async function carregarUpvotesDoMes() {
+  const livrosOriginais = livrosPorMes[mesIndex] || [];
+  const livros = livrosOriginais.map((l) => ({
+    ...l,
+    id: `${mesIndex}-${slugify(l.titulo)}`
+  }));
+
+  for (const l of livros) {
+    if (!(l.id in votadoAtual)) {
+      votadoAtual[l.id] = await jaVotou(l.id);
+    }
+    escutarUpvotes(l.id, (total) => {
+      totaisAtuais[l.id] = total;
+      renderizar();
+    });
+  }
+
+  renderizar();
+}
+
 document.getElementById('seta-esq').addEventListener('click', () => {
   mesIndex = (mesIndex - 1 + 12) % 12;
-  renderizar();
+  carregarUpvotesDoMes();
 });
 
 document.getElementById('seta-dir').addEventListener('click', () => {
   mesIndex = (mesIndex + 1) % 12;
-  renderizar();
+  carregarUpvotesDoMes();
 });
 
-renderizar();
+carregarUpvotesDoMes();
