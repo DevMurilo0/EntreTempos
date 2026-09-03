@@ -5,8 +5,8 @@
 import { escutarUpvotes, alternarUpvote, jaVotou } from '../../js/upvotes.js';
 
 const meses = [
-  "Janeiro","Fevereiro","Março","Abril","Maio","Junho",
-  "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"
+  "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+  "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
 ];
 
 const filmesPorMes = {
@@ -98,12 +98,12 @@ const totaisAtuais = {};
 const votadoAtual = {};
 const votandoAgora = new Set();
 
-const modal       = document.getElementById('modalFilme');
-const btnFechar   = document.getElementById('btnFechar');
+const modal = document.getElementById('modalFilme');
+const btnFechar = document.getElementById('btnFechar');
 const filmeTitulo = document.getElementById('filmeTitulo');
-const filmeDiretor= document.getElementById('filmeDiretor');
-const filmeDesc   = document.getElementById('filmeDescricao');
-const filmeTrailer= document.getElementById('filmeTrailer');
+const filmeDiretor = document.getElementById('filmeDiretor');
+const filmeDesc = document.getElementById('filmeDescricao');
+const filmeTrailer = document.getElementById('filmeTrailer');
 
 function fecharModal() {
   modal.classList.remove('ativo');
@@ -115,9 +115,9 @@ function fecharModal() {
 }
 
 function abrirModal(filme) {
-  filmeTitulo.textContent  = filme.nome;
+  filmeTitulo.textContent = filme.nome;
   filmeDiretor.textContent = filme.diretor;
-  filmeDesc.textContent    = filme.descricao;
+  filmeDesc.textContent = filme.descricao;
 
   if (filme.video) {
     filmeTrailer.src = filme.video;
@@ -199,7 +199,7 @@ function renderizar() {
     const clicavel = f.descricao && f.nome !== '—';
     if (clicavel) li.classList.add('clicavel');
 
-    const total  = totaisAtuais[f.id] ?? 0;
+    const total = totaisAtuais[f.id] ?? 0;
     const votado = !!votadoAtual[f.id];
 
     li.innerHTML = `
