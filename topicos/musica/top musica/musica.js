@@ -156,43 +156,6 @@ const musicasPorMes = {
   ],
 };
 
-/* =============================================
-   SISTEMA DE VOTOS — estilo Reddit
-   Cada voto fica salvo no localStorage do aparelho
-   (por navegador/dispositivo, cada telefone/PC guarda o seu).
-   ============================================= */
-const VOTOS_KEY = 'et_votos_musicas';
-
-function slugify(str) {
-  return (str || '')
-    .toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '');
-}
-
-function carregarVotos() {
-  try { return JSON.parse(localStorage.getItem(VOTOS_KEY)) || {}; }
-  catch (e) { return {}; }
-}
-function salvarVotos(v) { localStorage.setItem(VOTOS_KEY, JSON.stringify(v)); }
-
-let votosState = carregarVotos();
-
-function votar(id) {
-  const atual = votosState[id] || { score: 0, meuVoto: 0 };
-  if (atual.meuVoto === 1) {
-    atual.score -= 1;
-    atual.meuVoto = 0;
-  } else {
-    atual.score += 1;
-    atual.meuVoto = 1;
-  }
-  votosState[id] = atual;
-  salvarVotos(votosState);
-  renderizar();
-}
-
 const mesAtual = new Date().getMonth();
 let mesIndex = mesAtual;
 
@@ -284,32 +247,15 @@ function renderizar() {
   const lista = document.getElementById('lista-musicas');
   lista.innerHTML = '';
 
-<<<<<<< HEAD
-  const musicasOriginal = musicasPorMes[mesIndex];
-  if (!musicasOriginal || musicasOriginal.length === 0) {
-=======
   const musicasOriginais = musicasPorMes[mesIndex];
   if (!musicasOriginais || musicasOriginais.length === 0) {
->>>>>>> 92c4e3b (upvotes)
     const li = document.createElement('li');
     li.innerHTML = '<p class="vazio">Em breve as músicas deste mês!</p>';
     lista.appendChild(li);
     return;
   }
 
-<<<<<<< HEAD
-  // cada música recebe um id estável (mês + nome) pra guardar o voto dela
-  const musicas = musicasOriginal.map((m, i) => {
-    const id = `${mesIndex}-${slugify(m.nome)}`;
-    const v = votosState[id] || { score: 0, meuVoto: 0 };
-    return { ...m, id, ordemOriginal: i, score: v.score, meuVoto: v.meuVoto };
-  });
-
-  // ordena pelo placar (maior pro topo); empate mantém a ordem original
-  musicas.sort((a, b) => b.score - a.score || a.ordemOriginal - b.ordemOriginal);
-=======
   const musicas = ordenarPorUpvotes(musicasOriginais);
->>>>>>> 92c4e3b (upvotes)
 
   musicas.forEach((m, i) => {
     const num = String(i + 1).padStart(2, '0');
@@ -323,18 +269,11 @@ function renderizar() {
     const votado = !!votadoAtual[m.id];
 
     li.innerHTML = `
-<<<<<<< HEAD
-      <div class="voto-coluna" data-id="${m.id}">
-        <button class="voto-btn voto-up ${m.meuVoto === 1 ? 'ativo' : ''}" aria-label="Votar a favor">▲</button>
-        <span class="voto-score">${m.score}</span>
-      </div>
-=======
       <button class="btn-upvote${votado ? ' votado' : ''}" data-upvote-id="${m.id}"
         aria-label="Votar em ${m.nome}" aria-pressed="${votado}" ${votandoAgora.has(m.id) ? 'disabled' : ''}>
         <span class="upvote-seta">&#9650;</span>
         <span class="upvote-total">${total}</span>
       </button>
->>>>>>> 92c4e3b (upvotes)
       <span class="musica-num">${num}</span>
       <div class="musica-info">
         <span class="musica-nome">${m.nome}</span>
@@ -343,16 +282,10 @@ function renderizar() {
       ${clicavel ? `<span class="musica-toggle-icone">▶</span>` : ''}
     `;
 
-<<<<<<< HEAD
-    li.querySelector('.voto-up').addEventListener('click', (e) => {
-      e.stopPropagation();
-      votar(m.id);
-=======
     const btnUpvote = li.querySelector('.btn-upvote');
     btnUpvote.addEventListener('click', (e) => {
       e.stopPropagation();
       votar(btnUpvote, m.id);
->>>>>>> 92c4e3b (upvotes)
     });
 
     if (clicavel) {
