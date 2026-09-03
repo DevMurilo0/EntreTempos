@@ -45,7 +45,9 @@ header a {
   transition: color 0.2s;
 }
 
-header a:hover { color: #c0392b; }
+header a:hover {
+  color: #c0392b;
+}
 
 .page-titulo {
   position: relative;
@@ -136,8 +138,14 @@ header a:hover { color: #c0392b; }
   line-height: 1;
 }
 
-.seta-mes:hover { background: #922b21; transform: scale(1.1); }
-.seta-mes:active { transform: scale(0.93); }
+.seta-mes:hover {
+  background: #922b21;
+  transform: scale(1.1);
+}
+
+.seta-mes:active {
+  transform: scale(0.93);
+}
 
 .top10-wrapper {
   display: flex;
@@ -160,7 +168,7 @@ header a:hover { color: #c0392b; }
 
 .musica-item {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 12px;
   padding: 12px 0;
   border-bottom: 1px dashed #c4a96b;
@@ -168,11 +176,83 @@ header a:hover { color: #c0392b; }
   animation: entrar 0.35s ease both;
 }
 
-.musica-item:hover { transform: translateX(6px); }
+/* ── BOTÃO DE UPVOTE (estilo reddit) ── */
+.btn-upvote {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  min-width: 34px;
+  padding: 4px 2px;
+  font-family: 'Bebas Neue', sans-serif;
+  color: #a89878;
+  transition: color 0.15s, transform 0.15s;
+}
+
+.btn-upvote:hover {
+  color: #c0392b;
+  transform: translateY(-2px);
+}
+
+.btn-upvote:active {
+  transform: translateY(0) scale(0.9);
+}
+
+.btn-upvote:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.btn-upvote .upvote-seta {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.btn-upvote .upvote-total {
+  font-size: 13px;
+  min-width: 18px;
+}
+
+.btn-upvote.votado {
+  color: #c0392b;
+}
+
+@keyframes upvotePulso {
+  0% {
+    transform: scale(1);
+  }
+
+  40% {
+    transform: scale(1.35);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.btn-upvote.votado .upvote-seta {
+  animation: upvotePulso 0.3s ease;
+}
+
+.musica-item:hover {
+  transform: translateX(6px);
+}
 
 @keyframes entrar {
-  from { opacity: 0; transform: translateX(-18px); }
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .musica-num {
@@ -183,7 +263,10 @@ header a:hover { color: #c0392b; }
   line-height: 1;
 }
 
-.musica-info { display: flex; flex-direction: column; }
+.musica-info {
+  display: flex;
+  flex-direction: column;
+}
 
 .musica-nome {
   font-family: 'Special Elite', serif;
@@ -230,7 +313,7 @@ header a:hover { color: #c0392b; }
   width: 220px;
   transform: rotate(-8deg);
   opacity: 0.85;
-  filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.18));
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.18));
 }
 
 .img-mulher {
@@ -238,7 +321,7 @@ header a:hover { color: #c0392b; }
   left: -70px;
   width: 170px;
   transform: rotate(3deg);
-  filter: drop-shadow(3px 3px 10px rgba(0,0,0,0.35)) grayscale(20%);
+  filter: drop-shadow(3px 3px 10px rgba(0, 0, 0, 0.35)) grayscale(20%);
 }
 
 .img-caixasom {
@@ -246,7 +329,7 @@ header a:hover { color: #c0392b; }
   left: -90px;
   width: 180px;
   transform: rotate(5deg);
-  filter: drop-shadow(4px 4px 12px rgba(0,0,0,0.3));
+  filter: drop-shadow(4px 4px 12px rgba(0, 0, 0, 0.3));
   opacity: 0.9;
 }
 
@@ -263,7 +346,7 @@ header a:hover { color: #c0392b; }
   left: -30px;
   width: 150px;
   transform: rotate(-5deg);
-  filter: drop-shadow(2px 2px 6px rgba(0,0,0,0.2));
+  filter: drop-shadow(2px 2px 6px rgba(0, 0, 0, 0.2));
 }
 
 .img-bad {
@@ -271,7 +354,7 @@ header a:hover { color: #c0392b; }
   right: -30px;
   width: 160px;
   transform: rotate(8deg);
-  filter: drop-shadow(3px 3px 8px rgba(0,0,0,0.25));
+  filter: drop-shadow(3px 3px 8px rgba(0, 0, 0, 0.25));
 }
 
 .img-rita-silhueta {
@@ -279,7 +362,7 @@ header a:hover { color: #c0392b; }
   right: -30px;
   width: 130px;
   transform: rotate(-4deg);
-  filter: drop-shadow(3px 3px 6px rgba(0,0,0,0.2));
+  filter: drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.2));
   opacity: 0.7;
 }
 
@@ -288,7 +371,7 @@ header a:hover { color: #c0392b; }
   right: -10px;
   width: 100px;
   transform: rotate(4deg);
-  filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.15));
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.15));
 }
 
 .img-monstro {
@@ -304,7 +387,7 @@ header a:hover { color: #c0392b; }
   right: -50px;
   width: 130px;
   transform: rotate(5deg);
-  filter: drop-shadow(2px 2px 8px rgba(0,0,0,0.3));
+  filter: drop-shadow(2px 2px 8px rgba(0, 0, 0, 0.3));
 }
 
 .img-preta-gil {
@@ -312,21 +395,26 @@ header a:hover { color: #c0392b; }
   left: -190px;
   width: 310px;
   transform: rotate(-90deg);
-  filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3));
 }
 
 /* ─── CD RITA LEE ─── */
 .cd-destaque {
   width: 200px;
   margin: 0 auto;
-  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.4));
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.4));
   cursor: pointer;
   /* sem transform fixo e sem transition para não brigar com a animação */
 }
 
 @keyframes girar-cd {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(1080deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(1080deg);
+  }
 }
 
 .cd-destaque.girando {
@@ -335,14 +423,16 @@ header a:hover { color: #c0392b; }
 
 .foto-homem {
   width: 150px;
-  filter: drop-shadow(3px 3px 10px rgba(0,0,0,0.4));
+  filter: drop-shadow(3px 3px 10px rgba(0, 0, 0, 0.4));
   transform: rotate(5deg);
 }
 
 .notas-musicais {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   z-index: 1;
   overflow: hidden;
@@ -357,8 +447,15 @@ header a:hover { color: #c0392b; }
 }
 
 @keyframes flutuar {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50%       { transform: translateY(-20px) rotate(10deg); }
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-20px) rotate(10deg);
+  }
 }
 
 .rodape-musica {
@@ -465,49 +562,58 @@ header a:hover { color: #c0392b; }
     width: 72px !important;
     transform: rotate(-8deg) !important;
     opacity: 0.85;
-    filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.18)) !important;
+    filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.18)) !important;
   }
+
   .img-mulher {
     width: 68px !important;
     transform: rotate(3deg) !important;
-    filter: drop-shadow(2px 2px 8px rgba(0,0,0,0.35)) grayscale(20%) !important;
+    filter: drop-shadow(2px 2px 8px rgba(0, 0, 0, 0.35)) grayscale(20%) !important;
   }
+
   .img-caixasom {
     width: 66px !important;
     transform: rotate(5deg) !important;
     opacity: 0.9;
-    filter: drop-shadow(3px 3px 10px rgba(0,0,0,0.3)) !important;
+    filter: drop-shadow(3px 3px 10px rgba(0, 0, 0, 0.3)) !important;
   }
+
   .img-monstro {
     width: 68px !important;
     transform: rotate(-6deg) !important;
     opacity: 0.8;
   }
+
   .img-nirvana {
     width: 64px !important;
     transform: rotate(6deg) !important;
-    filter: drop-shadow(0 0 8px rgba(255,238,0,0.5)) !important;
+    filter: drop-shadow(0 0 8px rgba(255, 238, 0, 0.5)) !important;
   }
+
   .img-queen {
     width: 70px !important;
     transform: rotate(-5deg) !important;
-    filter: drop-shadow(2px 2px 6px rgba(0,0,0,0.2)) !important;
+    filter: drop-shadow(2px 2px 6px rgba(0, 0, 0, 0.2)) !important;
   }
+
   .img-bad {
     width: 68px !important;
     transform: rotate(8deg) !important;
-    filter: drop-shadow(3px 3px 8px rgba(0,0,0,0.25)) !important;
+    filter: drop-shadow(3px 3px 8px rgba(0, 0, 0, 0.25)) !important;
   }
+
   .img-mascara {
     width: 62px !important;
     transform: rotate(5deg) !important;
-    filter: drop-shadow(2px 2px 8px rgba(0,0,0,0.3)) !important;
+    filter: drop-shadow(2px 2px 8px rgba(0, 0, 0, 0.3)) !important;
   }
+
   .img-gal {
     width: 58px !important;
     transform: rotate(4deg) !important;
-    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.15)) !important;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.15)) !important;
   }
+
   .img-rita-silhueta {
     width: 62px !important;
     transform: rotate(-4deg) !important;
@@ -525,11 +631,12 @@ header a:hover { color: #c0392b; }
     width: 100%;
   }
 
-  .nav-mes        { gap: 8px; margin-bottom: 16px; }
-  .seta-mes       { width: 30px; height: 30px; font-size: 14px; }
-  .top10-titulo   { font-size: 32px; }
-  .top10-titulo .mes-label { font-size: 15px; }
+  .nav-mes {
+    gap: 8px;
+    margin-bottom: 16px;
+  }
 
+<<<<<<< HEAD
   .musica-num     { font-size: 26px; min-width: 36px; }
   .musica-nome    {
     font-size: 14px;
@@ -542,6 +649,45 @@ header a:hover { color: #c0392b; }
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+=======
+  .seta-mes {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+
+  .top10-titulo {
+    font-size: 32px;
+  }
+
+  .top10-titulo .mes-label {
+    font-size: 15px;
+  }
+
+  .musica-num {
+    font-size: 26px;
+    min-width: 36px;
+  }
+
+  .musica-nome {
+    font-size: 14px;
+  }
+
+  .musica-artista {
+    font-size: 11px;
+  }
+
+  .btn-upvote {
+    min-width: 28px;
+  }
+
+  .btn-upvote .upvote-seta {
+    font-size: 14px;
+  }
+
+  .btn-upvote .upvote-total {
+    font-size: 11px;
+>>>>>>> 92c4e3b (upvotes)
   }
 
   .decoracao-direita {
@@ -554,8 +700,13 @@ header a:hover { color: #c0392b; }
     padding: 0 8px;
   }
 
-  .cd-destaque { width: 100px; }
-  .foto-homem  { width: 80px; }
+  .cd-destaque {
+    width: 100px;
+  }
+
+  .foto-homem {
+    width: 80px;
+  }
 }
 
 /* ─── PAINEL DE CLIPE + DESCRIÇÃO ─── */
@@ -601,13 +752,15 @@ header a:hover { color: #c0392b; }
   height: 0;
   border-radius: 4px;
   overflow: hidden;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 
 .musica-video iframe {
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   border: none;
 }
 
@@ -633,9 +786,11 @@ header a:hover { color: #c0392b; }
     padding: 12px;
     gap: 12px;
   }
+
   .musica-desc {
     font-size: 13px;
   }
+
   .musica-toggle-icone {
     font-size: 10px;
   }
@@ -674,7 +829,7 @@ header a:hover { color: #c0392b; }
   padding: 32px 28px 28px;
   max-width: 480px;
   width: 90%;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   transform: translateY(20px);
   transition: transform 0.3s ease;
   font-family: 'Special Elite', serif;
@@ -697,7 +852,9 @@ header a:hover { color: #c0392b; }
   transition: color 0.2s;
 }
 
-.modal-fechar:hover { color: #c0392b; }
+.modal-fechar:hover {
+  color: #c0392b;
+}
 
 .modal-cabecalho {
   display: flex;
@@ -744,7 +901,7 @@ header a:hover { color: #c0392b; }
   letter-spacing: 2px;
   border-radius: 3px;
   transition: background 0.2s, transform 0.15s;
-  box-shadow: 0 4px 14px rgba(192,57,43,0.4);
+  box-shadow: 0 4px 14px rgba(192, 57, 43, 0.4);
   margin-bottom: 20px;
 }
 
@@ -770,6 +927,7 @@ header a:hover { color: #c0392b; }
   .modal-caixa {
     padding: 24px 18px 22px;
   }
+<<<<<<< HEAD
   .modal-nome { font-size: 22px; }
   .modal-botao-yt { font-size: 17px; padding: 12px; }
   .modal-desc { font-size: 13px; }
@@ -850,3 +1008,19 @@ header a:hover { color: #c0392b; }
     margin-left: 0;
   }
 }
+=======
+
+  .modal-nome {
+    font-size: 22px;
+  }
+
+  .modal-botao-yt {
+    font-size: 17px;
+    padding: 12px;
+  }
+
+  .modal-desc {
+    font-size: 13px;
+  }
+}
+>>>>>>> 92c4e3b (upvotes)

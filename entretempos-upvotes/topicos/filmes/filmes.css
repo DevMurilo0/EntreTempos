@@ -884,16 +884,10 @@ header a:hover {
 
   .filme-nome {
     font-size: 14px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   .filme-dir {
     font-size: 11px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   .modal-conteudo {
@@ -911,75 +905,4 @@ header a:hover {
   .modal-trailer video {
     max-height: 220px;
   }
-}
-/* =============================================
-   SISTEMA DE VOTOS — estilo Reddit
-   ============================================= */
-.voto-coluna {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  min-width: 28px;
-  flex-shrink: 0;
-}
-
-.voto-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 13px;
-  line-height: 1;
-  color: #b0a090;
-  padding: 3px;
-  transition: color 0.15s, transform 0.15s;
-}
-
-.voto-btn:hover {
-  color: #c0392b;
-  transform: scale(1.2);
-}
-
-.voto-btn.voto-up.ativo {
-  color: #c0392b;
-}
-
-.voto-score {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 15px;
-  color: #4a3f2c;
-  min-width: 18px;
-  text-align: center;
-}
-
-@media (max-width: 600px) {
-  .filme-item {
-    flex-wrap: nowrap;
-    align-items: center;
-    gap: 6px;
-  }
-  .filme-num {
-    order: 1;
-    flex-shrink: 0;
-  }
-  .filme-info {
-    order: 2;
-    flex: 1 1 auto;
-    min-width: 0;
-    text-align: left;
-  }
-  .voto-coluna {
-    order: 3;
-    flex-direction: row;
-    flex-basis: auto;
-    min-width: auto;
-    margin-top: 0;
-    margin-left: auto;
-    margin-right: 4px;
-    gap: 6px;
-  }
-  .voto-btn { font-size: 18px; padding: 5px; }
-  .voto-btn:active { transform: scale(0.9); }
-  .voto-score { font-size: 15px; }
 }

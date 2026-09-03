@@ -1,6 +1,9 @@
 /* =============================================
-   MUSICA.JS — Entre Tempos · Navegação por Mês
+   MUSICA.JS — Entre Tempos · Navegação por Mês + Upvotes
    ============================================= */
+
+import { escutarUpvotes, alternarUpvote, jaVotou } from '../../../js/upvotes.js';
+
 const meses = [
   "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
   "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
@@ -9,60 +12,70 @@ const meses = [
 const musicasPorMes = {
   7: [ // Agosto (índice 0–11)
     {
+      id: "musica-vento-ventania",
       nome: "Vento Ventania",
       artista: "Biquini Cavadão",
       video: "video/Vento Ventania.mp4",
       descricao: "A música surge em um momento em que o Rock já havia passado por um boom, Vento Ventania deu um up e capturou um sentimento universal: a vontade de sumir em momentos de crise. O vento é uma personificação, a ele é pedido para que seja o guia de uma viagem sem roteiro, sem obrigações e sem, em alguns casos, passagens de volta. O compositor dessa letra, Bruno Gouveia, em homenagem ao filho de 2 anos e 10 meses que morreu em decorrência de um acidente de helicóptero, cantou essa música no dia do velório de Gabriel, o filho dele."
     },
     {
+      id: "musica-ze-ninguem",
       nome: "Zé Ninguém",
       artista: "Biquini Cavadão",
       video: "video/Zé Ninguém.mp4",
       descricao: "Em 1990 o Brasil estava passando por um momento difícil e histórico, o confisco das poupanças pelo governo Fernando Collor de Melo. Cenário marcado por forte crise econômica, inflação alta, desilusão política e o contraste entre o que era dito oficialmente e a verdadeira realidade do povo brasileiro. A música já foi usada em protesto de esquerda e de direita."
     },
     {
+      id: "musica-conselho",
       nome: "Conselho",
       artista: "Fundo de Quintal",
       video: "video/Conselho.mp4",
       descricao: "Você está na bad? Escuta o samba Conselho. A letra foi composta por Almir Guineto, em 1986, e nasceu de uma discussão criativa entre os autores. Essa música virou um verdadeiro hino contra o baixo astral."
     },
     {
+      id: "musica-pra-melhorar",
       nome: "Pra Melhorar",
       artista: "Marisa Monte, Seu Jorge e Flor Maria",
       video: "video/Pra Melhorar.mp4",
       descricao: "A letra nasceu de um encontro musical nos Estados Unidos entre Marisa, Seu Jorge e a jovem Flor Maria Jorge, quando ela tinha apenas 12 anos. A mensagem central da letra fala sobre dias melhores, superação de tempestades e renovação da esperança."
     },
     {
+      id: "musica-sol-de-giz-de-cera",
       nome: "Sol de Giz de Cera",
       artista: "Emicida",
       video: "video/Sol de Giz de Cera.mp4",
       descricao: "Homenagem lúdica à Estela, filha de Emicida. A letra retrata a paternidade ativa e imaginativa, onde o pai vira \"rei, pirata e samurai\" e enfrenta o dia a dia duro (\"Dom Quixote doidão, de espada na mão\") para voltar para casa com a filha. Um bom exemplo de intertextualidade com a obra literária \"Dom Quixote\", de Miguel de Cervantes."
     },
     {
+      id: "musica-conversas-de-botas-batidas",
       nome: "Conversas de Botas Batidas",
       artista: "Los Hermanos",
       video: "video/Conversas de Botas Batidas.mp4",
       descricao: "A letra foi inspirada no desabamento real do Hotel Linda do Rosário, no Rio de Janeiro, ocorrido em setembro de 2002. Minutos antes da queda, os estalos chamaram atenção dos moradores; o porteiro, preocupado, bateu de porta em porta para que todos saíssem. Nos escombros estavam os corpos de um casal abraçado, dois amantes que se encontravam às escondidas no hotel. Marcelo Camelo criou um diálogo entre os apaixonados ao ouvirem as batidas. A canção dialoga com a obra \"Linda do Rosário\", de Adriana Varejão, exposta em Brumadinho."
     },
     {
+      id: "musica-so-os-loucos-sabem",
       nome: "Só os Loucos Sabem",
       artista: "Charlie Brown Jr.",
       video: "video/Só os Loucos Sabem.mp4",
       descricao: "Inspirada na transformação de um amigo de longa data que mudou de vida ao encontrar paz espiritual, além de refletir a dualidade do próprio Chorão, que parecia durão por fora, mas era sensível por dentro. Ele recebeu a música em um show quando uma fã mostrou um folder do irmão dela, falecido e fã da banda. A história dessa e de outras letras de Chorão está no livro escrito por Gazon: \"Se não eu, quem vai fazer você feliz?\""
     },
     {
+      id: "musica-manguetown",
       nome: "Manguetown",
       artista: "Chico Science",
       video: "video/Manguetown.mp4",
       descricao: "Manguetown é uma música de protesto contra a degradação dos mangues na cidade de Recife. O mangue serve de sustento para muitas famílias. Por meio da canção, Chico Science traduz em som e poesia a identidade, os contrastes e a realidade urbana periférica de Recife, retratada no trecho \"onde os urubus têm casa e eu não tenho asas\"."
     },
     {
+      id: "musica-negro-drama",
       nome: "Negro Drama",
       artista: "Racionais MC's",
       video: "video/Negro Drama.mp4",
       descricao: "A letra retrata com crueza a realidade do negro no Brasil, unindo vivências de exclusão social, racismo, pobreza, violência urbana e a ascensão financeira conquistada por meio do rap."
     },
     {
+      id: "musica-que-pais-e-este",
       nome: "Que País é Este",
       artista: "Legião Urbana",
       video: "video/Que País é Este.mp4",
@@ -71,60 +84,70 @@ const musicasPorMes = {
   ],
   5: [ // Junho (índice 0–11)
     {
+      id: "musica-oracao-ao-tempo",
       nome: "Oração Ao Tempo",
       artista: "Cateano Veloso",
       video: "mp4/Caetano Veloso - Oração Ao Tempo.mp4",
       descricao: "Uma música poética que trata o tempo como uma força viva, capaz de transformar tudo ao nosso redor. Caetano fala sobre as mudanças que acontecem com o passar dos anos, mostrando que o tempo carrega memórias, aprendizados e novas possibilidades."
     },
     {
+      id: "musica-epitafio",
       nome: "Epitáfio",
       artista: "Titãs",
       video: "mp4/Epitafio.mp4",
       descricao: "A canção apresenta uma reflexão sobre a vida, escolhas e arrependimentos. A letra imagina uma pessoa olhando para sua própria história e pensando nas coisas que poderia ter feito, trazendo uma mensagem sobre aproveitar melhor o presente."
     },
     {
+      id: "musica-era-uma-vez",
       nome: "Era Uma Vez",
       artista: "Kell Smith",
       video: "mp4/Kell Smith - Era Uma Vez.mp4",
       descricao: "Uma música marcada pela nostalgia, que relembra a infância, os sonhos e a inocência de tempos passados. A canção fala sobre como crescemos e mudamos, mas algumas lembranças continuam fazendo parte de quem somos."
     },
     {
+      id: "musica-poema",
       nome: "Poema",
       artista: "Ney Matogrosso",
       video: "mp4/Poema.mp4",
       descricao: "Uma música sensível e cheia de expressão artística, que utiliza a poesia para transmitir emoções profundas. A obra traz uma atmosfera reflexiva, falando sobre sentimentos, experiências e a forma como enxergamos a vida."
     },
     {
+      id: "musica-por-onde-andei",
       nome: "Por Onde Andei",
       artista: "Nando Reis",
       video: "mp4/Por Onde Andei.mp4",
       descricao: "A música fala sobre caminhos percorridos, lembranças e a busca por respostas dentro de si mesmo. A letra transmite uma sensação de saudade e reflexão sobre momentos, pessoas e lugares que fizeram parte da trajetória de alguém."
     },
     {
+      id: "musica-preciso-me-encontrar",
       nome: "Preciso Me Encontrar",
       artista: "Cartola",
       video: "mp4/Preciso me encontrar.mp4",
       descricao: "Uma das grandes obras da música brasileira sobre autoconhecimento. A canção fala sobre a necessidade de se afastar, refletir e descobrir a própria identidade, mostrando sentimentos de solidão, mudança e busca por paz interior."
     },
     {
+      id: "musica-tempo-perdido",
       nome: "Tempo Perdido",
       artista: "Legião Urbana",
       video: "mp4/Tempo perdido.mp4",
       descricao: "Uma música que aborda a passagem do tempo, a juventude e as incertezas da vida. Apesar do título, a mensagem mostra que sempre existe a oportunidade de recomeçar e valorizar os momentos que ainda temos."
     },
     {
+      id: "musica-tempos-modernos",
       nome: "Tempos Modernos",
       artista: "Lulu Santos",
       video: "mp4/Tempos Modernos.mp4",
       descricao: "Uma canção que transmite esperança e otimismo diante das mudanças do mundo. Lulu Santos fala sobre acreditar no futuro e buscar dias melhores, mesmo em meio às dificuldades da vida moderna."
     },
     {
+      id: "musica-terras-de-gigantes",
       nome: "Terras De Gigantes",
       artista: "Engenheiros do Hawaii",
       video: "mp4/Terra de Gigantes.mp4",
       descricao: "A música apresenta uma reflexão sobre amadurecimento e sobre viver em um mundo cheio de desafios. A letra fala sobre crescimento, sonhos e a sensação de tentar encontrar seu espaço em uma realidade cada vez mais complexa."
     },
     {
+      id: "musica-velha-infancia",
       nome: "Velha Infancia",
       artista: "Tribalistas",
       video: "mp4/Tribalistas - Velha Infancia.mp4",
@@ -172,6 +195,11 @@ function votar(id) {
 
 const mesAtual = new Date().getMonth();
 let mesIndex = mesAtual;
+
+// caches locais por id: total de upvotes e se o usuário atual já votou
+const totaisAtuais = {};
+const votadoAtual = {};
+const votandoAgora = new Set();
 
 /* ── MODAL ── */
 function abrirModal(musica) {
@@ -223,6 +251,32 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') fecharModal();
 });
 
+/**
+ * Ordena as músicas do mês por total de upvotes (maior primeiro).
+ * Em empate, mantém a ordem original cadastrada em musicasPorMes.
+ */
+function ordenarPorUpvotes(musicas) {
+  return musicas
+    .map((m, i) => ({ musica: m, i, total: totaisAtuais[m.id] ?? 0 }))
+    .sort((a, b) => b.total - a.total || a.i - b.i)
+    .map(x => x.musica);
+}
+
+async function votar(btn, id) {
+  if (votandoAgora.has(id)) return;
+  votandoAgora.add(id);
+  btn.disabled = true;
+
+  try {
+    votadoAtual[id] = await alternarUpvote(id);
+  } catch (err) {
+    console.error('[musica] erro ao votar:', id, err);
+  } finally {
+    votandoAgora.delete(id);
+    renderizar();
+  }
+}
+
 /* ── RENDERIZAR LISTA ── */
 function renderizar() {
   document.getElementById('mes-atual').textContent = meses[mesIndex];
@@ -230,14 +284,20 @@ function renderizar() {
   const lista = document.getElementById('lista-musicas');
   lista.innerHTML = '';
 
+<<<<<<< HEAD
   const musicasOriginal = musicasPorMes[mesIndex];
   if (!musicasOriginal || musicasOriginal.length === 0) {
+=======
+  const musicasOriginais = musicasPorMes[mesIndex];
+  if (!musicasOriginais || musicasOriginais.length === 0) {
+>>>>>>> 92c4e3b (upvotes)
     const li = document.createElement('li');
     li.innerHTML = '<p class="vazio">Em breve as músicas deste mês!</p>';
     lista.appendChild(li);
     return;
   }
 
+<<<<<<< HEAD
   // cada música recebe um id estável (mês + nome) pra guardar o voto dela
   const musicas = musicasOriginal.map((m, i) => {
     const id = `${mesIndex}-${slugify(m.nome)}`;
@@ -247,6 +307,9 @@ function renderizar() {
 
   // ordena pelo placar (maior pro topo); empate mantém a ordem original
   musicas.sort((a, b) => b.score - a.score || a.ordemOriginal - b.ordemOriginal);
+=======
+  const musicas = ordenarPorUpvotes(musicasOriginais);
+>>>>>>> 92c4e3b (upvotes)
 
   musicas.forEach((m, i) => {
     const num = String(i + 1).padStart(2, '0');
@@ -256,11 +319,22 @@ function renderizar() {
 
     const clicavel = (m.video || m.descricao) && m.nome !== '—';
 
+    const total = totaisAtuais[m.id] ?? 0;
+    const votado = !!votadoAtual[m.id];
+
     li.innerHTML = `
+<<<<<<< HEAD
       <div class="voto-coluna" data-id="${m.id}">
         <button class="voto-btn voto-up ${m.meuVoto === 1 ? 'ativo' : ''}" aria-label="Votar a favor">▲</button>
         <span class="voto-score">${m.score}</span>
       </div>
+=======
+      <button class="btn-upvote${votado ? ' votado' : ''}" data-upvote-id="${m.id}"
+        aria-label="Votar em ${m.nome}" aria-pressed="${votado}" ${votandoAgora.has(m.id) ? 'disabled' : ''}>
+        <span class="upvote-seta">&#9650;</span>
+        <span class="upvote-total">${total}</span>
+      </button>
+>>>>>>> 92c4e3b (upvotes)
       <span class="musica-num">${num}</span>
       <div class="musica-info">
         <span class="musica-nome">${m.nome}</span>
@@ -269,31 +343,64 @@ function renderizar() {
       ${clicavel ? `<span class="musica-toggle-icone">▶</span>` : ''}
     `;
 
+<<<<<<< HEAD
     li.querySelector('.voto-up').addEventListener('click', (e) => {
       e.stopPropagation();
       votar(m.id);
+=======
+    const btnUpvote = li.querySelector('.btn-upvote');
+    btnUpvote.addEventListener('click', (e) => {
+      e.stopPropagation();
+      votar(btnUpvote, m.id);
+>>>>>>> 92c4e3b (upvotes)
     });
 
     if (clicavel) {
       li.classList.add('clicavel');
-      li.addEventListener('click', () => abrirModal(m));
+      li.addEventListener('click', (e) => {
+        if (e.target.closest('.btn-upvote')) return;
+        abrirModal(m);
+      });
     }
 
     lista.appendChild(li);
   });
 }
 
+/**
+ * Escuta em tempo real o total de upvotes de todas as músicas do mês
+ * atual e confere se o usuário já votou em cada uma. Sempre que um
+ * total mudar (voto próprio ou de outra pessoa), a lista é
+ * reordenada e redesenhada sozinha — é isso que faz a música com mais
+ * upvotes subir pro topo do TOP 10.
+ */
+async function carregarUpvotesDoMes() {
+  const musicas = musicasPorMes[mesIndex] || [];
+
+  for (const m of musicas) {
+    if (!(m.id in votadoAtual)) {
+      votadoAtual[m.id] = await jaVotou(m.id);
+    }
+    escutarUpvotes(m.id, (total) => {
+      totaisAtuais[m.id] = total;
+      renderizar();
+    });
+  }
+
+  renderizar();
+}
+
 document.getElementById('seta-esq').addEventListener('click', () => {
   mesIndex = (mesIndex - 1 + 12) % 12;
-  renderizar();
+  carregarUpvotesDoMes();
 });
 
 document.getElementById('seta-dir').addEventListener('click', () => {
   mesIndex = (mesIndex + 1) % 12;
-  renderizar();
+  carregarUpvotesDoMes();
 });
 
-renderizar();
+carregarUpvotesDoMes();
 
 /* ── CD RITA LEE: clique para girar 3 voltas e parar ── */
 const cd = document.querySelector('.cd-destaque');
