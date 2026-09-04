@@ -2,7 +2,7 @@
    FILMES.JS — Entre Tempos · TOP 5 + Modal + Upvotes
    ============================================= */
 
-import { escutarUpvotes, alternarUpvote, jaVotou } from '../../js/upvotes.js';
+import { escutarUpvotes, alternarUpvote, jaVotou, pararTodosListeners } from '../../js/upvotes.js';
 
 const meses = [
   "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
@@ -57,6 +57,7 @@ let filmeAberto = null;
 const totaisAtuais = {};
 const votadoAtual = {};
 const votandoAgora = new Set();
+let carregamentoDoMes = 0;
 
 const modal = document.getElementById('modalFilme');
 const btnFechar = document.getElementById('btnFechar');
@@ -119,7 +120,7 @@ async function votar(btn, id) {
   }
 }
 
-function renderizar() {
+function renderizar(animar = false) {
   document.getElementById('mes-atual').textContent = meses[mesIndex];
   const lista = document.getElementById('lista-filmes');
   lista.innerHTML = '';
@@ -138,7 +139,8 @@ function renderizar() {
   filmes.forEach((f, i) => {
     const li = document.createElement('li');
     li.classList.add('filme-item');
-    li.style.animationDelay = `${i * 0.05}s`;
+    li.style.animation = animar ? '' : 'none';
+    if (animar) li.style.animationDelay = `${i * 0.05}s`;
     const clicavel = f.descricao && f.nome !== '—';
     if (clicavel) li.classList.add('clicavel');
 
@@ -183,19 +185,27 @@ function renderizar() {
  * upvotes subir pro "TOP 1".
  */
 async function carregarUpvotesDoMes() {
+  const carregamentoAtual = ++carregamentoDoMes;
   const filmes = filmesPorMes[mesIndex] || [];
+  pararTodosListeners();
+
+  // O conteúdo do mês não depende da rede: mostre-o imediatamente.
+  renderizar(true);
 
   for (const f of filmes) {
-    if (!(f.id in votadoAtual)) {
-      votadoAtual[f.id] = await jaVotou(f.id);
-    }
     escutarUpvotes(f.id, (total) => {
       totaisAtuais[f.id] = total;
       renderizar();
     });
   }
 
-  renderizar();
+  await Promise.all(filmes.map(async (f) => {
+    if (f.id in votadoAtual) return;
+    const votou = await jaVotou(f.id);
+    if (carregamentoAtual === carregamentoDoMes) votadoAtual[f.id] = votou;
+  }));
+
+  if (carregamentoAtual === carregamentoDoMes) renderizar();
 }
 
 // ── EVENTS ──

@@ -2,7 +2,7 @@
    LIVROS.JS — Entre Tempos · Navegação por Mês + Modal + Upvotes
    ============================================= */
 
-import { escutarUpvotes, alternarUpvote, jaVotou } from '../../js/upvotes.js';
+import { escutarUpvotes, alternarUpvote, jaVotou, pararTodosListeners } from '../../js/upvotes.js';
 
 const meses = [
   "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
@@ -110,6 +110,7 @@ let mesIndex = mesAtual;
 const totaisAtuais = {};
 const votadoAtual = {};
 const votandoAgora = new Set();
+let carregamentoDoMes = 0;
 
 const modal = document.getElementById('modal-livro');
 const modalCapa = document.getElementById('modal-livro-capa');
@@ -180,7 +181,7 @@ async function votar(btn, id) {
   }
 }
 
-function renderizar() {
+function renderizar(animar = false) {
   document.getElementById('mes-atual').textContent = meses[mesIndex];
   const lista = document.getElementById('lista-livros');
   lista.innerHTML = '';
@@ -207,7 +208,8 @@ function renderizar() {
     const num = String(i + 1).padStart(2, '0');
     const li = document.createElement('li');
     li.classList.add('livro-item');
-    li.style.animationDelay = `${i * 0.05}s`;
+    li.style.animation = animar ? '' : 'none';
+    if (animar) li.style.animationDelay = `${i * 0.05}s`;
 
     const total = totaisAtuais[l.id] ?? 0;
     const votado = !!votadoAtual[l.id];
@@ -249,23 +251,31 @@ function renderizar() {
  * reordenada e redesenhada sozinha.
  */
 async function carregarUpvotesDoMes() {
+  const carregamentoAtual = ++carregamentoDoMes;
   const livrosOriginais = livrosPorMes[mesIndex] || [];
   const livros = livrosOriginais.map((l) => ({
     ...l,
     id: `${mesIndex}-${slugify(l.titulo)}`
   }));
+  pararTodosListeners();
+
+  // A lista aparece já; votos e placares são sincronizados em segundo plano.
+  renderizar(true);
 
   for (const l of livros) {
-    if (!(l.id in votadoAtual)) {
-      votadoAtual[l.id] = await jaVotou(l.id);
-    }
     escutarUpvotes(l.id, (total) => {
       totaisAtuais[l.id] = total;
       renderizar();
     });
   }
 
-  renderizar();
+  await Promise.all(livros.map(async (l) => {
+    if (l.id in votadoAtual) return;
+    const votou = await jaVotou(l.id);
+    if (carregamentoAtual === carregamentoDoMes) votadoAtual[l.id] = votou;
+  }));
+
+  if (carregamentoAtual === carregamentoDoMes) renderizar();
 }
 
 document.getElementById('seta-esq').addEventListener('click', () => {

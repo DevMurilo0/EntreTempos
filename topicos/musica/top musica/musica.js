@@ -2,7 +2,7 @@
    MUSICA.JS — Entre Tempos · Navegação por Mês + Upvotes
    ============================================= */
 
-import { escutarUpvotes, alternarUpvote, jaVotou } from '../../../js/upvotes.js';
+import { escutarUpvotes, alternarUpvote, jaVotou, pararTodosListeners } from '../../../js/upvotes.js';
 
 const meses = [
   "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
@@ -163,6 +163,7 @@ let mesIndex = mesAtual;
 const totaisAtuais = {};
 const votadoAtual = {};
 const votandoAgora = new Set();
+let carregamentoDoMes = 0;
 
 /* ── MODAL ── */
 function abrirModal(musica) {
@@ -241,7 +242,7 @@ async function votar(btn, id) {
 }
 
 /* ── RENDERIZAR LISTA ── */
-function renderizar() {
+function renderizar(animar = false) {
   document.getElementById('mes-atual').textContent = meses[mesIndex];
 
   const lista = document.getElementById('lista-musicas');
@@ -261,7 +262,8 @@ function renderizar() {
     const num = String(i + 1).padStart(2, '0');
     const li = document.createElement('li');
     li.classList.add('musica-item');
-    li.style.animationDelay = `${i * 0.05}s`;
+    li.style.animation = animar ? '' : 'none';
+    if (animar) li.style.animationDelay = `${i * 0.05}s`;
 
     const clicavel = (m.video || m.descricao) && m.nome !== '—';
 
@@ -308,19 +310,27 @@ function renderizar() {
  * upvotes subir pro topo do TOP 10.
  */
 async function carregarUpvotesDoMes() {
+  const carregamentoAtual = ++carregamentoDoMes;
   const musicas = musicasPorMes[mesIndex] || [];
+  pararTodosListeners();
+
+  // Não bloqueia a troca de mês esperando respostas do Firebase.
+  renderizar(true);
 
   for (const m of musicas) {
-    if (!(m.id in votadoAtual)) {
-      votadoAtual[m.id] = await jaVotou(m.id);
-    }
     escutarUpvotes(m.id, (total) => {
       totaisAtuais[m.id] = total;
       renderizar();
     });
   }
 
-  renderizar();
+  await Promise.all(musicas.map(async (m) => {
+    if (m.id in votadoAtual) return;
+    const votou = await jaVotou(m.id);
+    if (carregamentoAtual === carregamentoDoMes) votadoAtual[m.id] = votou;
+  }));
+
+  if (carregamentoAtual === carregamentoDoMes) renderizar();
 }
 
 document.getElementById('seta-esq').addEventListener('click', () => {
