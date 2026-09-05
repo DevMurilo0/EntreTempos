@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inscrições | Entre Tempos</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../img/amp.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="pagina-painel bloqueado">
+  <header class="cabecalho-admin">
+    <div>
+      <p class="revista-admin">entre tempos · revista eletrônica</p>
+      <h1>Inscrições</h1>
+    </div>
+    <button class="botao-sair" id="botao-sair" type="button">Sair</button>
+  </header>
+  <main class="painel-conteudo">
+    <section class="contagens" aria-label="Resumo das inscrições">
+      <button class="filtro-contagem ativo" type="button" data-filtro="todas" aria-pressed="true"><strong id="total-inscricoes">0</strong><span>Inscrições</span></button>
+      <button class="filtro-contagem" type="button" data-filtro="nova" aria-pressed="false"><strong id="total-novas">0</strong><span>Novas</span></button>
+      <button class="filtro-contagem" type="button" data-filtro="vista" aria-pressed="false"><strong id="total-vistas">0</strong><span>Vistas</span></button>
+      <button class="filtro-contagem" type="button" data-filtro="aceita" aria-pressed="false"><strong id="total-aceitas">0</strong><span>Aceitas</span></button>
+    </section>
+    <p class="mensagem-admin mensagem-painel" id="mensagem-painel" role="status" aria-live="polite">Carregando os bilhetes...</p>
+    <section class="lista-inscricoes" id="lista-inscricoes" aria-label="Inscrições recebidas"></section>
+  </main>
+
+  <div class="modal-remocao" id="modal-remocao" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-remocao" hidden>
+    <div class="modal-remocao__caixa">
+      <h2 id="titulo-modal-remocao">Remover inscrição?</h2>
+      <p>Tem certeza que deseja remover “<strong id="nome-remocao"></strong>”?</p>
+      <p class="modal-remocao__aviso">Essa ação não poderá ser desfeita.</p>
+      <p class="modal-remocao__erro" id="erro-remocao" role="alert" aria-live="assertive"></p>
+      <div class="modal-remocao__acoes">
+        <button class="modal-remocao__cancelar" id="cancelar-remocao" type="button">Cancelar</button>
+        <button class="modal-remocao__confirmar" id="confirmar-remocao" type="button">Remover</button>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="../js/admin-painel.js"></script>
+</body>
+</html>

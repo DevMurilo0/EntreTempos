@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Área dos pesquisadores | Entre Tempos</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../img/amp.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="pagina-login">
+  <main class="login-conteudo">
+    <a class="voltar-admin" href="../faca-parte.html">← Voltar</a>
+    <img src="../img/inicial/ampulheta.webp" alt="" class="ampulheta-admin">
+    <section class="bilhete-login" aria-labelledby="titulo-login">
+      <h1 id="titulo-login">Área dos pesquisadores</h1>
+      <form id="formulario-login" novalidate>
+        <div class="campo-admin">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" autocomplete="username" required autofocus>
+        </div>
+        <div class="campo-admin">
+          <label for="senha">Senha</label>
+          <input type="password" id="senha" name="senha" autocomplete="current-password" required>
+        </div>
+        <button class="botao-admin" id="botao-entrar" type="submit">Entrar</button>
+        <p class="mensagem-admin" id="mensagem-login" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+  <script type="module" src="../js/admin-login.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; min-height: 100%; overflow-x: hidden; }
+body { min-height: 100vh; background: #f2e8d5; color: #3e3228; font-family: 'Special Elite', serif; }
+body::before { content: ""; position: fixed; inset: 0; z-index: -1; background: url('https://www.transparenttextures.com/patterns/aged-paper.webp'); opacity: .4; pointer-events: none; }
+.pagina-painel.bloqueado > * { visibility: hidden; }
+button, input { font: inherit; }
+button:focus-visible, input:focus-visible { outline: 3px solid #c4a96b; outline-offset: 3px; }
+
+.pagina-login { display: grid; place-items: center; padding: 30px 20px; }
+.login-conteudo { position: relative; width: min(100%, 520px); }
+.voltar-admin { display: inline-block; margin-bottom: 18px; padding: 5px 2px; color: #8c3b3b; font-size: 13px; text-decoration: underline; text-decoration-color: #c4a96b; text-underline-offset: 4px; transition: color .2s ease, translate .2s ease; }
+.voltar-admin:hover { color: #c0392b; translate: -2px 0; }
+.voltar-admin:focus-visible { outline: 2px solid #8c3b3b; outline-offset: 4px; border-radius: 2px; }
+.ampulheta-admin { position: absolute; top: -72px; right: -28px; z-index: 2; width: clamp(64px, 14vw, 95px); rotate: 10deg; filter: drop-shadow(3px 5px 8px rgba(0,0,0,.2)); }
+.bilhete-login { padding: clamp(30px, 7vw, 52px); background: #fffdf7; border: 1px dashed #c4a96b; border-left: 5px solid #8c3b3b; box-shadow: 6px 10px 25px rgba(0,0,0,.18); rotate: -1deg; }
+.bilhete-login h1 { margin-bottom: 32px; color: #1a1a1a; font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px, 9vw, 54px); font-weight: normal; letter-spacing: .05em; line-height: 1; text-align: center; text-shadow: 2px 2px 0 #c4a96b; }
+.campo-admin { display: flex; flex-direction: column; gap: 8px; margin-bottom: 26px; }
+.campo-admin input { width: 100%; padding: 12px 13px; border: 0; border-bottom: 2px solid #c4a96b; background: rgba(242,232,213,.5); color: #3e3228; font-family: 'IM Fell English', serif; font-size: 18px; }
+.botao-admin { display: block; min-width: 150px; margin: 0 auto; padding: 11px 28px; border: 2px dashed rgba(255,253,247,.65); border-radius: 3px; background: #8c3b3b; color: #fffdf7; box-shadow: 0 5px 14px rgba(140,59,59,.35); font-family: 'Bebas Neue', sans-serif; font-size: 19px; letter-spacing: .14em; text-transform: uppercase; cursor: pointer; }
+.botao-admin:disabled, .acoes-inscricao button:disabled { cursor: wait; opacity: .6; }
+.mensagem-admin { min-height: 24px; margin-top: 18px; font-size: 14px; line-height: 1.5; text-align: center; }
+.mensagem-admin--erro { color: #922b21; }
+
+.cabecalho-admin { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 22px clamp(20px, 6vw, 70px); border-bottom: 2px solid #c4a96b; }
+.revista-admin { margin-bottom: 3px; color: #8c3b3b; font-family: 'Dancing Script', cursive; font-size: 18px; }
+.cabecalho-admin h1 { color: #1a1a1a; font-family: 'Bebas Neue', sans-serif; font-size: clamp(38px, 7vw, 68px); font-weight: normal; letter-spacing: .08em; line-height: 1; text-shadow: 3px 3px 0 #c4a96b; }
+.botao-sair { padding: 7px 12px; border: 0; border-bottom: 1px dashed #8c3b3b; background: transparent; color: #8c3b3b; cursor: pointer; }
+.painel-conteudo { width: min(100% - 32px, 980px); margin: 34px auto 70px; }
+.contagens { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 38px; }
+.filtro-contagem { display: flex; align-items: baseline; gap: 7px; padding: 9px 15px; border: 1px dashed #c4a96b; background: rgba(255,253,247,.72); color: #3e3228; rotate: -1deg; cursor: pointer; transition: background .2s ease, border-color .2s ease, box-shadow .2s ease; }
+.filtro-contagem:nth-child(even) { rotate: 1deg; }
+.filtro-contagem:hover { border-color: #8c3b3b; background: #fffdf7; }
+.filtro-contagem.ativo { border-color: #8c3b3b; border-style: solid; background: #fffdf7; box-shadow: inset 0 -3px 0 #8c3b3b, 2px 3px 8px rgba(0,0,0,.1); }
+.contagens strong { color: #8c3b3b; font-family: 'Bebas Neue', sans-serif; font-size: 25px; }
+.contagens span { font-size: 12px; }
+.mensagem-painel { margin-bottom: 20px; }
+.lista-inscricoes { display: grid; gap: 26px; }
+.inscricao { min-width: 0; padding: clamp(22px, 5vw, 36px); border: 1px dashed #c4a96b; border-left: 6px solid #8c3b3b; background: #fffdf7; box-shadow: 4px 7px 18px rgba(0,0,0,.14); }
+.inscricao:nth-child(odd) { rotate: -.25deg; }
+.inscricao:nth-child(even) { rotate: .25deg; }
+.inscricao--vista { border-left-color: #9a7c50; }
+.inscricao--aceita { border-left-color: #49633f; }
+.topo-inscricao { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; padding-bottom: 18px; border-bottom: 1px solid #e8dcc0; }
+.topo-inscricao h2 { overflow-wrap: anywhere; color: #1a1a1a; font-family: 'Bebas Neue', sans-serif; font-size: clamp(26px, 5vw, 34px); font-weight: normal; }
+.topo-inscricao time { display: block; margin-top: 3px; color: #7a6a50; font-family: 'IM Fell English', serif; font-size: 14px; }
+.status-inscricao { flex-shrink: 0; padding: 5px 10px; border: 2px solid currentColor; color: #8c3b3b; font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: .12em; text-transform: uppercase; rotate: 2deg; }
+.status-inscricao--vista { color: #7a623e; }
+.status-inscricao--aceita { color: #49633f; }
+.detalhe-inscricao { margin-top: 20px; }
+.detalhe-inscricao h3 { margin-bottom: 6px; color: #8c3b3b; font-size: 13px; }
+.detalhe-inscricao p { overflow-wrap: anywhere; white-space: pre-wrap; font-family: 'IM Fell English', serif; font-size: 17px; line-height: 1.55; }
+.acoes-inscricao { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 25px; }
+.acoes-inscricao button { padding: 9px 14px; border-radius: 2px; font-family: 'Special Elite', serif; font-size: 12px; cursor: pointer; }
+.acao-principal { border: 2px dashed rgba(255,253,247,.65); background: #8c3b3b; color: #fffdf7; }
+.acao-secundaria { border: 1px solid #8c3b3b; background: transparent; color: #8c3b3b; }
+.acao-remover { margin-left: auto; border: 0; border-bottom: 1px dashed #922b21; background: transparent; color: #922b21; opacity: .78; }
+.acao-remover:hover { opacity: 1; }
+.acao-confirmada { color: #7a623e; font-size: 13px; }
+.acao-confirmada--aceita { color: #49633f; }
+
+.modal-aberto { overflow: hidden; }
+.modal-remocao { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 20px; background: rgba(35,25,20,.66); animation: surgir-fundo .18s ease-out; }
+.modal-remocao[hidden] { display: none; }
+.modal-remocao__caixa { width: min(100%, 470px); padding: clamp(28px, 6vw, 42px); border: 1px dashed #c4a96b; border-left: 6px solid #8c3b3b; background: #fffdf7; color: #3e3228; box-shadow: 8px 14px 35px rgba(0,0,0,.35); text-align: center; rotate: -.5deg; animation: surgir-bilhete .2s ease-out; }
+.modal-remocao__caixa h2 { margin-bottom: 20px; color: #1a1a1a; font-family: 'Bebas Neue', sans-serif; font-size: clamp(32px, 7vw, 44px); font-weight: normal; letter-spacing: .06em; text-shadow: 2px 2px 0 #c4a96b; }
+.modal-remocao__caixa > p { overflow-wrap: anywhere; font-family: 'IM Fell English', serif; font-size: 18px; line-height: 1.5; }
+.modal-remocao__caixa strong { color: #8c3b3b; font-weight: normal; }
+.modal-remocao__aviso { margin-top: 10px; color: #7a6a50; font-size: 15px !important; font-style: italic; }
+.modal-remocao__erro { min-height: 22px; margin-top: 12px; color: #922b21; font-family: 'Special Elite', serif !important; font-size: 13px !important; }
+.modal-remocao__acoes { display: flex; justify-content: center; gap: 14px; margin-top: 18px; }
+.modal-remocao__acoes button { min-width: 120px; padding: 10px 18px; border-radius: 2px; font-family: 'Special Elite', serif; cursor: pointer; }
+.modal-remocao__cancelar { border: 1px solid #8c3b3b; background: transparent; color: #8c3b3b; }
+.modal-remocao__confirmar { border: 2px dashed rgba(255,253,247,.65); background: #8c3b3b; color: #fffdf7; box-shadow: 0 4px 12px rgba(140,59,59,.28); }
+.modal-remocao__acoes button:disabled { cursor: wait; opacity: .6; }
+
+@keyframes surgir-fundo { from { opacity: 0; } }
+@keyframes surgir-bilhete { from { opacity: 0; translate: 0 10px; scale: .98; } }
+
+@media (max-width: 600px) {
+  .cabecalho-admin { align-items: flex-end; padding: 18px 20px; }
+  .revista-admin { font-size: 15px; }
+  .painel-conteudo { width: calc(100% - 24px); margin-top: 24px; }
+  .contagens { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; }
+  .filtro-contagem { justify-content: center; padding-inline: 8px; }
+  .inscricao, .inscricao:nth-child(odd), .inscricao:nth-child(even) { padding: 20px 17px; rotate: 0deg; }
+  .topo-inscricao { gap: 10px; }
+  .status-inscricao { padding: 4px 7px; font-size: 14px; }
+  .acoes-inscricao { align-items: stretch; flex-direction: column; }
+  .acoes-inscricao button { width: 100%; min-height: 42px; }
+  .acao-remover { margin-left: 0; }
+  .modal-remocao__caixa { padding: 28px 20px; rotate: 0deg; }
+  .modal-remocao__acoes { flex-direction: column; }
+  .modal-remocao__acoes button { width: 100%; min-height: 44px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-remocao, .modal-remocao__caixa { animation: none; }
+}

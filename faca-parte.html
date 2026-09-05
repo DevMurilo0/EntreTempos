@@ -102,38 +102,45 @@
         <div class="lista-passos">
             <div class="passo reveal">
                 <span class="passo-numero">1</span>
-                <p>Entre em contato com um dos pesquisadores responsáveis, aqui embaixo</p>
+                <p>Preencha o bilhete aqui embaixo com seu nome e uma forma de contato</p>
             </div>
             <div class="passo reveal">
                 <span class="passo-numero">2</span>
-                <p>Conte um pouco sobre o que você quer mandar pra revista</p>
+                <p>Conte um pouco sobre como você gostaria de fazer parte da revista</p>
             </div>
             <div class="passo reveal">
                 <span class="passo-numero">3</span>
-                <p>Combine com eles os próximos passos e o prazo de envio</p>
+                <p>Envie e aguarde o contato dos pesquisadores para combinar os próximos passos</p>
             </div>
         </div>
     </section>
 
-    <!-- CONTATO — usando o bilhete como metáfora visual -->
+    <!-- INSCRIÇÃO — formulário em formato de bilhete -->
     <section class="secao-contato">
         <img loading="lazy" decoding="async" src="img/folha/bilhete.webp" alt="" class="decor decor-bilhete flutua">
-        <h2 class="titulo-secao reveal"><span>Fale com os pesquisadores</span></h2>
+        <h2 class="titulo-secao reveal"><span>Mande seu bilhete</span></h2>
 
-        <div class="lista-pesquisadores">
-            <article class="card-pesquisador card-pesquisador--1 reveal">
-                <h3>nome</h3>
-                <p class="funcao-pesquisador">Pesquisador responsável</p>
-                <p class="contato-pesquisador">contato</p>
-            </article>
-
-            <article class="card-pesquisador card-pesquisador--2 reveal">
-                <h3>nome</h3>
-                <p class="funcao-pesquisador">Pesquisador responsável</p>
-                <p class="contato-pesquisador">contato</p>
-            </article>
-        </div>
+        <form class="formulario-inscricao reveal" id="formulario-inscricao" novalidate>
+            <div class="campo-formulario">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" maxlength="100" autocomplete="name" required>
+            </div>
+            <div class="campo-formulario">
+                <label for="contato">Contato</label>
+                <input type="text" id="contato" name="contato" maxlength="150" required>
+            </div>
+            <div class="campo-formulario">
+                <label for="descricao">Como gostaria de fazer parte</label>
+                <textarea id="descricao" name="descricao" maxlength="2000" rows="7" required></textarea>
+            </div>
+            <button class="botao-enviar" id="botao-enviar" type="submit">Enviar</button>
+            <p class="mensagem-formulario" id="mensagem-formulario" role="status" aria-live="polite"></p>
+        </form>
     </section>
+
+    <aside class="acesso-pesquisadores" aria-label="Acesso reservado aos pesquisadores">
+        <a href="admin/login.html">Acesso dos pesquisadores <span aria-hidden="true">→</span></a>
+    </aside>
 
     <div class="rodape-faca-parte">
         <div>entre tempos · revista eletrônica</div>
@@ -153,6 +160,7 @@
         }, { threshold: 0.15 });
         revelar.forEach((el) => observador.observe(el));
     </script>
+    <script type="module" src="js/faca-parte.js"></script>
 
 </body>
 
