@@ -27,6 +27,8 @@ const meses = [
      linkTexto  -> texto do botão do link (ex.: "Baixar PDF" ou
                    "Comprar livro"). Se não preencher, usa
                    "Baixar / Comprar" como padrão.
+     LinkCompra -> Texto do link para compra do livro
+                   kkrs
 
    Para criar um mês novo: copie um bloco inteiro (a chave
    numérica + a lista de livros com { } entre colchetes [ ]),
@@ -41,7 +43,8 @@ const livrosPorMes = {
       descricao: "Gregor Samsa acorda transformado em um enorme inseto e passa a enfrentar o isolamento, o preconceito e a incompreensão da própria família. A obra é um dos maiores clássicos da literatura mundial e aborda temas como alienação, identidade e condição humana.",
       capa: "img_livros/metamorfose.webp",
       link: "https://colegiocngparanagua.com.br/wp-content/uploads/2021/02/A-METAMORFOSE.pdf",
-      linkTexto: "Ler"
+      linkTexto: "Ler",
+      linkCompra: "https://www.amazon.com.br/s?k=a+metamorfose+kafka&adgrpid=1136895997349840&hvadid=71056163436700&hvbmt=be&hvdev=c&hvlocphy=678&hvnetw=s&hvqmt=e&hvtargid=kwd-71056688898588%3Aloc-20&hydadcr=5757_13231176&mcid=ec4ccf503ee83eaba216b55f67ac0e2b&tag=msndesktopsta-20&ref=pd_sl_5qsil6crz8_e",
     },
     {
       titulo: "A Volta ao Mundo em 80 Dias",
@@ -49,7 +52,8 @@ const livrosPorMes = {
       descricao: "O excêntrico inglês Phileas Fogg aposta que consegue dar a volta ao mundo em apenas 80 dias. Ao lado de seu fiel criado Passepartout, ele embarca em uma aventura repleta de desafios, imprevistos e descobertas através de diferentes países e culturas.",
       capa: "img_livros/80dias.webp",
       link: "https://www.netmundi.org/home/wp-content/uploads/2020/10/A-volta-ao-mundo-em-80-dias-julio-verne.pdf",
-      linkTexto: "Ler"
+      linkTexto: "Ler",
+      linkCompra: "https://www.amazon.com.br/s?k=A+Volta+ao+Mundo+em+80+Dias&__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=17K1U66MXL2VY&sprefix=a+volta+ao+mundo+em+80+dias%2Caps%2C262&ref=nb_sb_noss_1"
     },
     {
       titulo: "Blecaute",
@@ -57,7 +61,8 @@ const livrosPorMes = {
       descricao: "Três amigos ficam presos numa caverna depois de uma enchente. Quando saem, descobrem que todo mundo no mundo virou tipo estátua, parado, duro, sem vida. Eles parecem ser os únicos sobreviventes do planeta O livro acompanha a jornada desses três enquanto tentam sobreviver e entender o que aconteceu, e como isso vai mexendo com a cabeça e com a relação entre eles.",
       capa: "img_livros/blecaute.webp",
       link: "https://bibliopedra.wordpress.com/wp-content/uploads/2015/09/blecaute-marcelo-rubens-paiva.pdf",
-      linkTexto: "Ler"
+      linkTexto: "Ler",
+      linkCompra: "https://www.amazon.com.br/s?k=Blecaute&__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=38F2AXFTD1TU1&sprefix=blecaute%2Caps%2C267&ref=nb_sb_noss_1"
     },
     {
       titulo: "O Retrato de Dorian Gray",
@@ -65,7 +70,8 @@ const livrosPorMes = {
       descricao: "Dorian Gray deseja permanecer eternamente jovem enquanto um retrato envelhece em seu lugar. À medida que mergulha em uma vida de excessos e corrupção moral, apenas a pintura revela as consequências de seus atos.",
       capa: "img_livros/retrato.webp",
       link: "https://www.jaimemoniz.com/images/docs/recursos/Oscar-Wilde-livro.pdf",
-      linkTexto: "Ler"
+      linkTexto: "Ler",
+      linkCompra: "https://www.amazon.com.br/s?k=O+Retrato+de+Dorian+Gray&__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=YO0FO1ME2KXM&sprefix=o+retrato+de+dorian+gray%2Caps%2C251&ref=nb_sb_noss_1"
     },
     {
       titulo: "O Pequeno Príncipe",
@@ -73,7 +79,8 @@ const livrosPorMes = {
       descricao: "Um piloto perdido no deserto encontra um pequeno príncipe vindo de outro planeta. Por meio de encontros e reflexões poéticas, a obra aborda amizade, amor, infância, solidão e os valores essenciais da vida.",
       capa: "img_livros/pequenoprincipe.webp",
       link: "https://osaberdigital.com.br/wp-content/uploads/2024/11/O-Pequeno-Principe-Saint-Exupery-Zahar.pdf",
-      linkTexto: "Ler"
+      linkTexto: "Ler",
+      linkCompra: "https://www.amazon.com.br/s?k=O+Pequeno+Pr%C3%ADncipe&__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=2W4VS6FJH56ZD&sprefix=o+pequeno+pr%C3%ADncipe%2Caps%2C271&ref=nb_sb_noss_1"
     }
   ]
 
@@ -118,6 +125,7 @@ const modalTitulo = document.getElementById('modal-livro-titulo');
 const modalAutor = document.getElementById('modal-livro-autor');
 const modalDesc = document.getElementById('modal-livro-desc');
 const modalLink = document.getElementById('modal-livro-link');
+const modalLinkCompra = document.getElementById('modal-livro-link-compra');
 
 function abrirModal(livro) {
   modalCapa.src = livro.capa || CAPA_PADRAO;
@@ -133,6 +141,14 @@ function abrirModal(livro) {
     modalLink.style.display = 'inline-flex';
   } else {
     modalLink.style.display = 'none';
+  }
+
+  if (livro.linkCompra) {
+    modalLinkCompra.href = livro.linkCompra;
+    modalLinkCompra.textContent = 'Comprar';
+    modalLinkCompra.style.display = 'inline-flex';
+  } else {
+    modalLinkCompra.style.display = 'none';
   }
 
   modal.classList.add('aberto');
