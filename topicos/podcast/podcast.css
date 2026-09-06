@@ -290,6 +290,64 @@ header a:hover::after {
   margin-bottom: 10px;
 }
 
+.youtube-cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 10px 16px 9px;
+  color: var(--vermelho-escuro);
+  background: #fffdf7;
+  border: 2px solid var(--vermelho-escuro);
+  box-shadow: 4px 5px 0 rgba(122, 106, 80, 0.22);
+  font-family: 'Special Elite', serif;
+  font-size: 13px;
+  letter-spacing: 0.7px;
+  text-decoration: none;
+  transform: rotate(-0.6deg);
+  transition: color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.youtube-cta::before,
+.youtube-cta::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 7px;
+  background: rgba(196, 169, 107, 0.42);
+}
+
+.youtube-cta::before {
+  top: -5px;
+  left: 12px;
+  transform: rotate(-5deg);
+}
+
+.youtube-cta::after {
+  right: 11px;
+  bottom: -5px;
+  transform: rotate(4deg);
+}
+
+.youtube-cta:hover,
+.youtube-cta:focus-visible {
+  color: #fffdf7;
+  background: var(--vermelho-escuro);
+  box-shadow: 6px 7px 0 rgba(122, 106, 80, 0.22);
+  transform: translate(-2px, -2px) rotate(0deg);
+  outline: none;
+}
+
+.youtube-cta-play {
+  font-size: 12px;
+}
+
+.youtube-cta-seta {
+  color: var(--dourado);
+  font-size: 15px;
+}
+
 /* ── BUSCA ──
    Filtra os cards abaixo em tempo real, por nome ou por descrição
    (ver o JS no fim do podcast.html — compara com data-nome/data-descricao
@@ -414,6 +472,26 @@ header a:hover::after {
   object-fit: cover;
   display: block;
   transition: transform 0.35s ease;
+  object-position: center;
+}
+
+.card-episodio .capa-episodio.sem-foto {
+  display: grid;
+  place-items: center;
+  background: #d9ccb3;
+}
+
+.card-episodio .capa-episodio.sem-foto img {
+  display: none;
+}
+
+.card-episodio .capa-episodio.sem-foto::before {
+  content: "foto pendente";
+  color: var(--marrom);
+  font-family: 'Special Elite', serif;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .card-episodio:hover .capa-episodio img {
@@ -935,6 +1013,14 @@ header a:hover::after {
   .podcast-nav-link {
     font-size: 11px;
     padding: 7px 14px;
+  }
+
+  .podcast-apresentacao {
+    padding-inline: 24px;
+  }
+
+  .youtube-cta {
+    font-size: 12px;
   }
 
   .bastidores-bloco h2 {

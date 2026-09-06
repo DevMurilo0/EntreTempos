@@ -1,34 +1,3 @@
-/**
- * likes.js — Entre Tempos
- * Sistema de curtidas compartilhado via Firebase Firestore.
- *
- * Uso (mesmo HTML de antes, nada muda):
- *   <button class="btn-like" data-like-id="julio-desenho-1" aria-label="Curtir">
- *     <span class="like-icon">♡</span>
- *     <span class="like-count">0</span>
- *   </button>
- *
- * No HTML:
- *   <script type="module" src="js/likes.js"></script>
- *
- * initLikes() continua disponível globalmente (window.initLikes).
- *
- * ── VERSÃO REESCRITA (mais simples, de propósito) ──
- * A versão anterior usava uma collection group query em lote pra
- * descobrir "quais posts o usuário já curtiu" de uma vez só. Isso
- * exige um índice composto no Firestore e regras específicas pra
- * collection group — se qualquer um dos dois não estiver certo, a
- * busca falha silenciosamente e a página "esquece" as curtidas a
- * cada reload.
- *
- * Essa versão troca isso por uma verificação simples e direta POR
- * BOTÃO: um getDoc (curtiu?) e um onSnapshot (total em tempo real)
- * por id. Mais chamadas ao Firestore, mas cada uma é um doc único —
- * não depende de índice composto nem de regra de collection group.
- * Pra um site com algumas dezenas de curtidas por página isso não
- * é problema de performance nenhum.
- */
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
   getFirestore, doc, getDoc, setDoc, deleteDoc,

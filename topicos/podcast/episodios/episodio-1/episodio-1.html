@@ -40,21 +40,34 @@
        desta mesma pasta (episodios/episodio-1/). O poster é a imagem que
        aparece antes de dar play. -->
   <section class="episodio-video">
-    <video contrgit add "topicos/musica/top musica/top.css" ols preload="metadata" poster="capa.webp">
-      <source src="episodio-1.mp4" type="video/mp4">
-    </video>
+    <div class="video-moldura">
+      <div class="video-etiqueta" aria-hidden="true">EP. 01 · em exibição</div>
+      <video controls preload="metadata" poster="capa.webp">
+        <source src="episodio-1.mp4" type="video/mp4">
+      </video>
+      <div class="video-rodape" aria-hidden="true">
+        <span>Pod Aula Vaga</span>
+        <span>Entre Tempos</span>
+      </div>
+    </div>
   </section>
 
   <section class="episodio-info">
-    <!-- Troque por <img src="joao.webp" alt=""> quando tiver a foto real,
-         colocada dentro desta mesma pasta. -->
-    <div class="capa-episodio placeholder">JS</div>
-    <div>
-      <div class="etiquetas">
-        <span class="badge-cargo">Professor</span>
-        <span class="badge-episodio">EP: 01</span>
+    <div class="retrato-convidado">
+      <div class="capa-episodio">
+        <img src="../../img/pessoas/ayrton.webp" alt="Ayrton Matheus" decoding="async"
+          onerror="this.parentElement.classList.add('sem-foto')">
       </div>
-      <h1>Ayrton</h1>
+      <span aria-hidden="true">convidado</span>
+    </div>
+    <div class="dados-convidado">
+      <div class="etiquetas">
+        <span class="badge-episodio">EP: 01</span>
+        <span class="badge-cargo">Professor</span>
+      </div>
+      <h1>Ayrton Matheus</h1>
+      <p class="apelido-convidado">(A lenda)</p>
+      <p class="chamada-episodio">Tentando desesperadamente fazer Ayrton dar uma gargalhada <span>(Muita Aura para a seriedade dele)</span></p>
     </div>
   </section>
 
@@ -91,15 +104,16 @@
     <div class="bloco-entrevistadores">
       <h2>Entrevistadores</h2>
       <div class="grade-entrevistadores">
-        <!-- Um bloco .entrevistador pra cada aluno que participou.
-             Troque o placeholder por <div class="foto-entrevistador">
-             <img src="..."></div> quando tiver a foto. -->
         <div class="entrevistador">
-          <div class="foto-entrevistador placeholder">?</div>
+          <div class="foto-entrevistador">
+            <img src="../../img/pessoas/will.webp" alt="Wingrison" loading="lazy" decoding="async">
+          </div>
           <span>Wingrison</span>
         </div>
         <div class="entrevistador">
-          <div class="foto-entrevistador placeholder">?</div>
+          <div class="foto-entrevistador">
+            <img src="../../img/pessoas/kezia.webp" alt="Kezia" loading="lazy" decoding="async">
+          </div>
           <span>Kezia</span>
         </div>
       </div>
