@@ -939,6 +939,24 @@ header a:hover::after {
   display: block;
 }
 
+.equipe-foto--arte {
+  overflow: visible;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  filter: none;
+}
+
+.equipe-foto--arte img {
+  object-fit: contain;
+}
+
+.equipe-card--ryan .equipe-foto--arte img {
+  transform: scale(1.18);
+  transform-origin: center bottom;
+}
+
 /* placeholder — usado até a foto real ser adicionada */
 .equipe-foto.placeholder {
   background: linear-gradient(150deg, #cfc6b0, #b8ac91 60%, #9e9277);
