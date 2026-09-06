@@ -18,23 +18,13 @@
     <a href="../../podcast.html">← sair</a>
   </header>
 
-  <!-- FAIXA "MESA DO PODCAST" — mesma imagem em todos os episódios,
-       coloque o arquivo em podcast/img/mesa-podcast.webp. Enquanto essa
-       foto não existir, o onerror abaixo ativa a classe "sem-foto" e a
-       faixa vira uma vinheta só com tipografia (ver .faixa-vinheta no
-       episodio.css) — assim que a foto for colocada, ela some sozinha. -->
-  <div class="faixa-mesa">
-    <img src="../../img/mesa-podcast.webp" alt="Mesa de gravação do podcast Entre Tempos"
-      onerror="this.parentElement.classList.add('sem-foto')">
-    <span class="faixa-legenda">podcast entre tempos</span>
-
-    <div class="faixa-vinheta">
-      <!--<div class="risco"></div>-->
-      <div class="mic"></div>
-      <h2>PodCast<br> Pod Aula Vaga</h2>
-      <!--  <p>mesa de gravação</p>  -->
-    </div>
-  </div>
+  <section class="episodio-hero">
+    <picture>
+      <source media="(max-width: 600px)" srcset="../../img/branding/pod-aula-vaga-quadrado.webp">
+      <img src="../../img/branding/pod-aula-vaga-banner.webp"
+        alt="Identidade visual do podcast Pod Aula Vaga" decoding="async" fetchpriority="high">
+    </picture>
+  </section>
 
   <!-- VÍDEO DO EPISÓDIO -->
   <section class="episodio-video">
@@ -130,7 +120,7 @@
     </div>
 
     <div class="bloco-creditos">
-      <div>Gravado em: 12 de agosto</div>
+      <div>Gravado em: 12/08/2026</div>
     </div>
 
   </section>

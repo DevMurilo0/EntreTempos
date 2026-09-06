@@ -76,6 +76,57 @@ header a:hover {
   opacity: 0.6;
 }
 
+/* ── ABERTURA EDITORIAL DO EPISÓDIO ── */
+.episodio-hero {
+  position: relative;
+  z-index: 5;
+  width: min(88%, 1100px);
+  margin: clamp(32px, 5vw, 56px) auto 0;
+  padding: clamp(6px, 1vw, 10px);
+  background: #fffdf7;
+  border: 1px solid rgba(26, 14, 4, 0.6);
+  box-shadow: 9px 11px 0 rgba(122, 106, 80, 0.22), 0 0 0 1px rgba(196, 169, 107, 0.5);
+  transform: rotate(-0.35deg);
+}
+
+.episodio-hero::before,
+.episodio-hero::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  width: clamp(58px, 9vw, 92px);
+  height: clamp(15px, 2vw, 20px);
+  background: rgba(218, 194, 143, 0.68);
+  box-shadow: 0 1px 1px rgba(62, 50, 40, 0.12);
+  pointer-events: none;
+}
+
+.episodio-hero::before {
+  top: -9px;
+  left: 8%;
+  transform: rotate(-4deg);
+}
+
+.episodio-hero::after {
+  right: 7%;
+  bottom: -9px;
+  transform: rotate(3deg);
+}
+
+.episodio-hero picture,
+.episodio-hero img {
+  display: block;
+  width: 100%;
+}
+
+.episodio-hero img {
+  height: auto;
+}
+
+.episodio-hero + .episodio-video {
+  margin-top: clamp(40px, 5vw, 58px);
+}
+
 /* ── FAIXA "MESA DO PODCAST" ──
    Imagem fixa, a mesma em todo episódio — dá identidade visual ao
    programa (é a "vinheta" do podcast). Coloque o arquivo em
@@ -729,6 +780,14 @@ header a:hover {
 @media (max-width: 600px) {
   header {
     padding: 15px 20px;
+  }
+
+  .episodio-hero {
+    width: calc(100% - 38px);
+    margin-top: 30px;
+    padding: 6px;
+    box-shadow: 6px 7px 0 rgba(122, 106, 80, 0.22), 0 0 0 1px rgba(196, 169, 107, 0.5);
+    transform: rotate(-0.2deg);
   }
 
   .faixa-mesa {
