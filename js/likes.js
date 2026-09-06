@@ -47,6 +47,9 @@ function renderButton(btn, total, liked) {
 
   btn.classList.toggle('liked', liked);
   btn.setAttribute('aria-pressed', liked ? 'true' : 'false');
+
+  const ariaLabel = liked ? btn.dataset.unlikeLabel : btn.dataset.likeLabel;
+  if (ariaLabel) btn.setAttribute('aria-label', ariaLabel);
 }
 
 function bump(btn) {

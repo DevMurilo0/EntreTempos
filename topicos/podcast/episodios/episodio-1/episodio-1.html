@@ -36,15 +36,17 @@
     </div>
   </div>
 
-  <!-- VÍDEO DO EPISÓDIO — troque o src pelo mp4 real, colocado dentro
-       desta mesma pasta (episodios/episodio-1/). O poster é a imagem que
-       aparece antes de dar play. -->
+  <!-- VÍDEO DO EPISÓDIO -->
   <section class="episodio-video">
     <div class="video-moldura">
       <div class="video-etiqueta" aria-hidden="true">EP. 01 · em exibição</div>
-      <video controls preload="metadata" poster="capa.webp">
-        <source src="episodio-1.mp4" type="video/mp4">
-      </video>
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/3EtwHQY49uk"
+        title="Pod Aula Vaga — Episódio 1"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
       <div class="video-rodape" aria-hidden="true">
         <span>Pod Aula Vaga</span>
         <span>Entre Tempos</span>
@@ -68,6 +70,12 @@
       <h1>Ayrton Matheus</h1>
       <p class="apelido-convidado">(A lenda)</p>
       <p class="chamada-episodio">Tentando desesperadamente fazer Ayrton dar uma gargalhada <span>(Muita Aura para a seriedade dele)</span></p>
+      <button class="btn-like" type="button" data-like-id="podcast-episodio-1"
+        data-like-label="Curtir episódio" data-unlike-label="Remover curtida do episódio"
+        aria-label="Curtir episódio" aria-pressed="false">
+        <span class="like-icon" aria-hidden="true">♡</span>
+        <span class="like-count">0</span>
+      </button>
     </div>
   </section>
 
@@ -86,18 +94,19 @@
 
     <div class="bloco-galeria">
       <h2>Bastidores</h2>
-      <!-- Carrossel horizontal de fotos do episódio (arrasta pro lado).
-           Pra adicionar fotos reais: troque cada
-           <div class="foto-galeria placeholder"> por
-           <div class="foto-galeria"><img src="foto1.webp" alt=""></div>,
-           colocando os arquivos dentro desta mesma pasta. Use fotos na
-           horizontal (paisagem) — é esse formato que o carrossel espera.
-           Pode adicionar quantas quiser, o scroll se ajusta sozinho. -->
       <div class="carrossel-galeria">
-        <div class="foto-galeria placeholder"><span>foto 1</span></div>
-        <div class="foto-galeria placeholder"><span>foto 2</span></div>
-        <div class="foto-galeria placeholder"><span>foto 3</span></div>
-        <div class="foto-galeria placeholder"><span>foto 4</span></div>
+        <div class="foto-galeria"><img src="../../img/episodios/episodio-1/bastidores/bastidor-01.webp"
+            alt="Equipe durante os bastidores do episódio 1" loading="lazy" decoding="async"></div>
+        <div class="foto-galeria"><img src="../../img/episodios/episodio-1/bastidores/bastidor-02.webp"
+            alt="Estúdio durante a gravação do episódio 1" loading="lazy" decoding="async"></div>
+        <div class="foto-galeria"><img src="../../img/episodios/episodio-1/bastidores/bastidor-03.webp"
+            alt="Produção técnica do Pod Aula Vaga" loading="lazy" decoding="async"></div>
+        <div class="foto-galeria"><img src="../../img/episodios/episodio-1/bastidores/bastidor-04.webp"
+            alt="Participantes durante a gravação do episódio 1" loading="lazy" decoding="async"></div>
+        <div class="foto-galeria"><img src="../../img/episodios/episodio-1/bastidores/bastidor-05.webp"
+            alt="Bastidores da gravação do Pod Aula Vaga" loading="lazy" decoding="async"></div>
+        <div class="foto-galeria"><img src="../../img/episodios/episodio-1/bastidores/bastidor-06.webp"
+            alt="Monitor do estúdio durante a gravação" loading="lazy" decoding="async"></div>
       </div>
     </div>
 
@@ -106,13 +115,13 @@
       <div class="grade-entrevistadores">
         <div class="entrevistador">
           <div class="foto-entrevistador">
-            <img src="../../img/pessoas/will.webp" alt="Wingrison" loading="lazy" decoding="async">
+            <img src="../../img/pessoas/nomoldura/will.webp" alt="Wingrison" loading="lazy" decoding="async">
           </div>
           <span>Wingrison</span>
         </div>
         <div class="entrevistador">
           <div class="foto-entrevistador">
-            <img src="../../img/pessoas/kezia.webp" alt="Kezia" loading="lazy" decoding="async">
+            <img src="../../img/pessoas/nomoldura/kezia.webp" alt="Kezia" loading="lazy" decoding="async">
           </div>
           <span>Kezia</span>
         </div>
@@ -120,7 +129,7 @@
     </div>
 
     <div class="bloco-creditos">
-      <div>Gravado em: [data]</div>
+      <div>Gravado em: 12 de agosto</div>
     </div>
 
   </section>
@@ -129,6 +138,11 @@
     <div>entre tempos · revista eletrônica</div>
     <div class="carimbo">podcast</div>
   </div>
+
+  <script type="module" src="../../../../js/likes.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => window.initLikes());
+  </script>
 </body>
 
 </html>
