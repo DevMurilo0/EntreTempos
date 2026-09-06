@@ -39,8 +39,12 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: url('https://www.transparenttextures.com/patterns/aged-paper.webp');
-  opacity: 0.4;
+  background:
+    repeating-linear-gradient(7deg, rgba(62, 50, 40, 0.025) 0 1px, transparent 1px 5px),
+    radial-gradient(circle at 18% 28%, rgba(122, 106, 80, 0.07) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 76% 62%, rgba(122, 106, 80, 0.05) 0 1px, transparent 1.5px);
+  background-size: auto, 7px 9px, 11px 13px;
+  opacity: 0.55;
   pointer-events: none;
   z-index: 0;
 }
@@ -776,6 +780,82 @@ header a:hover {
   margin-top: 10px;
 }
 
+/* ── DECORAÇÕES COMPARTILHADAS ──
+   Os assets são neutros e podem ser reposicionados nos próximos episódios.
+   Cada elemento fica ancorado à seção à qual pertence. */
+.decor-episodio {
+  position: absolute;
+  z-index: 4;
+  display: block;
+  width: auto;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.68;
+}
+
+.decor-fones {
+  width: clamp(72px, 9vw, 108px);
+  filter: invert(25%) sepia(19%) saturate(1000%) hue-rotate(166deg) brightness(86%);
+}
+
+.episodio-hero > .decor-fones,
+.faixa-mesa > .decor-fones {
+  width: clamp(72px, 9vw, 108px);
+  height: auto;
+  object-fit: contain;
+}
+
+.decor-microfone {
+  width: clamp(66px, 8vw, 92px);
+  filter: invert(24%) sepia(12%) saturate(899%) hue-rotate(169deg) brightness(88%);
+}
+
+.decor-cassete {
+  width: clamp(76px, 9vw, 104px);
+  filter: invert(27%) sepia(22%) saturate(1541%) hue-rotate(314deg) brightness(87%);
+}
+
+.decor-onda {
+  width: clamp(44px, 6vw, 66px);
+  filter: invert(61%) sepia(23%) saturate(750%) hue-rotate(3deg) brightness(88%);
+}
+
+.decor-camera {
+  width: clamp(64px, 8vw, 88px);
+  filter: invert(26%) sepia(12%) saturate(807%) hue-rotate(169deg) brightness(85%);
+}
+
+.decor-hero {
+  top: 18%;
+  right: clamp(-54px, -5vw, -38px);
+  transform: rotate(9deg);
+}
+
+.decor-video {
+  top: 24%;
+  left: -62px;
+  transform: rotate(-8deg);
+}
+
+.decor-convidado {
+  top: 18px;
+  right: -70px;
+  transform: rotate(8deg);
+}
+
+.decor-conversa {
+  right: -48px;
+  bottom: 18px;
+  transform: rotate(12deg);
+}
+
+.decor-bastidores {
+  top: -22px;
+  right: -54px;
+  transform: rotate(7deg);
+}
+
 /* ── MOBILE ── */
 @media (max-width: 600px) {
   header {
@@ -866,6 +946,40 @@ header a:hover {
 
   .entrevistador {
     padding: 9px 9px 14px;
+  }
+
+  .decor-hero,
+  .decor-video,
+  .decor-convidado {
+    display: none;
+  }
+
+  .decor-conversa {
+    width: 38px;
+    right: 10px;
+    bottom: 7px;
+    opacity: 0.28;
+  }
+
+  .decor-bastidores {
+    width: 42px;
+    top: -5px;
+    right: 3px;
+    opacity: 0.42;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 980px) {
+  .decor-hero,
+  .decor-video,
+  .decor-convidado {
+    display: none;
+  }
+
+  .decor-conversa,
+  .decor-bastidores {
+    right: 8px;
+    opacity: 0.28;
   }
 }
 
