@@ -77,6 +77,8 @@ body {
   overflow: hidden;
 }
 
+
+
 .btn-faca-parte::after {
   content: "";
   position: absolute;
@@ -103,6 +105,38 @@ body {
 
 .btn-faca-parte.carimbando {
   animation: faca-parte-bater 0.4s ease;
+}
+
+.btn-enquetes {
+  position: relative;
+  display: inline-block;
+  padding: 9px 22px;
+  background: #8c3b3b;
+  color: #fffdf7 !important;
+  font-family: Georgia, serif;
+  font-weight: bold;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 2px dashed rgba(255, 253, 247, 0.55);
+  border-radius: 3px;
+  box-shadow: 0 5px 14px rgba(140, 59, 59, 0.4);
+  transform: rotate(-2deg);
+  transition: transform 0.3s cubic-bezier(.34, 1.56, .64, 1), box-shadow 0.3s ease, background 0.25s ease;
+  overflow: hidden;
+}
+
+.btn-enquetes:hover {
+  background: #6a2c2c !important;
+  color: #fffdf7 !important;
+  transform: rotate(0deg) translateY(-3px);
+  box-shadow: 0 12px 24px rgba(140, 59, 59, 0.55);
+}
+
+.botoes {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
 }
 
 @keyframes faca-parte-bater {

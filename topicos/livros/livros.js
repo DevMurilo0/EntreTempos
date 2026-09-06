@@ -29,6 +29,8 @@ const meses = [
                    "Baixar / Comprar" como padrão.
      LinkCompra -> Texto do link para compra do livro
                    kkrs
+                   Para "linkTexto" do "linkCompra" é colocado
+                   "Comprar" diretamente
 
    Para criar um mês novo: copie um bloco inteiro (a chave
    numérica + a lista de livros com { } entre colchetes [ ]),
@@ -95,6 +97,7 @@ const livrosPorMes = {
       capa: "img/nome-da-capa.webp",
       link: "https://link-para-baixar-ou-comprar.com",
       linkTexto: "Baixar PDF"
+      linkCompra :"Link Amazon / Mercado Livre"
     }
   ]
   */
