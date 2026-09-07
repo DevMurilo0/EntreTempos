@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,28 +10,60 @@
   <meta property="og:description" content="Conteúdo da revista eletrônica Entre Tempos.">
   <meta property="og:url" content="https://entretempos.vercel.app/topicos/enquetes/enquetes.html">
   <meta property="og:image" content="https://entretempos.vercel.app/img/social/entre-tempos-share.jpg">
-  <meta property="og:image:secure_url" content="https://entretempos.vercel.app/img/social/entre-tempos-share.jpg">
-  <meta property="og:image:type" content="image/jpeg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Entre Tempos — Revista Eletrônica Escolar">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Enquetes - Entre Tempos">
-  <meta name="twitter:description" content="Conteúdo da revista eletrônica Entre Tempos.">
-  <meta name="twitter:image" content="https://entretempos.vercel.app/img/social/entre-tempos-share.jpg">
-  <meta name="twitter:image:alt" content="Entre Tempos — Revista Eletrônica Escolar">
-  <link rel="canonical" href="https://entretempos.vercel.app/topicos/enquetes/enquetes.html">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="icon" href="../../img/amp.png" type="image/png">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=Permanent+Marker&display=swap"
-    rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="enquetes.css">
 </head>
+<body class="pagina-enquetes">
+  <main class="enquetes-main">
+    <a class="enquetes-voltar" href="../../index.html">← Voltar à página inicial</a>
+    
+    <header class="enquetes-header">
+      <div>
+        <p class="enquetes-revista">Entre Tempos</p>
+        <h1>Enquetes (Top 20)</h1>
+      </div>
+      <button id="btn-add-enquete" class="enquetes-btn-principal enquetes-btn-add">Adicionar Enquete</button>
+    </header>
 
-<!-- 
-    Faz ai pra mim por favor a pagina tlgd 
-    Esperar conceito de pagina dos designers 
-    a pagina vai ser tipo um forum velho, com postagens legais dos alunos? 
-    vou postar coco bosta mijo
--->
+    <section class="enquetes-lista" id="lista-enquetes">
+      <div class="enquetes-mensagem-estado">
+        Carregando enquetes...
+      </div>
+    </section>
+  </main>
+
+  <div id="modal-enquete" class="enquetes-modal" hidden>
+    <div class="enquetes-modal-box">
+      <h2 class="enquetes-modal-title">Nova Enquete</h2>
+      <form id="form-enquete">
+        <div class="enquetes-campo">
+          <label for="enquete-nome">Nome</label>
+          <input type="text" id="enquete-nome" class="enquetes-input" required>
+        </div>
+        <div class="enquetes-campo">
+          <label for="enquete-tipo">Tipo</label>
+          <select id="enquete-tipo" class="enquetes-input" required>
+            <option value="" disabled selected>Selecione um tipo...</option>
+            <option value="musica">Música</option>
+            <option value="filme">Filme</option>
+            <option value="livro">Livro</option>
+          </select>
+        </div>
+        <div class="enquetes-campo">
+          <label for="enquete-conteudo">Conteúdo</label>
+          <textarea id="enquete-conteudo" class="enquetes-input enquetes-textarea" required></textarea>
+        </div>
+        <p id="enquete-mensagem" class="enquetes-msg-erro"></p>
+        <div class="enquetes-modal-acoes">
+          <button type="button" id="btn-cancelar-enquete" class="enquetes-btn-secundario">Cancelar</button>
+          <button type="submit" id="btn-salvar-enquete" class="enquetes-btn-principal">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="../../js/enquetes.js"></script>
+</body>
+</html>
