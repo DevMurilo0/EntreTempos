@@ -82,6 +82,59 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   text-shadow: 3px 3px 0 #c4a96b;
 }
 
+.enquetes-header-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.enquetes-filtros {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.enquetes-filtros-rotulo {
+  font-family: 'Special Elite', serif;
+  font-size: 13px;
+  color: #7a6a50;
+  letter-spacing: .04em;
+}
+
+.enquetes-filtros-botoes {
+  display: inline-flex;
+  gap: 6px;
+  background: rgba(242, 232, 213, 0.7);
+  padding: 3px;
+  border: 1px solid #c4a96b;
+  border-radius: 4px;
+}
+
+.enquetes-btn-filtro {
+  background: transparent;
+  border: 0;
+  padding: 6px 14px;
+  border-radius: 3px;
+  color: #6d5b45;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 17px;
+  letter-spacing: .08em;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+.enquetes-btn-filtro:hover:not(.ativo) {
+  background: rgba(140, 59, 59, 0.1);
+  color: #8c3b3b;
+}
+
+.enquetes-btn-filtro.ativo {
+  background: #8c3b3b;
+  color: #fffdf7;
+  box-shadow: 0 2px 6px rgba(140, 59, 59, 0.25);
+}
+
 .enquetes-btn-principal {
   display: block; 
   padding: 11px 28px; 

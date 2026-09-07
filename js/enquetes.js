@@ -20,10 +20,61 @@ const campoOpcoesVotacao = document.getElementById('campo-opcoes-votacao');
 const listaInputsOpcoes = document.getElementById('enquetes-lista-opcoes');
 const btnAddOpcao = document.getElementById('btn-add-opcao');
 const contadorOpcoes = document.getElementById('enquetes-contador-opcoes');
+const botoesFiltro = document.querySelectorAll('.enquetes-btn-filtro');
 
 const MAX_OPCOES = 20;
 const MIN_OPCOES = 2;
 let listenersEnquetes = [];
+let filtroOrdenacao = 'recentes'; // padrão: 'mais recentes'
+
+function ordenarLista() {
+  if (!listaEnquetes) return;
+  const itens = Array.from(listaEnquetes.children);
+  const cards = itens.filter(el => el.classList.contains('enquetes-item'));
+  if (cards.length === 0) return;
+
+  cards.sort((a, b) => {
+    const criacaoA = a.getAttribute('data-criacao') || '';
+    const criacaoB = b.getAttribute('data-criacao') || '';
+    const upA = parseInt(a.getAttribute('data-upvotes') || '0', 10);
+    const opA = parseInt(a.getAttribute('data-votos-opcoes') || '0', 10);
+    const votosA = upA + opA;
+
+    const upB = parseInt(b.getAttribute('data-upvotes') || '0', 10);
+    const opB = parseInt(b.getAttribute('data-votos-opcoes') || '0', 10);
+    const votosB = upB + opB;
+
+    if (filtroOrdenacao === 'votados') {
+      if (votosA !== votosB) return votosB - votosA; // mais votados primeiro
+      return criacaoB.localeCompare(criacaoA); // desempate por mais recente
+    } else {
+      // 'recentes' (padrão)
+      const diffCriacao = criacaoB.localeCompare(criacaoA); // mais recentes primeiro
+      if (diffCriacao !== 0) return diffCriacao;
+      return votosB - votosA; // desempate por votos
+    }
+  });
+
+  cards.forEach(card => listaEnquetes.appendChild(card));
+}
+
+if (botoesFiltro) {
+  botoesFiltro.forEach(botao => {
+    botao.addEventListener('click', () => {
+      const novoFiltro = botao.dataset.filtro;
+      if (filtroOrdenacao === novoFiltro) return;
+      filtroOrdenacao = novoFiltro;
+
+      botoesFiltro.forEach(b => {
+        const ativo = (b === botao);
+        b.classList.toggle('ativo', ativo);
+        b.setAttribute('aria-pressed', String(ativo));
+      });
+
+      ordenarLista();
+    });
+  });
+}
 
 function gerarId(nome) {
   return 'enquete-' + nome
@@ -347,23 +398,13 @@ async function carregarEnquetes() {
       return;
     }
     
-    function ordenarLista() {
-      const itens = Array.from(listaEnquetes.children);
-      itens.sort((a, b) => {
-        const upA = parseInt(a.getAttribute('data-upvotes') || '0', 10);
-        const upB = parseInt(b.getAttribute('data-upvotes') || '0', 10);
-        if (upA !== upB) return upB - upA; // maior upvote primeiro
-        return (b.getAttribute('data-criacao') || '').localeCompare(a.getAttribute('data-criacao') || ''); // desempate por criação
-      });
-      itens.forEach(item => listaEnquetes.appendChild(item));
-    }
-    
     querySnapshot.forEach((docSnapshot) => {
       const data = docSnapshot.data();
       const div = document.createElement('div');
       div.className = 'enquetes-item';
       div.setAttribute('data-upvotes', '0');
       div.setAttribute('data-criacao', data.dataCriacao || '');
+      div.setAttribute('data-votos-opcoes', String(data.totalVotos || 0));
       
       const topo = document.createElement('div');
       topo.className = 'enquetes-item-topo';
@@ -439,6 +480,8 @@ async function carregarEnquetes() {
           listaOpcoesEl.innerHTML = '';
           const total = typeof totalVotos === 'number' ? totalVotos : opcoes.reduce((acc, o) => acc + (o.votos || 0), 0);
           totalVotosSpan.textContent = `Total: ${total} ${total === 1 ? 'voto' : 'votos'}`;
+          div.setAttribute('data-votos-opcoes', String(total));
+          ordenarLista();
 
           opcoes.forEach(opcao => {
             const votos = opcao.votos || 0;
@@ -599,6 +642,8 @@ async function carregarEnquetes() {
       
       listaEnquetes.appendChild(div);
     });
+
+    ordenarLista();
   } catch (erro) {
     console.error("Erro ao carregar enquetes:", erro);
     listaEnquetes.innerHTML = '<div class="enquetes-mensagem-estado enquetes-mensagem-erro">Erro ao carregar as enquetes.</div>';

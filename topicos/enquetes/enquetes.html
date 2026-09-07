@@ -20,9 +20,16 @@
     <a class="enquetes-voltar" href="../../folha.html">← Voltar à página inicial</a>
     
     <header class="enquetes-header">
-      <div>
+      <div class="enquetes-header-info">
         <p class="enquetes-revista">Entre Tempos</p>
         <h1>Enquetes (Top 20)</h1>
+        <div class="enquetes-filtros" role="group" aria-label="Filtrar enquetes">
+          <span class="enquetes-filtros-rotulo">Filtrar por:</span>
+          <div class="enquetes-filtros-botoes">
+            <button type="button" class="enquetes-btn-filtro ativo" data-filtro="recentes" aria-pressed="true">Mais recentes</button>
+            <button type="button" class="enquetes-btn-filtro" data-filtro="votados" aria-pressed="false">Mais votados</button>
+          </div>
+        </div>
       </div>
       <button id="btn-add-enquete" class="enquetes-btn-principal enquetes-btn-add">Adicionar Enquete</button>
     </header>
