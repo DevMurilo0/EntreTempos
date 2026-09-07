@@ -198,6 +198,9 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 
 .enquetes-modal-box {
   width: min(100%, 470px); 
+  width: min(100%, 500px); 
+  max-height: min(90vh, 760px);
+  overflow-y: auto;
   padding: clamp(28px, 6vw, 42px); 
   border: 1px dashed #c4a96b; 
   border-left: 6px solid #8c3b3b; 
@@ -348,3 +351,286 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 .admin-logado .enquetes-btn-deletar {
   display: inline-block;
 }
+
+/* ==========================================================================
+   Campos de Opções do Modal (Com Votação / Sem Votação)
+   ========================================================================== */
+
+.enquetes-formato-opcoes {
+  display: flex;
+  gap: 20px;
+  margin-top: 4px;
+}
+
+.enquetes-formato-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  color: #3e3228;
+  cursor: pointer;
+}
+
+.enquetes-formato-label input[type="radio"] {
+  accent-color: #8c3b3b;
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+}
+
+.enquetes-opcoes-cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.enquetes-contador-opcoes {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 17px;
+  color: #8c3b3b;
+  letter-spacing: .08em;
+  background: rgba(140, 59, 59, 0.08);
+  padding: 2px 10px;
+  border-radius: 3px;
+}
+
+.enquetes-lista-opcoes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.enquetes-opcao-linha {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.enquetes-opcao-linha .enquetes-opcao-input {
+  flex: 1;
+}
+
+.enquetes-btn-remover-opcao {
+  background: transparent;
+  border: 1px solid #c4a96b;
+  color: #922b21;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  font-family: 'Special Elite', serif;
+  font-size: 20px;
+  line-height: 1;
+  border-radius: 2px;
+  transition: all .2s ease;
+  flex-shrink: 0;
+}
+
+.enquetes-btn-remover-opcao:hover {
+  background: #922b21;
+  color: #fffdf7;
+  border-color: #922b21;
+}
+
+.enquetes-btn-add-opcao {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  padding: 11px 16px;
+  border: 1px dashed #8c3b3b;
+  background: rgba(242, 232, 213, 0.4);
+  color: #8c3b3b;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all .2s ease;
+}
+
+.enquetes-btn-add-opcao:hover:not(:disabled) {
+  background: #8c3b3b;
+  color: #fffdf7;
+}
+
+.enquetes-btn-add-opcao:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-style: solid;
+  border-color: #c4a96b;
+  color: #7a6a50;
+}
+
+/* ==========================================================================
+   Bloco de Votação no Card da Enquete
+   ========================================================================== */
+
+.enquetes-tag-votacao {
+  background: #8c3b3b;
+  color: #fffdf7;
+  border-color: #8c3b3b;
+}
+
+.enquetes-votacao-bloco {
+  margin-top: 22px;
+  padding: 18px 20px;
+  background: #fbf8f1;
+  border: 1px solid #e2d3b5;
+  border-radius: 3px;
+}
+
+.enquetes-votacao-titulo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: .08em;
+  color: #8c3b3b;
+  margin-bottom: 14px;
+}
+
+.enquetes-opcoes-voto-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.enquetes-opcao-voto-item {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #d8c6a5;
+  border-radius: 3px;
+  background: #fffdf7;
+  cursor: pointer;
+  transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+  user-select: none;
+}
+
+.enquetes-opcao-voto-item:hover {
+  border-color: #8c3b3b;
+}
+
+.enquetes-opcao-voto-item.votado {
+  border-color: #8c3b3b;
+  box-shadow: 0 0 0 1px #8c3b3b;
+  background: #fef8f6;
+}
+
+.enquetes-opcao-voto-item.processando {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.enquetes-opcao-barra {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0%;
+  background: rgba(140, 59, 59, 0.16);
+  transition: width .5s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.enquetes-opcao-voto-item.votado .enquetes-opcao-barra {
+  background: rgba(140, 59, 59, 0.28);
+}
+
+.enquetes-opcao-info {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  gap: 14px;
+}
+
+.enquetes-opcao-esquerda {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.enquetes-opcao-radio {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #c4a96b;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  transition: border-color .2s ease;
+}
+
+.enquetes-opcao-voto-item:hover .enquetes-opcao-radio {
+  border-color: #8c3b3b;
+}
+
+.enquetes-opcao-voto-item.votado .enquetes-opcao-radio {
+  border-color: #8c3b3b;
+}
+
+.enquetes-opcao-radio-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #8c3b3b;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+.enquetes-opcao-voto-item.votado .enquetes-opcao-radio-dot {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.enquetes-opcao-texto {
+  font-family: 'IM Fell English', serif;
+  font-size: 18px;
+  color: #2b221a;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.enquetes-opcao-voto-item.votado .enquetes-opcao-texto {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.enquetes-opcao-stats {
+  font-family: 'Special Elite', serif;
+  font-size: 14px;
+  color: #7a6a50;
+  flex-shrink: 0;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.enquetes-opcao-voto-item.votado .enquetes-opcao-stats {
+  color: #8c3b3b;
+  font-weight: bold;
+}
+
+.enquetes-votacao-rodape {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(196, 169, 107, 0.4);
+  font-family: 'Special Elite', serif;
+  font-size: 13px;
+  color: #7a6a50;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.enquetes-votacao-dica {
+  font-style: italic;
+  opacity: 0.85;
+}
+

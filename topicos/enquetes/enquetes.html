@@ -17,7 +17,7 @@
 </head>
 <body class="pagina-enquetes">
   <main class="enquetes-main">
-    <a class="enquetes-voltar" href="../../index.html">← Voltar à página inicial</a>
+    <a class="enquetes-voltar" href="../../folha.html">← Voltar à página inicial</a>
     
     <header class="enquetes-header">
       <div>
@@ -52,8 +52,36 @@
           </select>
         </div>
         <div class="enquetes-campo">
-          <label for="enquete-conteudo">Conteúdo</label>
-          <textarea id="enquete-conteudo" class="enquetes-input enquetes-textarea" required></textarea>
+          <label for="enquete-conteudo">Conteúdo <span id="tag-conteudo-opcional" style="font-size: 13px; font-style: italic; color: #7a6a50;">(opcional)</span></label>
+          <textarea id="enquete-conteudo" class="enquetes-input enquetes-textarea"></textarea>
+        </div>
+        <div class="enquetes-campo">
+          <label>Formato da Enquete</label>
+          <div class="enquetes-formato-opcoes">
+            <label class="enquetes-formato-label">
+              <input type="radio" name="enquete-formato" value="com-votacao" id="formato-com-votacao" checked>
+              <span>Com votação</span>
+            </label>
+            <label class="enquetes-formato-label">
+              <input type="radio" name="enquete-formato" value="sem-votacao" id="formato-sem-votacao">
+              <span>Sem votação</span>
+            </label>
+          </div>
+        </div>
+        <div class="enquetes-campo" id="campo-opcoes-votacao">
+          <div class="enquetes-opcoes-cabecalho">
+            <label>Opções de Voto</label>
+            <span id="enquetes-contador-opcoes" class="enquetes-contador-opcoes">2/20</span>
+          </div>
+          <div id="enquetes-lista-opcoes" class="enquetes-lista-opcoes">
+            <div class="enquetes-opcao-linha">
+              <input type="text" class="enquetes-input enquete-opcao-input" placeholder="Opção 1" required>
+            </div>
+            <div class="enquetes-opcao-linha">
+              <input type="text" class="enquetes-input enquete-opcao-input" placeholder="Opção 2" required>
+            </div>
+          </div>
+          <button type="button" id="btn-add-opcao" class="enquetes-btn-add-opcao">+ Criar nova opção</button>
         </div>
         <p id="enquete-mensagem" class="enquetes-msg-erro"></p>
         <div class="enquetes-modal-acoes">
