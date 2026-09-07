@@ -153,7 +153,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   border: 2px solid currentColor; 
   color: #8c3b3b; 
   font-family: 'Bebas Neue', sans-serif; 
-  font-size: 12px; 
+  font-size: 16px; 
   letter-spacing: .12em; 
   text-transform: uppercase; 
   rotate: 2deg;
@@ -167,7 +167,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
   overflow-wrap: anywhere; 
   white-space: pre-wrap; 
   font-family: 'IM Fell English', serif; 
-  font-size: 17px; 
+  font-size: 18px; 
   line-height: 1.55;
 }
 
