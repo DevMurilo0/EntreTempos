@@ -577,6 +577,17 @@ header a:hover {
   background: #000;
 }
 
+.modal-trailer iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  background: #000;
+}
+
+.modal-trailer iframe[hidden],
+.modal-trailer video[hidden] { display: none; }
+
 .modal-descricao {
   background: rgba(192, 57, 43, 0.08);
   padding: 20px;
@@ -911,6 +922,22 @@ header a:hover {
   .modal-trailer video {
     max-height: 220px;
   }
+}
+
+/* Editor com linguagem de cartaz e sala de cinema. */
+.btn-gerenciar-top { color: #922b21; border-width: 2px; box-shadow: 3px 3px 0 #c4a96b; }
+.btn-gerenciar-top:hover { background: #1a1a1a; color: #f2e8d5; }
+.editor-top__caixa { border: 4px double #1a1a1a; border-left: 8px solid #c0392b; }
+.editor-top__caixa::before {
+  content: "FILME · FILME · FILME";
+  display: block;
+  margin: -16px 44px 18px 0;
+  padding: 5px 8px;
+  background: #1a1a1a;
+  color: #f2e8d5;
+  font: 11px 'Special Elite', serif;
+  letter-spacing: .2em;
+  text-align: center;
 }
 /* =============================================
    SISTEMA DE VOTOS — estilo Reddit

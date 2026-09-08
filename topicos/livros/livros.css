@@ -591,6 +591,18 @@ header a:hover { color: #c0392b; }
   }
 }
 
+/* Editor como ficha literária presa ao mural. */
+.btn-gerenciar-top { color: #6d4c2f; border-style: dashed; background: rgba(255, 253, 247, .55); }
+.btn-gerenciar-top:hover { background: #6d4c2f; color: #fffdf7; }
+.editor-top__caixa {
+  border: 1px dashed #c4a96b;
+  border-left: 7px solid #6d4c2f;
+  background-image: repeating-linear-gradient(transparent 0 30px, rgba(122, 106, 80, .08) 31px);
+  transform: rotate(-.25deg);
+}
+.editor-top__titulo { text-shadow: 2px 2px 0 #c4a96b; }
+@media (max-width: 600px) { .editor-top__caixa { transform: none; } }
+
 /* ─── RODAPÉ ─── */
 .rodape-livros {
   position: relative;

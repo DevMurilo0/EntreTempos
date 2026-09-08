@@ -3,6 +3,10 @@
    ============================================= */
 
 import { escutarUpvotes, alternarUpvote, jaVotou, pararTodosListeners } from '../../../js/upvotes.js';
+import {
+  carregarTopConteudos, criarEditorTop, extrairYoutubeId,
+  gerarYoutubeEmbedUrl, obterIdEditado
+} from '../../../js/top-conteudos.js';
 
 const meses = [
   "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
@@ -156,8 +160,23 @@ const musicasPorMes = {
   ],
 };
 
-const mesAtual = new Date().getMonth();
-let mesIndex = mesAtual;
+const ANO_CONTEUDO_LEGADO = 2026;
+const agora = new Date();
+let mesIndex = agora.getMonth();
+let anoIndex = agora.getFullYear();
+let musicasAtuais = [];
+
+function obterFallback(ano, mes) {
+  if (ano !== ANO_CONTEUDO_LEGADO) return [];
+  return (musicasPorMes[mes - 1] || []).map((musica, indice) => ({
+    id: musica.id,
+    posicao: indice + 1,
+    titulo: musica.nome,
+    subtitulo: musica.artista,
+    descricao: musica.descricao,
+    video: musica.video
+  }));
+}
 
 // caches locais por id: total de upvotes e se o usuário atual já votou
 const totaisAtuais = {};
@@ -172,34 +191,65 @@ function abrirModal(musica) {
 
   const modal = document.createElement('div');
   modal.id = 'musica-modal';
-  modal.innerHTML = `
-    <div class="modal-overlay"></div>
-    <div class="modal-caixa">
-      <button class="modal-fechar" aria-label="Fechar">✕</button>
-      <div class="modal-cabecalho">
-        <span class="modal-num">♪</span>
-        <div>
-          <div class="modal-nome">${musica.nome}</div>
-          <div class="modal-artista">${musica.artista}</div>
-        </div>
-      </div>
-      ${musica.video ? `
-        <div class="musica-video">
-          <video controls width="100%">
-            <source src="${musica.video}" type="video/mp4">
-            Seu navegador não suporta vídeo.
-          </video>
-        </div>
-      ` : ''}
-      ${musica.descricao ? `<p class="modal-desc">${musica.descricao}</p>` : ''}
-    </div>
-  `;
+  const fundo = document.createElement('div');
+  fundo.className = 'modal-overlay';
+  const caixa = document.createElement('div');
+  caixa.className = 'modal-caixa';
+  const fechar = document.createElement('button');
+  fechar.className = 'modal-fechar';
+  fechar.type = 'button';
+  fechar.setAttribute('aria-label', 'Fechar');
+  fechar.textContent = '✕';
+  const cabecalho = document.createElement('div');
+  cabecalho.className = 'modal-cabecalho';
+  const nota = document.createElement('span');
+  nota.className = 'modal-num';
+  nota.textContent = '♪';
+  const identificacao = document.createElement('div');
+  const nome = document.createElement('div');
+  nome.className = 'modal-nome';
+  nome.textContent = musica.titulo;
+  const artista = document.createElement('div');
+  artista.className = 'modal-artista';
+  artista.textContent = musica.subtitulo;
+  identificacao.append(nome, artista);
+  cabecalho.append(nota, identificacao);
+  caixa.append(fechar, cabecalho);
+
+  const embedUrl = gerarYoutubeEmbedUrl(musica.youtubeId);
+  if (embedUrl || musica.video) {
+    const videoBox = document.createElement('div');
+    videoBox.className = 'musica-video';
+    if (embedUrl) {
+      const iframe = document.createElement('iframe');
+      iframe.src = embedUrl;
+      iframe.title = `Videoclipe de ${musica.titulo}`;
+      iframe.allow = 'accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+      iframe.allowFullscreen = true;
+      videoBox.appendChild(iframe);
+    } else {
+      const video = document.createElement('video');
+      video.controls = true;
+      video.playsInline = true;
+      video.src = musica.video;
+      videoBox.appendChild(video);
+    }
+    caixa.appendChild(videoBox);
+  }
+  if (musica.descricao) {
+    const descricao = document.createElement('p');
+    descricao.className = 'modal-desc';
+    descricao.textContent = musica.descricao;
+    caixa.appendChild(descricao);
+  }
+  modal.append(fundo, caixa);
 
   document.body.appendChild(modal);
   requestAnimationFrame(() => modal.classList.add('modal-visivel'));
 
-  modal.querySelector('.modal-fechar').addEventListener('click', fecharModal);
-  modal.querySelector('.modal-overlay').addEventListener('click', fecharModal);
+  fechar.addEventListener('click', fecharModal);
+  fundo.addEventListener('click', fecharModal);
 }
 
 function fecharModal() {
@@ -221,8 +271,8 @@ document.addEventListener('keydown', e => {
  */
 function ordenarPorUpvotes(musicas) {
   return musicas
-    .map((m, i) => ({ musica: m, i, total: totaisAtuais[m.id] ?? 0 }))
-    .sort((a, b) => b.total - a.total || a.i - b.i)
+    .map((m) => ({ musica: m, total: totaisAtuais[m.id] ?? 0 }))
+    .sort((a, b) => b.total - a.total || a.musica.posicao - b.musica.posicao)
     .map(x => x.musica);
 }
 
@@ -243,20 +293,22 @@ async function votar(btn, id) {
 
 /* ── RENDERIZAR LISTA ── */
 function renderizar(animar = false) {
-  document.getElementById('mes-atual').textContent = meses[mesIndex];
+  document.getElementById('mes-atual').textContent = `${meses[mesIndex]} ${anoIndex}`;
 
   const lista = document.getElementById('lista-musicas');
-  lista.innerHTML = '';
+  lista.replaceChildren();
 
-  const musicasOriginais = musicasPorMes[mesIndex];
-  if (!musicasOriginais || musicasOriginais.length === 0) {
+  if (!musicasAtuais.length) {
     const li = document.createElement('li');
-    li.innerHTML = '<p class="vazio">Em breve as músicas deste mês!</p>';
+    const vazio = document.createElement('p');
+    vazio.className = 'vazio';
+    vazio.textContent = 'Em breve as músicas deste mês!';
+    li.appendChild(vazio);
     lista.appendChild(li);
     return;
   }
 
-  const musicas = ordenarPorUpvotes(musicasOriginais);
+  const musicas = ordenarPorUpvotes(musicasAtuais);
 
   musicas.forEach((m, i) => {
     const num = String(i + 1).padStart(2, '0');
@@ -265,26 +317,43 @@ function renderizar(animar = false) {
     li.style.animation = animar ? '' : 'none';
     if (animar) li.style.animationDelay = `${i * 0.05}s`;
 
-    const clicavel = (m.video || m.descricao) && m.nome !== '—';
+    const clicavel = (m.video || m.youtubeId || m.descricao) && m.titulo !== '—';
 
     const total = totaisAtuais[m.id] ?? 0;
     const votado = !!votadoAtual[m.id];
 
-    li.innerHTML = `
-      <button class="btn-upvote${votado ? ' votado' : ''}" data-upvote-id="${m.id}"
-        aria-label="Votar em ${m.nome}" aria-pressed="${votado}" ${votandoAgora.has(m.id) ? 'disabled' : ''}>
-        <span class="upvote-seta">&#9650;</span>
-        <span class="upvote-total">${total}</span>
-      </button>
-      <span class="musica-num">${num}</span>
-      <div class="musica-info">
-        <span class="musica-nome">${m.nome}</span>
-        ${m.artista ? `<span class="musica-artista">${m.artista}</span>` : ''}
-      </div>
-      ${clicavel ? `<span class="musica-toggle-icone">▶</span>` : ''}
-    `;
-
-    const btnUpvote = li.querySelector('.btn-upvote');
+    const btnUpvote = document.createElement('button');
+    btnUpvote.className = `btn-upvote${votado ? ' votado' : ''}`;
+    btnUpvote.dataset.upvoteId = m.id;
+    btnUpvote.setAttribute('aria-label', `Votar em ${m.titulo}`);
+    btnUpvote.setAttribute('aria-pressed', String(votado));
+    btnUpvote.disabled = votandoAgora.has(m.id);
+    const seta = document.createElement('span');
+    seta.className = 'upvote-seta';
+    seta.textContent = '▲';
+    const totalEl = document.createElement('span');
+    totalEl.className = 'upvote-total';
+    totalEl.textContent = String(total);
+    btnUpvote.append(seta, totalEl);
+    const numero = document.createElement('span');
+    numero.className = 'musica-num';
+    numero.textContent = num;
+    const info = document.createElement('div');
+    info.className = 'musica-info';
+    const nome = document.createElement('span');
+    nome.className = 'musica-nome';
+    nome.textContent = m.titulo;
+    const artista = document.createElement('span');
+    artista.className = 'musica-artista';
+    artista.textContent = m.subtitulo;
+    info.append(nome, artista);
+    li.append(btnUpvote, numero, info);
+    if (clicavel) {
+      const abrir = document.createElement('span');
+      abrir.className = 'musica-toggle-icone';
+      abrir.textContent = '▶';
+      li.appendChild(abrir);
+    }
     btnUpvote.addEventListener('click', (e) => {
       e.stopPropagation();
       votar(btnUpvote, m.id);
@@ -311,10 +380,22 @@ function renderizar(animar = false) {
  */
 async function carregarUpvotesDoMes() {
   const carregamentoAtual = ++carregamentoDoMes;
-  const musicas = musicasPorMes[mesIndex] || [];
+  musicasAtuais = obterFallback(anoIndex, mesIndex + 1);
   pararTodosListeners();
 
   // Não bloqueia a troca de mês esperando respostas do Firebase.
+  renderizar(true);
+
+  try {
+    const resultado = await carregarTopConteudos('musicas', anoIndex, mesIndex + 1);
+    if (carregamentoAtual !== carregamentoDoMes) return;
+    if (resultado.existe) musicasAtuais = resultado.itens;
+  } catch (erro) {
+    console.warn('[musica] usando conteúdo local; Firestore indisponível:', erro);
+  }
+
+  if (carregamentoAtual !== carregamentoDoMes) return;
+  const musicas = musicasAtuais;
   renderizar(true);
 
   for (const m of musicas) {
@@ -334,13 +415,57 @@ async function carregarUpvotesDoMes() {
 }
 
 document.getElementById('seta-esq').addEventListener('click', () => {
-  mesIndex = (mesIndex - 1 + 12) % 12;
+  if (mesIndex === 0) {
+    mesIndex = 11;
+    anoIndex -= 1;
+  } else mesIndex -= 1;
   carregarUpvotesDoMes();
 });
 
 document.getElementById('seta-dir').addEventListener('click', () => {
-  mesIndex = (mesIndex + 1) % 12;
+  if (mesIndex === 11) {
+    mesIndex = 0;
+    anoIndex += 1;
+  } else mesIndex += 1;
   carregarUpvotesDoMes();
+});
+
+criarEditorTop({
+  tipo: 'musicas',
+  limite: 10,
+  botao: document.getElementById('btn-gerenciar-top'),
+  titulo: 'Gerenciar Top 10 · Músicas',
+  campos: [
+    { nome: 'titulo', label: 'Nome da música', obrigatorio: true },
+    { nome: 'subtitulo', label: 'Artista', obrigatorio: true },
+    { nome: 'descricao', label: 'Descrição', tipo: 'textarea', obrigatorio: true },
+    { nome: 'youtubeUrl', label: 'Link do vídeo no YouTube', tipo: 'url', placeholder: 'https://youtu.be/...' }
+  ],
+  obterPeriodo: () => ({ mes: mesIndex + 1, ano: anoIndex }),
+  carregarPeriodo: async (mes, ano) => {
+    mesIndex = mes - 1;
+    anoIndex = ano;
+    await carregarUpvotesDoMes();
+  },
+  obterItens: () => musicasAtuais,
+  montarItem: (valores, anterior, posicao) => {
+    const youtubeId = valores.youtubeUrl ? extrairYoutubeId(valores.youtubeUrl) : '';
+    if (!anterior?.video && !youtubeId) return { erro: 'Informe um link válido do YouTube.' };
+    if (valores.youtubeUrl && !youtubeId) return { erro: 'Informe um link válido do YouTube.' };
+    return {
+      item: {
+        ...(anterior?.video && !youtubeId ? { video: anterior.video } : {}),
+        id: obterIdEditado('musicas', anterior, valores.titulo),
+        posicao,
+        titulo: valores.titulo,
+        subtitulo: valores.subtitulo,
+        descricao: valores.descricao,
+        youtubeUrl: valores.youtubeUrl,
+        youtubeId
+      }
+    };
+  },
+  aoSalvar: carregarUpvotesDoMes
 });
 
 carregarUpvotesDoMes();

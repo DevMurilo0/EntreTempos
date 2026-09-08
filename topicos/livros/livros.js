@@ -3,6 +3,10 @@
    ============================================= */
 
 import { escutarUpvotes, alternarUpvote, jaVotou, pararTodosListeners } from '../../js/upvotes.js';
+import {
+  carregarTopConteudos, criarEditorTop, obterIdEditado,
+  validarCapa, validarUrlHttp
+} from '../../js/top-conteudos.js';
 
 const meses = [
   "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
@@ -103,7 +107,16 @@ const livrosPorMes = {
   */
 };
 
-const CAPA_PADRAO = "img/capa_destaque.webp";
+const CAPA_PADRAO = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+  <svg xmlns="http://www.w3.org/2000/svg" width="320" height="480" viewBox="0 0 320 480">
+    <rect width="320" height="480" fill="#8c3b3b"/>
+    <rect x="18" y="18" width="284" height="444" fill="#f2e8d5" stroke="#c4a96b" stroke-width="5"/>
+    <path d="M58 112h204M58 350h204" stroke="#8c3b3b" stroke-width="3"/>
+    <text x="160" y="222" text-anchor="middle" font-family="serif" font-size="31" fill="#3e3228">ENTRE</text>
+    <text x="160" y="262" text-anchor="middle" font-family="serif" font-size="31" fill="#3e3228">TEMPOS</text>
+    <text x="160" y="302" text-anchor="middle" font-family="serif" font-size="18" fill="#7a6a50">LIVRO</text>
+  </svg>
+`)}`;
 
 function slugify(str) {
   return (str || '')
@@ -113,8 +126,25 @@ function slugify(str) {
     .replace(/(^-|-$)/g, '');
 }
 
-const mesAtual = new Date().getMonth(); // 0–11
-let mesIndex = mesAtual;
+const ANO_CONTEUDO_LEGADO = 2026;
+const agora = new Date();
+let mesIndex = agora.getMonth();
+let anoIndex = agora.getFullYear();
+let livrosAtuais = [];
+
+function obterFallback(ano, mes) {
+  if (ano !== ANO_CONTEUDO_LEGADO) return [];
+  return (livrosPorMes[mes - 1] || []).map((livro, indice) => ({
+    id: `${mes - 1}-${slugify(livro.titulo)}`,
+    posicao: indice + 1,
+    titulo: livro.titulo,
+    subtitulo: livro.autor || '',
+    descricao: livro.descricao,
+    pdfUrl: livro.link || '',
+    capa: livro.capa || '',
+    linkCompra: livro.linkCompra || ''
+  }));
+}
 
 // caches locais por id: total de upvotes e se o usuário atual já votou
 const totaisAtuais = {};
@@ -134,13 +164,13 @@ function abrirModal(livro) {
   modalCapa.src = livro.capa || CAPA_PADRAO;
   modalCapa.alt = livro.titulo || '';
   modalTitulo.textContent = livro.titulo || '';
-  modalAutor.textContent = livro.autor || '';
-  modalAutor.style.display = livro.autor ? 'block' : 'none';
+  modalAutor.textContent = livro.subtitulo || '';
+  modalAutor.style.display = livro.subtitulo ? 'block' : 'none';
   modalDesc.textContent = livro.descricao || '';
 
-  if (livro.link) {
-    modalLink.href = livro.link;
-    modalLink.textContent = livro.linkTexto || 'Baixar / Comprar';
+  if (livro.pdfUrl && validarUrlHttp(livro.pdfUrl)) {
+    modalLink.href = livro.pdfUrl;
+    modalLink.textContent = 'Ler PDF ↗';
     modalLink.style.display = 'inline-flex';
   } else {
     modalLink.style.display = 'none';
@@ -180,8 +210,8 @@ document.addEventListener('keydown', (e) => {
  */
 function ordenarPorUpvotes(livros) {
   return livros
-    .map((l, i) => ({ livro: l, i, total: totaisAtuais[l.id] ?? 0 }))
-    .sort((a, b) => b.total - a.total || a.i - b.i)
+    .map((l) => ({ livro: l, total: totaisAtuais[l.id] ?? 0 }))
+    .sort((a, b) => b.total - a.total || a.livro.posicao - b.livro.posicao)
     .map(x => x.livro);
 }
 
@@ -201,27 +231,21 @@ async function votar(btn, id) {
 }
 
 function renderizar(animar = false) {
-  document.getElementById('mes-atual').textContent = meses[mesIndex];
+  document.getElementById('mes-atual').textContent = `${meses[mesIndex]} ${anoIndex}`;
   const lista = document.getElementById('lista-livros');
-  lista.innerHTML = '';
+  lista.replaceChildren();
 
-  const livrosOriginais = livrosPorMes[mesIndex];
-
-  if (!livrosOriginais || livrosOriginais.length === 0) {
+  if (!livrosAtuais.length) {
     const li = document.createElement('li');
-    li.innerHTML = '<p class="vazio">Em breve os livros deste mês!</p>';
+    const vazio = document.createElement('p');
+    vazio.className = 'vazio';
+    vazio.textContent = 'Em breve os livros deste mês!';
+    li.appendChild(vazio);
     lista.appendChild(li);
     return;
   }
 
-  // cada livro recebe um id estável (mês + título) pra sincronizar o voto no Firestore
-  const livrosComId = livrosOriginais.map((l, i) => ({
-    ...l,
-    id: `${mesIndex}-${slugify(l.titulo)}`,
-    ordemOriginal: i
-  }));
-
-  const livros = ordenarPorUpvotes(livrosComId);
+  const livros = ordenarPorUpvotes(livrosAtuais);
 
   livros.forEach((l, i) => {
     const num = String(i + 1).padStart(2, '0');
@@ -233,21 +257,38 @@ function renderizar(animar = false) {
     const total = totaisAtuais[l.id] ?? 0;
     const votado = !!votadoAtual[l.id];
 
-    li.innerHTML = `
-      <div class="voto-coluna" data-id="${l.id}">
-        <button class="voto-btn voto-up${votado ? ' ativo' : ''}"
-          aria-label="Votar em ${l.titulo}" aria-pressed="${votado}" ${votandoAgora.has(l.id) ? 'disabled' : ''}>▲</button>
-        <span class="voto-score">${total}</span>
-      </div>
-      <span class="livro-num">${num}</span>
-      <div class="livro-info">
-        <span class="livro-titulo">${l.titulo}</span>
-        ${l.autor ? `<span class="livro-autor">${l.autor}</span>` : ''}
-      </div>
-      <span class="livro-abrir">ver detalhes →</span>
-    `;
-
-    const btnVoto = li.querySelector('.voto-up');
+    const votoColuna = document.createElement('div');
+    votoColuna.className = 'voto-coluna';
+    votoColuna.dataset.id = l.id;
+    const btnVoto = document.createElement('button');
+    btnVoto.className = `voto-btn voto-up${votado ? ' ativo' : ''}`;
+    btnVoto.setAttribute('aria-label', `Votar em ${l.titulo}`);
+    btnVoto.setAttribute('aria-pressed', String(votado));
+    btnVoto.disabled = votandoAgora.has(l.id);
+    btnVoto.textContent = '▲';
+    const score = document.createElement('span');
+    score.className = 'voto-score';
+    score.textContent = String(total);
+    votoColuna.append(btnVoto, score);
+    const numero = document.createElement('span');
+    numero.className = 'livro-num';
+    numero.textContent = num;
+    const info = document.createElement('div');
+    info.className = 'livro-info';
+    const titulo = document.createElement('span');
+    titulo.className = 'livro-titulo';
+    titulo.textContent = l.titulo;
+    info.appendChild(titulo);
+    if (l.subtitulo) {
+      const autor = document.createElement('span');
+      autor.className = 'livro-autor';
+      autor.textContent = l.subtitulo;
+      info.appendChild(autor);
+    }
+    const abrir = document.createElement('span');
+    abrir.className = 'livro-abrir';
+    abrir.textContent = 'ver detalhes →';
+    li.append(votoColuna, numero, info, abrir);
     btnVoto.addEventListener('click', (e) => {
       e.stopPropagation();
       votar(btnVoto, l.id);
@@ -271,14 +312,22 @@ function renderizar(animar = false) {
  */
 async function carregarUpvotesDoMes() {
   const carregamentoAtual = ++carregamentoDoMes;
-  const livrosOriginais = livrosPorMes[mesIndex] || [];
-  const livros = livrosOriginais.map((l) => ({
-    ...l,
-    id: `${mesIndex}-${slugify(l.titulo)}`
-  }));
+  livrosAtuais = obterFallback(anoIndex, mesIndex + 1);
   pararTodosListeners();
 
   // A lista aparece já; votos e placares são sincronizados em segundo plano.
+  renderizar(true);
+
+  try {
+    const resultado = await carregarTopConteudos('livros', anoIndex, mesIndex + 1);
+    if (carregamentoAtual !== carregamentoDoMes) return;
+    if (resultado.existe) livrosAtuais = resultado.itens;
+  } catch (erro) {
+    console.warn('[livros] usando conteúdo local; Firestore indisponível:', erro);
+  }
+
+  if (carregamentoAtual !== carregamentoDoMes) return;
+  const livros = livrosAtuais;
   renderizar(true);
 
   for (const l of livros) {
@@ -298,13 +347,57 @@ async function carregarUpvotesDoMes() {
 }
 
 document.getElementById('seta-esq').addEventListener('click', () => {
-  mesIndex = (mesIndex - 1 + 12) % 12;
+  if (mesIndex === 0) {
+    mesIndex = 11;
+    anoIndex -= 1;
+  } else mesIndex -= 1;
   carregarUpvotesDoMes();
 });
 
 document.getElementById('seta-dir').addEventListener('click', () => {
-  mesIndex = (mesIndex + 1) % 12;
+  if (mesIndex === 11) {
+    mesIndex = 0;
+    anoIndex += 1;
+  } else mesIndex += 1;
   carregarUpvotesDoMes();
+});
+
+criarEditorTop({
+  tipo: 'livros',
+  limite: 5,
+  botao: document.getElementById('btn-gerenciar-top'),
+  titulo: 'Gerenciar Top 5 · Livros',
+  campos: [
+    { nome: 'titulo', label: 'Título', obrigatorio: true },
+    { nome: 'subtitulo', label: 'Autor', obrigatorio: true },
+    { nome: 'descricao', label: 'Descrição', tipo: 'textarea', obrigatorio: true },
+    { nome: 'pdfUrl', label: 'Link do PDF', tipo: 'url', placeholder: 'https://site.com/livro.pdf', obrigatorio: true },
+    { nome: 'capa', label: 'Capa (caminho local ou URL HTTPS)', placeholder: 'img_livros/capa.webp' }
+  ],
+  obterPeriodo: () => ({ mes: mesIndex + 1, ano: anoIndex }),
+  carregarPeriodo: async (mes, ano) => {
+    mesIndex = mes - 1;
+    anoIndex = ano;
+    await carregarUpvotesDoMes();
+  },
+  obterItens: () => livrosAtuais,
+  montarItem: (valores, anterior, posicao) => {
+    if (!validarUrlHttp(valores.pdfUrl)) return { erro: 'Informe um link HTTP ou HTTPS válido para o PDF.' };
+    if (!validarCapa(valores.capa)) return { erro: 'Use um caminho local ou uma URL HTTPS válida para a capa.' };
+    return {
+      item: {
+        id: obterIdEditado('livros', anterior, valores.titulo),
+        posicao,
+        titulo: valores.titulo,
+        subtitulo: valores.subtitulo,
+        descricao: valores.descricao,
+        pdfUrl: valores.pdfUrl,
+        capa: valores.capa,
+        ...(anterior?.linkCompra ? { linkCompra: anterior.linkCompra } : {})
+      }
+    };
+  },
+  aoSalvar: carregarUpvotesDoMes
 });
 
 carregarUpvotesDoMes();

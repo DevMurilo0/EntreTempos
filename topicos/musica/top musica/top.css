@@ -740,20 +740,20 @@ header a:hover {
 .musica-video {
   position: relative;
   width: 100%;
-  padding-bottom: 56.25%;
-  height: 0;
+  aspect-ratio: 16 / 9;
   border-radius: 4px;
   overflow: hidden;
+  background: #000;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 
-.musica-video iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
+.musica-video iframe,
+.musica-video video {
+  display: block;
   width: 100%;
   height: 100%;
-  border: none;
+  border: 0;
+  background: #000;
 }
 
 .musica-sem-video {
@@ -826,6 +826,8 @@ header a:hover {
   transition: transform 0.3s ease;
   font-family: 'Special Elite', serif;
 }
+
+.modal-caixa .musica-video { margin-bottom: 20px; border: 2px solid #1a1a1a; }
 
 #musica-modal.modal-visivel .modal-caixa {
   transform: translateY(0);
@@ -933,3 +935,9 @@ header a:hover {
     font-size: 13px;
   }
 }
+
+/* Editor com recorte de revista musical e selo vermelho. */
+.btn-gerenciar-top { color: #c0392b; border: 2px solid #1a1a1a; box-shadow: 4px 4px 0 #c0392b; }
+.btn-gerenciar-top:hover { background: #c0392b; color: #fff; }
+.editor-top__caixa { border: 3px solid #1a1a1a; box-shadow: 10px 18px 0 rgba(192, 57, 43, .42), 10px 18px 55px rgba(0, 0, 0, .45); }
+.editor-top__etiqueta { display: inline-block; padding: 4px 9px; background: #c0392b; color: #fff; transform: rotate(-2deg); }

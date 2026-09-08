@@ -1,0 +1,143 @@
+/* Estrutura compartilhada do editor mensal; cada seção colore a sua versão. */
+body.editor-top-aberto { overflow: hidden; }
+
+.btn-gerenciar-top {
+  display: block;
+  margin: -8px 0 20px auto;
+  padding: 8px 15px;
+  border: 1px solid currentColor;
+  background: transparent;
+  font: 15px 'Bebas Neue', sans-serif;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform .2s ease, background .2s ease, color .2s ease;
+}
+.btn-gerenciar-top[hidden] { display: none; }
+.btn-gerenciar-top:hover { transform: translateY(-2px) rotate(-1deg); }
+
+.editor-top {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(24, 18, 12, .78);
+  backdrop-filter: blur(3px);
+}
+.editor-top[hidden] { display: none; }
+.editor-top__caixa {
+  position: relative;
+  width: min(100%, 680px);
+  max-height: 92vh;
+  overflow-y: auto;
+  padding: clamp(24px, 5vw, 40px);
+  background: #f7efdf;
+  color: #302820;
+  box-shadow: 10px 18px 55px rgba(0, 0, 0, .48);
+  font-family: 'Special Elite', serif;
+}
+.editor-top__fechar {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: #8c3b3b;
+  color: #fff;
+  font-size: 23px;
+  line-height: 1;
+  cursor: pointer;
+}
+.editor-top__cabecalho { margin-bottom: 20px; padding-right: 38px; }
+.editor-top__etiqueta {
+  color: #8c3b3b;
+  font-size: 11px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+.editor-top__titulo {
+  margin-top: 4px;
+  font: 38px/1 'Bebas Neue', sans-serif;
+  letter-spacing: .06em;
+}
+.editor-top__periodo {
+  display: grid;
+  grid-template-columns: 1fr 130px;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.editor-top__periodo label,
+.editor-top__campo { display: flex; flex-direction: column; gap: 7px; }
+.editor-top__periodo label,
+.editor-top__campo > span { font-size: 13px; color: #695944; }
+.editor-top select,
+.editor-top input,
+.editor-top textarea {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #c4a96b;
+  border-radius: 2px;
+  background: rgba(255, 253, 247, .78);
+  color: #302820;
+  font: 16px 'Special Elite', serif;
+}
+.editor-top textarea { min-height: 112px; resize: vertical; line-height: 1.5; }
+.editor-top__slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 4px 0 22px;
+}
+.editor-top__slot {
+  min-width: 66px;
+  padding: 8px 9px;
+  border: 1px dashed #9e8a67;
+  background: transparent;
+  color: #7a6a50;
+  font: 15px 'Bebas Neue', sans-serif;
+  letter-spacing: .08em;
+  cursor: pointer;
+}
+.editor-top__slot--preenchido { border-style: solid; background: rgba(196, 169, 107, .18); color: #3e3228; }
+.editor-top__slot--selecionado { border-color: #8c3b3b; background: #8c3b3b; color: #fffdf7; box-shadow: 2px 3px 0 #c4a96b; }
+.editor-top__form { display: grid; gap: 15px; }
+.editor-top__posicao { padding-bottom: 9px; border-bottom: 1px dashed #c4a96b; color: #8c3b3b; font-weight: bold; }
+.editor-top__mensagem { min-height: 20px; color: #4d6648; font-size: 12px; text-align: center; }
+.editor-top__mensagem--erro { color: #922b21; }
+.editor-top__acoes { display: flex; align-items: center; justify-content: flex-end; gap: 10px; flex-wrap: wrap; }
+.editor-top__acoes button {
+  min-height: 40px;
+  padding: 9px 16px;
+  font: 14px 'Special Elite', serif;
+  cursor: pointer;
+}
+.editor-top__salvar { border: 1px solid #8c3b3b; background: #8c3b3b; color: #fffdf7; }
+.editor-top__cancelar { border: 1px solid #8c3b3b; background: transparent; color: #8c3b3b; }
+.editor-top__remover { margin-right: auto; border: 0; background: transparent; color: #922b21; text-decoration: underline; text-underline-offset: 3px; }
+.editor-top__remover[hidden] { display: none; }
+.editor-top__confirmacao { padding: 28px 4px 4px; text-align: center; }
+.editor-top__confirmacao[hidden] { display: none; }
+.editor-top__confirmacao p { margin-bottom: 22px; font-size: 17px; line-height: 1.5; }
+.editor-top__confirmacao .editor-top__acoes { justify-content: center; }
+.editor-top button:focus-visible,
+.editor-top input:focus-visible,
+.editor-top select:focus-visible,
+.editor-top textarea:focus-visible,
+.btn-gerenciar-top:focus-visible { outline: 3px solid #c4a96b; outline-offset: 3px; }
+
+@media (max-width: 600px) {
+  .btn-gerenciar-top { margin: -5px auto 18px; }
+  .editor-top { padding: 8px; }
+  .editor-top__caixa { max-height: 96vh; padding: 25px 17px; }
+  .editor-top__titulo { font-size: 30px; }
+  .editor-top__periodo { grid-template-columns: minmax(0, 1fr) 105px; }
+  .editor-top__slots { gap: 6px; }
+  .editor-top__slot { flex: 1 0 60px; min-width: 0; }
+  .editor-top__acoes { flex-direction: column; }
+  .editor-top__acoes button { width: 100%; }
+  .editor-top__remover { margin-right: 0; order: 3; }
+}
