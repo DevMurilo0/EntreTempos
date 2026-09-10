@@ -478,7 +478,9 @@ async function carregarEnquetes() {
 
         function renderizarOpcoes(opcoes, totalVotos) {
           listaOpcoesEl.innerHTML = '';
-          const total = typeof totalVotos === 'number' ? totalVotos : opcoes.reduce((acc, o) => acc + (o.votos || 0), 0);
+
+          const somaVotosOpcoes = opcoes.reduce((acc, o) => acc + (o.votos || 0), 0);
+          const total = somaVotosOpcoes > 0 ? somaVotosOpcoes : (typeof totalVotos === 'number' ? totalVotos : 0);
           totalVotosSpan.textContent = `Total: ${total} ${total === 1 ? 'voto' : 'votos'}`;
           div.setAttribute('data-votos-opcoes', String(total));
           ordenarLista();
