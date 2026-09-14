@@ -1,49 +1,134 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url>
-<loc>https://entretempos.vercel.app/</loc>
-<priority>1.0</priority>
-</url>
-<url>
-<loc>https://entretempos.vercel.app/folha.html</loc>
-</url>
-<url>
-<loc>https://entretempos.vercel.app/topicos/curiosidades/curiosidades.html</loc>
-</url>
-<url>
-<loc>https://entretempos.vercel.app/topicos/curiosidades/autorais/autorais.html</loc>
-</url>
-<url>
-<loc>https://entretempos.vercel.app/topicos/curiosidades/gerais/gerais.html</loc>
-</url>
-<url>
-<loc>https://entretempos.vercel.app/topicos/desenhos/desenhos.html</loc>
-</url>
-<url>
-<loc>https://entretempos.vercel.app/topicos/desenhos/autorais/autorais.html</loc>
-</url>
-<url>
-<loc>https://entretempos.vercel.app/topicos/desenhos/conhecidos/conhecidos.html</loc>
-</url>
-<url>
-<loc>https://entretempos.vercel.app/topicos/filmes/filmes.html</loc>
-</url>
-<url>
-<loc>https://entretempos.vercel.app/topicos/livros/livros.html</loc>
-</url>
-<url>
-<loc>https://entretempos.vercel.app/topicos/musica/musica.html</loc>
-</url>
-<url>
-<loc>https://entretempos.vercel.app/topicos/musica/talento/talento.html</loc>
-</url>
-<url>
-<loc>https://entretempos.vercel.app/topicos/musica/top%20musica/top.html</loc>
-</url>
-<url>
-<loc>https://entretempos.vercel.app/topicos/poemas/poemas.html</loc>
-</url>
-<url>
-<loc>https://entretempos.vercel.app/topicos/poemas/autorais/autorais/autorais.html</loc>
-</url>
+
+  <url>
+    <loc>https://entretempos.blog.br/</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/folha.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/faca-parte.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/sobre-o-site/index.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/enquetes/enquetes.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/curiosidades/curiosidades.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/curiosidades/autorais/autorais.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/curiosidades/autorais/leituras/ruan/ruan.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/curiosidades/autorais/leituras/jose/jose.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/curiosidades/gerais/gerais.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/curiosidades/gerais/leituras/curiosidade-1.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/curiosidades/gerais/leituras/curiosidade-2.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/curiosidades/gerais/leituras/curiosidade-3.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/curiosidades/gerais/leituras/curiosidade-4.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/desenhos/desenhos.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/desenhos/autorais/autorais.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/desenhos/autorais/anna/index.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/desenhos/autorais/julio/index.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/desenhos/autorais/rhuan/index.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/desenhos/autorais/will/index.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/desenhos/conhecidos/conhecidos.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/desenhos/conhecidos/artista-1/index.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/desenhos/conhecidos/artista-2/index.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/filmes/filmes.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/livros/livros.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/musica/musica.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/musica/top%20musica/top.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/musica/talento/talento.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/musica/talento/Bruno/index.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/musica/talento/Fernanda/index.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/musica/talento/Humberto/index.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/poemas/poemas.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/poemas/autorais/autorais/autorais.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/poemas/autorais/autorais/anna/index.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/poemas/autorais/autorais/eduarda/index.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/poemas/autorais/autorais/mikey/index.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/poemas/conhecidos/conhecidos.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/poemas/conhecidos/caio-fernando/index.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/poemas/conhecidos/mario-quintana/index.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/poemas/conhecidos/miro/index.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/podcast/podcast.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/podcast/bastidores/bastidores.html</loc>
+  </url>
+  <url>
+    <loc>https://entretempos.blog.br/topicos/podcast/episodios/episodio-1/episodio-1.html</loc>
+  </url>
+
 </urlset>

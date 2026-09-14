@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin/
+Disallow: /entretempos-upvotes/
+
+Sitemap: https://entretempos.blog.br/sitemap.xml
