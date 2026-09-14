@@ -10,7 +10,7 @@
         }
       ],
       "destination": "https://entretempos.blog.br/:path*",
-      "permanent": true
+      "statusCode": 301
     }
   ]
 }
