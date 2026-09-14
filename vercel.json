@@ -2,6 +2,17 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "entretempos.vercel.app"
+        }
+      ],
+      "destination": "https://entretempos.blog.br/",
+      "statusCode": 301
+    },
+    {
       "source": "/:path*",
       "has": [
         {
