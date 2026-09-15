@@ -1,6 +1,8 @@
 import { auth, db } from './firebase-config.js';
-import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { collection, deleteDoc, doc, onSnapshot, orderBy, query, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const PESQUISADOR_UID = 'QuiQMjtXjOWNW2LCrot86rsHh0F2';
 
 const lista = document.getElementById('lista-inscricoes');
 const mensagem = document.getElementById('mensagem-painel');
@@ -18,8 +20,8 @@ let filtroAtual = 'todas';
 let remocaoSelecionada = null;
 let removendo = false;
 
-function irParaLogin() {
-  window.location.replace('login.html');
+function irParaFacaParte() {
+  window.location.replace('../faca-parte.html');
 }
 
 function abrirModalRemocao(id, nome, elementoAcionador) {
@@ -64,6 +66,7 @@ function criarTexto(rotulo, valor) {
 function criarAcoes(id, status) {
   const acoes = document.createElement('div');
   acoes.className = 'acoes-inscricao';
+
   if (status === 'nova') {
     const vista = document.createElement('button');
     vista.type = 'button';
@@ -78,6 +81,7 @@ function criarAcoes(id, status) {
     vista.textContent = '✓ Vista';
     acoes.appendChild(vista);
   }
+
   if (status !== 'aceita') {
     const aceitar = document.createElement('button');
     aceitar.type = 'button';
@@ -92,6 +96,7 @@ function criarAcoes(id, status) {
     aceita.textContent = '✓ Aceita';
     acoes.appendChild(aceita);
   }
+
   const remover = document.createElement('button');
   remover.type = 'button';
   remover.textContent = 'Remover';
@@ -99,6 +104,7 @@ function criarAcoes(id, status) {
   remover.dataset.id = id;
   remover.dataset.acao = 'remover';
   acoes.appendChild(remover);
+
   return acoes;
 }
 
@@ -107,19 +113,32 @@ function criarCard(documento) {
   const status = rotulos[dados.status] ? dados.status : 'nova';
   const card = document.createElement('article');
   card.className = `inscricao inscricao--${status}`;
+
   const topo = document.createElement('header');
   topo.className = 'topo-inscricao';
+
   const identificacao = document.createElement('div');
   const nome = document.createElement('h2');
   nome.textContent = dados.nome || 'Sem nome';
+
   const data = document.createElement('time');
   data.textContent = formatarData(dados.criadoEm);
+
   identificacao.append(nome, data);
+
   const etiqueta = document.createElement('span');
   etiqueta.className = `status-inscricao status-inscricao--${status}`;
   etiqueta.textContent = rotulos[status];
+
   topo.append(identificacao, etiqueta);
-  card.append(topo, criarTexto('Contato', dados.contato || ''), criarTexto('Como gostaria de fazer parte', dados.descricao || ''), criarAcoes(documento.id, status));
+
+  card.append(
+    topo,
+    criarTexto('Contato', dados.contato || ''),
+    criarTexto('Como gostaria de fazer parte', dados.descricao || ''),
+    criarAcoes(documento.id, status)
+  );
+
   return card;
 }
 
@@ -135,6 +154,7 @@ function renderizarInscricoes() {
   const documentosFiltrados = filtroAtual === 'todas'
     ? documentosAtuais
     : documentosAtuais.filter((item) => item.data().status === filtroAtual);
+
   lista.replaceChildren(...documentosFiltrados.map(criarCard));
 
   if (!documentosAtuais.length) {
@@ -144,39 +164,53 @@ function renderizarInscricoes() {
   } else {
     mensagem.textContent = '';
   }
+
   mensagem.className = 'mensagem-admin mensagem-painel';
 }
 
 function carregarInscricoes() {
-  pararListener = onSnapshot(query(collection(db, 'inscricoes'), orderBy('criadoEm', 'desc')), (snapshot) => {
-    documentosAtuais = snapshot.docs;
-    atualizarContagens(documentosAtuais);
-    renderizarInscricoes();
-  }, () => {
-    mensagem.textContent = 'Não foi possível carregar as inscrições.';
-    mensagem.className = 'mensagem-admin mensagem-painel mensagem-admin--erro';
-  });
+  pararListener = onSnapshot(
+    query(collection(db, 'inscricoes'), orderBy('criadoEm', 'desc')),
+    (snapshot) => {
+      documentosAtuais = snapshot.docs;
+      atualizarContagens(documentosAtuais);
+      renderizarInscricoes();
+    },
+    () => {
+      mensagem.textContent = 'Não foi possível carregar as inscrições.';
+      mensagem.className = 'mensagem-admin mensagem-painel mensagem-admin--erro';
+    }
+  );
 }
 
 onAuthStateChanged(auth, (usuario) => {
-  if (!usuario || usuario.isAnonymous) {
-    if (pararListener) pararListener();
-    irParaLogin();
+  if (!usuario || usuario.uid !== PESQUISADOR_UID) {
+    if (pararListener) {
+      pararListener();
+      pararListener = null;
+    }
+
+    irParaFacaParte();
     return;
   }
+
   document.body.classList.remove('bloqueado');
+
   if (!pararListener) carregarInscricoes();
 });
 
 filtros.addEventListener('click', (evento) => {
   const botao = evento.target.closest('button[data-filtro]');
   if (!botao) return;
+
   filtroAtual = botao.dataset.filtro;
+
   filtros.querySelectorAll('button[data-filtro]').forEach((item) => {
     const ativo = item === botao;
     item.classList.toggle('ativo', ativo);
     item.setAttribute('aria-pressed', String(ativo));
   });
+
   renderizarInscricoes();
 });
 
@@ -193,8 +227,11 @@ lista.addEventListener('click', async (evento) => {
 
   atualizando.add(botao.dataset.id);
   botao.disabled = true;
+
   try {
-    await updateDoc(doc(db, 'inscricoes', botao.dataset.id), { status: botao.dataset.status });
+    await updateDoc(doc(db, 'inscricoes', botao.dataset.id), {
+      status: botao.dataset.status
+    });
   } catch (erro) {
     mensagem.textContent = 'Não foi possível atualizar o status.';
     mensagem.className = 'mensagem-admin mensagem-painel mensagem-admin--erro';
@@ -216,6 +253,7 @@ document.addEventListener('keydown', (evento) => {
 
 botaoConfirmarRemocao.addEventListener('click', async () => {
   if (!remocaoSelecionada || removendo) return;
+
   const { id } = remocaoSelecionada;
   removendo = true;
   atualizando.add(id);
@@ -240,10 +278,7 @@ botaoConfirmarRemocao.addEventListener('click', async () => {
   }
 });
 
-document.getElementById('botao-sair').addEventListener('click', async () => {
-  try {
-    await signOut(auth);
-  } finally {
-    irParaLogin();
-  }
+document.getElementById('botao-voltar').addEventListener('click', () => {
+  // Volta para Faça Parte sem encerrar a sessão do pesquisador.
+  window.location.href = '../faca-parte.html';
 });

@@ -32,8 +32,9 @@
       <p class="revista-admin">entre tempos · revista eletrônica</p>
       <h1>Inscrições</h1>
     </div>
-    <button class="botao-sair" id="botao-sair" type="button">Sair</button>
+    <button class="botao-sair" id="botao-voltar" type="button">← Voltar</button>
   </header>
+
   <main class="painel-conteudo">
     <section class="contagens" aria-label="Resumo das inscrições">
       <button class="filtro-contagem ativo" type="button" data-filtro="todas" aria-pressed="true"><strong id="total-inscricoes">0</strong><span>Inscrições</span></button>
@@ -41,6 +42,7 @@
       <button class="filtro-contagem" type="button" data-filtro="vista" aria-pressed="false"><strong id="total-vistas">0</strong><span>Vistas</span></button>
       <button class="filtro-contagem" type="button" data-filtro="aceita" aria-pressed="false"><strong id="total-aceitas">0</strong><span>Aceitas</span></button>
     </section>
+
     <p class="mensagem-admin mensagem-painel" id="mensagem-painel" role="status" aria-live="polite">Carregando os bilhetes...</p>
     <section class="lista-inscricoes" id="lista-inscricoes" aria-label="Inscrições recebidas"></section>
   </main>
@@ -57,6 +59,7 @@
       </div>
     </div>
   </div>
+
   <script type="module" src="../js/admin-painel.js"></script>
 </body>
 </html>
