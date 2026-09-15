@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Publicação autoral | Entre Tempos</title>
+  <meta name="description" content="Conteúdo autoral publicado na revista eletrônica Entre Tempos.">
+  <link rel="icon" href="/img/amp.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/autorais-admin.css">
+  <link rel="stylesheet" href="/topicos/autorais/pessoa.css">
+</head>
+<body>
+  <header class="et-pessoa-header">
+    <a id="et-voltar" href="/folha.html">← Voltar</a>
+    <span>entre tempos · revista eletrônica</span>
+  </header>
+
+  <main class="et-pessoa-main">
+    <p class="et-pagina-mensagem" id="et-pagina-mensagem" role="status" aria-live="polite">Carregando publicação...</p>
+
+    <section class="et-perfil">
+      <div class="et-perfil__foto-wrap">
+        <img id="et-pessoa-foto" src="/img/amp.png" alt="" class="et-perfil__foto">
+      </div>
+      <div class="et-perfil__texto">
+        <p class="et-perfil__rotulo" id="et-rotulo-secao">Autoral</p>
+        <h1 id="et-pessoa-nome">...</h1>
+        <p class="et-perfil__descricao" id="et-pessoa-descricao"></p>
+      </div>
+    </section>
+
+    <section class="et-admin-acoes" id="et-admin-acoes" hidden aria-label="Ferramentas dos pesquisadores">
+      <span class="et-admin-acoes__rotulo">Gerenciar publicação</span>
+      <div>
+        <button class="et-btn et-btn--principal" id="et-btn-adicionar-conteudo" type="button">+ Adicionar conteúdo</button>
+        <button class="et-btn et-btn--secundario" id="et-btn-editar-pessoa" type="button">Editar pessoa</button>
+        <button class="et-btn et-btn--perigo" id="et-btn-excluir-pessoa" type="button">Remover pessoa</button>
+      </div>
+    </section>
+
+    <div class="et-pessoa-divisor"></div>
+
+    <section class="et-publicacoes">
+      <div class="et-publicacoes__cabecalho">
+        <p>publicações</p>
+        <h2 id="et-conteudos-titulo">Conteúdos publicados</h2>
+      </div>
+      <div class="et-conteudos" id="et-conteudos"></div>
+    </section>
+  </main>
+
+  <footer class="et-pessoa-footer">
+    <div>entre tempos · revista eletrônica</div>
+    <div class="et-pessoa-carimbo">AUTORAL</div>
+  </footer>
+
+  <script type="module" src="/js/autorais-pessoa.js"></script>
+</body>
+</html>

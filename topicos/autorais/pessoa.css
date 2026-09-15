@@ -1,0 +1,267 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; min-height: 100%; overflow-x: hidden; }
+
+body {
+  min-height: 100vh;
+  background: #f2e8d5;
+  color: #3e3228;
+  font-family: 'Special Elite', serif;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: url('https://www.transparenttextures.com/patterns/aged-paper.webp');
+  opacity: .4;
+}
+
+.et-pessoa-header {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px clamp(18px, 5vw, 52px);
+  border-bottom: 2px solid #c4a96b;
+}
+
+.et-pessoa-header a {
+  color: #3e4a59;
+  font-size: 13px;
+  font-weight: bold;
+  text-decoration: none;
+  letter-spacing: .06em;
+}
+
+.et-pessoa-header a:hover { color: #c0392b; }
+.et-pessoa-header span { color: #9b8b76; font-size: 11px; letter-spacing: .12em; }
+
+.et-pessoa-main {
+  width: min(100% - 32px, 1000px);
+  margin: 0 auto;
+  padding: 42px 0 90px;
+}
+
+.et-pagina-mensagem {
+  min-height: 24px;
+  margin-bottom: 14px;
+  color: #7a6a50;
+  font-size: 13px;
+  text-align: center;
+}
+
+.et-perfil {
+  display: grid;
+  grid-template-columns: minmax(210px, 330px) 1fr;
+  align-items: center;
+  gap: clamp(34px, 7vw, 76px);
+  padding: 20px 0 42px;
+}
+
+.et-perfil__foto-wrap {
+  position: relative;
+  padding: 11px;
+  background: #fffdf7;
+  box-shadow: 7px 12px 26px rgba(0,0,0,.21);
+  transform: rotate(-1.5deg);
+}
+
+.et-perfil__foto-wrap::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  width: 86px;
+  height: 24px;
+  background: rgba(196,169,107,.52);
+  transform: translateX(-50%) rotate(2deg);
+}
+
+.et-perfil__foto {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  background: #e8dcc0;
+}
+
+.et-perfil__rotulo {
+  margin-bottom: 8px;
+  color: #8c3b3b;
+  font-size: 12px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.et-perfil h1 {
+  color: #1a1a1a;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(56px, 9vw, 104px);
+  font-weight: normal;
+  letter-spacing: .035em;
+  line-height: .88;
+  text-shadow: 4px 4px 0 #c4a96b;
+}
+
+.et-perfil__descricao {
+  max-width: 640px;
+  margin-top: 24px;
+  color: #3e3228;
+  font-family: 'IM Fell English', serif;
+  font-size: clamp(17px, 2vw, 20px);
+  line-height: 1.75;
+  white-space: pre-wrap;
+}
+
+.et-admin-acoes {
+  margin: 0 0 32px;
+  padding: 17px 18px;
+  border: 1px dashed #c4a96b;
+  border-left: 5px solid #8c3b3b;
+  background: rgba(255,253,247,.78);
+  box-shadow: 3px 6px 14px rgba(0,0,0,.09);
+}
+
+.et-admin-acoes__rotulo {
+  display: block;
+  margin-bottom: 12px;
+  color: #8c3b3b;
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.et-admin-acoes > div { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.et-pessoa-divisor {
+  width: 86%;
+  height: 2px;
+  margin: 24px auto 46px;
+  background: linear-gradient(to right, transparent, #c0392b, #c4a96b, #c0392b, transparent);
+}
+
+.et-publicacoes__cabecalho { margin-bottom: 32px; text-align: center; }
+.et-publicacoes__cabecalho p { color: #8c3b3b; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; }
+.et-publicacoes__cabecalho h2 {
+  margin-top: 6px;
+  color: #1a1a1a;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(38px, 6vw, 68px);
+  font-weight: normal;
+  letter-spacing: .05em;
+  text-shadow: 2px 2px 0 #c4a96b;
+}
+
+.et-conteudos { display: grid; gap: 34px; }
+.et-pagina-vazio { padding: 42px 20px; color: #7a6a50; text-align: center; font-family: 'IM Fell English', serif; font-size: 18px; }
+
+.et-conteudo {
+  position: relative;
+  padding: clamp(24px, 5vw, 42px);
+  border: 1px dashed #c4a96b;
+  border-left: 6px solid #8c3b3b;
+  background: #fffdf7;
+  box-shadow: 5px 9px 22px rgba(0,0,0,.14);
+}
+
+.et-conteudo:nth-child(even) { transform: rotate(.2deg); }
+.et-conteudo:nth-child(odd) { transform: rotate(-.15deg); }
+
+.et-conteudo__cabecalho {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e8dcc0;
+}
+
+.et-conteudo h3 {
+  color: #1a1a1a;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(30px, 5vw, 46px);
+  font-weight: normal;
+  letter-spacing: .04em;
+}
+
+.et-conteudo__autor { margin-top: 3px; color: #8c3b3b; font-size: 12px; letter-spacing: .07em; }
+.et-conteudo__acoes { flex-shrink: 0; }
+.et-mini-btn { padding: 6px 10px; border-radius: 2px; background: transparent; font-family: 'Special Elite', serif; font-size: 10px; cursor: pointer; }
+.et-mini-btn--perigo { border: 1px dashed #922b21; color: #922b21; }
+
+.et-poema-texto {
+  color: #2e2923;
+  font-family: 'IM Fell English', serif;
+  font-size: clamp(18px, 2.2vw, 22px);
+  line-height: 1.85;
+  white-space: pre-wrap;
+}
+
+.et-conteudo__descricao {
+  color: #3e3228;
+  font-family: 'IM Fell English', serif;
+  font-size: 18px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.et-midia-imagem { margin: 18px auto 0; }
+.et-midia-imagem img {
+  display: block;
+  width: min(100%, 760px);
+  max-height: 760px;
+  margin: 0 auto;
+  object-fit: contain;
+  box-shadow: 4px 7px 18px rgba(0,0,0,.17);
+  background: #ede3ce;
+}
+
+.et-midia-video {
+  display: block;
+  width: min(100%, 820px);
+  max-height: 70vh;
+  margin: 18px auto 0;
+  background: #171717;
+  box-shadow: 4px 8px 20px rgba(0,0,0,.23);
+}
+
+.et-pessoa-footer {
+  padding: 24px 20px 30px;
+  border-top: 1px solid #c4a96b;
+  color: #ad9d89;
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-align: center;
+}
+
+.et-pessoa-carimbo {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 4px 13px;
+  border: 3px solid #c0392b;
+  color: #c0392b;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 17px;
+  letter-spacing: .16em;
+  opacity: .6;
+  transform: rotate(-2deg);
+}
+
+@media (max-width: 720px) {
+  .et-pessoa-header span { display: none; }
+  .et-pessoa-main { width: min(100% - 24px, 1000px); padding-top: 24px; }
+  .et-perfil { grid-template-columns: 1fr; gap: 30px; text-align: center; }
+  .et-perfil__foto-wrap { width: min(72vw, 290px); margin: 0 auto; }
+  .et-perfil__descricao { text-align: left; }
+  .et-admin-acoes > div { flex-direction: column; }
+  .et-admin-acoes .et-btn { width: 100%; }
+  .et-conteudo, .et-conteudo:nth-child(even), .et-conteudo:nth-child(odd) { transform: none; padding: 23px 17px; }
+  .et-conteudo__cabecalho { flex-direction: column; }
+  .et-conteudo__acoes { width: 100%; }
+  .et-mini-btn { width: 100%; min-height: 38px; }
+}
