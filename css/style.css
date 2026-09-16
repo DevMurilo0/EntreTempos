@@ -29,8 +29,10 @@ body {
 }
 
 .site-container {
-  position: relative;
+  position: absolute;
+  inset: 0;
   overflow: hidden;
+  pointer-events: none;
 }
 
 body::before {
