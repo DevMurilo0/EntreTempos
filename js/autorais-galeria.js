@@ -18,8 +18,10 @@ import {
 
 const PESQUISADOR_UID = 'QuiQMjtXjOWNW2LCrot86rsHh0F2';
 const SECOES = new Set(['poemas', 'desenhos', 'musica', 'curiosidades']);
+const TEMPO_MAXIMO_SEM_PROGRESSO = 30000;
 
 const secao = document.body.dataset.autoraisSecao;
+
 if (!SECOES.has(secao)) {
   console.warn('[autorais] seção não reconhecida:', secao);
 } else {
@@ -31,6 +33,7 @@ function iniciarGaleria() {
   const barra = criarBarraAdmin(alvo);
   const botaoAdicionar = barra.querySelector('[data-et-adicionar]');
   const modal = criarModalCadastro();
+
   document.body.appendChild(modal);
 
   let pesquisadorLogado = false;
@@ -57,6 +60,7 @@ function obterAlvoGaleria() {
   novo.setAttribute('aria-label', 'Autores adicionados pelos pesquisadores');
 
   const primeiroAutor = document.querySelector('.autor-bloco');
+
   if (primeiroAutor?.parentNode) {
     primeiroAutor.parentNode.insertBefore(novo, primeiroAutor);
   } else {
@@ -117,6 +121,7 @@ function criarCardPessoa(id, dados) {
   img.decoding = 'async';
   img.src = dados.fotoUrl || '/img/amp.png';
   img.alt = dados.nome ? `Foto de ${dados.nome}` : 'Foto do participante';
+
   moldura.appendChild(img);
 
   const nome = document.createElement('span');
@@ -139,6 +144,7 @@ function criarModalCadastro() {
   const modal = document.createElement('div');
   modal.className = 'et-modal';
   modal.hidden = true;
+
   modal.innerHTML = `
     <div class="et-modal__caixa" role="dialog" aria-modal="true" aria-labelledby="et-nova-pessoa-titulo">
       <button type="button" class="et-modal__fechar" data-et-fechar aria-label="Fechar">×</button>
@@ -147,18 +153,18 @@ function criarModalCadastro() {
 
       <form data-et-form-pessoa novalidate>
         <div class="et-campo">
-          <label for="et-pessoa-nome">Nome</label>
-          <input id="et-pessoa-nome" name="nome" type="text" maxlength="120" autocomplete="name" required>
+          <label for="et-pessoa-nome">Nome <small>(opcional)</small></label>
+          <input id="et-pessoa-nome" name="nome" type="text" maxlength="120" autocomplete="name">
         </div>
 
         <div class="et-campo">
-          <label for="et-pessoa-descricao">Descrição</label>
-          <textarea id="et-pessoa-descricao" name="descricao" maxlength="1200" rows="5" required></textarea>
+          <label for="et-pessoa-descricao">Descrição <small>(opcional)</small></label>
+          <textarea id="et-pessoa-descricao" name="descricao" maxlength="1200" rows="5"></textarea>
         </div>
 
         <div class="et-campo et-arquivo">
-          <label for="et-pessoa-foto">Imagem da pessoa</label>
-          <input id="et-pessoa-foto" name="foto" type="file" accept="image/*" required>
+          <label for="et-pessoa-foto">Imagem da pessoa <small>(opcional)</small></label>
+          <input id="et-pessoa-foto" name="foto" type="file" accept="image/*">
           <img class="et-preview" data-et-preview alt="Prévia da imagem selecionada">
         </div>
 
@@ -180,15 +186,19 @@ function criarModalCadastro() {
   const barra = modal.querySelector('[data-et-barra]');
   const barraInterna = barra.querySelector('span');
   const salvar = modal.querySelector('[data-et-salvar]');
+
   let previewUrl = null;
   let salvando = false;
 
   inputFoto.addEventListener('change', () => {
     if (previewUrl) URL.revokeObjectURL(previewUrl);
+
     const arquivo = inputFoto.files?.[0];
+
     if (!arquivo) {
       preview.classList.remove('is-visible');
       preview.removeAttribute('src');
+      previewUrl = null;
       return;
     }
 
@@ -199,13 +209,16 @@ function criarModalCadastro() {
 
   function fechar() {
     if (salvando) return;
+
     fecharModal(modal);
     form.reset();
     mensagem.textContent = '';
     mensagem.classList.remove('is-erro');
     barra.classList.remove('is-visible');
     barraInterna.style.width = '0%';
+
     if (previewUrl) URL.revokeObjectURL(previewUrl);
+
     previewUrl = null;
     preview.classList.remove('is-visible');
     preview.removeAttribute('src');
@@ -213,9 +226,11 @@ function criarModalCadastro() {
 
   modal.querySelector('[data-et-fechar]').addEventListener('click', fechar);
   modal.querySelector('[data-et-cancelar]').addEventListener('click', fechar);
+
   modal.addEventListener('click', (evento) => {
     if (evento.target === modal) fechar();
   });
+
   document.addEventListener('keydown', (evento) => {
     if (evento.key === 'Escape' && !modal.hidden) fechar();
   });
@@ -225,6 +240,7 @@ function criarModalCadastro() {
     if (salvando) return;
 
     const usuario = auth.currentUser;
+
     if (usuario?.uid !== PESQUISADOR_UID) {
       mostrarErro(mensagem, 'Sua sessão de pesquisador não está ativa.');
       return;
@@ -232,19 +248,14 @@ function criarModalCadastro() {
 
     const nome = form.elements.nome.value.trim();
     const descricao = form.elements.descricao.value.trim();
-    const foto = form.elements.foto.files?.[0];
+    const foto = form.elements.foto.files?.[0] || null;
 
-    if (!nome || !descricao || !foto) {
-      mostrarErro(mensagem, 'Preencha nome, descrição e imagem.');
-      return;
-    }
-
-    if (!foto.type.startsWith('image/')) {
+    if (foto && !foto.type.startsWith('image/')) {
       mostrarErro(mensagem, 'Escolha um arquivo de imagem válido.');
       return;
     }
 
-    if (foto.size > 15 * 1024 * 1024) {
+    if (foto && foto.size > 15 * 1024 * 1024) {
       mostrarErro(mensagem, 'A imagem precisa ter no máximo 15 MB.');
       return;
     }
@@ -252,19 +263,28 @@ function criarModalCadastro() {
     salvando = true;
     salvar.disabled = true;
     salvar.textContent = 'Salvando...';
-    mensagem.textContent = 'Enviando a imagem...';
     mensagem.classList.remove('is-erro');
-    barra.classList.add('is-visible');
 
     const pessoaRef = doc(collection(db, 'participantesAutorais'));
-    let fotoPath = null;
+    let fotoPath = '';
+    let fotoUrl = '';
 
     try {
-      fotoPath = `conteudosAutorais/${secao}/${pessoaRef.id}/perfil/perfil-${Date.now()}-${nomeArquivoSeguro(foto.name)}`;
-      const fotoUrl = await enviarArquivo(foto, fotoPath, (percentual) => {
-        barraInterna.style.width = `${percentual}%`;
-        mensagem.textContent = `Enviando a imagem... ${Math.round(percentual)}%`;
-      });
+      if (foto) {
+        barra.classList.add('is-visible');
+        barraInterna.style.width = '0%';
+        mensagem.textContent = 'Enviando a imagem...';
+
+        fotoPath = `conteudosAutorais/${secao}/${pessoaRef.id}/perfil/perfil-${Date.now()}-${nomeArquivoSeguro(foto.name)}`;
+
+        fotoUrl = await enviarArquivo(foto, fotoPath, (percentual) => {
+          barraInterna.style.width = `${percentual}%`;
+          mensagem.textContent = `Enviando a imagem... ${Math.round(percentual)}%`;
+        });
+      } else {
+        barra.classList.remove('is-visible');
+        mensagem.textContent = 'Criando a página da pessoa...';
+      }
 
       mensagem.textContent = 'Criando a página da pessoa...';
 
@@ -283,10 +303,13 @@ function criarModalCadastro() {
       window.location.href = `/topicos/autorais/pessoa.html?secao=${encodeURIComponent(secao)}&id=${encodeURIComponent(pessoaRef.id)}&novo=1`;
     } catch (erro) {
       console.error('[autorais] Falha ao adicionar pessoa:', erro);
+
       if (fotoPath) {
         deleteObject(ref(storage, fotoPath)).catch(() => {});
       }
+
       mostrarErro(mensagem, mensagemErroFirebase(erro));
+
       barra.classList.remove('is-visible');
       barraInterna.style.width = '0%';
     } finally {
@@ -317,24 +340,72 @@ function enviarArquivo(arquivo, caminho, onProgress) {
       contentType: arquivo.type || 'application/octet-stream'
     });
 
-    tarefa.on('state_changed', (snapshot) => {
-      const percentual = snapshot.totalBytes
-        ? (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        : 0;
-      onProgress?.(percentual);
-    }, reject, async () => {
-      try {
-        resolve(await getDownloadURL(tarefa.snapshot.ref));
-      } catch (erro) {
+    let finalizado = false;
+    let timer = null;
+
+    const limparTimer = () => {
+      if (timer) clearTimeout(timer);
+      timer = null;
+    };
+
+    const armarTimer = () => {
+      limparTimer();
+      timer = setTimeout(() => {
+        if (finalizado) return;
+
+        finalizado = true;
+        tarefa.cancel();
+
+        const erro = new Error('Upload sem progresso por tempo demais.');
+        erro.code = 'storage/upload-stalled';
         reject(erro);
+      }, TEMPO_MAXIMO_SEM_PROGRESSO);
+    };
+
+    armarTimer();
+
+    tarefa.on(
+      'state_changed',
+      (snapshot) => {
+        if (finalizado) return;
+
+        armarTimer();
+
+        const percentual = snapshot.totalBytes
+          ? (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          : 0;
+
+        onProgress?.(percentual);
+      },
+      (erro) => {
+        if (finalizado) return;
+
+        finalizado = true;
+        limparTimer();
+        reject(erro);
+      },
+      async () => {
+        if (finalizado) return;
+
+        finalizado = true;
+        limparTimer();
+
+        try {
+          resolve(await getDownloadURL(tarefa.snapshot.ref));
+        } catch (erro) {
+          reject(erro);
+        }
       }
-    });
+    );
   });
 }
 
 function nomeArquivoSeguro(nome) {
   const partes = String(nome || 'arquivo').split('.');
-  const extensao = partes.length > 1 ? partes.pop().toLowerCase().replace(/[^a-z0-9]/g, '') : '';
+  const extensao = partes.length > 1
+    ? partes.pop().toLowerCase().replace(/[^a-z0-9]/g, '')
+    : '';
+
   const base = partes.join('.')
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
@@ -342,6 +413,7 @@ function nomeArquivoSeguro(nome) {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
     .slice(0, 50) || 'arquivo';
+
   return extensao ? `${base}.${extensao}` : base;
 }
 
@@ -360,11 +432,27 @@ function mostrarErro(elemento, texto) {
 
 function mensagemErroFirebase(erro) {
   const codigo = erro?.code || '';
-  if (codigo.includes('unauthorized') || codigo.includes('permission-denied')) {
-    return 'Sem permissão para salvar. Confira as regras do Firebase e a sessão de pesquisador.';
+
+  if (codigo.includes('storage/upload-stalled')) {
+    return 'O upload não iniciou. Confira o Firebase Storage. Se o projeto estiver no plano Spark, o Storage precisa ser atualizado para o plano Blaze.';
   }
-  if (codigo.includes('storage/unknown') || codigo.includes('storage/object-not-found')) {
-    return 'O Firebase Storage não respondeu como esperado. Confira se o Storage está ativado.';
+
+  if (
+    codigo.includes('unauthorized') ||
+    codigo.includes('permission-denied') ||
+    codigo.includes('storage/unauthorized')
+  ) {
+    return 'Sem permissão para enviar o arquivo. Confira as regras do Storage e a sessão de pesquisador.';
   }
+
+  if (
+    codigo.includes('storage/unknown') ||
+    codigo.includes('storage/object-not-found') ||
+    codigo.includes('storage/quota-exceeded') ||
+    codigo.includes('storage/retry-limit-exceeded')
+  ) {
+    return 'O Firebase Storage recusou o upload. Confira se o Storage está ativo e se o projeto está no plano Blaze.';
+  }
+
   return 'Não foi possível salvar agora. Tente novamente.';
 }
