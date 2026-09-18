@@ -235,6 +235,91 @@ body::before {
   box-shadow: 4px 8px 20px rgba(0,0,0,.23);
 }
 
+.et-curiosidade-midias {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 18px;
+}
+
+.et-curiosidade-midias > .et-midia-imagem,
+.et-curiosidade-midias > .et-midia-video {
+  margin-top: 0;
+}
+
+.et-curiosidade-midias > :not(.et-midia-retrato-menor) {
+  flex: 1 1 100%;
+}
+
+.et-midia-retrato-menor {
+  flex: 0 1 330px;
+  width: min(100%, 330px) !important;
+  max-width: 330px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.et-midia-imagem.et-midia-retrato-menor {
+  padding: 10px;
+  background: #fffdf7;
+  box-shadow: 5px 9px 22px rgba(0,0,0,.16);
+}
+
+.et-midia-imagem.et-midia-retrato-menor img {
+  width: 100%;
+  max-width: 100%;
+  max-height: 460px;
+  margin: 0;
+  object-fit: contain;
+  background: #ede3ce;
+}
+
+video.et-midia-retrato-menor {
+  max-height: 460px;
+  background: #171717;
+  box-shadow: 5px 9px 22px rgba(0,0,0,.18);
+}
+
+.et-opcao-retrato {
+  display: flex !important;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 12px 13px;
+  border: 1px dashed #c4a96b;
+  background: rgba(242,232,213,.42);
+  cursor: pointer;
+}
+
+.et-opcao-retrato input {
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  accent-color: #8c3b3b;
+  flex: 0 0 auto;
+}
+
+.et-opcao-retrato span {
+  display: grid;
+  gap: 3px;
+}
+
+.et-opcao-retrato strong {
+  color: #3e3228;
+  font-family: 'Special Elite', serif;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.et-opcao-retrato small {
+  color: #8c7c5e;
+  font-family: 'IM Fell English', serif;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
 .et-pessoa-footer {
   padding: 24px 20px 30px;
   border-top: 1px solid #c4a96b;
@@ -258,6 +343,12 @@ body::before {
 }
 
 @media (max-width: 720px) {
+  .et-curiosidade-midias { gap: 14px; }
+  .et-midia-retrato-menor {
+    flex-basis: min(76vw, 300px);
+    max-width: min(76vw, 300px) !important;
+  }
+
   .et-pessoa-header span { display: none; }
   .et-pessoa-main { width: min(100% - 24px, 1000px); padding-top: 24px; }
   .et-perfil { grid-template-columns: 1fr; gap: 30px; text-align: center; }
