@@ -309,21 +309,22 @@ body {
   mix-blend-mode: multiply;
 }
 
-.decor-camera {
-  width: clamp(110px, 12vw, 165px);
-  left: 18%;
-  top: 6%;
-  transform: rotate(8deg);
-  opacity: 0.5;
-  clip-path: polygon(5% 3%, 98% 0, 95% 96%, 0 100%);
+.decor-selo {
+  width: clamp(95px, 9vw, 125px);
+  right: 20%;
+  top: 8%;
+  transform: rotate(9deg);
+  opacity: 0.58;
+  border: 5px solid rgba(255, 248, 232, 0.72);
+  box-shadow: 0 7px 18px rgba(60, 36, 17, 0.18);
 }
 
 .decor-vinil {
-  width: clamp(92px, 9vw, 128px);
-  right: 9%;
-  top: 33%;
-  transform: rotate(-10deg);
-  opacity: 0.62;
+  width: clamp(150px, 15vw, 210px);
+  left: 7%;
+  top: 47%;
+  transform: rotate(-12deg);
+  opacity: 0.66;
   mix-blend-mode: multiply;
 }
 
@@ -843,18 +844,18 @@ body.folha-convite-aberto {
     opacity: 0.45;
   }
 
-  .decor-camera {
-    width: 96px;
-    left: 8%;
-    top: 12%;
-    opacity: 0.36;
+  .decor-selo {
+    width: 76px;
+    right: 8%;
+    top: 14%;
+    opacity: 0.46;
   }
 
   .decor-vinil {
-    width: 72px;
-    right: 4%;
-    top: 36%;
-    opacity: 0.48;
+    width: 118px;
+    left: -18px;
+    top: 45%;
+    opacity: 0.52;
   }
 
   .decor-jornal {
