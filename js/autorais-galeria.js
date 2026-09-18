@@ -215,9 +215,14 @@ function criarLoadingParticipantes() {
   overlay.className = 'et-loading-participantes';
   overlay.innerHTML = `
     <div class="et-loading-participantes__papel" role="status" aria-live="polite">
-      <div class="et-loading-participantes__ampulheta" aria-hidden="true">⌛</div>
+      <img
+        class="et-loading-participantes__ampulheta"
+        src="/img/amp.png"
+        alt=""
+        aria-hidden="true"
+      >
       <strong>Entre Tempos</strong>
-      <span>Carregando participantes...</span>
+      <span>carregando o tempo...</span>
     </div>
   `;
 
@@ -271,14 +276,19 @@ function criarLoadingParticipantes() {
     }
 
     .et-loading-participantes__ampulheta {
-      margin-bottom: 14px;
-      font-size: 36px;
-      animation: etLoadingAmpulheta 1.1s ease-in-out infinite alternate;
+      display: block;
+      width: clamp(58px, 12vw, 82px);
+      height: auto;
+      margin: 0 auto 16px;
+      object-fit: contain;
+      filter: drop-shadow(0 7px 8px rgba(61, 42, 27, .16));
+      transform-origin: center;
+      animation: etLoadingAmpulheta 1.35s ease-in-out infinite alternate;
     }
 
     @keyframes etLoadingAmpulheta {
-      from { transform: translateY(0) rotate(-4deg); }
-      to { transform: translateY(-5px) rotate(4deg); }
+      from { transform: translateY(0) rotate(-2deg); }
+      to { transform: translateY(-5px) rotate(2deg); }
     }
   `;
 
