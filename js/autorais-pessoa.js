@@ -1,4 +1,4 @@
-import { auth, db, storage } from '/js/firebase-config.js';
+import { auth, db } from '/js/firebase-config.js';
 import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 import {
   collection,
@@ -10,15 +10,10 @@ import {
   setDoc,
   updateDoc
 } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
-import {
-  deleteObject,
-  getDownloadURL,
-  ref,
-  uploadBytesResumable
-} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js';
-
 const PESQUISADOR_UID = 'QuiQMjtXjOWNW2LCrot86rsHh0F2';
-const TEMPO_MAXIMO_SEM_PROGRESSO = 30000;
+const CLOUDINARY_CLOUD_NAME = 'uaisf2vc';
+const CLOUDINARY_UPLOAD_PRESET = 'entre_tempos_upload';
+const CLOUDINARY_UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/auto/upload`;
 
 const CONFIG = {
   poemas: {
@@ -167,13 +162,7 @@ function iniciar() {
       const snapshot = await getDocs(conteudosRef);
 
       for (const item of snapshot.docs) {
-        const dados = item.data();
-        await apagarArquivosDoConteudo(dados);
         await deleteDoc(item.ref);
-      }
-
-      if (dadosPessoa.fotoPath) {
-        await deleteObject(ref(storage, dadosPessoa.fotoPath)).catch(() => {});
       }
 
       await deleteDoc(pessoaRef);
@@ -260,7 +249,6 @@ function criarConteudo(id, dados, pesquisador) {
       excluir.disabled = true;
 
       try {
-        await apagarArquivosDoConteudo(dados);
         await deleteDoc(
           doc(db, 'participantesAutorais', pessoaId, 'conteudos', id)
         );
@@ -436,8 +424,6 @@ function abrirModalConteudo(dadosPessoa) {
       criadoPor: auth.currentUser.uid
     };
 
-    const pathsCriados = [];
-
     try {
       if (secao === 'poemas') {
         dados.tipo = 'poema';
@@ -454,22 +440,16 @@ function abrirModalConteudo(dadosPessoa) {
           barra.classList.add('is-visible');
           barraSpan.style.width = '0%';
 
-          const caminho = caminhoConteudo(
-            conteudoRef.id,
-            'imagem',
-            arquivo.name
-          );
-
-          dados.imagemPath = caminho;
-          dados.imagemUrl = await enviarComMensagem(
+          const upload = await enviarComMensagem(
             arquivo,
-            caminho,
             msg,
             barraSpan,
             'Enviando desenho'
           );
 
-          pathsCriados.push(caminho);
+          dados.imagemUrl = upload.url;
+          dados.imagemPublicId = upload.publicId;
+          dados.imagemResourceType = upload.resourceType;
         }
       }
 
@@ -483,22 +463,16 @@ function abrirModalConteudo(dadosPessoa) {
           barra.classList.add('is-visible');
           barraSpan.style.width = '0%';
 
-          const caminho = caminhoConteudo(
-            conteudoRef.id,
-            'video',
-            arquivo.name
-          );
-
-          dados.videoPath = caminho;
-          dados.videoUrl = await enviarComMensagem(
+          const upload = await enviarComMensagem(
             arquivo,
-            caminho,
             msg,
             barraSpan,
             'Enviando vídeo'
           );
 
-          pathsCriados.push(caminho);
+          dados.videoUrl = upload.url;
+          dados.videoPublicId = upload.publicId;
+          dados.videoResourceType = upload.resourceType;
         }
       }
 
@@ -513,44 +487,32 @@ function abrirModalConteudo(dadosPessoa) {
           barra.classList.add('is-visible');
           barraSpan.style.width = '0%';
 
-          const caminho = caminhoConteudo(
-            conteudoRef.id,
-            'imagem',
-            imagem.name
-          );
-
-          dados.imagemPath = caminho;
-          dados.imagemUrl = await enviarComMensagem(
+          const uploadImagem = await enviarComMensagem(
             imagem,
-            caminho,
             msg,
             barraSpan,
             'Enviando imagem'
           );
 
-          pathsCriados.push(caminho);
+          dados.imagemUrl = uploadImagem.url;
+          dados.imagemPublicId = uploadImagem.publicId;
+          dados.imagemResourceType = uploadImagem.resourceType;
         }
 
         if (video) {
           barra.classList.add('is-visible');
           barraSpan.style.width = '0%';
 
-          const caminho = caminhoConteudo(
-            conteudoRef.id,
-            'video',
-            video.name
-          );
-
-          dados.videoPath = caminho;
-          dados.videoUrl = await enviarComMensagem(
+          const uploadVideo = await enviarComMensagem(
             video,
-            caminho,
             msg,
             barraSpan,
             'Enviando vídeo'
           );
 
-          pathsCriados.push(caminho);
+          dados.videoUrl = uploadVideo.url;
+          dados.videoPublicId = uploadVideo.publicId;
+          dados.videoResourceType = uploadVideo.resourceType;
         }
       }
 
@@ -562,11 +524,7 @@ function abrirModalConteudo(dadosPessoa) {
     } catch (erro) {
       console.error('[autorais] Falha ao publicar conteúdo:', erro);
 
-      for (const caminho of pathsCriados) {
-        await deleteObject(ref(storage, caminho)).catch(() => {});
-      }
-
-      erroMsg(msg, mensagemErroFirebase(erro));
+      erroMsg(msg, mensagemErroUpload(erro));
       barra.classList.remove('is-visible');
       barraSpan.style.width = '0%';
 
@@ -657,9 +615,9 @@ function abrirModalEditarPessoa(dadosPessoa, pessoaRef) {
     if (
       novaFoto &&
       (!novaFoto.type.startsWith('image/') ||
-        novaFoto.size > 15 * 1024 * 1024)
+        novaFoto.size > 10 * 1024 * 1024)
     ) {
-      erroMsg(msg, 'A nova foto precisa ser uma imagem de até 15 MB.');
+      erroMsg(msg, 'A nova foto precisa ser uma imagem de até 10 MB.');
       return;
     }
 
@@ -673,47 +631,33 @@ function abrirModalEditarPessoa(dadosPessoa, pessoaRef) {
       atualizadoEm: serverTimestamp()
     };
 
-    let novoPath = null;
-
     try {
       if (novaFoto) {
         barra.classList.add('is-visible');
         barraSpan.style.width = '0%';
 
-        novoPath = `conteudosAutorais/${secao}/${pessoaId}/perfil/perfil-${Date.now()}-${nomeArquivoSeguro(novaFoto.name)}`;
-
-        atualizacao.fotoPath = novoPath;
-        atualizacao.fotoUrl = await enviarComMensagem(
+        const upload = await enviarComMensagem(
           novaFoto,
-          novoPath,
           msg,
           barraSpan,
           'Enviando nova foto'
         );
+
+        atualizacao.fotoUrl = upload.url;
+        atualizacao.fotoPublicId = upload.publicId;
+        atualizacao.fotoResourceType = upload.resourceType;
       } else {
         msg.textContent = 'Salvando alterações...';
       }
 
       await updateDoc(pessoaRef, atualizacao);
 
-      if (
-        novaFoto &&
-        dadosPessoa.fotoPath &&
-        dadosPessoa.fotoPath !== novoPath
-      ) {
-        await deleteObject(ref(storage, dadosPessoa.fotoPath)).catch(() => {});
-      }
-
       salvando = false;
       fechar();
     } catch (erro) {
       console.error('[autorais] Falha ao editar pessoa:', erro);
 
-      if (novoPath) {
-        await deleteObject(ref(storage, novoPath)).catch(() => {});
-      }
-
-      erroMsg(msg, mensagemErroFirebase(erro));
+      erroMsg(msg, mensagemErroUpload(erro));
 
       barra.classList.remove('is-visible');
       barraSpan.style.width = '0%';
@@ -835,8 +779,8 @@ function validarImagem(arquivo) {
     return 'Escolha uma imagem válida.';
   }
 
-  if (arquivo.size > 15 * 1024 * 1024) {
-    return 'A imagem precisa ter no máximo 15 MB.';
+  if (arquivo.size > 10 * 1024 * 1024) {
+    return 'A imagem precisa ter no máximo 10 MB.';
   }
 
   return '';
@@ -854,96 +798,70 @@ function validarVideo(arquivo) {
   return '';
 }
 
-function caminhoConteudo(conteudoId, tipo, nomeArquivo) {
-  return `conteudosAutorais/${secao}/${pessoaId}/conteudos/${conteudoId}/${tipo}-${Date.now()}-${nomeArquivoSeguro(nomeArquivo)}`;
-}
-
-function enviarComMensagem(arquivo, caminho, msg, barra, rotulo) {
-  return enviarArquivo(arquivo, caminho, (percentual) => {
+function enviarComMensagem(arquivo, msg, barra, rotulo) {
+  return enviarArquivo(arquivo, (percentual) => {
     barra.style.width = `${percentual}%`;
     msg.textContent = `${rotulo}... ${Math.round(percentual)}%`;
   });
 }
 
-function enviarArquivo(arquivo, caminho, onProgress) {
+function enviarArquivo(arquivo, onProgress) {
   return new Promise((resolve, reject) => {
-    const tarefa = uploadBytesResumable(
-      ref(storage, caminho),
-      arquivo,
-      {
-        contentType: arquivo.type || 'application/octet-stream'
-      }
-    );
+    const xhr = new XMLHttpRequest();
+    const dados = new FormData();
 
-    let finalizado = false;
-    let timer = null;
+    dados.append('file', arquivo);
+    dados.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
 
-    const limparTimer = () => {
-      if (timer) clearTimeout(timer);
-      timer = null;
-    };
+    xhr.open('POST', CLOUDINARY_UPLOAD_URL, true);
+    xhr.responseType = 'json';
+    xhr.timeout = 10 * 60 * 1000;
 
-    const armarTimer = () => {
-      limparTimer();
-
-      timer = setTimeout(() => {
-        if (finalizado) return;
-
-        finalizado = true;
-        tarefa.cancel();
-
-        const erro = new Error('Upload sem progresso por tempo demais.');
-        erro.code = 'storage/upload-stalled';
-        reject(erro);
-      }, TEMPO_MAXIMO_SEM_PROGRESSO);
-    };
-
-    armarTimer();
-
-    tarefa.on(
-      'state_changed',
-      (snapshot) => {
-        if (finalizado) return;
-
-        armarTimer();
-
-        const percentual = snapshot.totalBytes
-          ? (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          : 0;
-
-        onProgress?.(percentual);
-      },
-      (erro) => {
-        if (finalizado) return;
-
-        finalizado = true;
-        limparTimer();
-        reject(erro);
-      },
-      async () => {
-        if (finalizado) return;
-
-        finalizado = true;
-        limparTimer();
-
-        try {
-          resolve(await getDownloadURL(tarefa.snapshot.ref));
-        } catch (erro) {
-          reject(erro);
-        }
-      }
-    );
-  });
-}
-
-async function apagarArquivosDoConteudo(dados) {
-  const paths = [dados.imagemPath, dados.videoPath].filter(Boolean);
-
-  for (const caminho of paths) {
-    await deleteObject(ref(storage, caminho)).catch((erro) => {
-      if (erro?.code !== 'storage/object-not-found') throw erro;
+    xhr.upload.addEventListener('progress', (evento) => {
+      if (!evento.lengthComputable) return;
+      onProgress?.((evento.loaded / evento.total) * 100);
     });
-  }
+
+    xhr.addEventListener('load', () => {
+      const resposta = xhr.response || {};
+
+      if (
+        xhr.status >= 200 &&
+        xhr.status < 300 &&
+        resposta.secure_url
+      ) {
+        onProgress?.(100);
+
+        resolve({
+          url: resposta.secure_url,
+          publicId: resposta.public_id || '',
+          resourceType: resposta.resource_type || ''
+        });
+        return;
+      }
+
+      const erro = new Error(
+        resposta?.error?.message || 'O Cloudinary recusou o arquivo.'
+      );
+      erro.code = 'cloudinary/upload-failed';
+      erro.status = xhr.status;
+      reject(erro);
+    });
+
+    xhr.addEventListener('error', () => {
+      const erro = new Error('Falha de rede durante o upload.');
+      erro.code = 'cloudinary/network-error';
+      reject(erro);
+    });
+
+    xhr.addEventListener('timeout', () => {
+      const erro = new Error('O upload demorou tempo demais.');
+      erro.code = 'cloudinary/timeout';
+      reject(erro);
+    });
+
+    xhr.send(dados);
+  });
 }
 
 function tituloPadrao() {
@@ -980,50 +898,31 @@ function obterMillis(timestamp) {
   }
 }
 
-function nomeArquivoSeguro(nome) {
-  const partes = String(nome || 'arquivo').split('.');
-  const extensao = partes.length > 1
-    ? partes.pop().toLowerCase().replace(/[^a-z0-9]/g, '')
-    : '';
-
-  const base = partes.join('.')
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .slice(0, 50) || 'arquivo';
-
-  return extensao ? `${base}.${extensao}` : base;
-}
-
 function erroMsg(elm, texto) {
   elm.textContent = texto;
   elm.classList.add('is-erro');
 }
 
-function mensagemErroFirebase(erro) {
+function mensagemErroUpload(erro) {
   const codigo = erro?.code || '';
+  const mensagem = erro?.message || '';
 
-  if (codigo.includes('storage/upload-stalled')) {
-    return 'O upload não iniciou. Confira o Firebase Storage. Se o projeto estiver no plano Spark, o Storage precisa ser atualizado para o plano Blaze.';
+  if (codigo === 'cloudinary/network-error') {
+    return 'Não foi possível enviar o arquivo. Confira sua conexão e tente novamente.';
   }
 
-  if (
-    codigo.includes('unauthorized') ||
-    codigo.includes('permission-denied') ||
-    codigo.includes('storage/unauthorized')
-  ) {
-    return 'Sem permissão para enviar o arquivo. Confira as regras do Storage e sua sessão de pesquisador.';
+  if (codigo === 'cloudinary/timeout') {
+    return 'O upload demorou demais. Tente novamente com uma conexão mais estável.';
   }
 
-  if (
-    codigo.includes('storage/unknown') ||
-    codigo.includes('storage/object-not-found') ||
-    codigo.includes('storage/quota-exceeded') ||
-    codigo.includes('storage/retry-limit-exceeded')
-  ) {
-    return 'O Firebase Storage recusou o upload. Confira se o Storage está ativo e se o projeto está no plano Blaze.';
+  if (codigo === 'cloudinary/upload-failed') {
+    return mensagem
+      ? `O Cloudinary recusou o arquivo: ${mensagem}`
+      : 'O Cloudinary recusou o arquivo. Confira o formato e o tamanho.';
+  }
+
+  if (codigo.includes('permission-denied')) {
+    return 'Sua sessão de pesquisador não tem permissão para salvar os dados.';
   }
 
   return 'Não foi possível concluir agora. Tente novamente.';
