@@ -284,29 +284,73 @@ body {
 }
 
 .decor-typewriter {
-  width: clamp(135px, 15vw, 200px);
-  right: 23%;
-  bottom: 1%;
+  width: clamp(125px, 13vw, 180px);
+  right: 18%;
+  bottom: 4%;
   transform: rotate(7deg);
   clip-path: polygon(2% 5%, 96% 0, 100% 94%, 6% 100%);
 }
 
 .decor-partitura {
-  width: clamp(150px, 16vw, 215px);
-  left: 1%;
-  top: 34%;
+  width: clamp(135px, 14vw, 190px);
+  left: 2%;
+  top: 29%;
   transform: rotate(-8deg);
-  opacity: 0.48;
+  opacity: 0.42;
   clip-path: polygon(3% 2%, 98% 5%, 94% 96%, 0 100%);
 }
 
 .decor-cassete {
-  width: clamp(90px, 9vw, 125px);
-  right: 31%;
-  top: 49%;
+  width: clamp(82px, 8vw, 112px);
+  right: 36%;
+  top: 55%;
   transform: rotate(11deg);
+  opacity: 0.58;
+  mix-blend-mode: multiply;
+}
+
+.decor-camera {
+  width: clamp(110px, 12vw, 165px);
+  left: 18%;
+  top: 6%;
+  transform: rotate(8deg);
+  opacity: 0.5;
+  clip-path: polygon(5% 3%, 98% 0, 95% 96%, 0 100%);
+}
+
+.decor-vinil {
+  width: clamp(92px, 9vw, 128px);
+  right: 9%;
+  top: 33%;
+  transform: rotate(-10deg);
   opacity: 0.62;
   mix-blend-mode: multiply;
+}
+
+.decor-jornal {
+  width: clamp(84px, 8vw, 112px);
+  left: 32%;
+  bottom: 4%;
+  transform: rotate(6deg);
+  opacity: 0.42;
+  filter:
+    sepia(0.5)
+    saturate(0.55)
+    contrast(0.9)
+    drop-shadow(2px 5px 8px rgba(54, 34, 18, 0.18));
+}
+
+.decor-caneta {
+  width: clamp(120px, 13vw, 180px);
+  right: 3%;
+  bottom: 17%;
+  transform: rotate(-26deg);
+  opacity: 0.46;
+  filter:
+    sepia(0.62)
+    saturate(0.42)
+    contrast(0.86)
+    drop-shadow(2px 5px 8px rgba(54, 34, 18, 0.15));
 }
 
 /* ── COMPONENTE DE PEGADA ──
@@ -793,10 +837,38 @@ body.folha-convite-aberto {
   }
 
   .decor-cassete {
-    width: 82px;
+    width: 74px;
     right: 8%;
     top: 58%;
-    opacity: 0.5;
+    opacity: 0.45;
+  }
+
+  .decor-camera {
+    width: 96px;
+    left: 8%;
+    top: 12%;
+    opacity: 0.36;
+  }
+
+  .decor-vinil {
+    width: 72px;
+    right: 4%;
+    top: 36%;
+    opacity: 0.48;
+  }
+
+  .decor-jornal {
+    width: 66px;
+    left: 12%;
+    bottom: 12%;
+    opacity: 0.3;
+  }
+
+  .decor-caneta {
+    width: 115px;
+    right: -6%;
+    bottom: 20%;
+    opacity: 0.34;
   }
 
   /* ── POSIÇÕES DAS PEGADAS NO MOBILE ──
