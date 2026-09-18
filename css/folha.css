@@ -271,9 +271,13 @@ body {
   position: absolute;
   z-index: 1;
   display: block;
+  width: 120px;
+  max-width: 220px;
+  max-height: 220px;
+  height: auto;
   pointer-events: none;
   user-select: none;
-  object-fit: cover;
+  object-fit: contain;
   filter:
     sepia(0.38)
     saturate(0.72)
