@@ -14,6 +14,9 @@ const SECOES = new Set(['poemas', 'desenhos', 'musica', 'curiosidades']);
 const CLOUDINARY_CLOUD_NAME = 'uaisf2vc';
 const CLOUDINARY_UPLOAD_PRESET = 'entre_tempos_upload';
 const CLOUDINARY_UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/auto/upload`;
+const CACHE_PREFIX = 'entretempos:participantes:';
+const CACHE_MAX_AGE = 1000 * 60 * 60 * 24 * 7;
+const SECOES_COM_LOADING = new Set(['poemas', 'desenhos', 'musica']);
 
 function otimizarImagemCloudinary(url, largura = 640, altura = 800) {
   if (!url || !url.includes('res.cloudinary.com') || !url.includes('/upload/')) {
@@ -52,7 +55,16 @@ function iniciarGaleria() {
     abrirModal(modal);
   });
 
-  observarParticipantes(alvo);
+  const loading = criarLoadingParticipantes();
+
+  const cache = lerCacheParticipantes();
+
+  if (cache.length) {
+    renderizarParticipantes(alvo, cache);
+    loading?.remover();
+  }
+
+  observarParticipantes(alvo, loading);
 }
 
 function obterAlvoGaleria() {
@@ -89,36 +101,215 @@ function criarBarraAdmin(alvo) {
   return barra;
 }
 
-function observarParticipantes(alvo) {
+function observarParticipantes(alvo, loading) {
   const consulta = query(
     collection(db, 'participantesAutorais'),
     where('secao', '==', secao)
   );
 
   onSnapshot(consulta, (snapshot) => {
-    alvo.querySelectorAll('[data-et-pessoa-dinamica]').forEach((el) => el.remove());
-
     const docs = snapshot.docs
       .filter((item) => item.data().ativo !== false)
-      .sort((a, b) => obterMillis(a.data().criadoEm) - obterMillis(b.data().criadoEm));
+      .sort((a, b) => obterMillis(a.data().criadoEm) - obterMillis(b.data().criadoEm))
+      .map((item) => ({
+        id: item.id,
+        dados: item.data()
+      }));
 
-    docs.forEach((item) => {
-      alvo.appendChild(criarCardPessoa(item.id, item.data()));
-    });
+    renderizarParticipantes(alvo, docs);
+    salvarCacheParticipantes(docs);
+    loading?.remover();
   }, (erro) => {
     console.error('[autorais] Falha ao carregar participantes:', erro);
+    loading?.erro();
   });
+}
+
+function renderizarParticipantes(alvo, participantes) {
+  alvo.querySelectorAll('[data-et-pessoa-dinamica]').forEach((el) => el.remove());
+
+  participantes.forEach((item) => {
+    alvo.appendChild(criarCardPessoa(item.id, item.dados));
+  });
+}
+
+function chaveCache() {
+  return `${CACHE_PREFIX}${secao}`;
+}
+
+function lerCacheParticipantes() {
+  try {
+    const bruto = localStorage.getItem(chaveCache());
+    if (!bruto) return [];
+
+    const cache = JSON.parse(bruto);
+
+    if (
+      !cache ||
+      !Array.isArray(cache.itens) ||
+      Date.now() - Number(cache.salvoEm || 0) > CACHE_MAX_AGE
+    ) {
+      localStorage.removeItem(chaveCache());
+      return [];
+    }
+
+    return cache.itens;
+  } catch {
+    return [];
+  }
+}
+
+function salvarCacheParticipantes(participantes) {
+  try {
+    const itens = participantes.map((item) => ({
+      id: item.id,
+      dados: {
+        nome: item.dados.nome || '',
+        descricao: item.dados.descricao || '',
+        fotoUrl: item.dados.fotoUrl || '',
+        secao,
+        ativo: item.dados.ativo !== false,
+        criadoEmMs: obterMillis(item.dados.criadoEm)
+      }
+    }));
+
+    localStorage.setItem(
+      chaveCache(),
+      JSON.stringify({ salvoEm: Date.now(), itens })
+    );
+  } catch {
+    // Cache é apenas uma otimização; falhar aqui não impede o site.
+  }
+}
+
+function adicionarPessoaAoCache(id, dados) {
+  try {
+    const atuais = lerCacheParticipantes()
+      .filter((item) => item.id !== id);
+
+    atuais.push({
+      id,
+      dados: {
+        nome: dados.nome || '',
+        descricao: dados.descricao || '',
+        fotoUrl: dados.fotoUrl || '',
+        secao,
+        ativo: true,
+        criadoEmMs: Date.now()
+      }
+    });
+
+    localStorage.setItem(
+      chaveCache(),
+      JSON.stringify({ salvoEm: Date.now(), itens: atuais })
+    );
+  } catch {
+    // Cache é apenas uma otimização.
+  }
+}
+
+function criarLoadingParticipantes() {
+  if (!SECOES_COM_LOADING.has(secao)) return null;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'et-loading-participantes';
+  overlay.innerHTML = `
+    <div class="et-loading-participantes__papel" role="status" aria-live="polite">
+      <div class="et-loading-participantes__ampulheta" aria-hidden="true">⌛</div>
+      <strong>Entre Tempos</strong>
+      <span>Carregando participantes...</span>
+    </div>
+  `;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    .et-loading-participantes {
+      position: fixed;
+      inset: 0;
+      z-index: 9998;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: #f2e8d5;
+      background-image: radial-gradient(rgba(104,75,45,.05) 1px, transparent 1px);
+      background-size: 5px 5px;
+      opacity: 1;
+      transition: opacity .28s ease, visibility .28s ease;
+    }
+
+    .et-loading-participantes.is-saindo {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .et-loading-participantes__papel {
+      min-width: min(88vw, 320px);
+      padding: 30px 28px;
+      text-align: center;
+      color: #3e3228;
+      background: #fffaf0;
+      border-left: 5px solid #9b3e3e;
+      box-shadow: 8px 12px 28px rgba(50,30,15,.18);
+      font-family: 'Special Elite', serif;
+    }
+
+    .et-loading-participantes__papel strong,
+    .et-loading-participantes__papel span {
+      display: block;
+    }
+
+    .et-loading-participantes__papel strong {
+      margin-bottom: 8px;
+      font-size: 22px;
+      letter-spacing: 2px;
+    }
+
+    .et-loading-participantes__papel span {
+      color: #7a6a50;
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+
+    .et-loading-participantes__ampulheta {
+      margin-bottom: 14px;
+      font-size: 36px;
+      animation: etLoadingAmpulheta 1.1s ease-in-out infinite alternate;
+    }
+
+    @keyframes etLoadingAmpulheta {
+      from { transform: translateY(0) rotate(-4deg); }
+      to { transform: translateY(-5px) rotate(4deg); }
+    }
+  `;
+
+  document.head.appendChild(style);
+  document.body.appendChild(overlay);
+
+  let removido = false;
+
+  return {
+    remover() {
+      if (removido) return;
+      removido = true;
+      overlay.classList.add('is-saindo');
+      setTimeout(() => {
+        overlay.remove();
+        style.remove();
+      }, 320);
+    },
+    erro() {
+      const texto = overlay.querySelector('span');
+      if (texto) texto.textContent = 'Não foi possível atualizar agora.';
+      setTimeout(() => this.remover(), 900);
+    }
+  };
 }
 
 function criarCardPessoa(id, dados) {
   const link = document.createElement('a');
-  link.className = 'et-pessoa-card';
   link.dataset.etPessoaDinamica = 'true';
   link.href = `/topicos/autorais/pessoa.html?secao=${encodeURIComponent(secao)}&id=${encodeURIComponent(id)}`;
   link.setAttribute('aria-label', `Ver publicações de ${dados.nome || 'participante'}`);
-
-  const moldura = document.createElement('span');
-  moldura.className = 'et-pessoa-card__foto';
 
   const img = document.createElement('img');
   img.loading = 'lazy';
@@ -126,12 +317,23 @@ function criarCardPessoa(id, dados) {
   img.src = otimizarImagemCloudinary(dados.fotoUrl || '/img/amp.png', 640, 800);
   img.alt = dados.nome ? `Foto de ${dados.nome}` : 'Foto do participante';
 
-  moldura.appendChild(img);
-
   const nome = document.createElement('span');
-  nome.className = 'et-pessoa-card__nome';
   nome.textContent = dados.nome || 'Sem nome';
 
+  if (secao === 'musica') {
+    link.className = 'foto-nav et-pessoa-card--musica';
+    nome.className = 'foto-nav-nome';
+    link.append(img, nome);
+    return link;
+  }
+
+  link.className = 'et-pessoa-card';
+
+  const moldura = document.createElement('span');
+  moldura.className = 'et-pessoa-card__foto';
+  moldura.appendChild(img);
+
+  nome.className = 'et-pessoa-card__nome';
   link.append(moldura, nome);
 
   if (dados.descricao) {
@@ -308,6 +510,12 @@ function criarModalCadastro() {
         criadoPor: usuario.uid
       });
 
+      adicionarPessoaAoCache(pessoaRef.id, {
+        nome,
+        descricao,
+        fotoUrl
+      });
+
       window.location.href = `/topicos/autorais/pessoa.html?secao=${encodeURIComponent(secao)}&id=${encodeURIComponent(pessoaRef.id)}&novo=1`;
     } catch (erro) {
       console.error('[autorais] Falha ao adicionar pessoa:', erro);
@@ -398,6 +606,8 @@ function enviarArquivo(arquivo, onProgress) {
 
 function obterMillis(timestamp) {
   try {
+    if (typeof timestamp === 'number') return timestamp;
+    if (typeof timestamp?.criadoEmMs === 'number') return timestamp.criadoEmMs;
     return timestamp?.toMillis?.() || 0;
   } catch {
     return 0;
