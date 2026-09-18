@@ -615,6 +615,57 @@ body {
   color: #8c3b3b;
 }
 
+.folha-convite.is-escondendo-cartao .folha-convite__cartao {
+  opacity: 0;
+  transform: translateY(10px) scale(0.97);
+  transition: opacity 0.24s ease, transform 0.24s ease;
+}
+
+.folha-foco-faca-parte {
+  position: fixed;
+  inset: 0;
+  z-index: 10001;
+  background: rgba(20, 13, 8, 0.82);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.folha-foco-faca-parte.is-visivel {
+  opacity: 1;
+}
+
+.folha-foco-faca-parte.is-saindo {
+  opacity: 0;
+}
+
+.folha-convite__botao-destaque {
+  position: fixed !important;
+  z-index: 10002;
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  animation: folhaFocoBotao 0.8s ease-in-out infinite alternate;
+  filter: none !important;
+}
+
+@keyframes folhaFocoBotao {
+  from {
+    transform: rotate(-2deg) scale(1);
+    box-shadow: 0 5px 14px rgba(140, 59, 59, 0.4);
+  }
+
+  to {
+    transform: rotate(-1deg) scale(1.06);
+    box-shadow:
+      0 0 0 6px rgba(255, 253, 247, 0.08),
+      0 12px 30px rgba(140, 59, 59, 0.62);
+  }
+}
+
 body.folha-convite-aberto {
   overflow: hidden;
 }
