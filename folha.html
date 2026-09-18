@@ -235,13 +235,12 @@
         if (!podeFechar) return;
 
         marcarComoVisto();
-        convite.classList.remove('is-aberto');
         convite.classList.add('is-escondendo-cartao');
         convite.setAttribute('aria-hidden', 'true');
 
         setTimeout(() => {
-          convite.remove();
           mostrarDestaqueFacaParte();
+          convite.remove();
         }, 280);
       }
 
