@@ -423,8 +423,8 @@ function abrirModalConteudo(dadosPessoa) {
 
     const dados = {
       tipo: secao === 'musica' ? 'musica' : secao.slice(0, -1),
-      titulo: form.elements.titulo.value.trim(),
-      autor: form.elements.autor.value.trim(),
+      titulo: form.elements.titulo?.value.trim() || '',
+      autor: form.elements.autor?.value.trim() || '',
       criadoEm: serverTimestamp(),
       atualizadoEm: serverTimestamp(),
       criadoPor: auth.currentUser.uid
@@ -708,10 +708,15 @@ function camposConteudoHtml(dadosPessoa) {
   }
 
   if (secao === 'musica') {
-    return `${comuns}
+    return `
       <div class="et-campo">
-        <label for="et-conteudo-descricao">Descrição da música / apresentação <small>(opcional)</small></label>
-        <textarea id="et-conteudo-descricao" name="descricao" rows="5" maxlength="3500"></textarea>
+        <label for="et-conteudo-titulo">Título da música <small>(opcional)</small></label>
+        <input id="et-conteudo-titulo" name="titulo" type="text" maxlength="160">
+      </div>
+
+      <div class="et-campo">
+        <label for="et-conteudo-descricao">Descrição da música <small>(opcional)</small></label>
+        <textarea id="et-conteudo-descricao" name="descricao" rows="6" maxlength="3500"></textarea>
       </div>
 
       <div class="et-campo et-arquivo">
