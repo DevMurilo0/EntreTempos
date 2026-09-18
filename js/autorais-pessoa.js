@@ -172,6 +172,7 @@ function iniciar() {
     pessoaRef,
     (snapshot) => {
       if (!snapshot.exists()) {
+        loadingPagina?.remover();
         falharPagina('Esta pessoa não existe mais ou foi removida.');
         return;
       }
@@ -179,6 +180,7 @@ function iniciar() {
       dadosPessoa = snapshot.data();
 
       if (dadosPessoa.secao !== secao) {
+        loadingPagina?.remover();
         falharPagina('A seção informada não corresponde a esta pessoa.');
         return;
       }
