@@ -1,4 +1,4 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { initializeApp, getApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
   getFirestore, doc, getDoc, setDoc, deleteDoc,
   updateDoc, increment, onSnapshot
@@ -19,7 +19,7 @@ const firebaseConfig = {
   appId: "1:448383791330:web:b19cafc6ce5311292c6ebb"
 };
 
-const app = initializeApp(firebaseConfig);
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
