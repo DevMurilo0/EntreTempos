@@ -354,23 +354,39 @@ function criarConteudo(id, dados, pesquisador) {
       artigo.appendChild(paragrafoDescricao(dados.descricao));
     }
 
+    const midias = document.createElement('div');
+    midias.className = 'et-curiosidade-midias';
+
     if (dados.imagemUrl) {
       const figura = document.createElement('figure');
       figura.className = 'et-midia-imagem';
 
+      if (dados.imagemRetratoMenor === true) {
+        figura.classList.add('et-midia-retrato-menor');
+      }
+
       const img = document.createElement('img');
       img.loading = 'lazy';
       img.decoding = 'async';
-      img.src = otimizarImagemCloudinary(dados.imagemUrl, 1400, 1400);
+      img.src = otimizarImagemCloudinary(
+        dados.imagemUrl,
+        dados.imagemRetratoMenor === true ? 720 : 1400,
+        dados.imagemRetratoMenor === true ? 960 : 1400
+      );
       img.alt = dados.titulo || 'Imagem da curiosidade';
 
       figura.appendChild(img);
-      artigo.appendChild(figura);
+      midias.appendChild(figura);
     }
 
     if (dados.videoUrl) {
       const video = document.createElement('video');
       video.className = 'et-midia-video';
+
+      if (dados.videoRetratoMenor === true) {
+        video.classList.add('et-midia-retrato-menor');
+      }
+
       video.controls = true;
       video.playsInline = true;
       video.preload = 'metadata';
@@ -380,7 +396,11 @@ function criarConteudo(id, dados, pesquisador) {
       source.type = 'video/mp4';
 
       video.appendChild(source);
-      artigo.appendChild(video);
+      midias.appendChild(video);
+    }
+
+    if (midias.childElementCount) {
+      artigo.appendChild(midias);
     }
   }
 
@@ -524,6 +544,8 @@ function abrirModalConteudo(dadosPessoa) {
       if (secao === 'curiosidades') {
         dados.tipo = 'curiosidade';
         dados.descricao = form.elements.descricao.value.trim();
+        dados.imagemRetratoMenor = form.elements.imagemRetratoMenor?.checked === true;
+        dados.videoRetratoMenor = form.elements.videoRetratoMenor?.checked === true;
 
         const imagem = form.elements.imagem.files?.[0] || null;
         const video = form.elements.video.files?.[0] || null;
@@ -733,39 +755,6 @@ function camposConteudoHtml(dadosPessoa) {
 
   if (secao === 'poemas') {
     return `${comuns}
-      <div class="et-campo">
-        <label for="et-conteudo-texto">Poema <small>(opcional)</small></label>
-        <textarea id="et-conteudo-texto" name="texto" rows="12" maxlength="20000"></textarea>
-      </div>`;
-  }
-
-  if (secao === 'desenhos') {
-    return `${comuns}
-      <div class="et-campo et-arquivo">
-        <label for="et-conteudo-imagem">Imagem do desenho <small>(opcional)</small></label>
-        <input id="et-conteudo-imagem" name="imagem" type="file" accept="image/*">
-      </div>`;
-  }
-
-  if (secao === 'musica') {
-    return `
-      <div class="et-campo">
-        <label for="et-conteudo-titulo">Título da música <small>(opcional)</small></label>
-        <input id="et-conteudo-titulo" name="titulo" type="text" maxlength="160">
-      </div>
-
-      <div class="et-campo">
-        <label for="et-conteudo-descricao">Descrição da música <small>(opcional)</small></label>
-        <textarea id="et-conteudo-descricao" name="descricao" rows="6" maxlength="3500"></textarea>
-      </div>
-
-      <div class="et-campo et-arquivo">
-        <label for="et-conteudo-video">Vídeo da música <small>(opcional)</small></label>
-        <input id="et-conteudo-video" name="video" type="file" accept="video/*">
-      </div>`;
-  }
-
-  return `${comuns}
     <div class="et-campo">
       <label for="et-conteudo-descricao">Texto / descrição da curiosidade <small>(opcional)</small></label>
       <textarea id="et-conteudo-descricao" name="descricao" rows="7" maxlength="12000"></textarea>
@@ -774,11 +763,27 @@ function camposConteudoHtml(dadosPessoa) {
     <div class="et-campo et-arquivo">
       <label for="et-conteudo-imagem">Imagem <small>(opcional)</small></label>
       <input id="et-conteudo-imagem" name="imagem" type="file" accept="image/*">
+
+      <label class="et-opcao-retrato">
+        <input name="imagemRetratoMenor" type="checkbox">
+        <span>
+          <strong>Retrato menor</strong>
+          <small>Exibir esta imagem em um quadro compacto, como nas outras curiosidades.</small>
+        </span>
+      </label>
     </div>
 
     <div class="et-campo et-arquivo">
       <label for="et-conteudo-video">Vídeo <small>(opcional)</small></label>
       <input id="et-conteudo-video" name="video" type="file" accept="video/*">
+
+      <label class="et-opcao-retrato">
+        <input name="videoRetratoMenor" type="checkbox">
+        <span>
+          <strong>Retrato menor</strong>
+          <small>Exibir este vídeo em tamanho compacto.</small>
+        </span>
+      </label>
     </div>`;
 }
 
