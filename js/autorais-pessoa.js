@@ -22,11 +22,23 @@ const CONFIG = {
     adicionar: 'Adicionar poema',
     voltar: '/topicos/poemas/autorais/autorais/autorais.html'
   },
+  'poemas-conhecidos': {
+    rotulo: 'Poetas conhecidos',
+    conteudo: 'Poemas publicados',
+    adicionar: 'Adicionar poema',
+    voltar: '/topicos/poemas/conhecidos/conhecidos.html'
+  },
   desenhos: {
     rotulo: 'Desenhos autorais',
     conteudo: 'Desenhos publicados',
     adicionar: 'Adicionar desenho',
     voltar: '/topicos/desenhos/autorais/autorais.html'
+  },
+  'desenhos-conhecidos': {
+    rotulo: 'Artes conhecidas',
+    conteudo: 'Obras publicadas',
+    adicionar: 'Adicionar obra',
+    voltar: '/topicos/desenhos/conhecidos/conhecidos.html'
   },
   musica: {
     rotulo: 'Talento musical',
@@ -39,7 +51,23 @@ const CONFIG = {
     conteudo: 'Curiosidades publicadas',
     adicionar: 'Adicionar curiosidade',
     voltar: '/topicos/curiosidades/autorais/autorais.html'
+  },
+  'curiosidades-gerais': {
+    rotulo: 'Curiosidades gerais',
+    conteudo: 'Curiosidades publicadas',
+    adicionar: 'Adicionar curiosidade',
+    voltar: '/topicos/curiosidades/gerais/gerais.html'
   }
+};
+
+const TIPO_SECAO = {
+  poemas: 'poemas',
+  'poemas-conhecidos': 'poemas',
+  desenhos: 'desenhos',
+  'desenhos-conhecidos': 'desenhos',
+  musica: 'musica',
+  curiosidades: 'curiosidades',
+  'curiosidades-gerais': 'curiosidades'
 };
 
 function otimizarImagemCloudinary(url, largura = 900, altura = 1200) {
@@ -83,6 +111,7 @@ function normalizarVideoCloudinary(url) {
 
 const params = new URLSearchParams(location.search);
 const secao = params.get('secao');
+const tipoSecao = TIPO_SECAO[secao];
 const pessoaId = params.get('id');
 const novo = params.get('novo') === '1';
 const config = CONFIG[secao];
@@ -102,7 +131,7 @@ const el = {
   btnExcluir: document.getElementById('et-btn-excluir-pessoa')
 };
 
-if (!config || !pessoaId) {
+if (!config || !tipoSecao || !pessoaId) {
   falharPagina('Página inválida. Volte para a revista e tente novamente.');
 } else {
   iniciar();
@@ -305,14 +334,18 @@ function criarConteudo(id, dados, pesquisador) {
 
   artigo.appendChild(cabecalho);
 
-  if (secao === 'poemas') {
+  if (tipoSecao === 'poemas') {
     const texto = document.createElement('div');
     texto.className = 'et-poema-texto';
     texto.textContent = dados.texto || '';
     artigo.appendChild(texto);
   }
 
-  if (secao === 'desenhos') {
+  if (tipoSecao === 'desenhos') {
+    if (secao === 'desenhos-conhecidos' && dados.descricao) {
+      artigo.appendChild(paragrafoDescricao(dados.descricao));
+    }
+
     if (dados.imagemUrl) {
       const figura = document.createElement('figure');
       figura.className = 'et-midia-imagem';
@@ -328,7 +361,7 @@ function criarConteudo(id, dados, pesquisador) {
     }
   }
 
-  if (secao === 'musica') {
+  if (tipoSecao === 'musica') {
     if (dados.videoUrl) {
       const video = document.createElement('video');
       video.className = 'et-midia-video';
@@ -349,7 +382,7 @@ function criarConteudo(id, dados, pesquisador) {
     }
   }
 
-  if (secao === 'curiosidades') {
+  if (tipoSecao === 'curiosidades') {
     if (dados.descricao) {
       artigo.appendChild(paragrafoDescricao(dados.descricao));
     }
@@ -482,7 +515,11 @@ function abrirModalConteudo(dadosPessoa) {
     );
 
     const dados = {
-      tipo: secao === 'musica' ? 'musica' : secao.slice(0, -1),
+      tipo:
+        tipoSecao === 'poemas' ? 'poema' :
+        tipoSecao === 'desenhos' ? 'desenho' :
+        tipoSecao === 'musica' ? 'musica' :
+        'curiosidade',
       titulo: form.elements.titulo?.value.trim() || '',
       autor: form.elements.autor?.value.trim() || '',
       criadoEm: serverTimestamp(),
@@ -491,13 +528,17 @@ function abrirModalConteudo(dadosPessoa) {
     };
 
     try {
-      if (secao === 'poemas') {
+      if (tipoSecao === 'poemas') {
         dados.tipo = 'poema';
         dados.texto = form.elements.texto.value.trim();
       }
 
-      if (secao === 'desenhos') {
+      if (tipoSecao === 'desenhos') {
         dados.tipo = 'desenho';
+
+        if (secao === 'desenhos-conhecidos') {
+          dados.descricao = form.elements.descricao?.value.trim() || '';
+        }
 
         const arquivo = form.elements.imagem.files?.[0] || null;
 
@@ -518,7 +559,7 @@ function abrirModalConteudo(dadosPessoa) {
         }
       }
 
-      if (secao === 'musica') {
+      if (tipoSecao === 'musica') {
         dados.tipo = 'musica';
         dados.descricao = form.elements.descricao.value.trim();
 
@@ -541,7 +582,7 @@ function abrirModalConteudo(dadosPessoa) {
         }
       }
 
-      if (secao === 'curiosidades') {
+      if (tipoSecao === 'curiosidades') {
         dados.tipo = 'curiosidade';
         dados.descricao = form.elements.descricao.value.trim();
         dados.imagemRetratoMenor = form.elements.imagemRetratoMenor?.checked === true;
@@ -753,8 +794,51 @@ function camposConteudoHtml(dadosPessoa) {
     </div>
   `;
 
-  if (secao === 'poemas') {
+  if (tipoSecao === 'poemas') {
     return `${comuns}
+      <div class="et-campo">
+        <label for="et-conteudo-texto">Poema <small>(opcional)</small></label>
+        <textarea id="et-conteudo-texto" name="texto" rows="12" maxlength="20000"></textarea>
+      </div>`;
+  }
+
+  if (tipoSecao === 'desenhos') {
+    const descricaoObra = secao === 'desenhos-conhecidos'
+      ? `
+        <div class="et-campo">
+          <label for="et-conteudo-descricao">Descrição da obra <small>(opcional)</small></label>
+          <textarea id="et-conteudo-descricao" name="descricao" rows="5" maxlength="4000"></textarea>
+        </div>
+      `
+      : '';
+
+    return `${comuns}
+      ${descricaoObra}
+      <div class="et-campo et-arquivo">
+        <label for="et-conteudo-imagem">Imagem da obra <small>(opcional)</small></label>
+        <input id="et-conteudo-imagem" name="imagem" type="file" accept="image/*">
+      </div>`;
+  }
+
+  if (tipoSecao === 'musica') {
+    return `
+      <div class="et-campo">
+        <label for="et-conteudo-titulo">Título da música <small>(opcional)</small></label>
+        <input id="et-conteudo-titulo" name="titulo" type="text" maxlength="160">
+      </div>
+
+      <div class="et-campo">
+        <label for="et-conteudo-descricao">Descrição da música <small>(opcional)</small></label>
+        <textarea id="et-conteudo-descricao" name="descricao" rows="6" maxlength="3500"></textarea>
+      </div>
+
+      <div class="et-campo et-arquivo">
+        <label for="et-conteudo-video">Vídeo da música <small>(opcional)</small></label>
+        <input id="et-conteudo-video" name="video" type="file" accept="video/*">
+      </div>`;
+  }
+
+  return `${comuns}
     <div class="et-campo">
       <label for="et-conteudo-descricao">Texto / descrição da curiosidade <small>(opcional)</small></label>
       <textarea id="et-conteudo-descricao" name="descricao" rows="7" maxlength="12000"></textarea>
@@ -768,7 +852,7 @@ function camposConteudoHtml(dadosPessoa) {
         <input name="imagemRetratoMenor" type="checkbox">
         <span>
           <strong>Retrato menor</strong>
-          <small>Exibir esta imagem em um quadro compacto, como nas outras curiosidades.</small>
+          <small>Exibir esta imagem em um quadro compacto.</small>
         </span>
       </label>
     </div>
@@ -788,7 +872,7 @@ function camposConteudoHtml(dadosPessoa) {
 }
 
 function validarConteudo(form) {
-  if (secao === 'desenhos') {
+  if (tipoSecao === 'desenhos') {
     const imagem = form.elements.imagem.files?.[0] || null;
 
     if (imagem) {
@@ -797,7 +881,7 @@ function validarConteudo(form) {
     }
   }
 
-  if (secao === 'musica') {
+  if (tipoSecao === 'musica') {
     const video = form.elements.video.files?.[0] || null;
 
     if (video) {
@@ -806,7 +890,7 @@ function validarConteudo(form) {
     }
   }
 
-  if (secao === 'curiosidades') {
+  if (tipoSecao === 'curiosidades') {
     const imagem = form.elements.imagem.files?.[0] || null;
     const video = form.elements.video.files?.[0] || null;
 
@@ -915,9 +999,9 @@ function enviarArquivo(arquivo, onProgress) {
 }
 
 function tituloPadrao() {
-  if (secao === 'poemas') return 'Poema';
-  if (secao === 'desenhos') return 'Desenho';
-  if (secao === 'musica') return 'Música';
+  if (tipoSecao === 'poemas') return 'Poema';
+  if (tipoSecao === 'desenhos') return secao === 'desenhos-conhecidos' ? 'Obra' : 'Desenho';
+  if (tipoSecao === 'musica') return 'Música';
   return 'Curiosidade';
 }
 
