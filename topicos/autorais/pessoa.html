@@ -16,21 +16,25 @@
       const params = new URLSearchParams(window.location.search);
       const secao = params.get('secao');
 
-      if (secao === 'poemas') {
+      if (secao === 'poemas' || secao === 'poemas-conhecidos') {
         document.documentElement.classList.add('et-poemas-dinamico');
 
         const link = document.createElement('link');
         link.rel = 'stylesheet';
-        link.href = '/topicos/poemas/autorais/autorais/pessoa.css';
+        link.href = secao === 'poemas-conhecidos'
+          ? '/topicos/poemas/conhecidos/pessoa.css'
+          : '/topicos/poemas/autorais/autorais/pessoa.css';
         document.head.appendChild(link);
       }
 
-      if (secao === 'desenhos') {
+      if (secao === 'desenhos' || secao === 'desenhos-conhecidos') {
         document.documentElement.classList.add('et-desenhos-dinamico');
 
         const link = document.createElement('link');
         link.rel = 'stylesheet';
-        link.href = '/topicos/desenhos/autorais/pessoa.css';
+        link.href = secao === 'desenhos-conhecidos'
+          ? '/topicos/desenhos/conhecidos/pessoa.css'
+          : '/topicos/desenhos/autorais/pessoa.css';
         document.head.appendChild(link);
       }
 
@@ -43,7 +47,11 @@
         document.head.appendChild(link);
       }
 
-      if (secao === 'desenhos' || secao === 'musica') {
+      if (
+        secao === 'desenhos' ||
+        secao === 'desenhos-conhecidos' ||
+        secao === 'musica'
+      ) {
         const likes = document.createElement('script');
         likes.type = 'module';
         likes.src = '/js/likes.js';
@@ -706,7 +714,7 @@
   <script>
     (function () {
       const params = new URLSearchParams(window.location.search);
-      if (params.get('secao') !== 'poemas') return;
+      if (!['poemas', 'poemas-conhecidos'].includes(params.get('secao'))) return;
 
       const root = document.getElementById('et-conteudos');
       const publicacoes = document.querySelector('.et-publicacoes');
@@ -727,7 +735,11 @@
       footer?.classList.add('rodape-poemas');
       carimbo?.classList.add('carimbo');
 
-      if (voltar) voltar.textContent = '← Voltar para Autorais';
+      if (voltar) {
+        voltar.textContent = params.get('secao') === 'desenhos-conhecidos'
+          ? '← Voltar para Artes Conhecidas'
+          : '← Voltar para Autorais';
+      }
       if (carimbo) carimbo.textContent = 'POEMAS';
 
       let contador = document.getElementById('et-contador-poemas');
@@ -805,7 +817,11 @@
       function adaptarPoemas() {
         if (!root || !grade) return;
 
-        if (rotulo) rotulo.textContent = 'poeta';
+        if (rotulo) {
+          rotulo.textContent = params.get('secao') === 'poemas-conhecidos'
+            ? 'poeta conhecido'
+            : 'poeta';
+        }
 
         const artigos = Array.from(root.querySelectorAll(':scope > .et-conteudo'));
 
@@ -903,7 +919,7 @@
   <script>
     (function () {
       const params = new URLSearchParams(window.location.search);
-      if (params.get('secao') !== 'desenhos') return;
+      if (!['desenhos', 'desenhos-conhecidos'].includes(params.get('secao'))) return;
 
       const pessoaId = params.get('id') || 'pessoa';
       const root = document.getElementById('et-conteudos');
@@ -926,7 +942,11 @@
 
       if (voltar) voltar.textContent = '← Voltar para Autorais';
       if (carimbo) carimbo.textContent = 'DESENHOS';
-      if (rotulo) rotulo.textContent = 'artista';
+      if (rotulo) {
+        rotulo.textContent = params.get('secao') === 'desenhos-conhecidos'
+          ? 'artista conhecido'
+          : 'artista';
+      }
 
       let contador = document.getElementById('et-contador-desenhos');
       if (!contador && perfilTexto) {
