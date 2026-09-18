@@ -36,6 +36,42 @@
     </div>
     
   </header>
+
+  <div
+    class="folha-convite"
+    id="folha-convite"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="folha-convite-titulo"
+    aria-hidden="true"
+  >
+    <div class="folha-convite__cartao">
+      <button
+        type="button"
+        class="folha-convite__fechar"
+        id="folha-convite-fechar"
+        aria-label="Fechar convite"
+      >×</button>
+
+      <p class="folha-convite__kicker">você também pode estar aqui</p>
+
+      <h2 class="folha-convite__titulo" id="folha-convite-titulo">
+        Um pedaço seu pode entrar na próxima página.
+      </h2>
+
+      <p class="folha-convite__texto">
+        Desenha? Escreve? Canta, grava <strong>covers</strong>, compõe músicas,
+        fotografa ou tem uma curiosidade que merece ser contada?
+        A <strong>Entre Tempos</strong> também é feita por quem decide aparecer.
+        Manda seu trabalho — ele pode virar parte da revista.
+      </p>
+
+      <a href="faca-parte.html" class="folha-convite__cta" id="folha-convite-cta">
+        Quero fazer parte
+      </a>
+    </div>
+  </div>
+
   <div class="scene">
     <!-- LUA - a luona la no canto direito, da um clima demais -->
     <div class="moon">
@@ -105,6 +141,79 @@
       scene.appendChild(wrap);
       scene.appendChild(tagWrap);
     });
+  </script>
+
+  <script>
+    (function () {
+      const CHAVE_CONVITE = 'entretempos:folha:convite-v1';
+      const convite = document.getElementById('folha-convite');
+      const fechar = document.getElementById('folha-convite-fechar');
+      const cta = document.getElementById('folha-convite-cta');
+
+      if (!convite || !fechar || !cta) return;
+
+      let jaViu = false;
+
+      try {
+        jaViu = localStorage.getItem(CHAVE_CONVITE) === '1';
+      } catch (_) {
+        jaViu = false;
+      }
+
+      if (jaViu) {
+        convite.remove();
+        return;
+      }
+
+      let podeFechar = false;
+
+      function marcarComoVisto() {
+        try {
+          localStorage.setItem(CHAVE_CONVITE, '1');
+        } catch (_) {
+          // Se o navegador bloquear armazenamento, o site continua funcionando.
+        }
+      }
+
+      function abrirConvite() {
+        convite.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('folha-convite-aberto');
+
+        requestAnimationFrame(() => {
+          convite.classList.add('is-aberto');
+        });
+
+        setTimeout(() => {
+          podeFechar = true;
+          fechar.classList.add('is-visivel');
+        }, 1800);
+      }
+
+      function fecharConvite() {
+        if (!podeFechar) return;
+
+        marcarComoVisto();
+        convite.classList.remove('is-aberto');
+        document.body.classList.remove('folha-convite-aberto');
+        convite.setAttribute('aria-hidden', 'true');
+
+        setTimeout(() => convite.remove(), 380);
+      }
+
+      fechar.addEventListener('click', fecharConvite);
+
+      cta.addEventListener('click', () => {
+        marcarComoVisto();
+      });
+
+      document.addEventListener('keydown', (evento) => {
+        if (evento.key === 'Escape' && podeFechar) {
+          fecharConvite();
+        }
+      });
+
+      setTimeout(abrirConvite, 250);
+    })();
   </script>
 
   <!-- animação de "carimbo" no botão Faça parte: espera o efeito
