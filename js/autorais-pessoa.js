@@ -290,15 +290,11 @@ function criarConteudo(id, dados, pesquisador) {
       const img = document.createElement('img');
       img.loading = 'lazy';
       img.decoding = 'async';
-      img.src = otimizarImagemCloudinary(dados.imagemUrl, 1400, 1400);
+      img.src = otimizarImagemCloudinary(dados.imagemUrl, 1100, 1400);
       img.alt = dados.titulo || 'Desenho autoral';
 
       figura.appendChild(img);
       artigo.appendChild(figura);
-    }
-
-    if (dados.descricao) {
-      artigo.appendChild(paragrafoDescricao(dados.descricao));
     }
   }
 
@@ -442,7 +438,6 @@ function abrirModalConteudo(dadosPessoa) {
 
       if (secao === 'desenhos') {
         dados.tipo = 'desenho';
-        dados.descricao = form.elements.descricao.value.trim();
 
         const arquivo = form.elements.imagem.files?.[0] || null;
 
@@ -706,11 +701,6 @@ function camposConteudoHtml(dadosPessoa) {
 
   if (secao === 'desenhos') {
     return `${comuns}
-      <div class="et-campo">
-        <label for="et-conteudo-descricao">Descrição <small>(opcional)</small></label>
-        <textarea id="et-conteudo-descricao" name="descricao" rows="4" maxlength="2500"></textarea>
-      </div>
-
       <div class="et-campo et-arquivo">
         <label for="et-conteudo-imagem">Imagem do desenho <small>(opcional)</small></label>
         <input id="et-conteudo-imagem" name="imagem" type="file" accept="image/*">
