@@ -15,6 +15,15 @@ const CLOUDINARY_CLOUD_NAME = 'uaisf2vc';
 const CLOUDINARY_UPLOAD_PRESET = 'entre_tempos_upload';
 const CLOUDINARY_UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/auto/upload`;
 
+function otimizarImagemCloudinary(url, largura = 640, altura = 800) {
+  if (!url || !url.includes('res.cloudinary.com') || !url.includes('/upload/')) {
+    return url;
+  }
+
+  const transformacao = `f_auto,q_auto:good,w_${largura},h_${altura},c_limit`;
+  return url.replace('/upload/', `/upload/${transformacao}/`);
+}
+
 const secao = document.body.dataset.autoraisSecao;
 
 if (!SECOES.has(secao)) {
@@ -114,7 +123,7 @@ function criarCardPessoa(id, dados) {
   const img = document.createElement('img');
   img.loading = 'lazy';
   img.decoding = 'async';
-  img.src = dados.fotoUrl || '/img/amp.png';
+  img.src = otimizarImagemCloudinary(dados.fotoUrl || '/img/amp.png', 640, 800);
   img.alt = dados.nome ? `Foto de ${dados.nome}` : 'Foto do participante';
 
   moldura.appendChild(img);
