@@ -32,7 +32,18 @@
         link.rel = 'stylesheet';
         link.href = '/topicos/desenhos/autorais/pessoa.css';
         document.head.appendChild(link);
+      }
 
+      if (secao === 'musica') {
+        document.documentElement.classList.add('et-musica-dinamico');
+
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = '/topicos/musica/talento/Bruno/style.css';
+        document.head.appendChild(link);
+      }
+
+      if (secao === 'desenhos' || secao === 'musica') {
         const likes = document.createElement('script');
         likes.type = 'module';
         likes.src = '/js/likes.js';
@@ -476,6 +487,165 @@
       .et-desenhos-dinamico .card-desenho .btn-like {
         padding: 4px 9px 4px 7px;
         font-size: 12px;
+      }
+    }
+
+    .et-musica-dinamico .et-pessoa-main {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .et-musica-dinamico .et-pagina-mensagem {
+      max-width: 900px;
+      margin: 18px auto 0;
+      padding: 0 20px;
+    }
+
+    .et-musica-dinamico .et-perfil {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      align-items: flex-start;
+      gap: 50px;
+      max-width: 900px;
+      margin: 40px auto 0;
+      padding: 0 40px;
+    }
+
+    .et-musica-dinamico .et-perfil__foto-wrap {
+      display: contents;
+    }
+
+    .et-musica-dinamico .et-perfil__foto-wrap::after {
+      display: none;
+    }
+
+    .et-musica-dinamico .et-perfil__foto {
+      width: clamp(160px, 22vw, 260px);
+      height: auto;
+      max-height: 340px;
+      object-fit: contain;
+      object-position: center;
+      flex-shrink: 0;
+      background: transparent;
+      filter: drop-shadow(4px 6px 14px rgba(0,0,0,.35)) sepia(15%);
+      transform: rotate(-2deg);
+      transition: transform .3s ease;
+    }
+
+    .et-musica-dinamico .et-perfil__foto:hover {
+      transform: rotate(0deg) scale(1.02);
+    }
+
+    .et-musica-dinamico .et-perfil__texto {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding-top: 6px;
+    }
+
+    .et-musica-dinamico .et-perfil__rotulo {
+      display: none;
+    }
+
+    .et-musica-dinamico .et-perfil h1 {
+      color: #1a1a1a;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: 0;
+      text-shadow: none;
+    }
+
+    .et-musica-dinamico .et-perfil__descricao {
+      max-width: 560px;
+      color: #3e3228;
+      font-family: 'IM Fell English', serif;
+      font-size: clamp(15px, 1.6vw, 18px);
+      line-height: 1.85;
+      text-align: justify;
+      white-space: pre-wrap;
+    }
+
+    .et-musica-dinamico .et-admin-acoes {
+      position: relative;
+      z-index: 6;
+      width: min(calc(100% - 40px), 900px);
+      margin: 26px auto 30px;
+    }
+
+    .et-musica-dinamico .et-pessoa-divisor {
+      position: relative;
+      z-index: 5;
+      width: 80%;
+      height: 2px;
+      margin: 36px auto;
+      background: linear-gradient(to right, transparent, #c0392b, #c4a96b, #c0392b, transparent);
+    }
+
+    .et-musica-dinamico .et-publicacoes__cabecalho {
+      display: none;
+    }
+
+    .et-musica-dinamico .et-conteudos.musica-corpo {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 40px 100px;
+    }
+
+    .et-musica-dinamico .et-musica-publicacao {
+      display: contents;
+    }
+
+    .et-musica-dinamico .et-musica-admin {
+      width: 100%;
+      margin-top: -16px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+    }
+
+    .et-musica-dinamico .et-musica-admin .et-conteudo__acoes {
+      width: 100%;
+    }
+
+    .et-musica-dinamico .et-musica-admin .et-mini-btn {
+      width: 100%;
+      min-height: 38px;
+    }
+
+    .et-musica-dinamico .et-pessoa-footer {
+      position: relative;
+      z-index: 5;
+    }
+
+    @media (max-width: 600px) {
+      .et-musica-dinamico .et-perfil {
+        flex-direction: column;
+        align-items: center;
+        gap: 22px;
+        padding: 0 20px;
+        text-align: center;
+      }
+
+      .et-musica-dinamico .et-perfil__foto {
+        width: clamp(150px, 55vw, 200px);
+        max-height: 280px;
+      }
+
+      .et-musica-dinamico .et-perfil h1,
+      .et-musica-dinamico .et-perfil__descricao {
+        text-align: left;
+      }
+
+      .et-musica-dinamico .et-conteudos.musica-corpo {
+        padding: 0 18px 80px;
+        gap: 24px;
       }
     }
 
@@ -925,6 +1095,142 @@
         const observer = new MutationObserver((mutacoes) => {
           if (mutacoes.some((item) => item.type === 'childList')) {
             setTimeout(adaptarDesenhos, 0);
+          }
+        });
+
+        observer.observe(root, { childList: true });
+      }
+    })();
+  </script>
+
+  <script>
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('secao') !== 'musica') return;
+
+      const pessoaId = params.get('id') || 'pessoa';
+      const root = document.getElementById('et-conteudos');
+      const perfil = document.querySelector('.et-perfil');
+      const perfilTexto = document.querySelector('.et-perfil__texto');
+      const foto = document.getElementById('et-pessoa-foto');
+      const nome = document.getElementById('et-pessoa-nome');
+      const descricao = document.getElementById('et-pessoa-descricao');
+      const voltar = document.getElementById('et-voltar');
+      const footer = document.querySelector('.et-pessoa-footer');
+      const carimbo = document.querySelector('.et-pessoa-carimbo');
+
+      document.body.classList.add('et-layout-musica');
+
+      perfil?.classList.add('musica-abertura');
+      foto?.classList.add('foto-musica');
+      perfilTexto?.classList.add('musica-abertura-info');
+      nome?.classList.add('musica-abertura-titulo');
+      descricao?.classList.add('musica-abertura-resumo');
+      document.querySelector('.et-pessoa-divisor')?.classList.add('divisor');
+      footer?.classList.add('rodape-musica');
+      carimbo?.classList.add('carimbo');
+
+      if (voltar) voltar.textContent = '← sair';
+      if (carimbo) carimbo.textContent = 'musicas';
+
+      root?.classList.add('musica-corpo');
+
+      function iniciarCurtidas() {
+        if (typeof window.initLikes === 'function') {
+          window.initLikes();
+          return;
+        }
+
+        setTimeout(() => {
+          if (typeof window.initLikes === 'function') window.initLikes();
+        }, 350);
+      }
+
+      function adaptarMusicas() {
+        if (!root) return;
+
+        const artigos = Array.from(root.querySelectorAll(':scope > .et-conteudo'));
+
+        artigos.forEach((artigo, indice) => {
+          const conteudoId = artigo.dataset.conteudoId || `musica-${indice + 1}`;
+          const cabecalho = artigo.querySelector('.et-conteudo__cabecalho');
+          const tituloOriginal = cabecalho?.querySelector('h3');
+          const tituloTexto = tituloOriginal?.textContent?.trim() || `Música ${indice + 1}`;
+          const descricaoOriginal = artigo.querySelector('.et-conteudo__descricao');
+          const video = artigo.querySelector('video');
+          const acoes = cabecalho?.querySelector('.et-conteudo__acoes');
+
+          artigo.className = 'et-musica-publicacao';
+
+          const fragmento = document.createDocumentFragment();
+
+          if (descricaoOriginal?.textContent?.trim()) {
+            const blocoTexto = document.createElement('div');
+            blocoTexto.className = 'bloco-texto';
+
+            const p = document.createElement('p');
+            p.textContent = descricaoOriginal.textContent.trim();
+
+            blocoTexto.appendChild(p);
+            fragmento.appendChild(blocoTexto);
+          }
+
+          const blocoMidia = document.createElement('div');
+          blocoMidia.className = 'bloco-midia';
+
+          if (video) {
+            video.className = '';
+            video.controls = true;
+            video.loop = true;
+            video.playsInline = true;
+            video.preload = 'metadata';
+            blocoMidia.appendChild(video);
+          } else {
+            const vazio = document.createElement('div');
+            vazio.className = 'midia-vazia';
+            vazio.textContent = 'vídeo em breve';
+            blocoMidia.appendChild(vazio);
+          }
+
+          const legenda = document.createElement('p');
+          legenda.className = 'legenda-midia';
+          legenda.textContent = tituloTexto;
+          blocoMidia.appendChild(legenda);
+
+          const like = document.createElement('button');
+          like.type = 'button';
+          like.className = 'btn-like';
+          like.dataset.likeId = `musica-dinamica-${pessoaId}-${conteudoId}`;
+          like.dataset.likeLabel = `Curtir ${tituloTexto}`;
+          like.dataset.unlikeLabel = `Descurtir ${tituloTexto}`;
+          like.setAttribute('aria-label', `Curtir ${tituloTexto}`);
+          like.setAttribute('aria-pressed', 'false');
+          like.innerHTML = '<span class="like-icon">♡</span><span class="like-count">0</span>';
+
+          blocoMidia.appendChild(like);
+          fragmento.appendChild(blocoMidia);
+
+          if (acoes) {
+            const admin = document.createElement('div');
+            admin.className = 'et-conteudo__cabecalho et-musica-admin';
+            admin.appendChild(acoes);
+            fragmento.appendChild(admin);
+          }
+
+          artigo.replaceChildren(fragmento);
+        });
+
+        iniciarCurtidas();
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(adaptarMusicas, 0);
+      });
+
+      if (root) {
+        const observer = new MutationObserver((mutacoes) => {
+          if (mutacoes.some((item) => item.type === 'childList')) {
+            setTimeout(adaptarMusicas, 0);
           }
         });
 
