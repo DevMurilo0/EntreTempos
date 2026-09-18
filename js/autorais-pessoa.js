@@ -138,6 +138,16 @@ if (!config || !tipoSecao || !pessoaId) {
 }
 
 function iniciar() {
+  const loadingPagina = criarLoadingPagina();
+  let pessoaCarregada = false;
+  let conteudosCarregados = false;
+
+  const tentarFecharLoading = () => {
+    if (pessoaCarregada && conteudosCarregados) {
+      loadingPagina?.remover();
+    }
+  };
+
   el.voltar.href = config.voltar;
   el.rotulo.textContent = config.rotulo;
   el.tituloConteudos.textContent = config.conteudo;
@@ -181,10 +191,13 @@ function iniciar() {
 
       document.body.classList.add('et-pessoa-carregada');
       el.mensagem.textContent = '';
+      pessoaCarregada = true;
+      tentarFecharLoading();
       tentarAbrirNovo();
     },
     (erro) => {
       console.error('[autorais] Erro ao carregar pessoa:', erro);
+      loadingPagina?.remover();
       falharPagina('Não foi possível carregar esta página agora.');
     }
   );
@@ -197,9 +210,12 @@ function iniciar() {
       );
 
       renderizarConteudos(documentosConteudo, pesquisador);
+      conteudosCarregados = true;
+      tentarFecharLoading();
     },
     (erro) => {
       console.error('[autorais] Erro ao carregar conteúdos:', erro);
+      loadingPagina?.remover();
       el.conteudos.replaceChildren(criarAviso('Não foi possível carregar os conteúdos.'));
     }
   );
@@ -777,6 +793,100 @@ function abrirModalEditarPessoa(dadosPessoa, pessoaRef) {
   });
 
   requestAnimationFrame(() => form.elements.nome.focus());
+}
+
+function criarLoadingPagina() {
+  const overlay = document.createElement('div');
+  overlay.className = 'et-loading-pagina-dinamica';
+  overlay.innerHTML = `
+    <div class="et-loading-pagina-dinamica__papel" role="status" aria-live="polite">
+      <img src="/img/amp.png" alt="" aria-hidden="true">
+      <strong>Entre Tempos</strong>
+      <span>carregando o tempo...</span>
+    </div>
+  `;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    .et-loading-pagina-dinamica {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: #f2e8d5;
+      background-image: radial-gradient(rgba(104,75,45,.05) 1px, transparent 1px);
+      background-size: 5px 5px;
+      opacity: 1;
+      transition: opacity .28s ease, visibility .28s ease;
+    }
+
+    .et-loading-pagina-dinamica.is-saindo {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .et-loading-pagina-dinamica__papel {
+      min-width: min(88vw, 320px);
+      padding: 30px 28px;
+      text-align: center;
+      color: #3e3228;
+      background: #fffaf0;
+      border-left: 5px solid #9b3e3e;
+      box-shadow: 8px 12px 28px rgba(50,30,15,.18);
+      font-family: 'Special Elite', serif;
+    }
+
+    .et-loading-pagina-dinamica__papel img {
+      display: block;
+      width: clamp(58px, 12vw, 82px);
+      height: auto;
+      margin: 0 auto 16px;
+      object-fit: contain;
+      filter: drop-shadow(0 7px 8px rgba(61,42,27,.16));
+      animation: etLoadingPaginaAmp 1.35s ease-in-out infinite alternate;
+    }
+
+    .et-loading-pagina-dinamica__papel strong,
+    .et-loading-pagina-dinamica__papel span {
+      display: block;
+    }
+
+    .et-loading-pagina-dinamica__papel strong {
+      margin-bottom: 8px;
+      font-size: 22px;
+      letter-spacing: 2px;
+    }
+
+    .et-loading-pagina-dinamica__papel span {
+      color: #7a6a50;
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+
+    @keyframes etLoadingPaginaAmp {
+      from { transform: translateY(0) rotate(-2deg); }
+      to { transform: translateY(-5px) rotate(2deg); }
+    }
+  `;
+
+  document.head.appendChild(style);
+  document.body.appendChild(overlay);
+
+  let removido = false;
+
+  return {
+    remover() {
+      if (removido) return;
+      removido = true;
+      overlay.classList.add('is-saindo');
+      setTimeout(() => {
+        overlay.remove();
+        style.remove();
+      }, 320);
+    }
+  };
 }
 
 function camposConteudoHtml(dadosPessoa) {
