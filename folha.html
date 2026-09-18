@@ -63,7 +63,7 @@
         Desenha? Escreve? Canta, grava <strong>covers</strong>, compõe músicas,
         fotografa ou tem uma curiosidade que merece ser contada?
         A <strong>Entre Tempos</strong> também é feita por quem decide aparecer.
-        Manda seu trabalho — ele pode virar parte da revista.
+        Manda seu trabalho. Ele pode virar parte da revista.
       </p>
 
       <a href="faca-parte.html" class="folha-convite__cta" id="folha-convite-cta">
@@ -189,15 +189,60 @@
         }, 1800);
       }
 
+      function mostrarDestaqueFacaParte() {
+        const original = document.querySelector('.btn-faca-parte');
+
+        if (!original) {
+          document.body.classList.remove('folha-convite-aberto');
+          return;
+        }
+
+        const rect = original.getBoundingClientRect();
+        const destaque = document.createElement('div');
+        destaque.className = 'folha-foco-faca-parte';
+
+        const clone = original.cloneNode(true);
+        clone.classList.add('folha-convite__botao-destaque');
+        clone.removeAttribute('id');
+        clone.style.top = `${rect.top}px`;
+        clone.style.left = `${rect.left}px`;
+        clone.style.width = `${rect.width}px`;
+        clone.style.height = `${rect.height}px`;
+
+        clone.addEventListener('click', (evento) => {
+          evento.preventDefault();
+          window.location.href = clone.href;
+        });
+
+        destaque.appendChild(clone);
+        document.body.appendChild(destaque);
+
+        requestAnimationFrame(() => {
+          destaque.classList.add('is-visivel');
+        });
+
+        setTimeout(() => {
+          destaque.classList.add('is-saindo');
+
+          setTimeout(() => {
+            destaque.remove();
+            document.body.classList.remove('folha-convite-aberto');
+          }, 380);
+        }, 1900);
+      }
+
       function fecharConvite() {
         if (!podeFechar) return;
 
         marcarComoVisto();
         convite.classList.remove('is-aberto');
-        document.body.classList.remove('folha-convite-aberto');
+        convite.classList.add('is-escondendo-cartao');
         convite.setAttribute('aria-hidden', 'true');
 
-        setTimeout(() => convite.remove(), 380);
+        setTimeout(() => {
+          convite.remove();
+          mostrarDestaqueFacaParte();
+        }, 280);
       }
 
       fechar.addEventListener('click', fecharConvite);
