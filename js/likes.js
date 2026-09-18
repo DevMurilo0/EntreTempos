@@ -180,18 +180,20 @@ function initLikes() {
 }
 
 setPersistence(auth, browserLocalPersistence)
-  .catch((err) => console.warn('[likes] não deu pra fixar persistência local:', err))
-  .finally(() => {
-    signInAnonymously(auth).catch((err) => {
-      console.error('Falha no login anônimo do Firebase:', err);
-    });
-  });
+  .catch((err) => console.warn('[likes] não deu pra fixar persistência local:', err));
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
     currentUid = user.uid;
     resolveUidReady();
+    return;
   }
+
+  // Só cria sessão anônima quando realmente não existe usuário autenticado.
+  // Isso preserva a sessão dos pesquisadores nas páginas administrativas.
+  signInAnonymously(auth).catch((err) => {
+    console.error('Falha no login anônimo do Firebase:', err);
+  });
 });
 
 // Expõe globalmente, igual antes
