@@ -233,9 +233,9 @@ body {
    Davi que teve a ideia de espelhar e admito que ficou bom */
 .books {
   position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 350px !important;
+  bottom: -78px;
+  right: -18px;
+  width: 370px !important;
   pointer-events: none;
   transform: scaleX(-1);
 }
@@ -263,6 +263,50 @@ body {
   width: 100%;
   height: auto;
   display: block;
+}
+
+/* ── RECORTES VINTAGE DA FOLHA ──
+   Imagens livres usadas só como decoração visual. */
+.decor-internet {
+  position: absolute;
+  z-index: 1;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  object-fit: cover;
+  filter:
+    sepia(0.38)
+    saturate(0.72)
+    contrast(0.94)
+    drop-shadow(3px 6px 10px rgba(54, 34, 18, 0.22));
+  mix-blend-mode: multiply;
+  opacity: 0.72;
+}
+
+.decor-typewriter {
+  width: clamp(135px, 15vw, 200px);
+  right: 23%;
+  bottom: 1%;
+  transform: rotate(7deg);
+  clip-path: polygon(2% 5%, 96% 0, 100% 94%, 6% 100%);
+}
+
+.decor-partitura {
+  width: clamp(150px, 16vw, 215px);
+  left: 1%;
+  top: 34%;
+  transform: rotate(-8deg);
+  opacity: 0.48;
+  clip-path: polygon(3% 2%, 98% 5%, 94% 96%, 0 100%);
+}
+
+.decor-cassete {
+  width: clamp(90px, 9vw, 125px);
+  right: 31%;
+  top: 49%;
+  transform: rotate(11deg);
+  opacity: 0.62;
+  mix-blend-mode: multiply;
 }
 
 /* ── COMPONENTE DE PEGADA ──
@@ -721,10 +765,10 @@ body.folha-convite-aberto {
   }
 
   .books {
-    width: 95px;
-    right: -38px;
-    /* livro acompanha o fundo maior */
-    bottom: 0;
+    width: 105px;
+    right: -34px;
+    /* livro realmente encosta no canto inferior direito */
+    bottom: -18px;
   }
 
   .note {
@@ -732,6 +776,27 @@ body.folha-convite-aberto {
     /* bilhete centralizado na tela maior */
     top: 40%;
     width: 68vw;
+  }
+
+  .decor-partitura {
+    width: 120px;
+    left: -22px;
+    top: 30%;
+    opacity: 0.34;
+  }
+
+  .decor-typewriter {
+    width: 125px;
+    right: 10%;
+    bottom: 7%;
+    opacity: 0.58;
+  }
+
+  .decor-cassete {
+    width: 82px;
+    right: 8%;
+    top: 58%;
+    opacity: 0.5;
   }
 
   /* ── POSIÇÕES DAS PEGADAS NO MOBILE ──
