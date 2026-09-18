@@ -949,6 +949,17 @@ img.deco-maos {
   transition: transform 0.22s ease, opacity 0.22s ease;
 }
 
+.card-guia,
+.card-guia:link,
+.card-guia:visited,
+.card-guia:hover,
+.card-guia:active,
+.card-guia *,
+.card-guia:link *,
+.card-guia:visited * {
+  text-decoration: none !important;
+}
+
 .card-guia:hover {
   transform: translateY(-2px);
 }
