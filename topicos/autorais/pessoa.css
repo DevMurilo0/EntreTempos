@@ -64,6 +64,8 @@ body::before {
 
 .et-perfil__foto-wrap {
   position: relative;
+  width: min(100%, 280px);
+  justify-self: center;
   padding: 11px;
   background: #fffdf7;
   box-shadow: 7px 12px 26px rgba(0,0,0,.21);
@@ -84,8 +86,11 @@ body::before {
 .et-perfil__foto {
   display: block;
   width: 100%;
+  height: auto;
+  max-height: 350px;
   aspect-ratio: 4 / 5;
   object-fit: cover;
+  object-position: center;
   background: #e8dcc0;
 }
 
@@ -256,7 +261,8 @@ body::before {
   .et-pessoa-header span { display: none; }
   .et-pessoa-main { width: min(100% - 24px, 1000px); padding-top: 24px; }
   .et-perfil { grid-template-columns: 1fr; gap: 30px; text-align: center; }
-  .et-perfil__foto-wrap { width: min(72vw, 290px); margin: 0 auto; }
+  .et-perfil__foto-wrap { width: min(68vw, 230px); margin: 0 auto; }
+  .et-perfil__foto { max-height: 300px; }
   .et-perfil__descricao { text-align: left; }
   .et-admin-acoes > div { flex-direction: column; }
   .et-admin-acoes .et-btn { width: 100%; }
