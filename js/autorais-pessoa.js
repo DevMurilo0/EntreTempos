@@ -51,6 +51,36 @@ function otimizarImagemCloudinary(url, largura = 900, altura = 1200) {
   return url.replace('/upload/', `/upload/${transformacao}/`);
 }
 
+function normalizarVideoCloudinary(url) {
+  if (
+    !url ||
+    !url.includes('res.cloudinary.com') ||
+    !url.includes('/video/upload/')
+  ) {
+    return url;
+  }
+
+  const transformacao = 'f_mp4,vc_h264:baseline,ac_aac,q_auto:good';
+  let resultado = url.replace(
+    '/video/upload/',
+    `/video/upload/${transformacao}/`
+  );
+
+  const queryIndex = resultado.indexOf('?');
+  const query = queryIndex >= 0 ? resultado.slice(queryIndex) : '';
+  let base = queryIndex >= 0 ? resultado.slice(0, queryIndex) : resultado;
+  const ultimoSlash = base.lastIndexOf('/');
+  const ultimoPonto = base.lastIndexOf('.');
+
+  if (ultimoPonto > ultimoSlash) {
+    base = `${base.slice(0, ultimoPonto)}.mp4`;
+  } else {
+    base += '.mp4';
+  }
+
+  return base + query;
+}
+
 const params = new URLSearchParams(location.search);
 const secao = params.get('secao');
 const pessoaId = params.get('id');
@@ -305,7 +335,12 @@ function criarConteudo(id, dados, pesquisador) {
       video.controls = true;
       video.playsInline = true;
       video.preload = 'metadata';
-      video.src = dados.videoUrl;
+
+      const source = document.createElement('source');
+      source.src = normalizarVideoCloudinary(dados.videoUrl);
+      source.type = 'video/mp4';
+
+      video.appendChild(source);
       artigo.appendChild(video);
     }
 
@@ -339,7 +374,12 @@ function criarConteudo(id, dados, pesquisador) {
       video.controls = true;
       video.playsInline = true;
       video.preload = 'metadata';
-      video.src = dados.videoUrl;
+
+      const source = document.createElement('source');
+      source.src = normalizarVideoCloudinary(dados.videoUrl);
+      source.type = 'video/mp4';
+
+      video.appendChild(source);
       artigo.appendChild(video);
     }
   }
