@@ -227,6 +227,7 @@ function renderizarConteudos(docs, pesquisador) {
 function criarConteudo(id, dados, pesquisador) {
   const artigo = document.createElement('article');
   artigo.className = `et-conteudo et-conteudo--${secao}`;
+  artigo.dataset.conteudoId = id;
 
   const cabecalho = document.createElement('div');
   cabecalho.className = 'et-conteudo__cabecalho';
