@@ -42,6 +42,15 @@ const CONFIG = {
   }
 };
 
+function otimizarImagemCloudinary(url, largura = 900, altura = 1200) {
+  if (!url || !url.includes('res.cloudinary.com') || !url.includes('/upload/')) {
+    return url;
+  }
+
+  const transformacao = `f_auto,q_auto:good,w_${largura},h_${altura},c_limit`;
+  return url.replace('/upload/', `/upload/${transformacao}/`);
+}
+
 const params = new URLSearchParams(location.search);
 const secao = params.get('secao');
 const pessoaId = params.get('id');
@@ -108,7 +117,7 @@ function iniciar() {
       document.title = `${dadosPessoa.nome || 'Publicação'} | Entre Tempos`;
       el.nome.textContent = dadosPessoa.nome || 'Sem nome';
       el.descricao.textContent = dadosPessoa.descricao || '';
-      el.foto.src = dadosPessoa.fotoUrl || '/img/amp.png';
+      el.foto.src = otimizarImagemCloudinary(dadosPessoa.fotoUrl || '/img/amp.png', 700, 900);
       el.foto.alt = dadosPessoa.nome ? `Foto de ${dadosPessoa.nome}` : 'Foto do participante';
 
       document.body.classList.add('et-pessoa-carregada');
@@ -280,7 +289,7 @@ function criarConteudo(id, dados, pesquisador) {
       const img = document.createElement('img');
       img.loading = 'lazy';
       img.decoding = 'async';
-      img.src = dados.imagemUrl;
+      img.src = otimizarImagemCloudinary(dados.imagemUrl, 1400, 1400);
       img.alt = dados.titulo || 'Desenho autoral';
 
       figura.appendChild(img);
@@ -320,7 +329,7 @@ function criarConteudo(id, dados, pesquisador) {
       const img = document.createElement('img');
       img.loading = 'lazy';
       img.decoding = 'async';
-      img.src = dados.imagemUrl;
+      img.src = otimizarImagemCloudinary(dados.imagemUrl, 1400, 1400);
       img.alt = dados.titulo || 'Imagem da curiosidade';
 
       figura.appendChild(img);
