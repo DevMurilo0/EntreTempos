@@ -363,12 +363,39 @@
     }
 
     .et-desenhos-dinamico .et-conteudos.galeria {
-      gap: 24px 18px;
+      width: min(calc(100% - 32px), 740px);
+      max-width: 740px;
+      margin: 0 auto;
+      padding-left: 0;
+      padding-right: 0;
+      grid-template-columns: repeat(2, minmax(0, 330px));
+      justify-content: center;
+      gap: 22px 28px;
     }
 
     .et-desenhos-dinamico .card-desenho {
+      width: 100%;
+      max-width: 330px;
+      justify-self: center;
+      padding: 14px 14px 12px;
       border: 0;
       border-left: 0;
+    }
+
+    .et-desenhos-dinamico .card-desenho .quadro {
+      aspect-ratio: 3 / 4;
+      border-width: 7px;
+    }
+
+    .et-desenhos-dinamico .card-desenho .card-titulo {
+      margin-top: 8px;
+      font-size: clamp(14px, 1.7vw, 17px);
+    }
+
+    .et-desenhos-dinamico .card-desenho .btn-like {
+      padding: 5px 12px 5px 9px;
+      font-size: 14px;
+      margin-top: 6px;
     }
 
     .et-desenhos-dinamico .card-desenho .et-desenho-admin {
@@ -429,6 +456,26 @@
       .et-desenhos-dinamico .et-perfil__descricao {
         max-width: 100%;
         text-align: left;
+      }
+
+      .et-desenhos-dinamico .et-conteudos.galeria {
+        width: min(calc(100% - 20px), 620px);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px 10px;
+      }
+
+      .et-desenhos-dinamico .card-desenho {
+        max-width: none;
+        padding: 9px 9px 10px;
+      }
+
+      .et-desenhos-dinamico .card-desenho .quadro {
+        border-width: 5px;
+      }
+
+      .et-desenhos-dinamico .card-desenho .btn-like {
+        padding: 4px 9px 4px 7px;
+        font-size: 12px;
       }
     }
 
