@@ -1,4 +1,4 @@
-import { auth, db, storage } from '/js/firebase-config.js';
+import { auth, db } from '/js/firebase-config.js';
 import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 import {
   collection,
@@ -9,16 +9,11 @@ import {
   setDoc,
   where
 } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
-import {
-  deleteObject,
-  getDownloadURL,
-  ref,
-  uploadBytesResumable
-} from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js';
-
 const PESQUISADOR_UID = 'QuiQMjtXjOWNW2LCrot86rsHh0F2';
 const SECOES = new Set(['poemas', 'desenhos', 'musica', 'curiosidades']);
-const TEMPO_MAXIMO_SEM_PROGRESSO = 30000;
+const CLOUDINARY_CLOUD_NAME = 'uaisf2vc';
+const CLOUDINARY_UPLOAD_PRESET = 'entre_tempos_upload';
+const CLOUDINARY_UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/auto/upload`;
 
 const secao = document.body.dataset.autoraisSecao;
 
@@ -255,8 +250,8 @@ function criarModalCadastro() {
       return;
     }
 
-    if (foto && foto.size > 15 * 1024 * 1024) {
-      mostrarErro(mensagem, 'A imagem precisa ter no máximo 15 MB.');
+    if (foto && foto.size > 10 * 1024 * 1024) {
+      mostrarErro(mensagem, 'A imagem precisa ter no máximo 10 MB.');
       return;
     }
 
@@ -266,8 +261,9 @@ function criarModalCadastro() {
     mensagem.classList.remove('is-erro');
 
     const pessoaRef = doc(collection(db, 'participantesAutorais'));
-    let fotoPath = '';
     let fotoUrl = '';
+    let fotoPublicId = '';
+    let fotoResourceType = '';
 
     try {
       if (foto) {
@@ -275,12 +271,14 @@ function criarModalCadastro() {
         barraInterna.style.width = '0%';
         mensagem.textContent = 'Enviando a imagem...';
 
-        fotoPath = `conteudosAutorais/${secao}/${pessoaRef.id}/perfil/perfil-${Date.now()}-${nomeArquivoSeguro(foto.name)}`;
-
-        fotoUrl = await enviarArquivo(foto, fotoPath, (percentual) => {
+        const upload = await enviarArquivo(foto, (percentual) => {
           barraInterna.style.width = `${percentual}%`;
           mensagem.textContent = `Enviando a imagem... ${Math.round(percentual)}%`;
         });
+
+        fotoUrl = upload.url;
+        fotoPublicId = upload.publicId;
+        fotoResourceType = upload.resourceType;
       } else {
         barra.classList.remove('is-visible');
         mensagem.textContent = 'Criando a página da pessoa...';
@@ -292,7 +290,8 @@ function criarModalCadastro() {
         nome,
         descricao,
         fotoUrl,
-        fotoPath,
+        fotoPublicId,
+        fotoResourceType,
         secao,
         ativo: true,
         criadoEm: serverTimestamp(),
@@ -304,11 +303,7 @@ function criarModalCadastro() {
     } catch (erro) {
       console.error('[autorais] Falha ao adicionar pessoa:', erro);
 
-      if (fotoPath) {
-        deleteObject(ref(storage, fotoPath)).catch(() => {});
-      }
-
-      mostrarErro(mensagem, mensagemErroFirebase(erro));
+      mostrarErro(mensagem, mensagemErroUpload(erro));
 
       barra.classList.remove('is-visible');
       barraInterna.style.width = '0%';
@@ -333,88 +328,63 @@ function fecharModal(modal) {
   document.body.classList.remove('et-modal-aberto');
 }
 
-function enviarArquivo(arquivo, caminho, onProgress) {
+function enviarArquivo(arquivo, onProgress) {
   return new Promise((resolve, reject) => {
-    const referencia = ref(storage, caminho);
-    const tarefa = uploadBytesResumable(referencia, arquivo, {
-      contentType: arquivo.type || 'application/octet-stream'
+    const xhr = new XMLHttpRequest();
+    const dados = new FormData();
+
+    dados.append('file', arquivo);
+    dados.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+    xhr.open('POST', CLOUDINARY_UPLOAD_URL, true);
+    xhr.responseType = 'json';
+    xhr.timeout = 10 * 60 * 1000;
+
+    xhr.upload.addEventListener('progress', (evento) => {
+      if (!evento.lengthComputable) return;
+      onProgress?.((evento.loaded / evento.total) * 100);
     });
 
-    let finalizado = false;
-    let timer = null;
+    xhr.addEventListener('load', () => {
+      const resposta = xhr.response || {};
 
-    const limparTimer = () => {
-      if (timer) clearTimeout(timer);
-      timer = null;
-    };
+      if (
+        xhr.status >= 200 &&
+        xhr.status < 300 &&
+        resposta.secure_url
+      ) {
+        onProgress?.(100);
 
-    const armarTimer = () => {
-      limparTimer();
-      timer = setTimeout(() => {
-        if (finalizado) return;
-
-        finalizado = true;
-        tarefa.cancel();
-
-        const erro = new Error('Upload sem progresso por tempo demais.');
-        erro.code = 'storage/upload-stalled';
-        reject(erro);
-      }, TEMPO_MAXIMO_SEM_PROGRESSO);
-    };
-
-    armarTimer();
-
-    tarefa.on(
-      'state_changed',
-      (snapshot) => {
-        if (finalizado) return;
-
-        armarTimer();
-
-        const percentual = snapshot.totalBytes
-          ? (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          : 0;
-
-        onProgress?.(percentual);
-      },
-      (erro) => {
-        if (finalizado) return;
-
-        finalizado = true;
-        limparTimer();
-        reject(erro);
-      },
-      async () => {
-        if (finalizado) return;
-
-        finalizado = true;
-        limparTimer();
-
-        try {
-          resolve(await getDownloadURL(tarefa.snapshot.ref));
-        } catch (erro) {
-          reject(erro);
-        }
+        resolve({
+          url: resposta.secure_url,
+          publicId: resposta.public_id || '',
+          resourceType: resposta.resource_type || ''
+        });
+        return;
       }
-    );
+
+      const erro = new Error(
+        resposta?.error?.message || 'O Cloudinary recusou o arquivo.'
+      );
+      erro.code = 'cloudinary/upload-failed';
+      erro.status = xhr.status;
+      reject(erro);
+    });
+
+    xhr.addEventListener('error', () => {
+      const erro = new Error('Falha de rede durante o upload.');
+      erro.code = 'cloudinary/network-error';
+      reject(erro);
+    });
+
+    xhr.addEventListener('timeout', () => {
+      const erro = new Error('O upload demorou tempo demais.');
+      erro.code = 'cloudinary/timeout';
+      reject(erro);
+    });
+
+    xhr.send(dados);
   });
-}
-
-function nomeArquivoSeguro(nome) {
-  const partes = String(nome || 'arquivo').split('.');
-  const extensao = partes.length > 1
-    ? partes.pop().toLowerCase().replace(/[^a-z0-9]/g, '')
-    : '';
-
-  const base = partes.join('.')
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .slice(0, 50) || 'arquivo';
-
-  return extensao ? `${base}.${extensao}` : base;
 }
 
 function obterMillis(timestamp) {
@@ -430,28 +400,26 @@ function mostrarErro(elemento, texto) {
   elemento.classList.add('is-erro');
 }
 
-function mensagemErroFirebase(erro) {
+function mensagemErroUpload(erro) {
   const codigo = erro?.code || '';
+  const mensagem = erro?.message || '';
 
-  if (codigo.includes('storage/upload-stalled')) {
-    return 'O upload não iniciou. Confira o Firebase Storage. Se o projeto estiver no plano Spark, o Storage precisa ser atualizado para o plano Blaze.';
+  if (codigo === 'cloudinary/network-error') {
+    return 'Não foi possível enviar o arquivo. Confira sua conexão e tente novamente.';
   }
 
-  if (
-    codigo.includes('unauthorized') ||
-    codigo.includes('permission-denied') ||
-    codigo.includes('storage/unauthorized')
-  ) {
-    return 'Sem permissão para enviar o arquivo. Confira as regras do Storage e a sessão de pesquisador.';
+  if (codigo === 'cloudinary/timeout') {
+    return 'O upload demorou demais. Tente novamente com uma conexão mais estável.';
   }
 
-  if (
-    codigo.includes('storage/unknown') ||
-    codigo.includes('storage/object-not-found') ||
-    codigo.includes('storage/quota-exceeded') ||
-    codigo.includes('storage/retry-limit-exceeded')
-  ) {
-    return 'O Firebase Storage recusou o upload. Confira se o Storage está ativo e se o projeto está no plano Blaze.';
+  if (codigo === 'cloudinary/upload-failed') {
+    return mensagem
+      ? `O Cloudinary recusou o arquivo: ${mensagem}`
+      : 'O Cloudinary recusou o arquivo. Confira o formato e o tamanho.';
+  }
+
+  if (codigo.includes('permission-denied')) {
+    return 'Sua sessão de pesquisador não tem permissão para salvar os dados.';
   }
 
   return 'Não foi possível salvar agora. Tente novamente.';
