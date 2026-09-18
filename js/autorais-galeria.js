@@ -10,13 +10,21 @@ import {
   where
 } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 const PESQUISADOR_UID = 'QuiQMjtXjOWNW2LCrot86rsHh0F2';
-const SECOES = new Set(['poemas', 'desenhos', 'musica', 'curiosidades']);
+const SECOES = new Set([
+  'poemas',
+  'poemas-conhecidos',
+  'desenhos',
+  'desenhos-conhecidos',
+  'musica',
+  'curiosidades',
+  'curiosidades-gerais'
+]);
 const CLOUDINARY_CLOUD_NAME = 'uaisf2vc';
 const CLOUDINARY_UPLOAD_PRESET = 'entre_tempos_upload';
 const CLOUDINARY_UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/auto/upload`;
 const CACHE_PREFIX = 'entretempos:participantes:';
 const CACHE_MAX_AGE = 1000 * 60 * 60 * 24 * 7;
-const SECOES_COM_LOADING = new Set(['poemas', 'desenhos', 'musica']);
+const SECOES_COM_LOADING = new Set(SECOES);
 
 function otimizarImagemCloudinary(url, largura = 640, altura = 800) {
   if (!url || !url.includes('res.cloudinary.com') || !url.includes('/upload/')) {
@@ -330,8 +338,12 @@ function criarCardPessoa(id, dados) {
   const nome = document.createElement('span');
   nome.textContent = dados.nome || 'Sem nome';
 
-  if (secao === 'musica') {
-    link.className = 'foto-nav et-pessoa-card--musica';
+  if (
+    secao === 'musica' ||
+    secao === 'poemas-conhecidos' ||
+    secao === 'desenhos-conhecidos'
+  ) {
+    link.className = 'foto-nav et-pessoa-card--navegacao';
     nome.className = 'foto-nav-nome';
     link.append(img, nome);
     return link;
