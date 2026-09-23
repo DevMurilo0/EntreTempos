@@ -37,16 +37,15 @@ function iniciarEditorPoeta() {
   let dadosAtuais = baseOriginal;
   let pesquisador = false;
 
-  const botao = document.createElement('button');
-  botao.type = 'button';
-  botao.className = 'et-btn et-btn--principal et-poeta-editar';
-  botao.textContent = 'Editar tudo';
-  botao.hidden = true;
-  pessoaInfo.appendChild(botao);
+  const painel = criarPainelAdmin();
+  pessoaSection.insertAdjacentElement('afterend', painel);
+
+  const btnAdicionar = painel.querySelector('[data-adicionar-poema]');
+  const btnEditar = painel.querySelector('[data-editar-tudo]');
 
   onAuthStateChanged(auth, (usuario) => {
     pesquisador = usuario?.uid === PESQUISADOR_UID;
-    botao.hidden = !pesquisador;
+    painel.hidden = !pesquisador;
   });
 
   onSnapshot(
@@ -64,10 +63,32 @@ function iniciarEditorPoeta() {
     }
   );
 
-  botao.addEventListener('click', () => {
+  btnAdicionar.addEventListener('click', () => {
+    if (!pesquisador) return;
+    abrirModalAdicionarPoema(dadosAtuais, ref);
+  });
+
+  btnEditar.addEventListener('click', () => {
     if (!pesquisador) return;
     abrirModalEdicao(dadosAtuais, ref);
   });
+}
+
+function criarPainelAdmin() {
+  const painel = document.createElement('section');
+  painel.className = 'et-poeta-admin';
+  painel.hidden = true;
+  painel.setAttribute('aria-label', 'Ferramentas dos pesquisadores');
+
+  painel.innerHTML = `
+    <span class="et-poeta-admin__rotulo">Gerenciar publicação</span>
+    <div class="et-poeta-admin__acoes">
+      <button type="button" class="et-btn et-btn--principal" data-adicionar-poema>+ Adicionar poema</button>
+      <button type="button" class="et-btn et-btn--secundario" data-editar-tudo>Editar tudo</button>
+    </div>
+  `;
+
+  return painel;
 }
 
 function lerEstadoDaPagina() {
@@ -103,9 +124,15 @@ function normalizarDados(dados, fallback) {
     descricao: typeof dados.descricao === 'string' ? dados.descricao : fallback.descricao,
     poemas: Array.isArray(dados.poemas) && dados.poemas.length
       ? dados.poemas.map((poema, i) => ({
-          titulo: typeof poema?.titulo === 'string' ? poema.titulo : fallback.poemas[i]?.titulo || `Poema ${i + 1}`,
-          autor: typeof poema?.autor === 'string' ? poema.autor : fallback.poemas[i]?.autor || dados.nome || fallback.nome,
-          texto: typeof poema?.texto === 'string' ? poema.texto : fallback.poemas[i]?.texto || ''
+          titulo: typeof poema?.titulo === 'string'
+            ? poema.titulo
+            : fallback.poemas[i]?.titulo || `Poema ${i + 1}`,
+          autor: typeof poema?.autor === 'string'
+            ? poema.autor
+            : fallback.poemas[i]?.autor || dados.nome || fallback.nome,
+          texto: typeof poema?.texto === 'string'
+            ? poema.texto
+            : fallback.poemas[i]?.texto || ''
         }))
       : fallback.poemas
   };
@@ -116,46 +143,272 @@ function aplicarEstado(dados) {
 
   [...pessoaInfo.querySelectorAll('.pessoa-bio')].forEach((p) => p.remove());
 
-  const referencia = contadorEl || pessoaInfo.querySelector('.et-poeta-editar');
-  const paragrafos = separarParagrafos(dados.descricao);
-
-  paragrafos.forEach((texto) => {
+  const referencia = contadorEl;
+  separarParagrafos(dados.descricao).forEach((texto) => {
     const p = document.createElement('p');
     p.className = 'pessoa-bio';
     p.textContent = texto;
     pessoaInfo.insertBefore(p, referencia || null);
   });
 
+  garantirEstruturaPoemas(dados.poemas);
+
   const artigos = [...areaFolha.querySelectorAll('.poema')];
   const envelopes = [...gradeEl.querySelectorAll('.envelope')];
 
-  artigos.forEach((artigo, indice) => {
-    const poema = dados.poemas[indice];
-    if (!poema) return;
+  dados.poemas.forEach((poema, indice) => {
+    const artigo = artigos[indice];
+    if (!artigo) return;
 
     const titulo = artigo.querySelector('.poema-titulo');
     const autor = artigo.querySelector('.poema-data');
     const assinatura = artigo.querySelector('.poema-assinatura');
     const texto = artigo.querySelector('.poema-texto');
-    const envTitulo = envelopes[indexPorAlvo(envelopes, artigo.id)]?.querySelector('.env-titulo');
+    const envelope = envelopes.find((env) => env.dataset.alvo === artigo.id);
+    const envNumero = envelope?.querySelector('.env-numero');
+    const envTitulo = envelope?.querySelector('.env-titulo');
+    const numero = romano(indice + 1);
 
+    const numeroPoema = artigo.querySelector('.poema-numero');
+    if (numeroPoema) numeroPoema.textContent = `Poema ${numero}`;
     if (titulo) titulo.textContent = poema.titulo || `Poema ${indice + 1}`;
     if (autor) autor.textContent = poema.autor || dados.nome || '';
     if (assinatura) assinatura.textContent = poema.autor ? `— ${poema.autor}` : '';
+    if (envNumero) envNumero.textContent = numero;
     if (envTitulo) envTitulo.textContent = poema.titulo || `Poema ${indice + 1}`;
     if (texto) renderizarTextoPoema(texto, poema.texto || '');
   });
 
   if (contadorEl) {
-    const total = artigos.length;
+    const total = dados.poemas.length;
     contadorEl.textContent = `${total} ${total === 1 ? 'poema' : 'poemas'}`;
   }
 
+  reativarEnvelopes();
   document.title = `${dados.nome || 'Poeta'} — Poemas | Entre Tempos`;
 }
 
-function indexPorAlvo(envelopes, alvoId) {
-  return envelopes.findIndex((env) => env.dataset.alvo === alvoId);
+function garantirEstruturaPoemas(poemas) {
+  poemas.forEach((poema, indice) => {
+    const id = `poema-${indice + 1}`;
+
+    if (!gradeEl.querySelector(`[data-alvo="${id}"]`)) {
+      gradeEl.appendChild(criarEnvelope(id, poema, indice));
+    }
+
+    if (!document.getElementById(id)) {
+      areaFolha.appendChild(criarArtigoPoema(id, poema, indice));
+    }
+  });
+}
+
+function criarEnvelope(id, poema, indice) {
+  const botao = document.createElement('button');
+  botao.type = 'button';
+  botao.className = 'envelope';
+  botao.dataset.alvo = id;
+
+  const numero = document.createElement('span');
+  numero.className = 'env-numero';
+  numero.textContent = romano(indice + 1);
+
+  const titulo = document.createElement('span');
+  titulo.className = 'env-titulo';
+  titulo.textContent = poema.titulo || `Poema ${indice + 1}`;
+
+  const aba = document.createElement('span');
+  aba.className = 'env-aba';
+
+  botao.append(numero, titulo, aba);
+  return botao;
+}
+
+function criarArtigoPoema(id, poema, indice) {
+  const artigo = document.createElement('article');
+  artigo.className = 'poema';
+  artigo.id = id;
+
+  const numero = document.createElement('p');
+  numero.className = 'poema-numero';
+  numero.textContent = `Poema ${romano(indice + 1)}`;
+
+  const titulo = document.createElement('h3');
+  titulo.className = 'poema-titulo';
+  titulo.textContent = poema.titulo || `Poema ${indice + 1}`;
+
+  const autor = document.createElement('p');
+  autor.className = 'poema-data';
+  autor.textContent = poema.autor || nomeEl.textContent.trim();
+
+  const texto = document.createElement('div');
+  texto.className = 'poema-texto';
+  renderizarTextoPoema(texto, poema.texto || '');
+
+  const assinatura = document.createElement('p');
+  assinatura.className = 'poema-assinatura';
+  assinatura.textContent = poema.autor ? `— ${poema.autor}` : '';
+
+  artigo.append(numero, titulo, autor, texto, assinatura);
+  return artigo;
+}
+
+function reativarEnvelopes() {
+  [...gradeEl.querySelectorAll('.envelope')].forEach((envelope) => {
+    const clone = envelope.cloneNode(true);
+    envelope.replaceWith(clone);
+    clone.addEventListener('click', () => alternarPoema(clone));
+  });
+}
+
+function alternarPoema(envelope) {
+  const envelopes = [...gradeEl.querySelectorAll('.envelope')];
+  const poemas = [...areaFolha.querySelectorAll('.poema')];
+  const alvoId = envelope.dataset.alvo;
+  const jaAtivo = envelope.classList.contains('ativo');
+
+  envelopes.forEach((item) => item.classList.remove('ativo'));
+
+  if (jaAtivo) {
+    poemas.forEach((poema) => {
+      poema.classList.remove('visivel');
+      poema.classList.add('saindo');
+      setTimeout(() => poema.classList.remove('saindo'), 400);
+    });
+    areaFolha.classList.remove('aberta');
+    return;
+  }
+
+  envelope.classList.add('ativo');
+
+  const poemaAtivo = areaFolha.querySelector('.poema.visivel');
+  const poemaAlvo = document.getElementById(alvoId);
+  if (!poemaAlvo) return;
+
+  if (poemaAtivo && poemaAtivo !== poemaAlvo) {
+    poemaAtivo.classList.remove('visivel');
+    poemaAtivo.classList.add('saindo');
+
+    setTimeout(() => {
+      poemaAtivo.classList.remove('saindo');
+      poemaAlvo.classList.add('visivel');
+    }, 280);
+  } else {
+    poemaAlvo.classList.add('visivel');
+  }
+
+  areaFolha.classList.add('aberta');
+}
+
+function abrirModalAdicionarPoema(dados, ref) {
+  const modal = document.createElement('div');
+  modal.className = 'et-modal et-modal--poeta';
+
+  modal.innerHTML = `
+    <div class="et-modal__caixa et-modal__caixa--poeta" role="dialog" aria-modal="true" aria-labelledby="et-poeta-adicionar-titulo">
+      <button type="button" class="et-modal__fechar" data-fechar aria-label="Fechar">×</button>
+      <p class="et-modal__kicker">Poetas</p>
+      <h2 class="et-modal__titulo" id="et-poeta-adicionar-titulo">Adicionar poema</h2>
+
+      <form data-form>
+        <div class="et-campo">
+          <label for="et-novo-poema-titulo">Título</label>
+          <input id="et-novo-poema-titulo" name="titulo" type="text" maxlength="160">
+        </div>
+
+        <div class="et-campo">
+          <label for="et-novo-poema-autor">Autor / assinatura</label>
+          <input id="et-novo-poema-autor" name="autor" type="text" maxlength="160" value="${escapeHtml(dados.nome || '')}">
+        </div>
+
+        <div class="et-campo">
+          <label for="et-novo-poema-texto">Texto do poema</label>
+          <textarea id="et-novo-poema-texto" name="texto" rows="13" maxlength="20000"></textarea>
+        </div>
+
+        <p class="et-progresso" data-msg role="status" aria-live="polite"></p>
+
+        <div class="et-modal__acoes">
+          <button type="button" class="et-btn et-btn--secundario" data-cancelar>Cancelar</button>
+          <button type="submit" class="et-btn et-btn--principal" data-salvar>Publicar poema</button>
+        </div>
+      </form>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+  document.body.classList.add('et-modal-aberto');
+
+  const form = modal.querySelector('[data-form]');
+  const msg = modal.querySelector('[data-msg]');
+  const salvar = modal.querySelector('[data-salvar]');
+  let salvando = false;
+
+  const fechar = () => {
+    if (salvando) return;
+    modal.remove();
+    document.body.classList.remove('et-modal-aberto');
+  };
+
+  modal.querySelector('[data-fechar]').addEventListener('click', fechar);
+  modal.querySelector('[data-cancelar]').addEventListener('click', fechar);
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) fechar();
+  });
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (salvando) return;
+
+    if (auth.currentUser?.uid !== PESQUISADOR_UID) {
+      mostrarErro(msg, 'Sua sessão de pesquisador não está ativa.');
+      return;
+    }
+
+    const novoPoema = {
+      titulo: form.elements.titulo.value.trim(),
+      autor: form.elements.autor.value.trim(),
+      texto: form.elements.texto.value.trim()
+    };
+
+    if (!novoPoema.titulo && !novoPoema.texto) {
+      mostrarErro(msg, 'Preencha pelo menos o título ou o texto do poema.');
+      return;
+    }
+
+    const poemas = [...dados.poemas, novoPoema];
+
+    salvando = true;
+    salvar.disabled = true;
+    salvar.textContent = 'Publicando...';
+    msg.classList.remove('is-erro');
+    msg.textContent = 'Salvando novo poema...';
+
+    try {
+      await setDoc(
+        ref,
+        {
+          tipo: 'edicao-poeta-estatico',
+          nome: dados.nome || '',
+          descricao: dados.descricao || '',
+          poemas,
+          atualizadoEm: serverTimestamp(),
+          atualizadoPor: auth.currentUser.uid
+        },
+        { merge: true }
+      );
+
+      salvando = false;
+      fechar();
+    } catch (erro) {
+      console.error('[poetas-editor] Erro ao adicionar poema:', erro);
+      mostrarErro(msg, 'Não foi possível adicionar o poema agora.');
+      salvar.disabled = false;
+      salvar.textContent = 'Publicar poema';
+      salvando = false;
+    }
+  });
+
+  requestAnimationFrame(() => form.elements.titulo.focus());
 }
 
 function abrirModalEdicao(dados, ref) {
@@ -240,8 +493,7 @@ function abrirModalEdicao(dados, ref) {
     if (salvando) return;
 
     if (auth.currentUser?.uid !== PESQUISADOR_UID) {
-      msg.textContent = 'Sua sessão de pesquisador não está ativa.';
-      msg.classList.add('is-erro');
+      mostrarErro(msg, 'Sua sessão de pesquisador não está ativa.');
       return;
     }
 
@@ -278,8 +530,7 @@ function abrirModalEdicao(dados, ref) {
       fechar();
     } catch (erro) {
       console.error('[poetas-editor] Erro ao salvar:', erro);
-      msg.textContent = 'Não foi possível salvar agora. Confira sua conexão e tente novamente.';
-      msg.classList.add('is-erro');
+      mostrarErro(msg, 'Não foi possível salvar agora. Confira sua conexão e tente novamente.');
       salvar.disabled = false;
       salvar.textContent = 'Salvar tudo';
       salvando = false;
@@ -339,6 +590,31 @@ function normalizarQuebras(texto) {
     .replace(/[ \t]+\n/g, '\n')
     .replace(/\n{3,}/g, '\n\n')
     .trim();
+}
+
+function romano(numero) {
+  const mapa = [
+    [1000, 'M'], [900, 'CM'], [500, 'D'], [400, 'CD'],
+    [100, 'C'], [90, 'XC'], [50, 'L'], [40, 'XL'],
+    [10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']
+  ];
+
+  let valor = numero;
+  let resultado = '';
+
+  mapa.forEach(([n, simbolo]) => {
+    while (valor >= n) {
+      resultado += simbolo;
+      valor -= n;
+    }
+  });
+
+  return resultado;
+}
+
+function mostrarErro(elemento, mensagem) {
+  elemento.textContent = mensagem;
+  elemento.classList.add('is-erro');
 }
 
 function escapeHtml(valor) {
