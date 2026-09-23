@@ -461,7 +461,7 @@ function abrirModalAdicionarPoema(dados, ref, secao, slug) {
   requestAnimationFrame(() => form.elements.titulo.focus());
 }
 
-function abrirModalEdicao(dados, ref) {
+function abrirModalEdicao(dados, ref, secao, slug) {
   const modal = document.createElement('div');
   modal.className = 'et-modal et-modal--poeta';
 
