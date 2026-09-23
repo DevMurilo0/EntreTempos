@@ -76,7 +76,7 @@ function iniciarEditorPoeta() {
 
   btnAdicionar.addEventListener('click', () => {
     if (!pesquisador) return;
-    abrirModalAdicionarPoema(dadosAtuais, ref);
+    abrirModalAdicionarPoema(dadosAtuais, ref, secao, slug);
   });
 
   btnEditar.addEventListener('click', () => {
@@ -346,7 +346,7 @@ function alternarPoema(envelope) {
   areaFolha.classList.add('aberta');
 }
 
-function abrirModalAdicionarPoema(dados, ref) {
+function abrirModalAdicionarPoema(dados, ref, secao, slug) {
   const modal = document.createElement('div');
   modal.className = 'et-modal et-modal--poeta';
 
@@ -435,6 +435,9 @@ function abrirModalAdicionarPoema(dados, ref) {
         ref,
         {
           tipo: 'edicao-poeta-estatico',
+          secao,
+          slug,
+          removido: false,
           nome: dados.nome || '',
           descricao: dados.descricao || '',
           poemas,
@@ -564,6 +567,9 @@ function abrirModalEdicao(dados, ref) {
         ref,
         {
           tipo: 'edicao-poeta-estatico',
+          secao,
+          slug,
+          removido: false,
           nome,
           descricao,
           poemas,
