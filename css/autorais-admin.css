@@ -389,10 +389,42 @@ body.et-modal-aberto {
 
 /* =========================================================
    Editor dos poetas já existentes
-   Aparece apenas para a conta de pesquisador autenticada.
+   Mesmo padrão visual do gerenciador dos poetas dinâmicos.
    ========================================================= */
-.et-poeta-editar {
-  margin-top: 18px;
+.et-poeta-admin {
+  position: relative;
+  z-index: 20;
+  width: min(calc(100% - 40px), 900px);
+  margin: 0 auto 30px;
+  padding: 17px 18px;
+  border: 1px dashed #c4a96b;
+  border-left: 5px solid #8c3b3b;
+  background: rgba(255, 253, 247, .82);
+  box-shadow: 3px 6px 14px rgba(0, 0, 0, .09);
+}
+
+.et-poeta-admin[hidden] {
+  display: none !important;
+}
+
+.et-poeta-admin__rotulo {
+  display: block;
+  margin-bottom: 12px;
+  color: #8c3b3b;
+  font-family: 'Special Elite', serif;
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.et-poeta-admin__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.et-poeta-admin__acoes .et-btn {
+  flex: 1 1 220px;
 }
 
 .et-modal__caixa--poeta {
@@ -431,9 +463,19 @@ body.et-modal-aberto {
 }
 
 @media (max-width: 600px) {
-  .et-poeta-editar {
+  .et-poeta-admin {
+    width: calc(100% - 40px);
+    margin-bottom: 30px;
+    padding: 17px 18px;
+  }
+
+  .et-poeta-admin__acoes {
+    flex-direction: column;
+  }
+
+  .et-poeta-admin__acoes .et-btn {
     width: 100%;
-    margin-top: 15px;
+    flex: 0 0 auto;
   }
 
   .et-modal__caixa--poeta {
