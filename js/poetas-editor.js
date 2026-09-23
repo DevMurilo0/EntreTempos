@@ -56,7 +56,14 @@ function iniciarEditorPoeta() {
     ref,
     (snapshot) => {
       if (snapshot.exists()) {
-        dadosAtuais = normalizarDados(snapshot.data(), baseOriginal);
+        const dadosSnapshot = snapshot.data();
+
+        if (dadosSnapshot.removido === true) {
+          location.replace(voltarUrl);
+          return;
+        }
+
+        dadosAtuais = normalizarDados(dadosSnapshot, baseOriginal);
         aplicarEstado(dadosAtuais);
       } else {
         dadosAtuais = baseOriginal;
@@ -74,7 +81,42 @@ function iniciarEditorPoeta() {
 
   btnEditar.addEventListener('click', () => {
     if (!pesquisador) return;
-    abrirModalEdicao(dadosAtuais, ref);
+    abrirModalEdicao(dadosAtuais, ref, secao, slug);
+  });
+
+  btnRemover.addEventListener('click', async () => {
+    if (!pesquisador) return;
+
+    const confirmar = window.confirm(
+      `Remover ${dadosAtuais.nome || 'esta pessoa'} da revista?`
+    );
+
+    if (!confirmar) return;
+
+    btnRemover.disabled = true;
+    btnRemover.textContent = 'Removendo...';
+
+    try {
+      await setDoc(
+        ref,
+        {
+          tipo: 'edicao-poeta-estatico',
+          secao,
+          slug,
+          removido: true,
+          atualizadoEm: serverTimestamp(),
+          atualizadoPor: auth.currentUser.uid
+        },
+        { merge: true }
+      );
+
+      location.replace(voltarUrl);
+    } catch (erro) {
+      console.error('[poetas-editor] Erro ao remover poeta:', erro);
+      alert('Não foi possível remover esta pessoa agora.');
+      btnRemover.disabled = false;
+      btnRemover.textContent = 'Remover pessoa';
+    }
   });
 }
 
