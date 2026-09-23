@@ -73,6 +73,47 @@ function iniciarGaleria() {
   }
 
   observarParticipantes(alvo, loading);
+
+  if (secao === 'poemas' || secao === 'poemas-conhecidos') {
+    observarPoetasEstaticosRemovidos(alvo);
+  }
+}
+
+function observarPoetasEstaticosRemovidos(alvo) {
+  const ref = collection(
+    db,
+    'participantesAutorais',
+    '_poetas-estaticos',
+    'conteudos'
+  );
+
+  onSnapshot(
+    ref,
+    (snapshot) => {
+      const prefixo = `${secao}--`;
+      const removidos = new Set();
+
+      snapshot.docs.forEach((item) => {
+        if (!item.id.startsWith(prefixo)) return;
+        if (item.data().removido !== true) return;
+        removidos.add(item.id.slice(prefixo.length));
+      });
+
+      alvo
+        .querySelectorAll('a.foto-nav:not([data-et-pessoa-dinamica])')
+        .forEach((link) => {
+          const href = link.getAttribute('href') || '';
+          const slug = [...removidos].find((item) =>
+            href.includes(`${item}/index.html`)
+          );
+
+          link.hidden = Boolean(slug);
+        });
+    },
+    (erro) => {
+      console.error('[autorais] Erro ao verificar poetas removidos:', erro);
+    }
+  );
 }
 
 function obterAlvoGaleria() {
