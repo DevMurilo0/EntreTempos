@@ -427,6 +427,10 @@ body.et-modal-aberto {
   flex: 1 1 220px;
 }
 
+.et-poeta-admin__acoes .et-btn--perigo {
+  flex-basis: 100%;
+}
+
 .et-modal__caixa--poeta {
   width: min(100%, 760px);
 }
