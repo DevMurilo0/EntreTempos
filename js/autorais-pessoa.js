@@ -152,6 +152,9 @@ function iniciar() {
   el.rotulo.textContent = config.rotulo;
   el.tituloConteudos.textContent = config.conteudo;
   el.btnAdicionar.textContent = `+ ${config.adicionar}`;
+  if (tipoSecao === 'poemas') {
+    el.btnEditar.textContent = 'Editar tudo';
+  }
 
   const pessoaRef = doc(db, 'participantesAutorais', pessoaId);
   const conteudosRef = collection(pessoaRef, 'conteudos');
@@ -229,6 +232,16 @@ function iniciar() {
 
   el.btnEditar.addEventListener('click', () => {
     if (!pesquisador || !dadosPessoa) return;
+
+    if (tipoSecao === 'poemas') {
+      abrirModalEditarPoetaCompleto(
+        dadosPessoa,
+        pessoaRef,
+        documentosConteudo
+      );
+      return;
+    }
+
     abrirModalEditarPessoa(dadosPessoa, pessoaRef);
   });
 
@@ -663,6 +676,207 @@ function abrirModalConteudo(dadosPessoa) {
   requestAnimationFrame(() => {
     form.querySelector('input, textarea')?.focus();
   });
+}
+
+function abrirModalEditarPoetaCompleto(dadosPessoa, pessoaRef, documentosConteudo) {
+  const modal = document.createElement('div');
+  modal.className = 'et-modal et-modal--poeta';
+
+  const poemasHtml = documentosConteudo.map((item, indice) => {
+    const dados = item.data();
+
+    return `
+      <fieldset class="et-poeta-poema" data-poema-id="${escapeHtml(item.id)}">
+        <legend>Poema ${indice + 1}</legend>
+
+        <div class="et-campo">
+          <label for="et-poema-titulo-${indice}">Título</label>
+          <input
+            id="et-poema-titulo-${indice}"
+            name="titulo-${indice}"
+            type="text"
+            maxlength="160"
+            value="${escapeHtml(dados.titulo || '')}"
+          >
+        </div>
+
+        <div class="et-campo">
+          <label for="et-poema-autor-${indice}">Autor / assinatura</label>
+          <input
+            id="et-poema-autor-${indice}"
+            name="autor-${indice}"
+            type="text"
+            maxlength="160"
+            value="${escapeHtml(dados.autor || dadosPessoa.nome || '')}"
+          >
+        </div>
+
+        <div class="et-campo">
+          <label for="et-poema-texto-${indice}">Texto do poema</label>
+          <textarea
+            id="et-poema-texto-${indice}"
+            name="texto-${indice}"
+            rows="11"
+            maxlength="20000"
+          >${escapeHtml(dados.texto || '')}</textarea>
+        </div>
+      </fieldset>
+    `;
+  }).join('');
+
+  modal.innerHTML = `
+    <div class="et-modal__caixa et-modal__caixa--poeta" role="dialog" aria-modal="true" aria-labelledby="et-editar-poeta-titulo">
+      <button type="button" class="et-modal__fechar" data-fechar aria-label="Fechar">×</button>
+      <p class="et-modal__kicker">Gerenciar poeta</p>
+      <h2 class="et-modal__titulo" id="et-editar-poeta-titulo">Editar tudo</h2>
+
+      <form data-form novalidate>
+        <div class="et-campo">
+          <label for="et-editar-poeta-nome">Nome</label>
+          <input
+            id="et-editar-poeta-nome"
+            name="nome"
+            type="text"
+            maxlength="120"
+            value="${escapeHtml(dadosPessoa.nome || '')}"
+          >
+        </div>
+
+        <div class="et-campo">
+          <label for="et-editar-poeta-descricao">Descrição</label>
+          <textarea
+            id="et-editar-poeta-descricao"
+            name="descricao"
+            rows="8"
+            maxlength="5000"
+          >${escapeHtml(dadosPessoa.descricao || '')}</textarea>
+        </div>
+
+        <div class="et-campo et-arquivo">
+          <label for="et-editar-poeta-foto">Trocar imagem <small>(opcional)</small></label>
+          <input id="et-editar-poeta-foto" name="foto" type="file" accept="image/*">
+        </div>
+
+        <div class="et-poeta-poemas-editor">
+          <h3>Poemas</h3>
+          ${poemasHtml || '<p class="et-estado-vazio">Ainda não há poemas cadastrados.</p>'}
+        </div>
+
+        <p class="et-progresso" data-msg role="status" aria-live="polite"></p>
+        <div class="et-progress-bar" data-barra><span></span></div>
+
+        <div class="et-modal__acoes">
+          <button type="button" class="et-btn et-btn--secundario" data-cancelar>Cancelar</button>
+          <button type="submit" class="et-btn et-btn--principal" data-salvar>Salvar tudo</button>
+        </div>
+      </form>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+  document.body.classList.add('et-modal-aberto');
+
+  const form = modal.querySelector('[data-form]');
+  const msg = modal.querySelector('[data-msg]');
+  const barra = modal.querySelector('[data-barra]');
+  const barraSpan = barra.querySelector('span');
+  const salvar = modal.querySelector('[data-salvar]');
+
+  let salvando = false;
+
+  const fechar = () => {
+    if (salvando) return;
+    modal.remove();
+    document.body.classList.remove('et-modal-aberto');
+  };
+
+  modal.querySelector('[data-fechar]').addEventListener('click', fechar);
+  modal.querySelector('[data-cancelar]').addEventListener('click', fechar);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) fechar();
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (salvando) return;
+
+    if (auth.currentUser?.uid !== PESQUISADOR_UID) {
+      erroMsg(msg, 'Sua sessão de pesquisador não está ativa.');
+      return;
+    }
+
+    const novaFoto = form.elements.foto.files?.[0] || null;
+
+    if (
+      novaFoto &&
+      (!novaFoto.type.startsWith('image/') || novaFoto.size > 10 * 1024 * 1024)
+    ) {
+      erroMsg(msg, 'A nova foto precisa ser uma imagem de até 10 MB.');
+      return;
+    }
+
+    salvando = true;
+    salvar.disabled = true;
+    salvar.textContent = 'Salvando...';
+    msg.classList.remove('is-erro');
+
+    const atualizacaoPessoa = {
+      nome: form.elements.nome.value.trim(),
+      descricao: form.elements.descricao.value.trim(),
+      atualizadoEm: serverTimestamp()
+    };
+
+    try {
+      if (novaFoto) {
+        barra.classList.add('is-visible');
+        barraSpan.style.width = '0%';
+
+        const upload = await enviarComMensagem(
+          novaFoto,
+          msg,
+          barraSpan,
+          'Enviando nova foto'
+        );
+
+        atualizacaoPessoa.fotoUrl = upload.url;
+        atualizacaoPessoa.fotoPublicId = upload.publicId;
+        atualizacaoPessoa.fotoResourceType = upload.resourceType;
+      } else {
+        msg.textContent = 'Salvando perfil e poemas...';
+      }
+
+      await updateDoc(pessoaRef, atualizacaoPessoa);
+
+      for (let indice = 0; indice < documentosConteudo.length; indice += 1) {
+        const item = documentosConteudo[indice];
+
+        await updateDoc(
+          doc(db, 'participantesAutorais', pessoaId, 'conteudos', item.id),
+          {
+            titulo: form.elements[`titulo-${indice}`]?.value.trim() || '',
+            autor: form.elements[`autor-${indice}`]?.value.trim() || '',
+            texto: form.elements[`texto-${indice}`]?.value.trim() || '',
+            atualizadoEm: serverTimestamp()
+          }
+        );
+      }
+
+      salvando = false;
+      fechar();
+    } catch (erro) {
+      console.error('[autorais] Falha ao editar poeta:', erro);
+      erroMsg(msg, mensagemErroUpload(erro));
+
+      barra.classList.remove('is-visible');
+      barraSpan.style.width = '0%';
+
+      salvando = false;
+      salvar.disabled = false;
+      salvar.textContent = 'Salvar tudo';
+    }
+  });
+
+  requestAnimationFrame(() => form.elements.nome?.focus());
 }
 
 function abrirModalEditarPessoa(dadosPessoa, pessoaRef) {
