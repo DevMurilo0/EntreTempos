@@ -30,6 +30,9 @@ function iniciarEditorPoeta() {
     ? 'poemas-conhecidos'
     : 'poemas';
   const editorId = `${secao}--${slug}`;
+  const voltarUrl = secao === 'poemas-conhecidos'
+    ? '/topicos/poemas/conhecidos/conhecidos.html'
+    : '/topicos/poemas/autorais/autorais/autorais.html';
 
   const baseOriginal = lerEstadoDaPagina();
   const ref = doc(db, 'participantesAutorais', RAIZ_EDICOES, 'conteudos', editorId);
@@ -42,6 +45,7 @@ function iniciarEditorPoeta() {
 
   const btnAdicionar = painel.querySelector('[data-adicionar-poema]');
   const btnEditar = painel.querySelector('[data-editar-tudo]');
+  const btnRemover = painel.querySelector('[data-remover-pessoa]');
 
   onAuthStateChanged(auth, (usuario) => {
     pesquisador = usuario?.uid === PESQUISADOR_UID;
@@ -85,6 +89,7 @@ function criarPainelAdmin() {
     <div class="et-poeta-admin__acoes">
       <button type="button" class="et-btn et-btn--principal" data-adicionar-poema>+ Adicionar poema</button>
       <button type="button" class="et-btn et-btn--secundario" data-editar-tudo>Editar tudo</button>
+      <button type="button" class="et-btn et-btn--perigo" data-remover-pessoa>Remover pessoa</button>
     </div>
   `;
 
