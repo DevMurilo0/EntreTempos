@@ -52,11 +52,12 @@ function iniciarEditorPoeta() {
   onSnapshot(
     ref,
     (snapshot) => {
-      dadosAtuais = snapshot.exists()
-        ? normalizarDados(snapshot.data(), baseOriginal)
-        : baseOriginal;
-
-      aplicarEstado(dadosAtuais);
+      if (snapshot.exists()) {
+        dadosAtuais = normalizarDados(snapshot.data(), baseOriginal);
+        aplicarEstado(dadosAtuais);
+      } else {
+        dadosAtuais = baseOriginal;
+      }
     },
     (erro) => {
       console.error('[poetas-editor] Erro ao carregar edições:', erro);
