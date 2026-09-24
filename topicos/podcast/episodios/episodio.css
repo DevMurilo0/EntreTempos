@@ -304,6 +304,80 @@ header a:hover {
   text-transform: uppercase;
 }
 
+/* ── ACESSO AO CANAL DO YOUTUBE ── */
+.episodio-youtube-canal {
+  position: relative;
+  z-index: 6;
+  display: flex;
+  justify-content: center;
+  width: min(calc(100% - 40px), 840px);
+  margin: 24px auto 8px;
+}
+
+.episodio-youtube-canal__botao {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 11px 18px 10px;
+  color: var(--vermelho-escuro);
+  background: rgba(255, 253, 247, .94);
+  border: 2px solid var(--vermelho-escuro);
+  box-shadow: 4px 5px 0 rgba(122, 106, 80, .22);
+  font-family: 'Special Elite', serif;
+  font-size: 13px;
+  letter-spacing: .05em;
+  text-decoration: none;
+  transform: rotate(-.35deg);
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease,
+    color .2s ease,
+    background .2s ease;
+}
+
+.episodio-youtube-canal__botao::before,
+.episodio-youtube-canal__botao::after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 7px;
+  background: rgba(196, 169, 107, .42);
+  pointer-events: none;
+}
+
+.episodio-youtube-canal__botao::before {
+  top: -6px;
+  left: 14px;
+  transform: rotate(-5deg);
+}
+
+.episodio-youtube-canal__botao::after {
+  right: 13px;
+  bottom: -6px;
+  transform: rotate(4deg);
+}
+
+.episodio-youtube-canal__botao:hover,
+.episodio-youtube-canal__botao:focus-visible {
+  color: #fffdf7;
+  background: var(--vermelho-escuro);
+  box-shadow: 6px 7px 0 rgba(122, 106, 80, .22);
+  transform: translate(-2px, -2px) rotate(0deg);
+  outline: none;
+}
+
+.episodio-youtube-canal__play {
+  font-size: 12px;
+}
+
+.episodio-youtube-canal__seta {
+  color: var(--dourado);
+  font-size: 15px;
+}
+
 /* ── INFORMAÇÕES DO CONVIDADO ── */
 .episodio-info {
   position: relative;
@@ -858,6 +932,16 @@ header a:hover {
 
 /* ── MOBILE ── */
 @media (max-width: 600px) {
+  .episodio-youtube-canal {
+    width: calc(100% - 38px);
+    margin-top: 20px;
+    margin-bottom: 4px;
+  }
+
+  .episodio-youtube-canal__botao {
+    width: min(100%, 310px);
+  }
+
   header {
     padding: 15px 20px;
   }
