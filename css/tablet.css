@@ -1,0 +1,445 @@
+/* =========================================================
+   ENTRE TEMPOS — AJUSTES EXCLUSIVOS PARA TABLET
+   Faixa: 768px a 1180px, com altura mínima de 600px.
+   Este arquivo é carregado por último para adaptar tablets
+   sem alterar as versões já existentes de celular e desktop.
+   ========================================================= */
+
+@media (min-width: 768px) and (max-width: 1180px) and (min-height: 600px) {
+
+  /* ---------- BASE / CABEÇALHO ---------- */
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  header {
+    padding-left: clamp(24px, 4vw, 44px);
+    padding-right: clamp(24px, 4vw, 44px);
+  }
+
+  .page-titulo {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .page-titulo h1 {
+    font-size: clamp(58px, 8vw, 88px);
+    letter-spacing: clamp(3px, .65vw, 7px);
+    line-height: .98;
+  }
+
+  .titulo-secao {
+    max-width: calc(100% - 56px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .divisor {
+    width: min(90%, 960px);
+  }
+
+  /* ---------- BLOCOS DE APRESENTAÇÃO ---------- */
+  .apresentacao-section,
+  .musica-section,
+  .curiosidade-abertura,
+  .pessoa-section {
+    width: min(calc(100% - 64px), 940px);
+    max-width: 940px;
+    padding-left: 0;
+    padding-right: 0;
+    gap: clamp(28px, 4vw, 42px);
+  }
+
+  .apresentacao-texto,
+  .apresentacao-info,
+  .musica-info,
+  .curiosidade-abertura-info,
+  .pessoa-info,
+  .dados-convidado {
+    min-width: 0;
+  }
+
+  .foto-apresentacao,
+  .foto-pessoa {
+    max-width: 240px;
+  }
+
+  /* ---------- PÁGINA INICIAL ---------- */
+  .hero-text {
+    padding: clamp(170px, 20vw, 210px) 44px 36px;
+  }
+
+  .grid-guia {
+    max-width: 960px;
+    padding-left: 32px;
+    padding-right: 32px;
+    gap: 28px 34px;
+  }
+
+  .card-guia {
+    gap: 14px;
+  }
+
+  .imagem-guia {
+    width: clamp(108px, 13vw, 132px);
+    max-width: 132px;
+  }
+
+  .img-filmes,
+  .img-desenho,
+  .img-musicas,
+  .img-podcast {
+    width: clamp(118px, 14vw, 142px);
+    max-width: 142px;
+  }
+
+  .img-livros {
+    width: clamp(125px, 15vw, 150px);
+    max-width: 150px;
+  }
+
+  .img-poemas,
+  .img-curiosidades {
+    width: clamp(105px, 12vw, 126px);
+    max-width: 126px;
+  }
+
+  .card-guia-podcast {
+    width: min(100%, 620px);
+  }
+
+  .chamada-equipe {
+    width: min(72%, 560px);
+  }
+
+  /* ---------- FOLHA / MAPA DA REVISTA ---------- */
+  .scene {
+    min-height: 760px;
+    height: 100svh;
+    overflow: hidden;
+  }
+
+  .moon {
+    top: -170px;
+    right: -150px;
+    width: 500px;
+  }
+
+  .books {
+    right: -12px;
+    bottom: -58px;
+    width: 305px !important;
+  }
+
+  .note {
+    top: 47%;
+    left: 48%;
+    width: clamp(260px, 34vw, 330px);
+  }
+
+  .tag-img-wrap {
+    width: clamp(112px, 14vw, 148px);
+  }
+
+  .polaroid {
+    width: clamp(112px, 15vw, 150px);
+  }
+
+  .decor-internet {
+    max-width: 170px;
+    max-height: 170px;
+  }
+
+  /* ---------- FAÇA PARTE ---------- */
+  .secao-manda,
+  .secao-contato {
+    max-width: 920px;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .secao-passos {
+    max-width: 760px;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .cards-manda {
+    gap: 24px;
+  }
+
+  .card-manda {
+    width: min(29%, 245px);
+    min-width: 200px;
+  }
+
+  .formulario-inscricao {
+    width: min(100%, 680px);
+  }
+
+  /* ---------- DESENVOLVEDORES ---------- */
+  .lista-pessoas {
+    max-width: 920px;
+    padding-left: 36px;
+    padding-right: 36px;
+  }
+
+  .card-pessoa,
+  .card-equipe {
+    grid-template-columns: 170px minmax(0, 1fr);
+    column-gap: 1.5rem;
+  }
+
+  .decoracoes-dev .deco-dev {
+    max-width: min(15vw, 118px);
+  }
+
+  /* ---------- NAVEGAÇÃO DE POEMAS / DESENHOS / MÚSICA / CURIOSIDADES ---------- */
+  .cards-navegacao {
+    max-width: 820px;
+    height: clamp(430px, 52vw, 520px);
+    padding-left: 32px;
+    padding-right: 32px;
+    margin-bottom: 64px;
+  }
+
+  .cards-navegacao .card-img img {
+    width: clamp(190px, 25vw, 260px);
+    max-width: 260px;
+  }
+
+  .cards-navegacao .card-esquerda {
+    left: 24px;
+    top: 34px;
+  }
+
+  .cards-navegacao .card-direita {
+    right: 24px;
+    bottom: 8px;
+  }
+
+  /* ---------- GALERIAS DE PESSOAS ---------- */
+  .fotos-navegacao {
+    max-width: 940px;
+    padding-left: 32px;
+    padding-right: 32px;
+    gap: 32px 36px;
+  }
+
+  .fotos-navegacao .foto-nav {
+    width: clamp(180px, 24vw, 235px);
+    max-width: 235px;
+  }
+
+  /* ---------- PERFIS / CONTEÚDOS AUTORAIS ---------- */
+  .pessoa-section {
+    margin-top: 34px;
+  }
+
+  .pessoa-bio {
+    max-width: none;
+  }
+
+  .grade-envelopes,
+  .area-folha {
+    width: min(calc(100% - 64px), 780px);
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .galeria {
+    width: min(calc(100% - 56px), 900px);
+    max-width: 900px;
+    padding-left: 0;
+    padding-right: 0;
+    gap: 24px;
+  }
+
+  .et-pessoa-main {
+    width: min(calc(100% - 56px), 980px);
+    padding-top: 34px;
+  }
+
+  .et-perfil {
+    grid-template-columns: minmax(200px, 27vw, 270px) minmax(0, 1fr);
+    gap: clamp(30px, 5vw, 46px);
+    padding-bottom: 36px;
+  }
+
+  .et-conteudos {
+    gap: 28px;
+  }
+
+  .et-admin-acoes,
+  .et-poeta-admin {
+    width: min(calc(100% - 56px), 900px);
+  }
+
+  /* ---------- CURIOSIDADES / LEITURAS ---------- */
+  .curiosidade-corpo {
+    width: min(calc(100% - 64px), 820px);
+    max-width: 820px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .curiosidade-corpo .bloco-texto,
+  .curiosidade-corpo .bloco-midia {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* ---------- TOP FILMES / LIVROS / MÚSICAS ---------- */
+  .mural-filmes,
+  .mural-livros,
+  .mural-musica {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 28px;
+    padding-right: 28px;
+  }
+
+  .top5-wrapper,
+  .top10-wrapper {
+    gap: 26px;
+  }
+
+  .top5-lista,
+  .top10-lista {
+    min-width: 0;
+    padding-left: clamp(28px, 6vw, 68px);
+  }
+
+  .nav-mes {
+    flex-wrap: wrap;
+    row-gap: 10px;
+  }
+
+  /* ---------- ENQUETES ---------- */
+  .enquetes-main {
+    width: min(calc(100% - 56px), 960px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .enquetes-filtros,
+  .enquetes-lista {
+    min-width: 0;
+  }
+
+  .enquetes-modal-box {
+    width: min(calc(100vw - 80px), 760px);
+    max-height: calc(100vh - 80px);
+  }
+
+  /* ---------- PODCAST — LISTAGEM ---------- */
+  .podcast-apresentacao {
+    width: min(calc(100% - 64px), 800px);
+    max-width: 800px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .busca-podcast {
+    width: min(calc(100% - 100px), 600px);
+    max-width: 600px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .lista-episodios {
+    width: min(calc(100% - 64px), 860px);
+    max-width: 860px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .card-episodio {
+    padding: 28px 28px 24px;
+  }
+
+  .topo-card {
+    gap: 24px;
+  }
+
+  .lista-episodios .capa-episodio {
+    width: clamp(132px, 18vw, 156px);
+  }
+
+  .bastidores-conteudo,
+  .bastidores-equipe {
+    width: min(calc(100% - 64px), 820px);
+    max-width: 820px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .equipe-grade {
+    gap: 22px;
+  }
+
+  /* ---------- PODCAST — EPISÓDIO ---------- */
+  .episodio-video,
+  .episodio-youtube-canal,
+  .episodio-info,
+  .episodio-corpo,
+  .podcast-links,
+  .podcast-episodio-admin {
+    width: min(calc(100% - 64px), 900px);
+    max-width: 900px;
+  }
+
+  .episodio-info {
+    padding: 28px 30px 30px;
+    gap: clamp(28px, 4vw, 38px);
+  }
+
+  .episodio-info .capa-episodio {
+    width: clamp(150px, 20vw, 176px);
+  }
+
+  .episodio-corpo {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .bloco-texto {
+    max-width: 760px;
+  }
+
+  .foto-galeria {
+    width: clamp(230px, 31vw, 285px);
+  }
+
+  .grade-entrevistadores {
+    grid-template-columns: repeat(2, minmax(180px, 230px));
+    gap: 28px;
+  }
+
+  /* ---------- MODAIS / PAINÉIS DE PESQUISADOR ---------- */
+  .et-modal,
+  .podcast-modal {
+    padding: 24px;
+  }
+
+  .et-modal__caixa,
+  .podcast-modal__caixa {
+    width: min(calc(100vw - 80px), 760px);
+    max-height: calc(100vh - 80px);
+  }
+
+  .podcast-form-grid {
+    gap: 16px;
+  }
+
+  /* ---------- DECORAÇÕES: EVITA ESTOURO EM TABLET ---------- */
+  .img-deco,
+  .deco-dev,
+  .sticker,
+  .stamp-decor {
+    max-width: min(24vw, 180px);
+  }
+}
