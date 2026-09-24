@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Episódio | Pod Aula Vaga</title>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Entre Tempos">
+  <meta property="og:title" content="Episódio | Pod Aula Vaga">
+  <meta property="og:description" content="Episódio do podcast Pod Aula Vaga, da revista Entre Tempos.">
+  <meta property="og:image" content="https://entretempos.blog.br/img/social/entre-tempos-share.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="icon" href="/img/amp.png" type="image/png">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=IM+Fell+English:ital@0;1&family=Playfair+Display:ital,wght@0,700;1,700&family=Dancing+Script:wght@400;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="episodio.css">
+  <link rel="stylesheet" href="/css/podcast-admin.css">
+</head>
+
+<body class="podcast-episodio-dinamico">
+  <header>
+    <a href="../podcast.html">← sair</a>
+  </header>
+
+  <section class="episodio-hero">
+    <img class="decor-episodio decor-fones decor-hero" src="../img/decoracoes/fones.svg" alt=""
+      aria-hidden="true" decoding="async">
+    <picture>
+      <source media="(max-width: 600px)" srcset="../img/branding/pod-aula-vaga-quadrado.webp">
+      <img src="../img/branding/pod-aula-vaga-banner.webp"
+        alt="Identidade visual do podcast Pod Aula Vaga" decoding="async" fetchpriority="high">
+    </picture>
+  </section>
+
+  <div class="podcast-episodio-admin" id="podcast-episodio-admin" hidden>
+    <span>Gerenciar episódio</span>
+    <div>
+      <button type="button" class="podcast-btn podcast-btn--secundario" data-editar-base>Editar dados do episódio</button>
+      <button type="button" class="podcast-btn podcast-btn--perigo" data-remover-episodio>Remover episódio</button>
+    </div>
+  </div>
+
+  <section class="episodio-video" id="episodio-video">
+    <img class="decor-episodio decor-microfone decor-video" src="../img/decoracoes/microfone-vintage.svg"
+      alt="" aria-hidden="true" loading="lazy" decoding="async">
+    <div class="video-moldura" id="video-moldura">
+      <div class="video-etiqueta" id="video-etiqueta" aria-hidden="true">EP. -- · em exibição</div>
+      <div class="podcast-video-vazio" id="podcast-video-vazio">
+        <strong>Vídeo do episódio</strong>
+        <span>A URL do YouTube ainda não foi adicionada.</span>
+      </div>
+      <div class="video-rodape" aria-hidden="true">
+        <span>Pod Aula Vaga</span>
+        <span>Entre Tempos</span>
+      </div>
+    </div>
+    <button type="button" class="podcast-editor-inline" data-editar-youtube hidden>Adicionar / editar URL do YouTube</button>
+  </section>
+
+  <section class="episodio-info">
+    <img class="decor-episodio decor-cassete decor-convidado" src="../img/decoracoes/fita-cassete.svg"
+      alt="" aria-hidden="true" loading="lazy" decoding="async">
+
+    <div class="retrato-convidado">
+      <div class="capa-episodio sem-foto" id="episodio-foto-wrap">
+        <img id="episodio-foto" alt="" decoding="async">
+      </div>
+      <span aria-hidden="true">convidado</span>
+    </div>
+
+    <div class="dados-convidado">
+      <div class="etiquetas">
+        <span class="badge-episodio" id="episodio-numero">EP: --</span>
+        <span class="badge-cargo" id="episodio-cargo">Convidado</span>
+      </div>
+      <h1 id="episodio-nome">Carregando...</h1>
+      <p class="chamada-episodio" id="episodio-descricao"></p>
+      <button class="btn-like" type="button" id="episodio-like"
+        data-like-id="podcast-dinamico"
+        data-like-label="Curtir episódio" data-unlike-label="Remover curtida do episódio"
+        aria-label="Curtir episódio" aria-pressed="false">
+        <span class="like-icon" aria-hidden="true">♡</span>
+        <span class="like-count">0</span>
+      </button>
+    </div>
+  </section>
+
+  <section class="podcast-links" id="podcast-links">
+    <h2>Confira agora! <span aria-hidden="true">↓</span></h2>
+    <div class="podcast-links__lista" id="podcast-links-lista"></div>
+    <button type="button" class="podcast-editor-inline" data-adicionar-link hidden>+ Adicionar link</button>
+  </section>
+
+  <div class="divisor"></div>
+
+  <section class="episodio-corpo">
+    <div class="bloco-texto">
+      <img class="decor-episodio decor-onda decor-conversa" src="../img/decoracoes/onda-audio.svg" alt=""
+        aria-hidden="true" loading="lazy" decoding="async">
+      <h2>Sobre a conversa</h2>
+      <p id="episodio-sobre">Ainda não há um texto sobre a conversa.</p>
+      <button type="button" class="podcast-editor-inline" data-editar-sobre hidden>Adicionar / editar texto</button>
+    </div>
+
+    <div class="bloco-galeria">
+      <img class="decor-episodio decor-camera decor-bastidores" src="../img/decoracoes/camera-vintage.svg"
+        alt="" aria-hidden="true" loading="lazy" decoding="async">
+      <h2>Bastidores</h2>
+      <div class="carrossel-galeria" id="episodio-bastidores"></div>
+      <button type="button" class="podcast-editor-inline" data-adicionar-bastidor hidden>+ Adicionar imagem ou vídeo</button>
+    </div>
+
+    <div id="episodio-grupos"></div>
+
+    <div class="podcast-funcoes-admin" id="podcast-funcoes-admin" hidden>
+      <button type="button" class="podcast-editor-inline" data-adicionar-funcao>+ Adicionar nova função</button>
+    </div>
+  </section>
+
+  <div class="rodape-podcast">
+    <div>entre tempos · revista eletrônica</div>
+    <div class="carimbo">podcast</div>
+  </div>
+
+  <script type="module" src="/js/likes.js"></script>
+  <script type="module" src="/js/podcast-episodio.js"></script>
+</body>
+
+</html>
