@@ -67,6 +67,12 @@ function iniciar() {
     pesquisador = usuario?.uid === PESQUISADOR_UID;
     atualizarControles();
 
+    if (dados) {
+      renderizarLinks();
+      renderizarBastidores();
+      renderizarGrupos();
+    }
+
     if (
       pesquisador &&
       abrirEdicaoInicial &&
@@ -216,6 +222,7 @@ function iniciar() {
 
   function renderizarLinks() {
     el.linksLista.replaceChildren();
+    el.btnLink.textContent = dados.links.length ? 'Adicionar outro?' : '+ Adicionar link';
 
     if (!dados.links.length && !pesquisador) {
       el.links.hidden = true;
@@ -668,7 +675,14 @@ function iniciar() {
         if (indiceGrupo === null) grupos.push(novoGrupo);
         else grupos[indiceGrupo] = novoGrupo;
 
-        await salvar({ grupos });
+        const atualizacao = { grupos };
+
+        if (funcao.trim().toLowerCase() === 'entrevistadores') {
+          atualizacao.entrevistador1 = participantes[0]?.nome || '';
+          atualizacao.entrevistador2 = participantes[1]?.nome || '';
+        }
+
+        await salvar(atualizacao);
       }
     });
 
