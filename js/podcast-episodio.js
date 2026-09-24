@@ -431,14 +431,40 @@ function iniciar() {
       `,
       salvarTexto: 'Salvar alterações',
       async aoSalvar({ form, msg, progress, progressSpan }) {
+        const entrevistador1 = form.elements.entrevistador1.value.trim();
+        const entrevistador2 = form.elements.entrevistador2.value.trim();
+
         const atualizacao = {
           numero: formatarNumero(form.elements.numero.value),
           cargo: form.elements.cargo.value.trim(),
           nome: form.elements.nome.value.trim(),
           descricao: form.elements.descricao.value.trim(),
-          entrevistador1: form.elements.entrevistador1.value.trim(),
-          entrevistador2: form.elements.entrevistador2.value.trim()
+          entrevistador1,
+          entrevistador2
         };
+
+        const grupos = dados.grupos.map((grupo) => ({
+          ...grupo,
+          participantes: Array.isArray(grupo.participantes)
+            ? grupo.participantes.map((pessoa) => ({ ...pessoa }))
+            : []
+        }));
+
+        const indiceEntrevistadores = grupos.findIndex(
+          (grupo) => String(grupo.funcao || '').trim().toLowerCase() === 'entrevistadores'
+        );
+
+        if (indiceEntrevistadores >= 0) {
+          const participantes = grupos[indiceEntrevistadores].participantes;
+
+          while (participantes.length < 2) {
+            participantes.push({ nome: '', fotoUrl: '', instagram: '' });
+          }
+
+          participantes[0].nome = entrevistador1;
+          participantes[1].nome = entrevistador2;
+          atualizacao.grupos = grupos;
+        }
 
         const foto = form.elements.foto.files?.[0] || null;
 
