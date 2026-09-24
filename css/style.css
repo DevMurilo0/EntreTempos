@@ -1028,6 +1028,18 @@ img.deco-maos {
   margin-left: -10px;
 }
 
+.card-guia-podcast {
+  grid-column: 1 / -1;
+  width: min(100%, 560px);
+  justify-self: center;
+}
+
+.img-podcast {
+  width: 165px;
+  transform: rotate(-2deg);
+  margin-left: -8px;
+}
+
 .card-guia-texto h3 {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 21px;
@@ -1047,6 +1059,11 @@ img.deco-maos {
 @media (max-width: 900px) {
   .grid-guia {
     grid-template-columns: 1fr;
+  }
+
+  .card-guia-podcast {
+    grid-column: auto;
+    width: 100%;
   }
 }
 
