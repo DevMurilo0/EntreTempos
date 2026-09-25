@@ -86,6 +86,29 @@ body.editor-top-aberto { overflow: hidden; }
   font: 16px 'Special Elite', serif;
 }
 .editor-top textarea { min-height: 112px; resize: vertical; line-height: 1.5; }
+
+.editor-top input[type="file"] {
+  padding: 10px;
+  border-style: dashed;
+  cursor: pointer;
+}
+
+.editor-top input[type="file"]::file-selector-button {
+  margin-right: 10px;
+  padding: 8px 11px;
+  border: 1px solid #8c3b3b;
+  background: #8c3b3b;
+  color: #fffdf7;
+  font: 12px 'Special Elite', serif;
+  cursor: pointer;
+}
+
+.editor-top__ajuda {
+  margin-top: -2px;
+  color: #7a6a50;
+  font-size: 11px;
+  line-height: 1.45;
+}
 .editor-top__slots {
   display: flex;
   flex-wrap: wrap;
