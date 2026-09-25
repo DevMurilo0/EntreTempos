@@ -264,19 +264,6 @@ header a:hover { color: #c0392b; }
   text-overflow: ellipsis;
 }
 
-/* indicador de que o item abre os detalhes ao clicar */
-.livro-abrir {
-  margin-left: auto;
-  padding-left: 10px;
-  font-family: 'Special Elite', serif;
-  font-size: 11px;
-  color: #c0392b;
-  letter-spacing: 1px;
-  white-space: nowrap;
-  opacity: 0.75;
-  flex-shrink: 0;
-}
-
 /* Mensagem quando não há livros */
 .vazio {
   text-align: center;
