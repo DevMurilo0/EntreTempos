@@ -209,9 +209,11 @@ export function criarEditorTop(configuracao) {
       : document.createElement('input');
     if (campo.tipo !== 'textarea') input.type = campo.tipo || 'text';
     if (campo.placeholder) input.placeholder = campo.placeholder;
-    if (campo.obrigatorio) input.required = true;
+    if (campo.accept) input.accept = campo.accept;
+    if (campo.obrigatorio && campo.tipo !== 'file') input.required = true;
     input.name = campo.nome;
     grupo.appendChild(input);
+    if (campo.ajuda) grupo.appendChild(criarElemento('small', 'editor-top__ajuda', campo.ajuda));
     formulario.appendChild(grupo);
     inputs[campo.nome] = input;
   });
