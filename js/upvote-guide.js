@@ -11,7 +11,8 @@
   const textos = {
     musicas: 'Vote nas músicas que você gosta!',
     livros: 'Vote nos livros que você gosta!',
-    filmes: 'Vote nos filmes que você gosta!'
+    filmes: 'Vote nos filmes que você gosta!',
+    enquetes: 'Vote nas enquetes que você gosta!'
   };
 
   const mensagem = textos[contexto] || 'Vote nos conteúdos que você gosta!';
@@ -53,7 +54,6 @@
 
     const clone = original.cloneNode(true);
     clone.removeAttribute('id');
-    clone.disabled = true;
     clone.setAttribute('aria-hidden', 'true');
     clone.tabIndex = -1;
     wrap.appendChild(clone);
