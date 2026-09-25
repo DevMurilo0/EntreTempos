@@ -5,13 +5,47 @@
 import { escutarUpvotes, alternarUpvote, jaVotou, pararTodosListeners } from '../../js/upvotes.js';
 import {
   carregarTopConteudos, criarEditorTop, obterIdEditado,
-  validarCapa, validarUrlHttp
+  validarUrlHttp
 } from '../../js/top-conteudos.js';
 
 const meses = [
   "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
   "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
 ];
+
+const CLOUDINARY_CLOUD_NAME = 'uaisf2vc';
+const CLOUDINARY_UPLOAD_PRESET = 'entre_tempos_upload';
+const CLOUDINARY_UPLOAD_URL =
+  `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
+
+async function enviarCapaCloudinary(arquivo) {
+  if (!arquivo) return null;
+  if (!arquivo.type?.startsWith('image/')) {
+    throw new Error('Escolha uma imagem válida para a capa.');
+  }
+  if (arquivo.size > 10 * 1024 * 1024) {
+    throw new Error('A imagem da capa precisa ter no máximo 10 MB.');
+  }
+
+  const formData = new FormData();
+  formData.append('file', arquivo);
+  formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+  const resposta = await fetch(CLOUDINARY_UPLOAD_URL, {
+    method: 'POST',
+    body: formData
+  });
+
+  const dados = await resposta.json().catch(() => ({}));
+  if (!resposta.ok || !dados.secure_url) {
+    throw new Error(dados?.error?.message || 'Não foi possível enviar a imagem da capa.');
+  }
+
+  return {
+    url: dados.secure_url,
+    publicId: dados.public_id || ''
+  };
+}
 
 /* ═══════════════════════════════════════════════════════════
    COMO ADICIONAR OS LIVROS DE UM MÊS
@@ -176,7 +210,7 @@ function abrirModal(livro) {
     modalLink.style.display = 'none';
   }
 
-  if (livro.linkCompra) {
+  if (livro.linkCompra && validarUrlHttp(livro.linkCompra)) {
     modalLinkCompra.href = livro.linkCompra;
     modalLinkCompra.textContent = 'Comprar';
     modalLinkCompra.style.display = 'inline-flex';
@@ -372,7 +406,20 @@ criarEditorTop({
     { nome: 'subtitulo', label: 'Autor', obrigatorio: true },
     { nome: 'descricao', label: 'Descrição', tipo: 'textarea', obrigatorio: true },
     { nome: 'pdfUrl', label: 'Link do PDF', tipo: 'url', placeholder: 'https://site.com/livro.pdf', obrigatorio: true },
-    { nome: 'capa', label: 'Capa (caminho local ou URL HTTPS)', placeholder: 'img_livros/capa.webp' }
+    {
+      nome: 'capaArquivo',
+      label: 'Capa do livro',
+      tipo: 'file',
+      accept: 'image/*',
+      ajuda: 'Envie uma imagem. Ao editar, deixe vazio para manter a capa atual.'
+    },
+    {
+      nome: 'linkCompra',
+      label: 'Link para comprar',
+      tipo: 'url',
+      placeholder: 'https://loja.com/livro',
+      obrigatorio: true
+    }
   ],
   obterPeriodo: () => ({ mes: mesIndex + 1, ano: anoIndex }),
   carregarPeriodo: async (mes, ano) => {
@@ -381,9 +428,31 @@ criarEditorTop({
     await carregarUpvotesDoMes();
   },
   obterItens: () => livrosAtuais,
-  montarItem: (valores, anterior, posicao) => {
-    if (!validarUrlHttp(valores.pdfUrl)) return { erro: 'Informe um link HTTP ou HTTPS válido para o PDF.' };
-    if (!validarCapa(valores.capa)) return { erro: 'Use um caminho local ou uma URL HTTPS válida para a capa.' };
+  montarItem: async (valores, anterior, posicao) => {
+    if (!validarUrlHttp(valores.pdfUrl)) {
+      return { erro: 'Informe um link HTTP ou HTTPS válido para o PDF.' };
+    }
+    if (!validarUrlHttp(valores.linkCompra)) {
+      return { erro: 'Informe um link HTTP ou HTTPS válido para comprar o livro.' };
+    }
+
+    let capa = anterior?.capa || '';
+    let capaPublicId = anterior?.capaPublicId || '';
+
+    if (valores.capaArquivo) {
+      try {
+        const upload = await enviarCapaCloudinary(valores.capaArquivo);
+        capa = upload.url;
+        capaPublicId = upload.publicId;
+      } catch (erro) {
+        return { erro: erro?.message || 'Não foi possível enviar a imagem da capa.' };
+      }
+    }
+
+    if (!capa) {
+      return { erro: 'Envie uma imagem para a capa do livro.' };
+    }
+
     return {
       item: {
         id: obterIdEditado('livros', anterior, valores.titulo),
@@ -392,8 +461,9 @@ criarEditorTop({
         subtitulo: valores.subtitulo,
         descricao: valores.descricao,
         pdfUrl: valores.pdfUrl,
-        capa: valores.capa,
-        ...(anterior?.linkCompra ? { linkCompra: anterior.linkCompra } : {})
+        capa,
+        ...(capaPublicId ? { capaPublicId } : {}),
+        linkCompra: valores.linkCompra
       }
     };
   },
