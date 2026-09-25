@@ -184,6 +184,106 @@ const votadoAtual = {};
 const votandoAgora = new Set();
 let carregamentoDoMes = 0;
 
+function criarLoadingTopMusicas() {
+  const overlay = document.createElement('div');
+  overlay.className = 'et-loading-participantes';
+  overlay.innerHTML = `
+    <div class="et-loading-participantes__papel" role="status" aria-live="polite">
+      <img
+        class="et-loading-participantes__ampulheta"
+        src="/img/amp.png"
+        alt=""
+        aria-hidden="true"
+      >
+      <strong>Entre Tempos</strong>
+      <span>carregando o tempo...</span>
+    </div>
+  `;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    .et-loading-participantes {
+      position: fixed;
+      inset: 0;
+      z-index: 9998;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: #f2e8d5;
+      background-image: radial-gradient(rgba(104,75,45,.05) 1px, transparent 1px);
+      background-size: 5px 5px;
+      opacity: 1;
+      transition: opacity .28s ease, visibility .28s ease;
+    }
+
+    .et-loading-participantes.is-saindo {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .et-loading-participantes__papel {
+      min-width: min(88vw, 320px);
+      padding: 30px 28px;
+      text-align: center;
+      color: #3e3228;
+      background: #fffaf0;
+      border-left: 5px solid #9b3e3e;
+      box-shadow: 8px 12px 28px rgba(50,30,15,.18);
+      font-family: 'Special Elite', serif;
+    }
+
+    .et-loading-participantes__papel strong,
+    .et-loading-participantes__papel span {
+      display: block;
+    }
+
+    .et-loading-participantes__papel strong {
+      margin-bottom: 8px;
+      font-size: 22px;
+      letter-spacing: 2px;
+    }
+
+    .et-loading-participantes__papel span {
+      color: #7a6a50;
+      font-size: 13px;
+      letter-spacing: 1px;
+    }
+
+    .et-loading-participantes__ampulheta {
+      display: block;
+      width: clamp(58px, 12vw, 82px);
+      height: auto;
+      margin: 0 auto 16px;
+      object-fit: contain;
+      filter: drop-shadow(0 7px 8px rgba(61, 42, 27, .16));
+      transform-origin: center;
+      animation: etLoadingAmpulheta 1.35s ease-in-out infinite alternate;
+    }
+
+    @keyframes etLoadingAmpulheta {
+      from { transform: translateY(0) rotate(-2deg); }
+      to { transform: translateY(-5px) rotate(2deg); }
+    }
+  `;
+
+  document.head.appendChild(style);
+  document.body.appendChild(overlay);
+
+  let removido = false;
+
+  return {
+    remover() {
+      if (removido) return;
+      removido = true;
+      overlay.classList.add('is-saindo');
+      setTimeout(() => {
+        overlay.remove();
+        style.remove();
+      }, 320);
+    }
+  };
+}
+
 /* ── MODAL ── */
 function abrirModal(musica) {
   const antigo = document.getElementById('musica-modal');
@@ -380,23 +480,36 @@ function renderizar(animar = false) {
  */
 async function carregarUpvotesDoMes() {
   const carregamentoAtual = ++carregamentoDoMes;
+  const loading = criarLoadingTopMusicas();
+
   musicasAtuais = obterFallback(anoIndex, mesIndex + 1);
   pararTodosListeners();
 
-  // Não bloqueia a troca de mês esperando respostas do Firebase.
+  // O conteúdo pode existir localmente, mas a tela só é liberada
+  // depois de confirmar se há uma versão atualizada no Firestore.
   renderizar(true);
 
   try {
     const resultado = await carregarTopConteudos('musicas', anoIndex, mesIndex + 1);
-    if (carregamentoAtual !== carregamentoDoMes) return;
+
+    if (carregamentoAtual !== carregamentoDoMes) {
+      loading.remover();
+      return;
+    }
+
     if (resultado.existe) musicasAtuais = resultado.itens;
   } catch (erro) {
     console.warn('[musica] usando conteúdo local; Firestore indisponível:', erro);
   }
 
-  if (carregamentoAtual !== carregamentoDoMes) return;
+  if (carregamentoAtual !== carregamentoDoMes) {
+    loading.remover();
+    return;
+  }
+
   const musicas = musicasAtuais;
   renderizar(true);
+  loading.remover();
 
   for (const m of musicas) {
     escutarUpvotes(m.id, (total) => {
