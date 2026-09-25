@@ -502,7 +502,8 @@ header a:hover { color: #c0392b; }
 .modal-livro-botoes {
   display: flex;
   flex-direction: row;
-  gap: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
   margin-top: 6px;
 }
 
@@ -573,8 +574,15 @@ header a:hover { color: #c0392b; }
     align-items: center;
   }
 
-  .modal-livro-link {
+  .modal-livro-botoes {
+    justify-content: center;
+  }
+
+  .modal-livro-link,
+  .modal-livro-link-compra {
     align-self: center;
+    justify-content: center;
+    min-width: 132px;
   }
 }
 
