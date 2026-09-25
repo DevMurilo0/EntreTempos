@@ -1,0 +1,195 @@
+/* =========================================================
+   ENTRE TEMPOS — Upvotes
+   Alvos maiores + dica de primeira visita.
+   ========================================================= */
+
+.btn-upvote,
+.voto-btn {
+  min-width: 46px;
+  min-height: 46px;
+  padding: 8px 7px;
+}
+
+.btn-upvote .upvote-seta {
+  font-size: 23px;
+}
+
+.btn-upvote .upvote-total {
+  font-size: 16px;
+}
+
+.voto-coluna {
+  min-width: 44px;
+  gap: 3px;
+}
+
+.voto-btn {
+  font-size: 21px;
+  line-height: 1;
+}
+
+.voto-score {
+  font-size: 17px;
+}
+
+/* ---------- dica de primeira visita ---------- */
+
+.et-upvote-guide {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  pointer-events: auto;
+}
+
+.et-upvote-guide__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 16, 13, .78);
+  backdrop-filter: blur(1.5px);
+  animation: etUpvoteBackdropIn .28s ease both;
+}
+
+.et-upvote-guide__alvos {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.et-upvote-guide__alvo {
+  position: fixed;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  padding: 4px;
+  border: 2px solid #c0392b;
+  border-radius: 12px;
+  background: #f2e8d5;
+  box-shadow:
+    0 0 0 4px rgba(196, 169, 107, .55),
+    0 0 0 9px rgba(192, 57, 43, .18);
+  animation: etUpvoteFocus 1.05s ease-in-out infinite alternate;
+}
+
+.et-upvote-guide__alvo > * {
+  margin: 0 !important;
+  pointer-events: none !important;
+}
+
+.et-upvote-guide__mensagem {
+  position: fixed;
+  z-index: 3;
+  left: 50%;
+  bottom: max(28px, env(safe-area-inset-bottom));
+  width: min(calc(100% - 38px), 430px);
+  transform: translateX(-50%);
+  padding: 18px 20px 16px;
+  border: 1px dashed #c4a96b;
+  border-left: 5px solid #8c3b3b;
+  background: #fffaf0;
+  color: #3e3228;
+  box-shadow: 8px 12px 30px rgba(0, 0, 0, .28);
+  text-align: center;
+  font-family: 'Special Elite', serif;
+  animation: etUpvoteMessageIn .38s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.et-upvote-guide__mensagem strong {
+  display: block;
+  font-size: clamp(17px, 4vw, 22px);
+  line-height: 1.35;
+  font-weight: 400;
+}
+
+.et-upvote-guide__mensagem button {
+  margin-top: 12px;
+  padding: 8px 16px;
+  border: 1px solid #8c3b3b;
+  background: #8c3b3b;
+  color: #fffaf0;
+  font: 12px 'Special Elite', serif;
+  cursor: pointer;
+}
+
+.et-upvote-guide.is-saindo {
+  pointer-events: none;
+}
+
+.et-upvote-guide.is-saindo .et-upvote-guide__backdrop,
+.et-upvote-guide.is-saindo .et-upvote-guide__mensagem,
+.et-upvote-guide.is-saindo .et-upvote-guide__alvo {
+  opacity: 0;
+  transition: opacity .22s ease;
+}
+
+@keyframes etUpvoteBackdropIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes etUpvoteMessageIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 14px) rotate(-.5deg);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) rotate(-.5deg);
+  }
+}
+
+@keyframes etUpvoteFocus {
+  from {
+    transform: scale(1);
+    box-shadow:
+      0 0 0 4px rgba(196, 169, 107, .45),
+      0 0 0 8px rgba(192, 57, 43, .12);
+  }
+  to {
+    transform: scale(1.08);
+    box-shadow:
+      0 0 0 5px rgba(196, 169, 107, .75),
+      0 0 0 14px rgba(192, 57, 43, .27);
+  }
+}
+
+@media (max-width: 600px) {
+  .btn-upvote,
+  .voto-btn {
+    min-width: 48px;
+    min-height: 48px;
+    padding: 9px 8px;
+  }
+
+  .btn-upvote .upvote-seta {
+    font-size: 26px;
+  }
+
+  .btn-upvote .upvote-total {
+    font-size: 17px;
+  }
+
+  .voto-coluna {
+    min-width: 48px;
+  }
+
+  .voto-btn {
+    font-size: 25px !important;
+    padding: 8px !important;
+  }
+
+  .voto-score {
+    font-size: 17px !important;
+  }
+
+  .et-upvote-guide__mensagem {
+    bottom: max(18px, env(safe-area-inset-bottom));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .et-upvote-guide__backdrop,
+  .et-upvote-guide__mensagem,
+  .et-upvote-guide__alvo {
+    animation: none !important;
+  }
+}
