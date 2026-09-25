@@ -17,6 +17,8 @@ const CLOUDINARY_CLOUD_NAME = 'uaisf2vc';
 const CLOUDINARY_UPLOAD_PRESET = 'entre_tempos_upload';
 const CLOUDINARY_UPLOAD_URL =
   `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
+const CLOUDINARY_PDF_UPLOAD_URL =
+  `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/raw/upload`;
 
 async function enviarCapaCloudinary(arquivo) {
   if (!arquivo) return null;
@@ -39,6 +41,48 @@ async function enviarCapaCloudinary(arquivo) {
   const dados = await resposta.json().catch(() => ({}));
   if (!resposta.ok || !dados.secure_url) {
     throw new Error(dados?.error?.message || 'Não foi possível enviar a imagem da capa.');
+  }
+
+  return {
+    url: dados.secure_url,
+    publicId: dados.public_id || ''
+  };
+}
+
+async function enviarPdfCloudinary(arquivo) {
+  if (!arquivo) return null;
+
+  const nome = String(arquivo.name || '').toLowerCase();
+  const ehPdf = arquivo.type === 'application/pdf' || nome.endsWith('.pdf');
+
+  if (!ehPdf) {
+    throw new Error('Escolha um arquivo PDF válido.');
+  }
+
+  if (arquivo.size > 25 * 1024 * 1024) {
+    throw new Error('O PDF precisa ter no máximo 25 MB.');
+  }
+
+  const formData = new FormData();
+  formData.append('file', arquivo);
+  formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+  const resposta = await fetch(CLOUDINARY_PDF_UPLOAD_URL, {
+    method: 'POST',
+    body: formData
+  });
+
+  const dados = await resposta.json().catch(() => ({}));
+
+  if (!resposta.ok || !dados.secure_url) {
+    const detalhe = dados?.error?.message || '';
+    const dica = /format|allowed|pdf/i.test(detalhe)
+      ? ' Verifique se o formato PDF está permitido no preset entre_tempos_upload do Cloudinary.'
+      : '';
+
+    throw new Error(
+      (detalhe || 'Não foi possível enviar o PDF.') + dica
+    );
   }
 
   return {
@@ -174,7 +218,8 @@ function obterFallback(ano, mes) {
     titulo: livro.titulo,
     subtitulo: livro.autor || '',
     descricao: livro.descricao,
-    pdfUrl: livro.link || '',
+    onlineUrl: livro.link || '',
+    pdfArquivoUrl: '',
     capa: livro.capa || '',
     linkCompra: livro.linkCompra || ''
   }));
@@ -191,7 +236,8 @@ const modalCapa = document.getElementById('modal-livro-capa');
 const modalTitulo = document.getElementById('modal-livro-titulo');
 const modalAutor = document.getElementById('modal-livro-autor');
 const modalDesc = document.getElementById('modal-livro-desc');
-const modalLink = document.getElementById('modal-livro-link');
+const modalLinkOnline = document.getElementById('modal-livro-link-online');
+const modalLinkPdf = document.getElementById('modal-livro-link-pdf');
 const modalLinkCompra = document.getElementById('modal-livro-link-compra');
 
 function abrirModal(livro) {
@@ -202,12 +248,22 @@ function abrirModal(livro) {
   modalAutor.style.display = livro.subtitulo ? 'block' : 'none';
   modalDesc.textContent = livro.descricao || '';
 
-  if (livro.pdfUrl && validarUrlHttp(livro.pdfUrl)) {
-    modalLink.href = livro.pdfUrl;
-    modalLink.textContent = 'Ler PDF ↗';
-    modalLink.style.display = 'inline-flex';
+  const onlineUrl = livro.onlineUrl || livro.pdfUrl || '';
+
+  if (onlineUrl && validarUrlHttp(onlineUrl)) {
+    modalLinkOnline.href = onlineUrl;
+    modalLinkOnline.textContent = 'Ler online ↗';
+    modalLinkOnline.style.display = 'inline-flex';
   } else {
-    modalLink.style.display = 'none';
+    modalLinkOnline.style.display = 'none';
+  }
+
+  if (livro.pdfArquivoUrl && validarUrlHttp(livro.pdfArquivoUrl)) {
+    modalLinkPdf.href = livro.pdfArquivoUrl;
+    modalLinkPdf.textContent = 'Ler PDF ↗';
+    modalLinkPdf.style.display = 'inline-flex';
+  } else {
+    modalLinkPdf.style.display = 'none';
   }
 
   if (livro.linkCompra && validarUrlHttp(livro.linkCompra)) {
@@ -352,7 +408,13 @@ async function carregarUpvotesDoMes() {
   try {
     const resultado = await carregarTopConteudos('livros', anoIndex, mesIndex + 1);
     if (carregamentoAtual !== carregamentoDoMes) return;
-    if (resultado.existe) livrosAtuais = resultado.itens;
+    if (resultado.existe) {
+      livrosAtuais = resultado.itens.map((livro) => ({
+        ...livro,
+        onlineUrl: livro.onlineUrl || livro.pdfUrl || '',
+        pdfArquivoUrl: livro.pdfArquivoUrl || ''
+      }));
+    }
   } catch (erro) {
     console.warn('[livros] usando conteúdo local; Firestore indisponível:', erro);
   }
@@ -402,7 +464,19 @@ criarEditorTop({
     { nome: 'titulo', label: 'Título', obrigatorio: true },
     { nome: 'subtitulo', label: 'Autor', obrigatorio: true },
     { nome: 'descricao', label: 'Descrição', tipo: 'textarea', obrigatorio: true },
-    { nome: 'pdfUrl', label: 'Link do PDF', tipo: 'url', placeholder: 'https://site.com/livro.pdf', obrigatorio: true },
+    {
+      nome: 'onlineUrl',
+      label: 'Ler online (opcional)',
+      tipo: 'url',
+      placeholder: 'https://site.com/livro'
+    },
+    {
+      nome: 'pdfArquivo',
+      label: 'Ler PDF (opcional)',
+      tipo: 'file',
+      accept: 'application/pdf,.pdf',
+      ajuda: 'Envie um PDF de até 25 MB. Ao editar, deixe vazio para manter o PDF atual.'
+    },
     {
       nome: 'capaArquivo',
       label: 'Capa do livro',
@@ -426,8 +500,8 @@ criarEditorTop({
   },
   obterItens: () => livrosAtuais,
   montarItem: async (valores, anterior, posicao) => {
-    if (!validarUrlHttp(valores.pdfUrl)) {
-      return { erro: 'Informe um link HTTP ou HTTPS válido para o PDF.' };
+    if (valores.onlineUrl && !validarUrlHttp(valores.onlineUrl)) {
+      return { erro: 'Informe um link HTTP ou HTTPS válido em “Ler online”.' };
     }
     if (!validarUrlHttp(valores.linkCompra)) {
       return { erro: 'Informe um link HTTP ou HTTPS válido para comprar o livro.' };
@@ -435,6 +509,8 @@ criarEditorTop({
 
     let capa = anterior?.capa || '';
     let capaPublicId = anterior?.capaPublicId || '';
+    let pdfArquivoUrl = anterior?.pdfArquivoUrl || '';
+    let pdfPublicId = anterior?.pdfPublicId || '';
 
     if (valores.capaArquivo) {
       try {
@@ -450,6 +526,16 @@ criarEditorTop({
       return { erro: 'Envie uma imagem para a capa do livro.' };
     }
 
+    if (valores.pdfArquivo) {
+      try {
+        const uploadPdf = await enviarPdfCloudinary(valores.pdfArquivo);
+        pdfArquivoUrl = uploadPdf.url;
+        pdfPublicId = uploadPdf.publicId;
+      } catch (erro) {
+        return { erro: erro?.message || 'Não foi possível enviar o PDF.' };
+      }
+    }
+
     return {
       item: {
         id: obterIdEditado('livros', anterior, valores.titulo),
@@ -457,7 +543,9 @@ criarEditorTop({
         titulo: valores.titulo,
         subtitulo: valores.subtitulo,
         descricao: valores.descricao,
-        pdfUrl: valores.pdfUrl,
+        onlineUrl: valores.onlineUrl,
+        pdfArquivoUrl,
+        ...(pdfPublicId ? { pdfPublicId } : {}),
         capa,
         ...(capaPublicId ? { capaPublicId } : {}),
         linkCompra: valores.linkCompra
