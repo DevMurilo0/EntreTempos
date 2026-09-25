@@ -319,10 +319,7 @@ function renderizar(animar = false) {
       autor.textContent = l.subtitulo;
       info.appendChild(autor);
     }
-    const abrir = document.createElement('span');
-    abrir.className = 'livro-abrir';
-    abrir.textContent = 'ver detalhes →';
-    li.append(votoColuna, numero, info, abrir);
+    li.append(votoColuna, numero, info);
     btnVoto.addEventListener('click', (e) => {
       e.stopPropagation();
       votar(btnVoto, l.id);
