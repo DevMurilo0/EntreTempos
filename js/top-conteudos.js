@@ -272,7 +272,11 @@ export function criarEditorTop(configuracao) {
     itemAtual = obterItens().find((item) => item.posicao === posicao) || null;
     posicaoLabel.textContent = `Posição: TOP ${posicao}`;
     campos.forEach((campo) => {
-      inputs[campo.nome].value = itemAtual?.[campo.nome] || '';
+      if (campo.tipo === 'file') {
+        inputs[campo.nome].value = '';
+      } else {
+        inputs[campo.nome].value = itemAtual?.[campo.nome] || '';
+      }
     });
     remover.hidden = !itemAtual;
     confirmacao.hidden = true;
@@ -321,8 +325,14 @@ export function criarEditorTop(configuracao) {
   formulario.addEventListener('submit', async (evento) => {
     evento.preventDefault();
     if (processando) return;
-    const valores = Object.fromEntries(campos.map((campo) => [campo.nome, inputs[campo.nome].value.trim()]));
-    const resultado = montarItem(valores, itemAtual, posicaoAtual);
+    const valores = Object.fromEntries(campos.map((campo) => {
+      const input = inputs[campo.nome];
+      const valor = campo.tipo === 'file'
+        ? (input.files?.[0] || null)
+        : input.value.trim();
+      return [campo.nome, valor];
+    }));
+    const resultado = await montarItem(valores, itemAtual, posicaoAtual);
     if (resultado.erro) {
       mostrarMensagem(resultado.erro, true);
       return;
