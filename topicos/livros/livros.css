@@ -793,3 +793,9 @@ header a:hover { color: #c0392b; }
   .voto-btn:active { transform: scale(0.9); }
   .voto-score { font-size: 15px; }
 }
+
+
+/* O item inteiro já é clicável; não exibe rótulo redundante de detalhes. */
+.livro-abrir {
+  display: none !important;
+}
