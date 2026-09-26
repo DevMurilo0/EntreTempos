@@ -3,6 +3,7 @@
    ============================================= */
 
 import { escutarUpvotes, alternarUpvote, jaVotou, pararTodosListeners } from '../../js/upvotes.js';
+import { criarLoadingEntreTempos } from '/js/loading-tempo.js';
 import {
   carregarTopConteudos, criarEditorTop, obterIdEditado,
   validarUrlHttp
@@ -399,6 +400,7 @@ function renderizar(animar = false) {
  */
 async function carregarUpvotesDoMes() {
   const carregamentoAtual = ++carregamentoDoMes;
+  const loading = criarLoadingEntreTempos();
   livrosAtuais = obterFallback(anoIndex, mesIndex + 1);
   pararTodosListeners();
 
@@ -407,7 +409,10 @@ async function carregarUpvotesDoMes() {
 
   try {
     const resultado = await carregarTopConteudos('livros', anoIndex, mesIndex + 1);
-    if (carregamentoAtual !== carregamentoDoMes) return;
+    if (carregamentoAtual !== carregamentoDoMes) {
+      loading.remover();
+      return;
+    }
     if (resultado.existe) {
       livrosAtuais = resultado.itens.map((livro) => ({
         ...livro,
@@ -419,9 +424,13 @@ async function carregarUpvotesDoMes() {
     console.warn('[livros] usando conteúdo local; Firestore indisponível:', erro);
   }
 
-  if (carregamentoAtual !== carregamentoDoMes) return;
+  if (carregamentoAtual !== carregamentoDoMes) {
+      loading.remover();
+      return;
+    }
   const livros = livrosAtuais;
   renderizar(true);
+  loading.remover();
 
   for (const l of livros) {
     escutarUpvotes(l.id, (total) => {
