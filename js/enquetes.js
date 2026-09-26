@@ -5,6 +5,7 @@ import {
   getDoc, runTransaction, onSnapshot 
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { escutarUpvotes, alternarUpvote, jaVotou, uidPronto } from './upvotes.js';
+import { criarLoadingEntreTempos } from './loading-tempo.js';
 
 const btnAddEnquete = document.getElementById('btn-add-enquete');
 const modalEnquete = document.getElementById('modal-enquete');
@@ -384,6 +385,7 @@ async function obterVotoUsuario(enqueteDocId) {
 }
 
 async function carregarEnquetes() {
+  const loading = criarLoadingEntreTempos();
   listenersEnquetes.forEach(unsub => unsub());
   listenersEnquetes = [];
 
@@ -395,6 +397,7 @@ async function carregarEnquetes() {
     
     if (querySnapshot.empty) {
       listaEnquetes.innerHTML = '<div class="enquetes-mensagem-estado">Nenhuma enquete encontrada.</div>';
+      loading.remover();
       return;
     }
     
@@ -646,9 +649,11 @@ async function carregarEnquetes() {
     });
 
     ordenarLista();
+    loading.remover();
   } catch (erro) {
     console.error("Erro ao carregar enquetes:", erro);
     listaEnquetes.innerHTML = '<div class="enquetes-mensagem-estado enquetes-mensagem-erro">Erro ao carregar as enquetes.</div>';
+    loading.erro('Não foi possível carregar as enquetes agora.');
   }
 }
 
