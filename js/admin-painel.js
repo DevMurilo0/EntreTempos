@@ -1,4 +1,5 @@
 import { auth, db } from './firebase-config.js';
+import { criarLoadingEntreTempos } from './loading-tempo.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { collection, deleteDoc, doc, onSnapshot, orderBy, query, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
@@ -19,6 +20,8 @@ let documentosAtuais = [];
 let filtroAtual = 'todas';
 let remocaoSelecionada = null;
 let removendo = false;
+let loadingInscricoes = null;
+let primeiraCargaInscricoes = true;
 
 function irParaFacaParte() {
   window.location.replace('../faca-parte.html');
@@ -169,16 +172,32 @@ function renderizarInscricoes() {
 }
 
 function carregarInscricoes() {
+  if (primeiraCargaInscricoes && !loadingInscricoes) {
+    loadingInscricoes = criarLoadingEntreTempos();
+  }
+
   pararListener = onSnapshot(
     query(collection(db, 'inscricoes'), orderBy('criadoEm', 'desc')),
     (snapshot) => {
       documentosAtuais = snapshot.docs;
       atualizarContagens(documentosAtuais);
       renderizarInscricoes();
+
+      if (primeiraCargaInscricoes) {
+        primeiraCargaInscricoes = false;
+        loadingInscricoes?.remover();
+        loadingInscricoes = null;
+      }
     },
     () => {
       mensagem.textContent = 'Não foi possível carregar as inscrições.';
       mensagem.className = 'mensagem-admin mensagem-painel mensagem-admin--erro';
+
+      if (primeiraCargaInscricoes) {
+        primeiraCargaInscricoes = false;
+        loadingInscricoes?.erro('Não foi possível carregar as inscrições agora.');
+        loadingInscricoes = null;
+      }
     }
   );
 }
