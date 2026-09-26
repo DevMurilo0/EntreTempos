@@ -1,5 +1,6 @@
 import { auth, db } from '/js/firebase-config.js';
 import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { criarLoadingEntreTempos } from '/js/loading-tempo.js';
 import {
   collection,
   doc,
@@ -20,6 +21,9 @@ const busca = document.querySelector('.busca-podcast');
 if (lista) iniciar();
 
 function iniciar() {
+  const loading = criarLoadingEntreTempos();
+  let primeiraLeitura = true;
+
   const barra = document.createElement('div');
   barra.className = 'podcast-admin-barra';
   barra.innerHTML = `
@@ -54,9 +58,19 @@ function iniciar() {
         .sort((a, b) => obterMillis(b.dados.criadoEm) - obterMillis(a.dados.criadoEm));
 
       renderizarCards(itens);
+
+      if (primeiraLeitura) {
+        primeiraLeitura = false;
+        loading.remover();
+      }
     },
     (erro) => {
       console.error('[podcast] Erro ao carregar episódios dinâmicos:', erro);
+
+      if (primeiraLeitura) {
+        primeiraLeitura = false;
+        loading.erro('Não foi possível carregar os episódios agora.');
+      }
     }
   );
 }
