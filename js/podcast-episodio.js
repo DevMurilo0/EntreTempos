@@ -1,5 +1,6 @@
 import { auth, db } from '/js/firebase-config.js';
 import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { criarLoadingEntreTempos } from '/js/loading-tempo.js';
 import {
   doc,
   onSnapshot,
@@ -23,6 +24,9 @@ if (!episodioId) {
 }
 
 function iniciar() {
+  const loading = criarLoadingEntreTempos();
+  let primeiraLeitura = true;
+
   const episodioRef = doc(
     db,
     'participantesAutorais',
@@ -97,6 +101,11 @@ function iniciar() {
       renderizar();
       atualizarControles();
 
+      if (primeiraLeitura) {
+        primeiraLeitura = false;
+        loading.remover();
+      }
+
       if (!likesIniciado) {
         likesIniciado = true;
         requestAnimationFrame(() => window.initLikes?.());
@@ -116,6 +125,11 @@ function iniciar() {
       console.error('[podcast] Erro ao carregar episódio:', erro);
       document.getElementById('episodio-nome').textContent =
         'Não foi possível carregar este episódio.';
+
+      if (primeiraLeitura) {
+        primeiraLeitura = false;
+        loading.erro('Não foi possível carregar este episódio agora.');
+      }
     }
   );
 
