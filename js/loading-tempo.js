@@ -1,5 +1,9 @@
 const STYLE_ID = 'et-loading-tempo-style';
 
+let overlayAtual = null;
+let referenciasAtivas = 0;
+let encerrando = false;
+
 function garantirEstilo() {
   if (document.getElementById(STYLE_ID)) return;
 
@@ -81,54 +85,72 @@ function garantirEstilo() {
   document.head.appendChild(style);
 }
 
-export function criarLoadingEntreTempos(texto = 'carregando o tempo...') {
+function garantirOverlay(texto) {
   garantirEstilo();
 
-  const existente = document.querySelector('.et-loading-tempo');
-  if (existente) {
-    return {
-      remover() {
-        existente.classList.add('is-saindo');
-        setTimeout(() => existente.remove(), 320);
-      },
-      erro(mensagem = 'Não foi possível atualizar agora.') {
-        const span = existente.querySelector('.et-loading-tempo__papel span');
-        if (span) span.textContent = mensagem;
-        setTimeout(() => {
-          existente.classList.add('is-saindo');
-          setTimeout(() => existente.remove(), 320);
-        }, 850);
-      }
-    };
+  if (!overlayAtual || !overlayAtual.isConnected) {
+    overlayAtual = document.createElement('div');
+    overlayAtual.className = 'et-loading-tempo';
+    overlayAtual.innerHTML = `
+      <div class="et-loading-tempo__papel" role="status" aria-live="polite">
+        <img src="/img/amp.png" alt="" aria-hidden="true">
+        <strong>Entre Tempos</strong>
+        <span></span>
+      </div>
+    `;
+    document.body.appendChild(overlayAtual);
+    encerrando = false;
   }
 
-  const overlay = document.createElement('div');
-  overlay.className = 'et-loading-tempo';
-  overlay.innerHTML = `
-    <div class="et-loading-tempo__papel" role="status" aria-live="polite">
-      <img src="/img/amp.png" alt="" aria-hidden="true">
-      <strong>Entre Tempos</strong>
-      <span></span>
-    </div>
-  `;
+  const span = overlayAtual.querySelector('.et-loading-tempo__papel span');
+  if (span) span.textContent = texto;
 
-  overlay.querySelector('span').textContent = texto;
-  document.body.appendChild(overlay);
+  return overlayAtual;
+}
 
-  let removido = false;
+function encerrarOverlay() {
+  if (!overlayAtual || encerrando) return;
+  encerrando = true;
+
+  const alvo = overlayAtual;
+  alvo.classList.add('is-saindo');
+
+  setTimeout(() => {
+    alvo.remove();
+    if (overlayAtual === alvo) overlayAtual = null;
+    encerrando = false;
+  }, 320);
+}
+
+export function criarLoadingEntreTempos(texto = 'carregando o tempo...') {
+  garantirOverlay(texto);
+  referenciasAtivas += 1;
+
+  let finalizado = false;
 
   return {
     remover() {
-      if (removido) return;
-      removido = true;
-      overlay.classList.add('is-saindo');
-      setTimeout(() => overlay.remove(), 320);
+      if (finalizado) return;
+      finalizado = true;
+      referenciasAtivas = Math.max(0, referenciasAtivas - 1);
+
+      if (referenciasAtivas === 0) {
+        encerrarOverlay();
+      }
     },
+
     erro(mensagem = 'Não foi possível atualizar agora.') {
-      if (removido) return;
-      const span = overlay.querySelector('.et-loading-tempo__papel span');
+      if (finalizado) return;
+
+      const span = overlayAtual?.querySelector('.et-loading-tempo__papel span');
       if (span) span.textContent = mensagem;
-      setTimeout(() => this.remover(), 850);
+
+      finalizado = true;
+      referenciasAtivas = Math.max(0, referenciasAtivas - 1);
+
+      if (referenciasAtivas === 0) {
+        setTimeout(() => encerrarOverlay(), 850);
+      }
     }
   };
 }
