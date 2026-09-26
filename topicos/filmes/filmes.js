@@ -3,6 +3,7 @@
    ============================================= */
 
 import { escutarUpvotes, alternarUpvote, jaVotou, pararTodosListeners } from '../../js/upvotes.js';
+import { criarLoadingEntreTempos } from '/js/loading-tempo.js';
 import {
   carregarTopConteudos, criarEditorTop, extrairYoutubeId,
   gerarYoutubeEmbedUrl, obterIdEditado
@@ -237,6 +238,7 @@ function renderizar(animar = false) {
  */
 async function carregarUpvotesDoMes() {
   const carregamentoAtual = ++carregamentoDoMes;
+  const loading = criarLoadingEntreTempos();
   const filmesFallback = obterFallback(anoIndex, mesIndex + 1);
   filmesAtuais = filmesFallback;
   pararTodosListeners();
@@ -246,15 +248,22 @@ async function carregarUpvotesDoMes() {
 
   try {
     const resultado = await carregarTopConteudos('filmes', anoIndex, mesIndex + 1);
-    if (carregamentoAtual !== carregamentoDoMes) return;
+    if (carregamentoAtual !== carregamentoDoMes) {
+      loading.remover();
+      return;
+    }
     if (resultado.existe) filmesAtuais = resultado.itens;
   } catch (erro) {
     console.warn('[filmes] usando conteúdo local; Firestore indisponível:', erro);
   }
 
-  if (carregamentoAtual !== carregamentoDoMes) return;
+  if (carregamentoAtual !== carregamentoDoMes) {
+      loading.remover();
+      return;
+    }
   const filmes = filmesAtuais;
   renderizar(true);
+  loading.remover();
 
   for (const f of filmes) {
     escutarUpvotes(f.id, (total) => {
