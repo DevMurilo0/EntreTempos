@@ -66,20 +66,9 @@ export function gerarIdConteudo(tipo) {
   return `${prefixo}-${uuid}`;
 }
 
-function normalizarTitulo(titulo) {
-  return String(titulo || '')
-    .trim()
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '');
-}
-
-export function obterIdEditado(tipo, itemAnterior, tituloNovo) {
+export function obterIdEditado(tipo, itemAnterior) {
   if (!itemAnterior?.id) return gerarIdConteudo(tipo);
-  const mesmoTitulo = normalizarTitulo(itemAnterior.titulo) === normalizarTitulo(tituloNovo);
-  return mesmoTitulo ? itemAnterior.id : gerarIdConteudo(tipo);
+  return itemAnterior.id;
 }
 
 export function extrairYoutubeId(valor) {
@@ -146,7 +135,8 @@ function criarElemento(tag, classe, texto) {
 export function criarEditorTop(configuracao) {
   const {
     tipo, limite, botao, titulo, campos, obterPeriodo,
-    carregarPeriodo, obterItens, montarItem, aoSalvar
+    carregarPeriodo, obterItens, obterItensClassificados = obterItens,
+    montarItem, aoSalvar
   } = configuracao;
 
   const overlay = criarElemento('div', 'editor-top');
@@ -224,15 +214,9 @@ export function criarEditorTop(configuracao) {
       painelAtual.hidden = true;
       const estadoAtual = criarElemento('strong', 'editor-top__arquivo-estado');
       const nomeAtual = criarElemento('span', 'editor-top__arquivo-nome');
-      const acaoAtual = criarElemento(
-        'button',
-        'editor-top__arquivo-acao',
-        campo.arquivoAtual.textoAcao || 'Ver arquivo atual'
-      );
-      acaoAtual.type = 'button';
-      painelAtual.append(estadoAtual, nomeAtual, acaoAtual);
+      painelAtual.append(estadoAtual, nomeAtual);
       grupo.appendChild(painelAtual);
-      arquivosAtuais[campo.nome] = { painelAtual, estadoAtual, nomeAtual, acaoAtual };
+      arquivosAtuais[campo.nome] = { painelAtual, estadoAtual, nomeAtual };
     }
 
     formulario.appendChild(grupo);
@@ -277,20 +261,21 @@ export function criarEditorTop(configuracao) {
   }
 
   function atualizarSlots() {
-    const itens = obterItens();
+    const itens = obterItensClassificados();
     botoesSlots.forEach((slot) => {
       const posicao = Number(slot.dataset.posicao);
-      const preenchido = itens.some((item) => item.posicao === posicao);
+      const item = itens[posicao - 1];
+      const preenchido = Boolean(item);
       slot.classList.toggle('editor-top__slot--preenchido', preenchido);
       slot.classList.toggle('editor-top__slot--selecionado', posicao === posicaoAtual);
       slot.setAttribute('aria-selected', String(posicao === posicaoAtual));
-      slot.title = preenchido ? 'Posição preenchida' : 'Posição vazia';
+      slot.title = preenchido ? `TOP ${posicao}: ${item.titulo}` : 'Posição vazia';
     });
   }
 
   function selecionarPosicao(posicao) {
     posicaoAtual = posicao;
-    itemAtual = obterItens().find((item) => item.posicao === posicao) || null;
+    itemAtual = obterItensClassificados()[posicao - 1] || null;
     posicaoLabel.textContent = `Posição: TOP ${posicao}`;
     campos.forEach((campo) => {
       if (campo.tipo === 'file') {
@@ -365,32 +350,6 @@ export function criarEditorTop(configuracao) {
   campoMes.addEventListener('change', mudarPeriodo);
   campoAno.addEventListener('change', mudarPeriodo);
 
-  campos.forEach((campo) => {
-    const elementosAtual = arquivosAtuais[campo.nome];
-    if (!elementosAtual || !campo.arquivoAtual?.aoAcionar) return;
-
-    elementosAtual.acaoAtual.addEventListener('click', async () => {
-      if (!itemAtual || processando) return;
-      const textoOriginal = elementosAtual.acaoAtual.textContent;
-      elementosAtual.acaoAtual.disabled = true;
-      elementosAtual.acaoAtual.textContent = campo.arquivoAtual.textoProcessando || 'Abrindo...';
-      mostrarMensagem('Obtendo arquivo atual...');
-      try {
-        await campo.arquivoAtual.aoAcionar(itemAtual);
-        mostrarMensagem('Arquivo atual obtido com sucesso.');
-      } catch (erro) {
-        console.error(`[${tipo}] erro ao obter arquivo atual:`, erro);
-        mostrarMensagem(
-          campo.arquivoAtual.mensagemErro || 'Não foi possível obter o arquivo atual.',
-          true
-        );
-      } finally {
-        elementosAtual.acaoAtual.disabled = false;
-        elementosAtual.acaoAtual.textContent = textoOriginal;
-      }
-    });
-  });
-
   formulario.addEventListener('submit', async (evento) => {
     evento.preventDefault();
     if (processando) return;
@@ -407,18 +366,28 @@ export function criarEditorTop(configuracao) {
     remover.disabled = true;
     salvar.textContent = 'Enviando e salvando...';
     try {
-      const resultado = await montarItem(valores, itemAtual, posicaoAtual);
+      const posicaoPersistida = itemAtual?.posicao || (() => {
+        const usadas = new Set(obterItens().map((item) => Number(item.posicao)));
+        for (let posicao = 1; posicao <= limite; posicao += 1) {
+          if (!usadas.has(posicao)) return posicao;
+        }
+        return limite;
+      })();
+      const resultado = await montarItem(valores, itemAtual, posicaoPersistida);
       if (resultado.erro) {
         mostrarMensagem(resultado.erro, true);
         return;
       }
 
-      const itens = obterItens().filter((item) => item.posicao !== posicaoAtual);
+      const idEditado = itemAtual?.id;
+      const itens = obterItens().filter((item) => !idEditado || item.id !== idEditado);
       itens.push(resultado.item);
       const { mes, ano } = obterPeriodo();
       await salvarTopConteudos(tipo, ano, mes, itens);
       await aoSalvar();
-      selecionarPosicao(posicaoAtual);
+      const novaPosicao = obterItensClassificados()
+        .findIndex((item) => item.id === resultado.item.id) + 1;
+      selecionarPosicao(novaPosicao || posicaoAtual);
       mostrarMensagem('Conteúdo salvo. A lista já foi atualizada.');
     } catch (erro) {
       console.error(`[${tipo}] erro ao salvar conteúdo:`, erro);
@@ -450,7 +419,7 @@ export function criarEditorTop(configuracao) {
     confirmarRemocao.textContent = 'Removendo...';
     try {
       const { mes, ano } = obterPeriodo();
-      await removerItemTop(tipo, ano, mes, obterItens(), posicaoAtual);
+      await removerItemTop(tipo, ano, mes, obterItens(), itemAtual.posicao);
       await aoSalvar();
       selecionarPosicao(posicaoAtual);
       mostrarMensagem('Conteúdo removido. As outras posições foram preservadas.');
@@ -475,5 +444,21 @@ export function criarEditorTop(configuracao) {
     if (!autorizado && !overlay.hidden) fecharEditor();
   });
 
-  return { atualizarSlots };
+  function atualizarRanking() {
+    if (!itemAtual?.id) {
+      atualizarSlots();
+      return;
+    }
+
+    const itens = obterItensClassificados();
+    const indiceAtual = itens.findIndex((item) => item.id === itemAtual.id);
+    if (indiceAtual >= 0) {
+      posicaoAtual = indiceAtual + 1;
+      itemAtual = itens[indiceAtual];
+      posicaoLabel.textContent = `Posição: TOP ${posicaoAtual}`;
+    }
+    atualizarSlots();
+  }
+
+  return { atualizarSlots, atualizarRanking };
 }

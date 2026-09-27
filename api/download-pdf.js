@@ -19,6 +19,9 @@ export default async function handler(req, res) {
 
   const caminhoPermitido =
     parsed.hostname === 'res.cloudinary.com' &&
+    !parsed.username &&
+    !parsed.password &&
+    !parsed.port &&
     (
       parsed.pathname.startsWith('/uaisf2vc/raw/upload/') ||
       parsed.pathname.startsWith('/uaisf2vc/image/upload/')
@@ -33,7 +36,17 @@ export default async function handler(req, res) {
     const resposta = await fetch(parsed.toString());
 
     if (!resposta.ok) {
-      return res.status(resposta.status).send('Não foi possível obter o PDF.');
+      const corpo = await resposta.text().catch(() => '');
+      console.error('[download-pdf] Cloudinary recusou o arquivo:', {
+        status: resposta.status,
+        contentType: resposta.headers.get('content-type') || '',
+        cloudinaryError: resposta.headers.get('x-cld-error') || '',
+        url: `${parsed.origin}${parsed.pathname}`,
+        corpo: corpo.slice(0, 500)
+      });
+      return res.status(resposta.status).json({
+        erro: 'Não foi possível obter o PDF no armazenamento.'
+      });
     }
 
     const tipo = resposta.headers.get('content-type') || '';

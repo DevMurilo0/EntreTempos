@@ -74,8 +74,11 @@ async function enviarPdfCloudinary(arquivo) {
   });
 
   const dados = await resposta.json().catch(() => ({}));
+  const recursoValido =
+    dados.secure_url && dados.public_id && dados.asset_id &&
+    dados.resource_type === 'raw' && dados.type === 'upload';
 
-  if (!resposta.ok || !dados.secure_url) {
+  if (!resposta.ok || !recursoValido) {
     const detalhe = dados?.error?.message || '';
     const dica = /format|allowed|pdf/i.test(detalhe)
       ? ' Verifique se o formato PDF está permitido no preset entre_tempos_upload do Cloudinary.'
@@ -88,7 +91,11 @@ async function enviarPdfCloudinary(arquivo) {
 
   return {
     url: dados.secure_url,
-    publicId: dados.public_id || ''
+    publicId: dados.public_id,
+    assetId: dados.asset_id,
+    resourceType: dados.resource_type,
+    format: dados.format || (/\.pdf$/i.test(dados.public_id) ? 'pdf' : ''),
+    nomeOriginal: arquivo.name || `${dados.original_filename || 'livro'}.pdf`
   };
 }
 
@@ -522,6 +529,7 @@ async function carregarUpvotesDoMes() {
     escutarUpvotes(l.id, (total) => {
       totaisAtuais[l.id] = total;
       renderizar();
+      editorTop.atualizarRanking();
     });
   }
 
@@ -550,7 +558,7 @@ document.getElementById('seta-dir').addEventListener('click', () => {
   carregarUpvotesDoMes();
 });
 
-criarEditorTop({
+const editorTop = criarEditorTop({
   tipo: 'livros',
   limite: 5,
   botao: document.getElementById('btn-gerenciar-top'),
@@ -574,10 +582,7 @@ criarEditorTop({
       arquivoAtual: {
         existe: (livro) => Boolean(livro?.pdfArquivoUrl),
         textoCadastrado: '✓ PDF atual cadastrado',
-        textoAcao: 'Baixar PDF atual',
-        textoProcessando: 'Baixando...',
-        mensagemErro: 'Não foi possível baixar o PDF atual. Tente novamente.',
-        aoAcionar: baixarPdf
+        obterNome: (livro) => livro?.pdfNomeOriginal || ''
       }
     },
     {
@@ -602,6 +607,7 @@ criarEditorTop({
     await carregarUpvotesDoMes();
   },
   obterItens: () => livrosAtuais,
+  obterItensClassificados: () => ordenarPorUpvotes(livrosAtuais),
   montarItem: async (valores, anterior, posicao) => {
     if (valores.onlineUrl && !validarUrlHttp(valores.onlineUrl)) {
       return { erro: 'Informe um link HTTP ou HTTPS válido em “Ler online”.' };
@@ -614,6 +620,10 @@ criarEditorTop({
     let capaPublicId = anterior?.capaPublicId || '';
     let pdfArquivoUrl = anterior?.pdfArquivoUrl || '';
     let pdfPublicId = anterior?.pdfPublicId || '';
+    let pdfAssetId = anterior?.pdfAssetId || '';
+    let pdfResourceType = anterior?.pdfResourceType || '';
+    let pdfFormat = anterior?.pdfFormat || '';
+    let pdfNomeOriginal = anterior?.pdfNomeOriginal || '';
 
     if (valores.capaArquivo) {
       try {
@@ -634,6 +644,10 @@ criarEditorTop({
         const uploadPdf = await enviarPdfCloudinary(valores.pdfArquivo);
         pdfArquivoUrl = uploadPdf.url;
         pdfPublicId = uploadPdf.publicId;
+        pdfAssetId = uploadPdf.assetId;
+        pdfResourceType = uploadPdf.resourceType;
+        pdfFormat = uploadPdf.format;
+        pdfNomeOriginal = uploadPdf.nomeOriginal;
       } catch (erro) {
         return { erro: erro?.message || 'Não foi possível enviar o PDF.' };
       }
@@ -641,6 +655,7 @@ criarEditorTop({
 
     return {
       item: {
+        ...anterior,
         id: obterIdEditado('livros', anterior, valores.titulo),
         posicao,
         titulo: valores.titulo,
@@ -649,6 +664,10 @@ criarEditorTop({
         onlineUrl: valores.onlineUrl,
         pdfArquivoUrl,
         ...(pdfPublicId ? { pdfPublicId } : {}),
+        ...(pdfAssetId ? { pdfAssetId } : {}),
+        ...(pdfResourceType ? { pdfResourceType } : {}),
+        ...(pdfFormat ? { pdfFormat } : {}),
+        ...(pdfNomeOriginal ? { pdfNomeOriginal } : {}),
         capa,
         ...(capaPublicId ? { capaPublicId } : {}),
         linkCompra: valores.linkCompra

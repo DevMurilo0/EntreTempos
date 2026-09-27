@@ -420,6 +420,7 @@ async function carregarUpvotesDoMes() {
     escutarUpvotes(m.id, (total) => {
       totaisAtuais[m.id] = total;
       renderizar();
+      editorTop.atualizarRanking();
     });
   }
 
@@ -448,7 +449,7 @@ document.getElementById('seta-dir').addEventListener('click', () => {
   carregarUpvotesDoMes();
 });
 
-criarEditorTop({
+const editorTop = criarEditorTop({
   tipo: 'musicas',
   limite: 10,
   botao: document.getElementById('btn-gerenciar-top'),
@@ -466,12 +467,14 @@ criarEditorTop({
     await carregarUpvotesDoMes();
   },
   obterItens: () => musicasAtuais,
+  obterItensClassificados: () => ordenarPorUpvotes(musicasAtuais),
   montarItem: (valores, anterior, posicao) => {
     const youtubeId = valores.youtubeUrl ? extrairYoutubeId(valores.youtubeUrl) : '';
     if (!anterior?.video && !youtubeId) return { erro: 'Informe um link válido do YouTube.' };
     if (valores.youtubeUrl && !youtubeId) return { erro: 'Informe um link válido do YouTube.' };
     return {
       item: {
+        ...anterior,
         ...(anterior?.video && !youtubeId ? { video: anterior.video } : {}),
         id: obterIdEditado('musicas', anterior, valores.titulo),
         posicao,

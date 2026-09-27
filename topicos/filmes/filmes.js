@@ -269,6 +269,7 @@ async function carregarUpvotesDoMes() {
     escutarUpvotes(f.id, (total) => {
       totaisAtuais[f.id] = total;
       renderizar();
+      editorTop.atualizarRanking();
     });
   }
 
@@ -301,7 +302,7 @@ btnFechar.addEventListener('click', fecharModal);
 modal.addEventListener('click', e => { if (e.target === modal) fecharModal(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && filmeAberto) fecharModal(); });
 
-criarEditorTop({
+const editorTop = criarEditorTop({
   tipo: 'filmes',
   limite: 5,
   botao: document.getElementById('btn-gerenciar-top'),
@@ -319,12 +320,14 @@ criarEditorTop({
     await carregarUpvotesDoMes();
   },
   obterItens: () => filmesAtuais,
+  obterItensClassificados: () => ordenarPorUpvotes(filmesAtuais),
   montarItem: (valores, anterior, posicao) => {
     const youtubeId = valores.youtubeUrl ? extrairYoutubeId(valores.youtubeUrl) : '';
     if (!anterior?.video && !youtubeId) return { erro: 'Informe um link válido do YouTube.' };
     if (valores.youtubeUrl && !youtubeId) return { erro: 'Informe um link válido do YouTube.' };
     return {
       item: {
+        ...anterior,
         ...(anterior?.video && !youtubeId ? { video: anterior.video } : {}),
         id: obterIdEditado('filmes', anterior, valores.titulo),
         posicao,

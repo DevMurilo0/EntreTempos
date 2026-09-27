@@ -129,16 +129,6 @@ body.editor-top-aberto { overflow: hidden; }
   color: #695944;
   font-size: 11px;
 }
-.editor-top__arquivo-acao {
-  margin-left: auto;
-  padding: 7px 10px;
-  border: 1px solid #4d6648;
-  background: transparent;
-  color: #3f5b3b;
-  font: 11px 'Special Elite', serif;
-  cursor: pointer;
-}
-.editor-top__arquivo-acao:disabled { cursor: wait; opacity: .65; }
 .editor-top__slots {
   display: flex;
   flex-wrap: wrap;
@@ -193,5 +183,4 @@ body.editor-top-aberto { overflow: hidden; }
   .editor-top__acoes { flex-direction: column; }
   .editor-top__acoes button { width: 100%; }
   .editor-top__remover { margin-right: 0; order: 3; }
-  .editor-top__arquivo-acao { width: 100%; margin-left: 0; }
 }
