@@ -71,9 +71,11 @@ body.editor-top-aberto { overflow: hidden; }
   margin-bottom: 18px;
 }
 .editor-top__periodo label,
-.editor-top__campo { display: flex; flex-direction: column; gap: 7px; }
+.editor-top__campo,
+.editor-top__campo > label { display: flex; flex-direction: column; gap: 7px; }
 .editor-top__periodo label,
-.editor-top__campo > span { font-size: 13px; color: #695944; }
+.editor-top__campo > span,
+.editor-top__campo > label > span { font-size: 13px; color: #695944; }
 .editor-top select,
 .editor-top input,
 .editor-top textarea {
@@ -109,6 +111,34 @@ body.editor-top-aberto { overflow: hidden; }
   font-size: 11px;
   line-height: 1.45;
 }
+.editor-top__arquivo-atual {
+  display: flex;
+  align-items: center;
+  gap: 8px 12px;
+  flex-wrap: wrap;
+  margin-top: 3px;
+  padding: 10px 12px;
+  border-left: 3px solid #4d6648;
+  background: rgba(77, 102, 72, .09);
+}
+.editor-top__arquivo-atual[hidden] { display: none; }
+.editor-top__arquivo-estado { color: #3f5b3b; font-size: 12px; }
+.editor-top__arquivo-nome {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  color: #695944;
+  font-size: 11px;
+}
+.editor-top__arquivo-acao {
+  margin-left: auto;
+  padding: 7px 10px;
+  border: 1px solid #4d6648;
+  background: transparent;
+  color: #3f5b3b;
+  font: 11px 'Special Elite', serif;
+  cursor: pointer;
+}
+.editor-top__arquivo-acao:disabled { cursor: wait; opacity: .65; }
 .editor-top__slots {
   display: flex;
   flex-wrap: wrap;
@@ -163,4 +193,5 @@ body.editor-top-aberto { overflow: hidden; }
   .editor-top__acoes { flex-direction: column; }
   .editor-top__acoes button { width: 100%; }
   .editor-top__remover { margin-right: 0; order: 3; }
+  .editor-top__arquivo-acao { width: 100%; margin-left: 0; }
 }

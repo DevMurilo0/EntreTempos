@@ -201,9 +201,12 @@ export function criarEditorTop(configuracao) {
   const posicaoLabel = criarElemento('p', 'editor-top__posicao', 'Posição: TOP 1');
   formulario.appendChild(posicaoLabel);
   const inputs = {};
+  const arquivosAtuais = {};
   campos.forEach((campo) => {
-    const grupo = criarElemento('label', 'editor-top__campo');
-    grupo.appendChild(criarElemento('span', '', campo.label));
+    const possuiArquivoAtual = campo.tipo === 'file' && campo.arquivoAtual;
+    const grupo = criarElemento(possuiArquivoAtual ? 'div' : 'label', 'editor-top__campo');
+    const rotuloCampo = possuiArquivoAtual ? document.createElement('label') : grupo;
+    rotuloCampo.appendChild(criarElemento('span', '', campo.label));
     const input = campo.tipo === 'textarea'
       ? document.createElement('textarea')
       : document.createElement('input');
@@ -212,8 +215,26 @@ export function criarEditorTop(configuracao) {
     if (campo.accept) input.accept = campo.accept;
     if (campo.obrigatorio && campo.tipo !== 'file') input.required = true;
     input.name = campo.nome;
-    grupo.appendChild(input);
-    if (campo.ajuda) grupo.appendChild(criarElemento('small', 'editor-top__ajuda', campo.ajuda));
+    rotuloCampo.appendChild(input);
+    if (campo.ajuda) rotuloCampo.appendChild(criarElemento('small', 'editor-top__ajuda', campo.ajuda));
+    if (possuiArquivoAtual) grupo.appendChild(rotuloCampo);
+
+    if (possuiArquivoAtual) {
+      const painelAtual = criarElemento('div', 'editor-top__arquivo-atual');
+      painelAtual.hidden = true;
+      const estadoAtual = criarElemento('strong', 'editor-top__arquivo-estado');
+      const nomeAtual = criarElemento('span', 'editor-top__arquivo-nome');
+      const acaoAtual = criarElemento(
+        'button',
+        'editor-top__arquivo-acao',
+        campo.arquivoAtual.textoAcao || 'Ver arquivo atual'
+      );
+      acaoAtual.type = 'button';
+      painelAtual.append(estadoAtual, nomeAtual, acaoAtual);
+      grupo.appendChild(painelAtual);
+      arquivosAtuais[campo.nome] = { painelAtual, estadoAtual, nomeAtual, acaoAtual };
+    }
+
     formulario.appendChild(grupo);
     inputs[campo.nome] = input;
   });
@@ -274,6 +295,28 @@ export function criarEditorTop(configuracao) {
     campos.forEach((campo) => {
       if (campo.tipo === 'file') {
         inputs[campo.nome].value = '';
+
+        const elementosAtual = arquivosAtuais[campo.nome];
+        if (elementosAtual) {
+          const configuracaoAtual = campo.arquivoAtual;
+          const existe = Boolean(
+            itemAtual && (
+              configuracaoAtual.existe
+                ? configuracaoAtual.existe(itemAtual)
+                : itemAtual[configuracaoAtual.urlCampo]
+            )
+          );
+          elementosAtual.painelAtual.hidden = !existe;
+          if (existe) {
+            elementosAtual.estadoAtual.textContent = configuracaoAtual.textoCadastrado
+              || '✓ Arquivo atual cadastrado';
+            const nome = configuracaoAtual.obterNome
+              ? configuracaoAtual.obterNome(itemAtual)
+              : itemAtual[configuracaoAtual.nomeCampo];
+            elementosAtual.nomeAtual.textContent = nome || '';
+            elementosAtual.nomeAtual.hidden = !nome;
+          }
+        }
       } else {
         inputs[campo.nome].value = itemAtual?.[campo.nome] || '';
       }
@@ -322,6 +365,32 @@ export function criarEditorTop(configuracao) {
   campoMes.addEventListener('change', mudarPeriodo);
   campoAno.addEventListener('change', mudarPeriodo);
 
+  campos.forEach((campo) => {
+    const elementosAtual = arquivosAtuais[campo.nome];
+    if (!elementosAtual || !campo.arquivoAtual?.aoAcionar) return;
+
+    elementosAtual.acaoAtual.addEventListener('click', async () => {
+      if (!itemAtual || processando) return;
+      const textoOriginal = elementosAtual.acaoAtual.textContent;
+      elementosAtual.acaoAtual.disabled = true;
+      elementosAtual.acaoAtual.textContent = campo.arquivoAtual.textoProcessando || 'Abrindo...';
+      mostrarMensagem('Obtendo arquivo atual...');
+      try {
+        await campo.arquivoAtual.aoAcionar(itemAtual);
+        mostrarMensagem('Arquivo atual obtido com sucesso.');
+      } catch (erro) {
+        console.error(`[${tipo}] erro ao obter arquivo atual:`, erro);
+        mostrarMensagem(
+          campo.arquivoAtual.mensagemErro || 'Não foi possível obter o arquivo atual.',
+          true
+        );
+      } finally {
+        elementosAtual.acaoAtual.disabled = false;
+        elementosAtual.acaoAtual.textContent = textoOriginal;
+      }
+    });
+  });
+
   formulario.addEventListener('submit', async (evento) => {
     evento.preventDefault();
     if (processando) return;
@@ -332,24 +401,24 @@ export function criarEditorTop(configuracao) {
         : input.value.trim();
       return [campo.nome, valor];
     }));
-    const resultado = await montarItem(valores, itemAtual, posicaoAtual);
-    if (resultado.erro) {
-      mostrarMensagem(resultado.erro, true);
-      return;
-    }
 
     processando = true;
     salvar.disabled = true;
     remover.disabled = true;
-    salvar.textContent = 'Salvando...';
+    salvar.textContent = 'Enviando e salvando...';
     try {
+      const resultado = await montarItem(valores, itemAtual, posicaoAtual);
+      if (resultado.erro) {
+        mostrarMensagem(resultado.erro, true);
+        return;
+      }
+
       const itens = obterItens().filter((item) => item.posicao !== posicaoAtual);
       itens.push(resultado.item);
       const { mes, ano } = obterPeriodo();
       await salvarTopConteudos(tipo, ano, mes, itens);
       await aoSalvar();
-      itemAtual = obterItens().find((item) => item.posicao === posicaoAtual) || resultado.item;
-      atualizarSlots();
+      selecionarPosicao(posicaoAtual);
       mostrarMensagem('Conteúdo salvo. A lista já foi atualizada.');
     } catch (erro) {
       console.error(`[${tipo}] erro ao salvar conteúdo:`, erro);

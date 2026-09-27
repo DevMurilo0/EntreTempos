@@ -63,19 +63,49 @@ async function enviarPdfCloudinary(arquivo) {
   if (arquivo.size > 25 * 1024 * 1024) {
     throw new Error('O PDF precisa ter no máximo 25 MB.');
   }
+  if (!arquivo.size) {
+    throw new Error('O PDF selecionado está vazio.');
+  }
+
+  const assinatura = new Uint8Array(await arquivo.slice(0, 5).arrayBuffer());
+  const cabecalhoPdf = String.fromCharCode(...assinatura);
+  if (cabecalhoPdf !== '%PDF-') {
+    throw new Error('O arquivo selecionado não contém um PDF válido.');
+  }
 
   const formData = new FormData();
   formData.append('file', arquivo);
   formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
 
-  const resposta = await fetch(CLOUDINARY_PDF_UPLOAD_URL, {
-    method: 'POST',
-    body: formData
-  });
+  let resposta;
+  try {
+    resposta = await fetch(CLOUDINARY_PDF_UPLOAD_URL, {
+      method: 'POST',
+      body: formData
+    });
+  } catch (_) {
+    throw new Error('Não foi possível enviar o PDF. Verifique sua conexão e tente novamente.');
+  }
 
   const dados = await resposta.json().catch(() => ({}));
 
-  if (!resposta.ok || !dados.secure_url) {
+  const recursoEhRaw = dados.resource_type === 'raw';
+  // Uploads raw não trazem `format`; a extensão faz parte do public_id.
+  const formato = String(
+    dados.format || dados.public_id?.split('.').pop() || dados.secure_url?.split('.').pop() || ''
+  ).toLowerCase();
+
+  if (
+    !resposta.ok
+    || !dados.secure_url
+    || !dados.public_id
+    || !dados.asset_id
+    || !recursoEhRaw
+    || dados.type !== 'upload'
+    || formato !== 'pdf'
+    || !Number(dados.bytes)
+    || Number(dados.bytes) > 25 * 1024 * 1024
+  ) {
     const detalhe = dados?.error?.message || '';
     const dica = /format|allowed|pdf/i.test(detalhe)
       ? ' Verifique se o formato PDF está permitido no preset entre_tempos_upload do Cloudinary.'
@@ -88,7 +118,11 @@ async function enviarPdfCloudinary(arquivo) {
 
   return {
     url: dados.secure_url,
-    publicId: dados.public_id || ''
+    publicId: dados.public_id,
+    assetId: dados.asset_id,
+    resourceType: dados.resource_type,
+    format: formato,
+    nomeOriginal: arquivo.name || dados.original_filename || 'livro.pdf'
   };
 }
 
@@ -240,38 +274,59 @@ const modalDesc = document.getElementById('modal-livro-desc');
 const modalLinkOnline = document.getElementById('modal-livro-link-online');
 const modalLinkPdf = document.getElementById('modal-livro-link-pdf');
 const modalLinkCompra = document.getElementById('modal-livro-link-compra');
+const modalDownloadStatus = document.getElementById('modal-livro-download-status');
 
-async function baixarPdf(url, titulo = 'livro') {
-  if (!validarUrlHttp(url)) {
+function gerarUrlApiDownload(livro) {
+  const parametros = new URLSearchParams({
+    url: livro.pdfArquivoUrl,
+    filename: `${slugify(livro.titulo) || 'livro'}.pdf`
+  });
+  return `/api/download-pdf?${parametros.toString()}`;
+}
+
+async function baixarPdf(livro) {
+  if (!livro?.pdfArquivoUrl || !validarUrlHttp(livro.pdfArquivoUrl)) {
     throw new Error('Link do PDF inválido.');
   }
 
-  const resposta = await fetch(url, {
+  const resposta = await fetch(gerarUrlApiDownload(livro), {
     method: 'GET',
-    mode: 'cors',
-    cache: 'no-store'
+    cache: 'no-store',
+    credentials: 'same-origin',
+    headers: { Accept: 'application/pdf' }
   });
 
   if (!resposta.ok) {
-    throw new Error(`Não foi possível baixar o PDF (HTTP ${resposta.status}).`);
+    const detalhe = await resposta.json().catch(() => ({}));
+    throw new Error(detalhe?.erro || `Não foi possível baixar o PDF (HTTP ${resposta.status}).`);
   }
 
   const blob = await resposta.blob();
+  const tipoResposta = String(blob.type || '').toLowerCase();
+  if (
+    !blob.size
+    || !['application/pdf', 'application/octet-stream'].some((tipo) => tipoResposta.startsWith(tipo))
+  ) {
+    throw new Error('A resposta recebida não é um PDF válido.');
+  }
   const blobUrl = URL.createObjectURL(blob);
   const link = document.createElement('a');
 
   link.href = blobUrl;
-  link.download = `${slugify(titulo) || 'livro'}.pdf`;
+  link.download = `${slugify(livro.titulo) || 'livro'}.pdf`;
   link.style.display = 'none';
 
   document.body.appendChild(link);
   link.click();
   link.remove();
 
-  setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+  // Android pode iniciar o download de forma assíncrona; não revogue cedo demais.
+  setTimeout(() => URL.revokeObjectURL(blobUrl), 60_000);
 }
 
 function abrirModal(livro) {
+  modalDownloadStatus.textContent = '';
+  modalDownloadStatus.classList.remove('erro');
   modalCapa.src = livro.capa || CAPA_PADRAO;
   modalCapa.alt = livro.titulo || '';
   modalTitulo.textContent = livro.titulo || '';
@@ -290,7 +345,7 @@ function abrirModal(livro) {
   }
 
   if (livro.pdfArquivoUrl && validarUrlHttp(livro.pdfArquivoUrl)) {
-    modalLinkPdf.href = livro.pdfArquivoUrl;
+    modalLinkPdf.href = '#';
     modalLinkPdf.dataset.pdfUrl = livro.pdfArquivoUrl;
     modalLinkPdf.dataset.pdfTitulo = livro.titulo || 'livro';
     modalLinkPdf.textContent = 'Baixar PDF ↓';
@@ -323,6 +378,7 @@ function fecharModal() {
 
 modalLinkPdf.addEventListener('click', async (evento) => {
   evento.preventDefault();
+  if (modalLinkPdf.getAttribute('aria-disabled') === 'true') return;
 
   const url = modalLinkPdf.dataset.pdfUrl;
   const titulo = modalLinkPdf.dataset.pdfTitulo || 'livro';
@@ -331,12 +387,19 @@ modalLinkPdf.addEventListener('click', async (evento) => {
   const textoOriginal = modalLinkPdf.textContent;
   modalLinkPdf.textContent = 'Baixando...';
   modalLinkPdf.setAttribute('aria-disabled', 'true');
+  modalDownloadStatus.textContent = 'Preparando o download...';
+  modalDownloadStatus.classList.remove('erro');
 
   try {
-    await baixarPdf(url, titulo);
+    await baixarPdf({
+      pdfArquivoUrl: url,
+      titulo
+    });
+    modalDownloadStatus.textContent = 'Download iniciado.';
   } catch (erro) {
     console.error('[livros] erro ao baixar PDF:', erro);
-    alert('Não foi possível baixar o PDF agora. Tente novamente em instantes.');
+    modalDownloadStatus.textContent = 'Não foi possível baixar o PDF agora. Tente novamente.';
+    modalDownloadStatus.classList.add('erro');
   } finally {
     modalLinkPdf.textContent = textoOriginal;
     modalLinkPdf.removeAttribute('aria-disabled');
@@ -538,10 +601,19 @@ criarEditorTop({
     },
     {
       nome: 'pdfArquivo',
-      label: 'Ler PDF (opcional)',
+      label: 'PDF para download (opcional)',
       tipo: 'file',
       accept: 'application/pdf,.pdf',
-      ajuda: 'Envie um PDF de até 25 MB. Ao editar, deixe vazio para manter o PDF atual.'
+      ajuda: 'Envie um novo PDF somente se quiser substituir o atual. Limite: 25 MB.',
+      arquivoAtual: {
+        existe: (livro) => Boolean(livro?.pdfArquivoUrl),
+        obterNome: (livro) => livro.pdfNomeOriginal || '',
+        textoCadastrado: '✓ PDF atual cadastrado',
+        textoAcao: 'Baixar PDF atual',
+        textoProcessando: 'Baixando...',
+        mensagemErro: 'Não foi possível baixar o PDF atual. Tente novamente.',
+        aoAcionar: baixarPdf
+      }
     },
     {
       nome: 'capaArquivo',
@@ -577,6 +649,10 @@ criarEditorTop({
     let capaPublicId = anterior?.capaPublicId || '';
     let pdfArquivoUrl = anterior?.pdfArquivoUrl || '';
     let pdfPublicId = anterior?.pdfPublicId || '';
+    let pdfAssetId = anterior?.pdfAssetId || '';
+    let pdfResourceType = anterior?.pdfResourceType || '';
+    let pdfFormat = anterior?.pdfFormat || '';
+    let pdfNomeOriginal = anterior?.pdfNomeOriginal || '';
 
     if (valores.capaArquivo) {
       try {
@@ -597,6 +673,10 @@ criarEditorTop({
         const uploadPdf = await enviarPdfCloudinary(valores.pdfArquivo);
         pdfArquivoUrl = uploadPdf.url;
         pdfPublicId = uploadPdf.publicId;
+        pdfAssetId = uploadPdf.assetId;
+        pdfResourceType = uploadPdf.resourceType;
+        pdfFormat = uploadPdf.format;
+        pdfNomeOriginal = uploadPdf.nomeOriginal;
       } catch (erro) {
         return { erro: erro?.message || 'Não foi possível enviar o PDF.' };
       }
@@ -612,6 +692,10 @@ criarEditorTop({
         onlineUrl: valores.onlineUrl,
         pdfArquivoUrl,
         ...(pdfPublicId ? { pdfPublicId } : {}),
+        ...(pdfAssetId ? { pdfAssetId } : {}),
+        ...(pdfResourceType ? { pdfResourceType } : {}),
+        ...(pdfFormat ? { pdfFormat } : {}),
+        ...(pdfNomeOriginal ? { pdfNomeOriginal } : {}),
         capa,
         ...(capaPublicId ? { capaPublicId } : {}),
         linkCompra: valores.linkCompra

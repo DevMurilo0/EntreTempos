@@ -507,6 +507,16 @@ header a:hover { color: #c0392b; }
   margin-top: 6px;
 }
 
+.modal-livro-download-status {
+  min-height: 18px;
+  margin: 10px 0 0;
+  color: #4d6648;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.modal-livro-download-status.erro { color: #922b21; }
+
 .modal-livro-link {
   margin-top: 6px;
   display: inline-flex;
