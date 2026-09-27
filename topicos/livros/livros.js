@@ -495,10 +495,10 @@ criarEditorTop({
     },
     {
       nome: 'pdfArquivo',
-      label: 'Ler PDF (opcional)',
+      label: 'PDF para download (opcional)',
       tipo: 'file',
       accept: 'application/pdf,.pdf',
-      ajuda: 'Envie um PDF de até 25 MB. Ao editar, deixe vazio para manter o PDF atual.'
+      ajuda: 'Envie um PDF de até 25 MB para download. Ao editar, deixe vazio para manter o PDF atual.'
     },
     {
       nome: 'capaArquivo',
