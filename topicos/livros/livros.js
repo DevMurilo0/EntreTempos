@@ -241,34 +241,15 @@ const modalLinkOnline = document.getElementById('modal-livro-link-online');
 const modalLinkPdf = document.getElementById('modal-livro-link-pdf');
 const modalLinkCompra = document.getElementById('modal-livro-link-compra');
 
-async function baixarPdf(url, titulo = 'livro') {
-  if (!validarUrlHttp(url)) {
-    throw new Error('Link do PDF inválido.');
-  }
+function gerarUrlDownloadPdf(url, titulo = 'livro') {
+  if (!validarUrlHttp(url)) return '';
 
-  const resposta = await fetch(url, {
-    method: 'GET',
-    mode: 'cors',
-    cache: 'no-store'
+  const parametros = new URLSearchParams({
+    url,
+    filename: slugify(titulo) || 'livro'
   });
 
-  if (!resposta.ok) {
-    throw new Error(`Não foi possível baixar o PDF (HTTP ${resposta.status}).`);
-  }
-
-  const blob = await resposta.blob();
-  const blobUrl = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-
-  link.href = blobUrl;
-  link.download = `${slugify(titulo) || 'livro'}.pdf`;
-  link.style.display = 'none';
-
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-
-  setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+  return `/api/download-pdf?${parametros.toString()}`;
 }
 
 function abrirModal(livro) {
@@ -290,15 +271,11 @@ function abrirModal(livro) {
   }
 
   if (livro.pdfArquivoUrl && validarUrlHttp(livro.pdfArquivoUrl)) {
-    modalLinkPdf.href = livro.pdfArquivoUrl;
-    modalLinkPdf.dataset.pdfUrl = livro.pdfArquivoUrl;
-    modalLinkPdf.dataset.pdfTitulo = livro.titulo || 'livro';
+    modalLinkPdf.href = gerarUrlDownloadPdf(livro.pdfArquivoUrl, livro.titulo);
     modalLinkPdf.textContent = 'Baixar PDF ↓';
     modalLinkPdf.style.display = 'inline-flex';
   } else {
     modalLinkPdf.removeAttribute('href');
-    delete modalLinkPdf.dataset.pdfUrl;
-    delete modalLinkPdf.dataset.pdfTitulo;
     modalLinkPdf.style.display = 'none';
   }
 
@@ -321,27 +298,7 @@ function fecharModal() {
   document.body.style.overflow = '';
 }
 
-modalLinkPdf.addEventListener('click', async (evento) => {
-  evento.preventDefault();
 
-  const url = modalLinkPdf.dataset.pdfUrl;
-  const titulo = modalLinkPdf.dataset.pdfTitulo || 'livro';
-  if (!url) return;
-
-  const textoOriginal = modalLinkPdf.textContent;
-  modalLinkPdf.textContent = 'Baixando...';
-  modalLinkPdf.setAttribute('aria-disabled', 'true');
-
-  try {
-    await baixarPdf(url, titulo);
-  } catch (erro) {
-    console.error('[livros] erro ao baixar PDF:', erro);
-    alert('Não foi possível baixar o PDF agora. Tente novamente em instantes.');
-  } finally {
-    modalLinkPdf.textContent = textoOriginal;
-    modalLinkPdf.removeAttribute('aria-disabled');
-  }
-});
 
 /* fecha ao clicar fora da caixa, no X, ou apertando Esc */
 modal.addEventListener('click', (e) => {
