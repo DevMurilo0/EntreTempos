@@ -1,98 +1,231 @@
-# Entre Tempos · Revista Eletrônica
+# Entre Tempos
 
+> Revista eletrônica escolar produzida por estudantes da Escola de Referência Professor Antônio Farias (EREMPAF), em Gravatá, Pernambuco.
 
+**Site:** https://entretempos.blog.br/
 
-## Sobre o Projeto
+A **Entre Tempos** é uma revista eletrônica escolar criada para reunir produção artística, cultura, recomendações e participação estudantil em um espaço digital próprio.
 
-**Entre Tempos** é uma revista eletrônica interativa desenvolvida com o intuito de celebrar e divulgar diferentes vertentes culturais e artísticas. O site apresenta uma interface imersiva e poética, que guia o leitor através de "pegadas" no tempo, explorando tópicos que vão desde a arte mais sutil até curiosidades do cotidiano.
-
-
-
-## Propósito
-
-O principal objetivo do projeto é oferecer uma experiência de leitura fluida e esteticamente agradável, onde o usuário pode explorar seções como Desenhos, Filmes, Livros, Música, Poemas e Curiosidades. Cada tópico serve como um pequeno universo, permitindo que os criadores e colaboradores compartilhem recomendações, textos autorais e obras conhecidas. 
-
-
-
-## Tecnologias Envolvidas
-
-O projeto foi construído utilizando as bases da web para garantir velocidade, leveza e facilidade de manutenção:
-
-- **HTML5**: Semântica e estruturação das páginas.
-- **CSS3 (Vanilla)**: Estilização completa, uso de variáveis, animações, media queries para responsividade e layouts. Feito sem o uso de frameworks externos para garantir um visual 100% autêntico e customizado (estilo artesanal/vintage).
-- **JavaScript**: Interatividade da página, rotação dinâmica de elementos (como as etiquetas de menu em `folha.html`) e manipulação de classes.
-
-
+O projeto mistura a linguagem visual de uma revista impressa com recursos interativos da web. A navegação foi construída com uma identidade editorial inspirada em papel, colagens, carimbos, fotografias e elementos gráficos espalhados pelas páginas.
 
 ---
 
+## O projeto
 
+A revista reúne diferentes áreas de conteúdo:
 
-## Estrutura do Código
+- **Poemas**
+- **Desenhos**
+- **Filmes**
+- **Livros**
+- **Música**
+- **Curiosidades**
+- **Podcast**
+- **Enquetes**
 
-O repositório está organizado de forma simples e modular, separando as responsabilidades para facilitar o trabalho de novos desenvolvedores e mantenedores de conteúdo:
+Além do conteúdo editorial, o site possui recursos para participação e atualização da própria revista, como Tops mensais, votos, gerenciamento de conteúdo e envio de interesse pelo **Faça Parte**.
+
+O objetivo é criar um espaço onde trabalhos, opiniões, recomendações e produções dos estudantes possam continuar disponíveis para além da sala de aula.
+
+---
+
+## Principais recursos
+
+### Conteúdo editorial
+
+As seções ficam organizadas dentro de `topicos/` e possuem páginas próprias, estilos e comportamentos específicos.
+
+Algumas áreas utilizam uma estrutura de galeria e páginas autorais; outras, como **Filmes**, **Livros** e **Música**, possuem rankings mensais administráveis.
+
+### Tops e upvotes
+
+Os Tops de conteúdos podem ser atualizados pelos pesquisadores da revista e possuem sistema de **upvotes**.
+
+A classificação exibida ao público é definida dinamicamente pelos votos, mantendo a identidade de cada conteúdo independentemente da posição ocupada no ranking.
+
+### Faça Parte
+
+A página `faca-parte.html` permite que estudantes enviem interesse em participar da revista, informando nome, contato e como gostariam de contribuir.
+
+As inscrições são armazenadas no **Firebase Firestore** e podem ser acompanhadas pela equipe responsável.
+
+### Área dos pesquisadores
+
+O projeto possui uma área reservada em `admin/`, usada pelos pesquisadores para acessar ferramentas internas e gerenciar informações da revista.
+
+Entre os recursos administrativos estão o acompanhamento de inscrições e a edição de conteúdos que possuem gerenciamento integrado ao site.
+
+### Podcast
+
+A seção de podcast possui listagem de episódios e páginas individuais. Os metadados são armazenados no Firestore e a mídia é integrada ao **Cloudinary**.
+
+### SEO e métricas
+
+O projeto também possui:
+
+- domínio próprio;
+- `sitemap.xml`;
+- `robots.txt`;
+- URLs canônicas;
+- metadados Open Graph;
+- dados estruturados em JSON-LD;
+- integração com Google Search Console;
+- Google tag para métricas de acesso.
+
+---
+
+## Tecnologias
+
+O projeto mantém uma arquitetura simples, sem framework de interface ou etapa obrigatória de build.
+
+### Front-end
+
+- **HTML5**
+- **CSS3**
+- **JavaScript ES Modules**
+- **Google Fonts**
+
+### Dados e serviços
+
+- **Firebase / Firestore** — conteúdo dinâmico, inscrições, votos e outros dados da revista
+- **Firebase Authentication** — autenticação utilizada pelos recursos que precisam identificar usuários
+- **Cloudinary** — armazenamento e entrega de mídia usada por partes do projeto
+- **Vercel** — hospedagem e deploy
+- **Google Search Console** — acompanhamento de indexação
+- **Google tag / Analytics** — métricas de acesso
+
+---
+
+## Estrutura do repositório
 
 ```text
-├── index.html          # Página inicial / capa da revista
-├── folha.html          # O menu interativo (a tela com a lua, livros e as pegadas)
-├── css/                # Folhas de estilo globais (incluindo o CSS do folha.html)
-├── js/                 # Scripts globais
-├── img/                # Todos os recursos visuais e decorativos genéricos
-└── topicos/            # Pasta contendo os temas centrais da revista
-    ├── curiosidades/   # HTML, imagens e CSS específicos para a seção de Curiosidades
-    ├── desenhos/       # HTML, imagens e CSS específicos para a seção de Desenhos
-    ├── filmes/         # HTML, imagens e CSS específicos para a seção de Filmes
-    ├── livros/         # ...
-    ├── musica/         # ...
-    └── poemas/         # ...
+EntreTempos/
+├── index.html               # Página inicial da revista
+├── folha.html               # Navegação principal entre as seções
+├── faca-parte.html          # Formulário para novos participantes
+│
+├── admin/                   # Login e painel dos pesquisadores
+├── css/                     # Estilos globais e compartilhados
+├── js/                      # Lógica compartilhada e integrações
+├── img/                     # Imagens e elementos gráficos gerais
+│
+├── topicos/
+│   ├── autorais/
+│   ├── curiosidades/
+│   ├── desenhos/
+│   ├── enquetes/
+│   ├── filmes/
+│   ├── livros/
+│   ├── musica/
+│   ├── podcast/
+│   └── poemas/
+│
+├── docs-entretempos/        # Documentação e anotações internas
+├── robots.txt
+├── sitemap.xml
+└── vercel.json
 ```
 
-- **`folha.html`**: É o coração da navegação. Usa JavaScript nativo (array `categories`) para injetar dinamicamente as categorias e posicionar as "pegadas" e "etiquetas" na tela de modo criativo.
-- **Tópicos (`/topicos`)**: Cada assunto (ex: `/desenhos`) possui sua própria pasta contendo o arquivo HTML principal, um arquivo CSS particular (ex: `desenhos.css`), imagens exclusivas do tópico e subdivisões internas (como "autorais" e "conhecidos").
+### Arquivos JavaScript importantes
 
+Alguns módulos compartilhados ajudam a conectar as diferentes partes do projeto:
 
+- `js/firebase-config.js` — configuração do Firebase utilizada pelo front-end;
+- `js/upvotes.js` — sistema de votação dos Tops;
+- `js/top-conteudos.js` — carregamento e gerenciamento compartilhado dos Tops;
+- `js/faca-parte.js` — envio das inscrições do Faça Parte;
+- `js/admin-login.js` e `js/admin-painel.js` — área dos pesquisadores;
+- `js/podcast-data.js` — leitura dos episódios do podcast;
+- `js/podcast-admin.js` — gerenciamento dos episódios;
+- `js/likes.js` — sistema de curtidas;
+- `js/enquetes.js` — funcionamento das enquetes.
 
 ---
 
+## Executando localmente
 
+Não há uma etapa de build obrigatória.
 
-## Como Fazer Futuras Atualizações
+Clone o repositório:
 
-Se você é um desenvolvedor ou contribuidor querendo modificar o conteúdo ou adicionar novas páginas, siga as diretrizes abaixo:
+```bash
+git clone https://github.com/DevMurilo0/EntreTempos.git
+cd EntreTempos
+```
 
+Depois sirva a pasta por HTTP. Por exemplo, com Python:
 
+```bash
+python3 -m http.server 5500
+```
 
-### 1. Alterar Textos ou Imagens de uma Seção Existente
+E acesse:
 
-Vá até o arquivo `.html` do respectivo tópico. Exemplo: para mudar a descrição da página de Desenhos, abra `topicos/desenhos/desenhos.html`. 
-As novas imagens devem ser salvas na pasta `img/` do tópico correspondente, preferencialmente no formato `.webp` ou `.png` (para manter transparências) a fim de otimizar o carregamento.
+```text
+http://localhost:5500
+```
 
+Também é possível usar extensões como **Live Server** no VS Code.
 
+> Abrir os arquivos diretamente com `file://` não é recomendado, pois o projeto utiliza módulos JavaScript, caminhos absolutos e serviços externos.
 
-### 2. Modificar Estilos e Responsividade (CSS)
+---
 
-Sempre que precisar alterar cores, espaçamentos ou responsividade de uma página específica, vá até o arquivo CSS **daquela página** (ex: `topicos/desenhos/desenhos.css`). 
-- **Dica Mobile:** O projeto possui pontos de quebra (*Breakpoints*) para dispositivos móveis configurados em `@media (max-width: 768px)`. Faça todas as adaptações mobile dentro desse bloco para manter a coesão visual e não quebrar o layout do desktop.
+## Deploy
 
+O site é hospedado na **Vercel**.
 
+A branch principal é usada para o deploy do projeto, e o domínio público é:
 
-### 3. Adicionar uma Nova Categoria no Menu (folha.html)
+**https://entretempos.blog.br/**
 
-Se a revista ganhar um novo tema no futuro (ex: "Fotografia"), siga os passos:
+O arquivo `vercel.json` contém configurações específicas utilizadas pela hospedagem, incluindo o redirecionamento do endereço antigo da Vercel para o domínio oficial.
 
-1. Crie a pasta `topicos/fotografia/` e adicione os arquivos base (`fotografia.html` e `fotografia.css`).
-2. Abra o arquivo `folha.html` e localize o array `categories` na tag `<script>`.
-3. Adicione um novo objeto à lista, respeitando o padrão de classes `fp--X`:
-   ```javascript
-   { label: "", href: "/topicos/fotografia/fotografia.html", cls: "fp--7", rotate: 90, tagImg: "Etiqueta-fotografia.webp" }
-   ```
-4. Em seguida, vá até o arquivo `css/folha.css`, adicione as regras de posicionamento para o novo elemento (`.fp--7 { top: X%; left: Y%; }`) e configure as rotações e animações de *hover* da nova categoria, tanto para desktop quanto para o bloco de mobile.
+---
 
+## Atualizando conteúdo
 
+Antes de editar uma seção, identifique se o conteúdo é:
 
-### 4. Executando o Projeto Localmente
+1. **estático**, escrito diretamente no HTML/JavaScript da página; ou
+2. **dinâmico**, carregado do Firestore e gerenciado pela interface dos pesquisadores.
 
-Por ser um projeto puramente estático (sem banco de dados ou Node.js em background), não há processos complexos de instalação:
+Isso evita editar manualmente um conteúdo que, na prática, é controlado pelo banco de dados.
 
-1. Clone o repositório ou abra a pasta do projeto no VSCode (ou seu editor favorito).
-2. Utilize a extensão **Live Server** e clique em *Go Live* ou simplesmente abra o arquivo `index.html` no seu navegador.
+As páginas de **Filmes**, **Livros** e **Música**, por exemplo, compartilham parte da infraestrutura de Tops e gerenciamento.
+
+---
+
+## Imagens e mídia
+
+Sempre que possível, as imagens estáticas do repositório utilizam formatos otimizados, especialmente `.webp`.
+
+O projeto também possui scripts auxiliares para otimização de mídia e usa Cloudinary em recursos que precisam de armazenamento externo.
+
+Evite adicionar arquivos muito grandes diretamente ao repositório quando não for necessário.
+
+---
+
+## Documentação interna
+
+A pasta `docs-entretempos/` contém documentação complementar sobre a organização e a evolução do projeto.
+
+Parte desse material foi escrita em fases anteriores da Entre Tempos, então o próprio código atual deve ser considerado a referência principal quando houver diferença entre documentação antiga e implementação.
+
+---
+
+## Identidade do projeto
+
+A Entre Tempos não tenta parecer um portal institucional tradicional.
+
+A direção visual faz parte da experiência da revista: tipografia expressiva, colagens, papéis, carimbos, objetos recortados, texturas e elementos com aparência artesanal são características intencionais do projeto.
+
+Ao criar novas páginas, a prioridade é manter essa linguagem visual sem comprometer legibilidade, responsividade e desempenho.
+
+---
+
+## Projeto escolar
+
+A **Entre Tempos** é uma revista eletrônica escolar sem fins lucrativos, desenvolvida por estudantes da **Escola de Referência Professor Antônio Farias — EREMPAF**, em Gravatá, Pernambuco.
+
+**Entre tempos, a palavra permanece.**
