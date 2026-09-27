@@ -63,49 +63,19 @@ async function enviarPdfCloudinary(arquivo) {
   if (arquivo.size > 25 * 1024 * 1024) {
     throw new Error('O PDF precisa ter no máximo 25 MB.');
   }
-  if (!arquivo.size) {
-    throw new Error('O PDF selecionado está vazio.');
-  }
-
-  const assinatura = new Uint8Array(await arquivo.slice(0, 5).arrayBuffer());
-  const cabecalhoPdf = String.fromCharCode(...assinatura);
-  if (cabecalhoPdf !== '%PDF-') {
-    throw new Error('O arquivo selecionado não contém um PDF válido.');
-  }
 
   const formData = new FormData();
   formData.append('file', arquivo);
   formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
 
-  let resposta;
-  try {
-    resposta = await fetch(CLOUDINARY_PDF_UPLOAD_URL, {
-      method: 'POST',
-      body: formData
-    });
-  } catch (_) {
-    throw new Error('Não foi possível enviar o PDF. Verifique sua conexão e tente novamente.');
-  }
+  const resposta = await fetch(CLOUDINARY_PDF_UPLOAD_URL, {
+    method: 'POST',
+    body: formData
+  });
 
   const dados = await resposta.json().catch(() => ({}));
 
-  const recursoEhRaw = dados.resource_type === 'raw';
-  // Uploads raw não trazem `format`; a extensão faz parte do public_id.
-  const formato = String(
-    dados.format || dados.public_id?.split('.').pop() || dados.secure_url?.split('.').pop() || ''
-  ).toLowerCase();
-
-  if (
-    !resposta.ok
-    || !dados.secure_url
-    || !dados.public_id
-    || !dados.asset_id
-    || !recursoEhRaw
-    || dados.type !== 'upload'
-    || formato !== 'pdf'
-    || !Number(dados.bytes)
-    || Number(dados.bytes) > 25 * 1024 * 1024
-  ) {
+  if (!resposta.ok || !dados.secure_url) {
     const detalhe = dados?.error?.message || '';
     const dica = /format|allowed|pdf/i.test(detalhe)
       ? ' Verifique se o formato PDF está permitido no preset entre_tempos_upload do Cloudinary.'
@@ -118,11 +88,7 @@ async function enviarPdfCloudinary(arquivo) {
 
   return {
     url: dados.secure_url,
-    publicId: dados.public_id,
-    assetId: dados.asset_id,
-    resourceType: dados.resource_type,
-    format: formato,
-    nomeOriginal: arquivo.name || dados.original_filename || 'livro.pdf'
+    publicId: dados.public_id || ''
   };
 }
 
@@ -607,7 +573,6 @@ criarEditorTop({
       ajuda: 'Envie um novo PDF somente se quiser substituir o atual. Limite: 25 MB.',
       arquivoAtual: {
         existe: (livro) => Boolean(livro?.pdfArquivoUrl),
-        obterNome: (livro) => livro.pdfNomeOriginal || '',
         textoCadastrado: '✓ PDF atual cadastrado',
         textoAcao: 'Baixar PDF atual',
         textoProcessando: 'Baixando...',
@@ -649,10 +614,6 @@ criarEditorTop({
     let capaPublicId = anterior?.capaPublicId || '';
     let pdfArquivoUrl = anterior?.pdfArquivoUrl || '';
     let pdfPublicId = anterior?.pdfPublicId || '';
-    let pdfAssetId = anterior?.pdfAssetId || '';
-    let pdfResourceType = anterior?.pdfResourceType || '';
-    let pdfFormat = anterior?.pdfFormat || '';
-    let pdfNomeOriginal = anterior?.pdfNomeOriginal || '';
 
     if (valores.capaArquivo) {
       try {
@@ -673,10 +634,6 @@ criarEditorTop({
         const uploadPdf = await enviarPdfCloudinary(valores.pdfArquivo);
         pdfArquivoUrl = uploadPdf.url;
         pdfPublicId = uploadPdf.publicId;
-        pdfAssetId = uploadPdf.assetId;
-        pdfResourceType = uploadPdf.resourceType;
-        pdfFormat = uploadPdf.format;
-        pdfNomeOriginal = uploadPdf.nomeOriginal;
       } catch (erro) {
         return { erro: erro?.message || 'Não foi possível enviar o PDF.' };
       }
@@ -692,10 +649,6 @@ criarEditorTop({
         onlineUrl: valores.onlineUrl,
         pdfArquivoUrl,
         ...(pdfPublicId ? { pdfPublicId } : {}),
-        ...(pdfAssetId ? { pdfAssetId } : {}),
-        ...(pdfResourceType ? { pdfResourceType } : {}),
-        ...(pdfFormat ? { pdfFormat } : {}),
-        ...(pdfNomeOriginal ? { pdfNomeOriginal } : {}),
         capa,
         ...(capaPublicId ? { capaPublicId } : {}),
         linkCompra: valores.linkCompra
