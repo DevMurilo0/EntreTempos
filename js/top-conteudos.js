@@ -191,11 +191,9 @@ export function criarEditorTop(configuracao) {
   const posicaoLabel = criarElemento('p', 'editor-top__posicao', 'Posição: TOP 1');
   formulario.appendChild(posicaoLabel);
   const inputs = {};
-  const arquivosAtuais = {};
   campos.forEach((campo) => {
-    const possuiArquivoAtual = campo.tipo === 'file' && campo.arquivoAtual;
-    const grupo = criarElemento(possuiArquivoAtual ? 'div' : 'label', 'editor-top__campo');
-    const rotuloCampo = possuiArquivoAtual ? document.createElement('label') : grupo;
+    const grupo = criarElemento('label', 'editor-top__campo');
+    const rotuloCampo = grupo;
     rotuloCampo.appendChild(criarElemento('span', '', campo.label));
     const input = campo.tipo === 'textarea'
       ? document.createElement('textarea')
@@ -207,17 +205,6 @@ export function criarEditorTop(configuracao) {
     input.name = campo.nome;
     rotuloCampo.appendChild(input);
     if (campo.ajuda) rotuloCampo.appendChild(criarElemento('small', 'editor-top__ajuda', campo.ajuda));
-    if (possuiArquivoAtual) grupo.appendChild(rotuloCampo);
-
-    if (possuiArquivoAtual) {
-      const painelAtual = criarElemento('div', 'editor-top__arquivo-atual');
-      painelAtual.hidden = true;
-      const estadoAtual = criarElemento('strong', 'editor-top__arquivo-estado');
-      const nomeAtual = criarElemento('span', 'editor-top__arquivo-nome');
-      painelAtual.append(estadoAtual, nomeAtual);
-      grupo.appendChild(painelAtual);
-      arquivosAtuais[campo.nome] = { painelAtual, estadoAtual, nomeAtual };
-    }
 
     formulario.appendChild(grupo);
     inputs[campo.nome] = input;
@@ -280,28 +267,6 @@ export function criarEditorTop(configuracao) {
     campos.forEach((campo) => {
       if (campo.tipo === 'file') {
         inputs[campo.nome].value = '';
-
-        const elementosAtual = arquivosAtuais[campo.nome];
-        if (elementosAtual) {
-          const configuracaoAtual = campo.arquivoAtual;
-          const existe = Boolean(
-            itemAtual && (
-              configuracaoAtual.existe
-                ? configuracaoAtual.existe(itemAtual)
-                : itemAtual[configuracaoAtual.urlCampo]
-            )
-          );
-          elementosAtual.painelAtual.hidden = !existe;
-          if (existe) {
-            elementosAtual.estadoAtual.textContent = configuracaoAtual.textoCadastrado
-              || '✓ Arquivo atual cadastrado';
-            const nome = configuracaoAtual.obterNome
-              ? configuracaoAtual.obterNome(itemAtual)
-              : itemAtual[configuracaoAtual.nomeCampo];
-            elementosAtual.nomeAtual.textContent = nome || '';
-            elementosAtual.nomeAtual.hidden = !nome;
-          }
-        }
       } else {
         inputs[campo.nome].value = itemAtual?.[campo.nome] || '';
       }

@@ -18,8 +18,6 @@ const CLOUDINARY_CLOUD_NAME = 'uaisf2vc';
 const CLOUDINARY_UPLOAD_PRESET = 'entre_tempos_upload';
 const CLOUDINARY_UPLOAD_URL =
   `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
-const CLOUDINARY_PDF_UPLOAD_URL =
-  `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/raw/upload`;
 
 async function enviarCapaCloudinary(arquivo) {
   if (!arquivo) return null;
@@ -50,55 +48,6 @@ async function enviarCapaCloudinary(arquivo) {
   };
 }
 
-async function enviarPdfCloudinary(arquivo) {
-  if (!arquivo) return null;
-
-  const nome = String(arquivo.name || '').toLowerCase();
-  const ehPdf = arquivo.type === 'application/pdf' || nome.endsWith('.pdf');
-
-  if (!ehPdf) {
-    throw new Error('Escolha um arquivo PDF válido.');
-  }
-
-  if (arquivo.size > 25 * 1024 * 1024) {
-    throw new Error('O PDF precisa ter no máximo 25 MB.');
-  }
-
-  const formData = new FormData();
-  formData.append('file', arquivo);
-  formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-
-  const resposta = await fetch(CLOUDINARY_PDF_UPLOAD_URL, {
-    method: 'POST',
-    body: formData
-  });
-
-  const dados = await resposta.json().catch(() => ({}));
-  const recursoValido =
-    dados.secure_url && dados.public_id && dados.asset_id &&
-    dados.resource_type === 'raw' && dados.type === 'upload';
-
-  if (!resposta.ok || !recursoValido) {
-    const detalhe = dados?.error?.message || '';
-    const dica = /format|allowed|pdf/i.test(detalhe)
-      ? ' Verifique se o formato PDF está permitido no preset entre_tempos_upload do Cloudinary.'
-      : '';
-
-    throw new Error(
-      (detalhe || 'Não foi possível enviar o PDF.') + dica
-    );
-  }
-
-  return {
-    url: dados.secure_url,
-    publicId: dados.public_id,
-    assetId: dados.asset_id,
-    resourceType: dados.resource_type,
-    format: dados.format || (/\.pdf$/i.test(dados.public_id) ? 'pdf' : ''),
-    nomeOriginal: arquivo.name || `${dados.original_filename || 'livro'}.pdf`
-  };
-}
-
 /* ═══════════════════════════════════════════════════════════
    COMO ADICIONAR OS LIVROS DE UM MÊS
 
@@ -113,10 +62,7 @@ async function enviarPdfCloudinary(arquivo) {
      capa       -> caminho da imagem da capa (coloque o arquivo
                    dentro da pasta img/ e aponte pra ele aqui;
                    se deixar em branco, usa uma capa genérica)
-     link       -> URL para baixar o PDF ou comprar o livro
-     linkTexto  -> texto do botão do link (ex.: "Baixar PDF" ou
-                   "Comprar livro"). Se não preencher, usa
-                   "Baixar / Comprar" como padrão.
+     link       -> URL para ler o livro online
      LinkCompra -> Texto do link para compra do livro
                    kkrs
                    Para "linkTexto" do "linkCompra" é colocado
@@ -186,7 +132,7 @@ const livrosPorMes = {
       descricao: "Descrição do livro que vai aparecer no pop-up.",
       capa: "img/nome-da-capa.webp",
       link: "https://link-para-baixar-ou-comprar.com",
-      linkTexto: "Baixar PDF"
+      linkTexto: "Ler online"
       linkCompra :"Link Amazon / Mercado Livre"
     }
   ]
@@ -218,6 +164,20 @@ let mesIndex = agora.getMonth();
 let anoIndex = agora.getFullYear();
 let livrosAtuais = [];
 
+function normalizarLivro(livro) {
+  return {
+    id: livro.id,
+    posicao: livro.posicao,
+    titulo: livro.titulo || '',
+    subtitulo: livro.subtitulo || '',
+    descricao: livro.descricao || '',
+    onlineUrl: livro.onlineUrl || '',
+    capa: livro.capa || '',
+    ...(livro.capaPublicId ? { capaPublicId: livro.capaPublicId } : {}),
+    linkCompra: livro.linkCompra || ''
+  };
+}
+
 function obterFallback(ano, mes) {
   if (ano !== ANO_CONTEUDO_LEGADO) return [];
   return (livrosPorMes[mes - 1] || []).map((livro, indice) => ({
@@ -227,7 +187,6 @@ function obterFallback(ano, mes) {
     subtitulo: livro.autor || '',
     descricao: livro.descricao,
     onlineUrl: livro.link || '',
-    pdfArquivoUrl: '',
     capa: livro.capa || '',
     linkCompra: livro.linkCompra || ''
   }));
@@ -245,61 +204,9 @@ const modalTitulo = document.getElementById('modal-livro-titulo');
 const modalAutor = document.getElementById('modal-livro-autor');
 const modalDesc = document.getElementById('modal-livro-desc');
 const modalLinkOnline = document.getElementById('modal-livro-link-online');
-const modalLinkPdf = document.getElementById('modal-livro-link-pdf');
 const modalLinkCompra = document.getElementById('modal-livro-link-compra');
-const modalDownloadStatus = document.getElementById('modal-livro-download-status');
-
-function gerarUrlApiDownload(livro) {
-  const parametros = new URLSearchParams({
-    url: livro.pdfArquivoUrl,
-    filename: `${slugify(livro.titulo) || 'livro'}.pdf`
-  });
-  return `/api/download-pdf?${parametros.toString()}`;
-}
-
-async function baixarPdf(livro) {
-  if (!livro?.pdfArquivoUrl || !validarUrlHttp(livro.pdfArquivoUrl)) {
-    throw new Error('Link do PDF inválido.');
-  }
-
-  const resposta = await fetch(gerarUrlApiDownload(livro), {
-    method: 'GET',
-    cache: 'no-store',
-    credentials: 'same-origin',
-    headers: { Accept: 'application/pdf' }
-  });
-
-  if (!resposta.ok) {
-    const detalhe = await resposta.json().catch(() => ({}));
-    throw new Error(detalhe?.erro || `Não foi possível baixar o PDF (HTTP ${resposta.status}).`);
-  }
-
-  const blob = await resposta.blob();
-  const tipoResposta = String(blob.type || '').toLowerCase();
-  if (
-    !blob.size
-    || !['application/pdf', 'application/octet-stream'].some((tipo) => tipoResposta.startsWith(tipo))
-  ) {
-    throw new Error('A resposta recebida não é um PDF válido.');
-  }
-  const blobUrl = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-
-  link.href = blobUrl;
-  link.download = `${slugify(livro.titulo) || 'livro'}.pdf`;
-  link.style.display = 'none';
-
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-
-  // Android pode iniciar o download de forma assíncrona; não revogue cedo demais.
-  setTimeout(() => URL.revokeObjectURL(blobUrl), 60_000);
-}
 
 function abrirModal(livro) {
-  modalDownloadStatus.textContent = '';
-  modalDownloadStatus.classList.remove('erro');
   modalCapa.src = livro.capa || CAPA_PADRAO;
   modalCapa.alt = livro.titulo || '';
   modalTitulo.textContent = livro.titulo || '';
@@ -307,7 +214,7 @@ function abrirModal(livro) {
   modalAutor.style.display = livro.subtitulo ? 'block' : 'none';
   modalDesc.textContent = livro.descricao || '';
 
-  const onlineUrl = livro.onlineUrl || livro.pdfUrl || '';
+  const onlineUrl = livro.onlineUrl || '';
 
   if (onlineUrl && validarUrlHttp(onlineUrl)) {
     modalLinkOnline.href = onlineUrl;
@@ -315,19 +222,6 @@ function abrirModal(livro) {
     modalLinkOnline.style.display = 'inline-flex';
   } else {
     modalLinkOnline.style.display = 'none';
-  }
-
-  if (livro.pdfArquivoUrl && validarUrlHttp(livro.pdfArquivoUrl)) {
-    modalLinkPdf.href = '#';
-    modalLinkPdf.dataset.pdfUrl = livro.pdfArquivoUrl;
-    modalLinkPdf.dataset.pdfTitulo = livro.titulo || 'livro';
-    modalLinkPdf.textContent = 'Baixar PDF ↓';
-    modalLinkPdf.style.display = 'inline-flex';
-  } else {
-    modalLinkPdf.removeAttribute('href');
-    delete modalLinkPdf.dataset.pdfUrl;
-    delete modalLinkPdf.dataset.pdfTitulo;
-    modalLinkPdf.style.display = 'none';
   }
 
   if (livro.linkCompra && validarUrlHttp(livro.linkCompra)) {
@@ -348,36 +242,6 @@ function fecharModal() {
   modal.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
 }
-
-modalLinkPdf.addEventListener('click', async (evento) => {
-  evento.preventDefault();
-  if (modalLinkPdf.getAttribute('aria-disabled') === 'true') return;
-
-  const url = modalLinkPdf.dataset.pdfUrl;
-  const titulo = modalLinkPdf.dataset.pdfTitulo || 'livro';
-  if (!url) return;
-
-  const textoOriginal = modalLinkPdf.textContent;
-  modalLinkPdf.textContent = 'Baixando...';
-  modalLinkPdf.setAttribute('aria-disabled', 'true');
-  modalDownloadStatus.textContent = 'Preparando o download...';
-  modalDownloadStatus.classList.remove('erro');
-
-  try {
-    await baixarPdf({
-      pdfArquivoUrl: url,
-      titulo
-    });
-    modalDownloadStatus.textContent = 'Download iniciado.';
-  } catch (erro) {
-    console.error('[livros] erro ao baixar PDF:', erro);
-    modalDownloadStatus.textContent = 'Não foi possível baixar o PDF agora. Tente novamente.';
-    modalDownloadStatus.classList.add('erro');
-  } finally {
-    modalLinkPdf.textContent = textoOriginal;
-    modalLinkPdf.removeAttribute('aria-disabled');
-  }
-});
 
 /* fecha ao clicar fora da caixa, no X, ou apertando Esc */
 modal.addEventListener('click', (e) => {
@@ -507,11 +371,7 @@ async function carregarUpvotesDoMes() {
       return;
     }
     if (resultado.existe) {
-      livrosAtuais = resultado.itens.map((livro) => ({
-        ...livro,
-        onlineUrl: livro.onlineUrl || livro.pdfUrl || '',
-        pdfArquivoUrl: livro.pdfArquivoUrl || ''
-      }));
+      livrosAtuais = resultado.itens.map(normalizarLivro);
     }
   } catch (erro) {
     console.warn('[livros] usando conteúdo local; Firestore indisponível:', erro);
@@ -574,18 +434,6 @@ const editorTop = criarEditorTop({
       placeholder: 'https://site.com/livro'
     },
     {
-      nome: 'pdfArquivo',
-      label: 'PDF para download (opcional)',
-      tipo: 'file',
-      accept: 'application/pdf,.pdf',
-      ajuda: 'Envie um novo PDF somente se quiser substituir o atual. Limite: 25 MB.',
-      arquivoAtual: {
-        existe: (livro) => Boolean(livro?.pdfArquivoUrl),
-        textoCadastrado: '✓ PDF atual cadastrado',
-        obterNome: (livro) => livro?.pdfNomeOriginal || ''
-      }
-    },
-    {
       nome: 'capaArquivo',
       label: 'Capa do livro',
       tipo: 'file',
@@ -618,12 +466,6 @@ const editorTop = criarEditorTop({
 
     let capa = anterior?.capa || '';
     let capaPublicId = anterior?.capaPublicId || '';
-    let pdfArquivoUrl = anterior?.pdfArquivoUrl || '';
-    let pdfPublicId = anterior?.pdfPublicId || '';
-    let pdfAssetId = anterior?.pdfAssetId || '';
-    let pdfResourceType = anterior?.pdfResourceType || '';
-    let pdfFormat = anterior?.pdfFormat || '';
-    let pdfNomeOriginal = anterior?.pdfNomeOriginal || '';
 
     if (valores.capaArquivo) {
       try {
@@ -639,35 +481,14 @@ const editorTop = criarEditorTop({
       return { erro: 'Envie uma imagem para a capa do livro.' };
     }
 
-    if (valores.pdfArquivo) {
-      try {
-        const uploadPdf = await enviarPdfCloudinary(valores.pdfArquivo);
-        pdfArquivoUrl = uploadPdf.url;
-        pdfPublicId = uploadPdf.publicId;
-        pdfAssetId = uploadPdf.assetId;
-        pdfResourceType = uploadPdf.resourceType;
-        pdfFormat = uploadPdf.format;
-        pdfNomeOriginal = uploadPdf.nomeOriginal;
-      } catch (erro) {
-        return { erro: erro?.message || 'Não foi possível enviar o PDF.' };
-      }
-    }
-
     return {
       item: {
-        ...anterior,
         id: obterIdEditado('livros', anterior, valores.titulo),
         posicao,
         titulo: valores.titulo,
         subtitulo: valores.subtitulo,
         descricao: valores.descricao,
         onlineUrl: valores.onlineUrl,
-        pdfArquivoUrl,
-        ...(pdfPublicId ? { pdfPublicId } : {}),
-        ...(pdfAssetId ? { pdfAssetId } : {}),
-        ...(pdfResourceType ? { pdfResourceType } : {}),
-        ...(pdfFormat ? { pdfFormat } : {}),
-        ...(pdfNomeOriginal ? { pdfNomeOriginal } : {}),
         capa,
         ...(capaPublicId ? { capaPublicId } : {}),
         linkCompra: valores.linkCompra
