@@ -19,7 +19,7 @@ const CLOUDINARY_UPLOAD_PRESET = 'entre_tempos_upload';
 const CLOUDINARY_UPLOAD_URL =
   `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
 const CLOUDINARY_PDF_UPLOAD_URL =
-  `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/raw/upload`;
+  `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
 
 async function enviarCapaCloudinary(arquivo) {
   if (!arquivo) return null;
