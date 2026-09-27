@@ -241,6 +241,27 @@ const modalLinkOnline = document.getElementById('modal-livro-link-online');
 const modalLinkPdf = document.getElementById('modal-livro-link-pdf');
 const modalLinkCompra = document.getElementById('modal-livro-link-compra');
 
+function gerarUrlDownloadPdf(url, titulo = 'livro') {
+  if (!validarUrlHttp(url)) return '';
+
+  try {
+    const parsed = new URL(url);
+
+    if (parsed.hostname === 'res.cloudinary.com') {
+      const nomeArquivo = slugify(titulo) || 'livro';
+      parsed.pathname = parsed.pathname.replace(
+        /(\/raw\/upload\/|\/image\/upload\/)/,
+        `$1fl_attachment:${nomeArquivo}/`
+      );
+      return parsed.toString();
+    }
+  } catch (_) {
+    return url;
+  }
+
+  return url;
+}
+
 function abrirModal(livro) {
   modalCapa.src = livro.capa || CAPA_PADRAO;
   modalCapa.alt = livro.titulo || '';
@@ -260,10 +281,12 @@ function abrirModal(livro) {
   }
 
   if (livro.pdfArquivoUrl && validarUrlHttp(livro.pdfArquivoUrl)) {
-    modalLinkPdf.href = livro.pdfArquivoUrl;
-    modalLinkPdf.textContent = 'Ler PDF ↗';
+    modalLinkPdf.href = gerarUrlDownloadPdf(livro.pdfArquivoUrl, livro.titulo);
+    modalLinkPdf.textContent = 'Baixar PDF ↓';
+    modalLinkPdf.setAttribute('download', `${slugify(livro.titulo) || 'livro'}.pdf`);
     modalLinkPdf.style.display = 'inline-flex';
   } else {
+    modalLinkPdf.removeAttribute('download');
     modalLinkPdf.style.display = 'none';
   }
 
