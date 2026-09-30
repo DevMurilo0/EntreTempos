@@ -11,6 +11,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  gap: 10px;
 }
 
 .et-admin-adicionar {
@@ -47,6 +48,12 @@
   height: 25px;
   border: 1px solid currentColor;
   border-radius: 50%;
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.et-admin-organizar > span:first-child {
   font-family: Arial, sans-serif;
   font-size: 20px;
   line-height: 1;
@@ -122,6 +129,49 @@
   font-size: 13px;
   line-height: 1.45;
   text-align: center;
+}
+
+.et-ordem-lista--blocos {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+.et-ordem-lista--blocos > .et-pessoa-card {
+  margin: 34px auto 55px;
+}
+
+.et-ordem-lista--blocos > [data-et-order-id] + [data-et-order-id]::before {
+  content: '';
+  display: block;
+  width: 80%;
+  height: 2px;
+  margin: 10px auto 30px;
+  background: linear-gradient(to right, transparent, #c0392b, #c4a96b, #c0392b, transparent);
+}
+
+.et-perfil__instagram {
+  display: inline-block;
+  margin-top: 9px;
+  color: #8c3b3b;
+  border-bottom: 1px dashed currentColor;
+  font-family: 'Special Elite', serif;
+  font-size: 13px;
+  letter-spacing: .03em;
+  text-decoration: none;
+}
+
+.et-perfil__instagram[hidden] {
+  display: none !important;
+}
+
+.et-perfil__instagram:hover,
+.et-perfil__instagram:focus-visible {
+  color: #5f2525;
 }
 
 .et-estado-vazio {
@@ -348,6 +398,7 @@ body.et-modal-aberto {
 
 @media (max-width: 600px) {
   .et-admin-barra {
+    flex-direction: column;
     justify-content: center;
     margin-bottom: 20px;
   }
@@ -383,6 +434,16 @@ body.et-modal-aberto {
 
   .et-modal__acoes .et-btn {
     width: 100%;
+  }
+
+  .et-ordem-item {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 7px;
+    padding-left: 9px;
+  }
+
+  .et-ordem-item__alca {
+    display: none;
   }
 }
 
@@ -433,6 +494,88 @@ body.et-modal-aberto {
 
 .et-modal__caixa--poeta {
   width: min(100%, 760px);
+}
+
+.et-modal__caixa--ordem {
+  width: min(100%, 680px);
+}
+
+.et-ordem-ajuda {
+  margin: -10px 0 18px;
+  color: #7a6a50;
+  font-family: 'IM Fell English', serif;
+  font-size: 15px;
+}
+
+.et-ordem-lista-admin {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: et-ordem;
+}
+
+.et-ordem-item {
+  counter-increment: et-ordem;
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 11px;
+  min-height: 54px;
+  padding: 8px 9px 8px 13px;
+  border: 1px dashed #c4a96b;
+  border-left: 4px solid #8c3b3b;
+  background: rgba(242, 232, 213, .42);
+  cursor: grab;
+}
+
+.et-ordem-item::before {
+  content: counter(et-ordem) '.';
+  color: #8c3b3b;
+  font-family: 'Special Elite', serif;
+  font-size: 12px;
+}
+
+.et-ordem-item.is-arrastando {
+  opacity: .48;
+}
+
+.et-ordem-item__alca {
+  color: #9f8a63;
+  font-family: Arial, sans-serif;
+  letter-spacing: -3px;
+}
+
+.et-ordem-item__nome {
+  overflow: hidden;
+  color: #3e3228;
+  font-family: 'Special Elite', serif;
+  font-size: 13px;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.et-ordem-item__acoes {
+  display: flex;
+  gap: 5px;
+}
+
+.et-ordem-item__acoes button {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #8c3b3b;
+  border-radius: 2px;
+  background: #fffdf7;
+  color: #8c3b3b;
+  font-size: 19px;
+  cursor: pointer;
+}
+
+.et-ordem-item__acoes button:disabled {
+  opacity: .3;
+  cursor: default;
 }
 
 .et-poeta-poemas-editor {

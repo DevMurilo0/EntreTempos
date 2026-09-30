@@ -121,6 +121,7 @@ const el = {
   rotulo: document.getElementById('et-rotulo-secao'),
   nome: document.getElementById('et-pessoa-nome'),
   descricao: document.getElementById('et-pessoa-descricao'),
+  instagram: document.getElementById('et-pessoa-instagram'),
   foto: document.getElementById('et-pessoa-foto'),
   tituloConteudos: document.getElementById('et-conteudos-titulo'),
   conteudos: document.getElementById('et-conteudos'),
@@ -191,6 +192,7 @@ function iniciar() {
       document.title = `${dadosPessoa.nome || 'Publicação'} | Entre Tempos`;
       el.nome.textContent = dadosPessoa.nome || 'Sem nome';
       el.descricao.textContent = dadosPessoa.descricao || '';
+      renderizarInstagram(dadosPessoa.instagram);
       el.foto.src = otimizarImagemCloudinary(dadosPessoa.fotoUrl || '/img/amp.png', 700, 900);
       el.foto.alt = dadosPessoa.nome ? `Foto de ${dadosPessoa.nome}` : 'Foto do participante';
 
@@ -752,6 +754,11 @@ function abrirModalEditarPoetaCompleto(dadosPessoa, pessoaRef, documentosConteud
           >${escapeHtml(dadosPessoa.descricao || '')}</textarea>
         </div>
 
+        <div class="et-campo">
+          <label for="et-editar-poeta-instagram">Instagram <small>(opcional)</small></label>
+          <input id="et-editar-poeta-instagram" name="instagram" type="text" maxlength="120" inputmode="url" value="${escapeHtml(dadosPessoa.instagram || '')}" placeholder="@usuario ou instagram.com/usuario">
+        </div>
+
         <div class="et-campo et-arquivo">
           <label for="et-editar-poeta-foto">Trocar imagem <small>(opcional)</small></label>
           <input id="et-editar-poeta-foto" name="foto" type="file" accept="image/*">
@@ -806,6 +813,12 @@ function abrirModalEditarPoetaCompleto(dadosPessoa, pessoaRef, documentosConteud
     }
 
     const novaFoto = form.elements.foto.files?.[0] || null;
+    const instagramResultado = normalizarInstagram(form.elements.instagram.value);
+
+    if (!instagramResultado.ok) {
+      erroMsg(msg, instagramResultado.mensagem);
+      return;
+    }
 
     if (
       novaFoto &&
@@ -823,6 +836,7 @@ function abrirModalEditarPoetaCompleto(dadosPessoa, pessoaRef, documentosConteud
     const atualizacaoPessoa = {
       nome: form.elements.nome.value.trim(),
       descricao: form.elements.descricao.value.trim(),
+      instagram: instagramResultado.usuario,
       atualizadoEm: serverTimestamp()
     };
 
@@ -900,6 +914,11 @@ function abrirModalEditarPessoa(dadosPessoa, pessoaRef) {
           <textarea id="et-editar-descricao" name="descricao" maxlength="1200"></textarea>
         </div>
 
+        <div class="et-campo">
+          <label for="et-editar-instagram">Instagram <small>(opcional)</small></label>
+          <input id="et-editar-instagram" name="instagram" type="text" maxlength="120" inputmode="url" placeholder="@usuario ou instagram.com/usuario">
+        </div>
+
         <div class="et-campo et-arquivo">
           <label for="et-editar-foto">Trocar imagem <small>(opcional)</small></label>
           <input id="et-editar-foto" name="foto" type="file" accept="image/*">
@@ -922,6 +941,7 @@ function abrirModalEditarPessoa(dadosPessoa, pessoaRef) {
   const form = modal.querySelector('[data-form]');
   form.elements.nome.value = dadosPessoa.nome || '';
   form.elements.descricao.value = dadosPessoa.descricao || '';
+  form.elements.instagram.value = dadosPessoa.instagram || '';
 
   const msg = modal.querySelector('[data-msg]');
   const barra = modal.querySelector('[data-barra]');
@@ -950,7 +970,13 @@ function abrirModalEditarPessoa(dadosPessoa, pessoaRef) {
 
     const nome = form.elements.nome.value.trim();
     const descricao = form.elements.descricao.value.trim();
+    const instagramResultado = normalizarInstagram(form.elements.instagram.value);
     const novaFoto = form.elements.foto.files?.[0] || null;
+
+    if (!instagramResultado.ok) {
+      erroMsg(msg, instagramResultado.mensagem);
+      return;
+    }
 
     if (
       novaFoto &&
@@ -968,6 +994,7 @@ function abrirModalEditarPessoa(dadosPessoa, pessoaRef) {
     const atualizacao = {
       nome,
       descricao,
+      instagram: instagramResultado.usuario,
       atualizadoEm: serverTimestamp()
     };
 
@@ -1348,6 +1375,62 @@ function criarAviso(texto) {
 function falharPagina(texto) {
   if (el?.mensagem) el.mensagem.textContent = texto;
   if (el?.conteudos) el.conteudos.replaceChildren();
+}
+
+function renderizarInstagram(valor) {
+  if (!el.instagram) return;
+
+  const resultado = normalizarInstagram(valor);
+  if (!resultado.ok || !resultado.usuario) {
+    el.instagram.hidden = true;
+    el.instagram.textContent = '';
+    el.instagram.removeAttribute('href');
+    return;
+  }
+
+  el.instagram.href = `https://www.instagram.com/${encodeURIComponent(resultado.usuario)}/`;
+  el.instagram.textContent = `@${resultado.usuario} ↗`;
+  el.instagram.hidden = false;
+}
+
+function normalizarInstagram(valor) {
+  const entrada = String(valor || '').trim();
+  if (!entrada) return { ok: true, usuario: '' };
+
+  let usuario = entrada;
+
+  if (/^https?:\/\//i.test(entrada)) {
+    try {
+      const url = new URL(entrada);
+      const host = url.hostname.toLowerCase().replace(/^www\./, '');
+      const partes = url.pathname.split('/').filter(Boolean);
+
+      if (host !== 'instagram.com' || partes.length !== 1) {
+        return {
+          ok: false,
+          mensagem: 'Informe um usuário ou uma URL válida de perfil do Instagram.'
+        };
+      }
+
+      usuario = partes[0];
+    } catch {
+      return {
+        ok: false,
+        mensagem: 'Informe um usuário ou uma URL válida de perfil do Instagram.'
+      };
+    }
+  } else {
+    usuario = entrada.replace(/^@/, '');
+  }
+
+  if (!/^[a-zA-Z0-9._]{1,30}$/.test(usuario)) {
+    return {
+      ok: false,
+      mensagem: 'O Instagram deve ter até 30 caracteres e usar apenas letras, números, ponto ou sublinhado.'
+    };
+  }
+
+  return { ok: true, usuario: usuario.toLowerCase() };
 }
 
 function obterMillis(timestamp) {

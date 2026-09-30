@@ -25,6 +25,7 @@ const CLOUDINARY_UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOU
 const CACHE_PREFIX = 'entretempos:participantes:';
 const CACHE_MAX_AGE = 1000 * 60 * 60 * 24 * 7;
 const SECOES_COM_LOADING = new Set(SECOES);
+const RAIZ_ORDEM = '_ordem-secoes';
 
 function otimizarImagemCloudinary(url, largura = 640, altura = 800) {
   if (!url || !url.includes('res.cloudinary.com') || !url.includes('/upload/')) {
@@ -47,7 +48,13 @@ function iniciarGaleria() {
   const alvo = obterAlvoGaleria();
   const barra = criarBarraAdmin(alvo);
   const botaoAdicionar = barra.querySelector('[data-et-adicionar]');
+  const botaoOrganizar = barra.querySelector('[data-et-organizar]');
   const modal = criarModalCadastro();
+  const estadoOrdem = {
+    ids: null,
+    alvo,
+    modal: null
+  };
 
   document.body.appendChild(modal);
 
@@ -63,16 +70,22 @@ function iniciarGaleria() {
     abrirModal(modal);
   });
 
+  botaoOrganizar.addEventListener('click', () => {
+    if (!pesquisadorLogado) return;
+    abrirOrganizadorOrdem(estadoOrdem);
+  });
+
   const loading = criarLoadingParticipantes();
 
   const cache = lerCacheParticipantes();
 
   if (cache.length) {
-    renderizarParticipantes(alvo, cache);
+    renderizarParticipantes(alvo, cache, estadoOrdem);
     loading?.remover();
   }
 
-  observarParticipantes(alvo, loading);
+  observarOrdem(estadoOrdem);
+  observarParticipantes(alvo, loading, estadoOrdem);
 
   if (secao === 'poemas' || secao === 'poemas-conhecidos') {
     observarPoetasEstaticosRemovidos(alvo);
@@ -121,13 +134,22 @@ function obterAlvoGaleria() {
   if (existente) return existente;
 
   const novo = document.createElement('section');
-  novo.className = 'et-participantes-dinamicos';
-  novo.setAttribute('aria-label', 'Autores adicionados pelos pesquisadores');
+  novo.className = 'et-participantes-dinamicos et-ordem-lista et-ordem-lista--blocos';
+  novo.setAttribute('aria-label', 'Pessoas e conteúdos da seção');
 
   const primeiroAutor = document.querySelector('.autor-bloco');
 
   if (primeiroAutor?.parentNode) {
     primeiroAutor.parentNode.insertBefore(novo, primeiroAutor);
+
+    document.querySelectorAll('.divisor').forEach((divisor) => {
+      const posicao = primeiroAutor.compareDocumentPosition(divisor);
+      if (posicao & Node.DOCUMENT_POSITION_FOLLOWING) divisor.remove();
+    });
+
+    document.querySelectorAll('.autor-bloco[data-et-order-id]').forEach((bloco) => {
+      novo.appendChild(bloco);
+    });
   } else {
     const rodape = document.querySelector('[class*="rodape"]');
     (rodape?.parentNode || document.body).insertBefore(novo, rodape || null);
@@ -144,13 +166,17 @@ function criarBarraAdmin(alvo) {
       <span class="et-admin-adicionar__mais" aria-hidden="true">+</span>
       <span>Adicionar pessoa</span>
     </button>
+    <button type="button" class="et-admin-adicionar et-admin-organizar" data-et-organizar>
+      <span aria-hidden="true">↕</span>
+      <span>Organizar ordem</span>
+    </button>
   `;
 
   alvo.parentNode.insertBefore(barra, alvo);
   return barra;
 }
 
-function observarParticipantes(alvo, loading) {
+function observarParticipantes(alvo, loading, estadoOrdem) {
   const consulta = query(
     collection(db, 'participantesAutorais'),
     where('secao', '==', secao)
@@ -165,7 +191,7 @@ function observarParticipantes(alvo, loading) {
         dados: item.data()
       }));
 
-    renderizarParticipantes(alvo, docs);
+    renderizarParticipantes(alvo, docs, estadoOrdem);
     salvarCacheParticipantes(docs);
     loading?.remover();
   }, (erro) => {
@@ -174,11 +200,248 @@ function observarParticipantes(alvo, loading) {
   });
 }
 
-function renderizarParticipantes(alvo, participantes) {
+function renderizarParticipantes(alvo, participantes, estadoOrdem = null) {
   alvo.querySelectorAll('[data-et-pessoa-dinamica]').forEach((el) => el.remove());
 
   participantes.forEach((item) => {
-    alvo.appendChild(criarCardPessoa(item.id, item.dados));
+    const card = criarCardPessoa(item.id, item.dados);
+
+    if (alvo.classList.contains('et-ordem-lista--blocos') && estadoOrdem?.ids === null) {
+      const primeiroEstatico = alvo.querySelector('[data-et-order-id^="static:"]');
+      alvo.insertBefore(card, primeiroEstatico || null);
+    } else {
+      alvo.appendChild(card);
+    }
+  });
+
+  aplicarOrdem(estadoOrdem);
+}
+
+function observarOrdem(estado) {
+  const ordemRef = doc(
+    db,
+    'participantesAutorais',
+    RAIZ_ORDEM,
+    'conteudos',
+    secao
+  );
+
+  onSnapshot(ordemRef, (snapshot) => {
+    const ids = snapshot.exists() && Array.isArray(snapshot.data().ids)
+      ? snapshot.data().ids.filter((id) => typeof id === 'string')
+      : null;
+
+    estado.ids = ids;
+    aplicarOrdem(estado);
+  }, (erro) => {
+    console.error('[autorais] Falha ao carregar a ordem editorial:', erro);
+  });
+}
+
+function itensOrdenaveis(alvo) {
+  return [...alvo.querySelectorAll(':scope > [data-et-order-id]')]
+    .filter((item) => !item.hidden);
+}
+
+function aplicarOrdem(estado) {
+  if (!estado?.alvo || !Array.isArray(estado.ids)) return;
+
+  const itens = itensOrdenaveis(estado.alvo);
+  const porId = new Map(itens.map((item) => [item.dataset.etOrderId, item]));
+  const ordenados = [];
+
+  estado.ids.forEach((id) => {
+    const item = porId.get(id);
+    if (!item) return;
+    ordenados.push(item);
+    porId.delete(id);
+  });
+
+  // Itens novos ou antigos ainda sem configuração sempre entram no final.
+  ordenados.push(...porId.values());
+  ordenados.forEach((item) => estado.alvo.appendChild(item));
+}
+
+function rotuloItemOrdem(item) {
+  return (
+    item.querySelector('.foto-nav-nome, .et-pessoa-card__nome, h1, h2, h3')
+      ?.textContent.trim() ||
+    item.getAttribute('aria-label') ||
+    'Item sem título'
+  );
+}
+
+function abrirOrganizadorOrdem(estado) {
+  estado.modal?.remove();
+
+  const itens = itensOrdenaveis(estado.alvo);
+  const modal = document.createElement('div');
+  modal.className = 'et-modal';
+  modal.innerHTML = `
+    <div class="et-modal__caixa et-modal__caixa--ordem" role="dialog" aria-modal="true" aria-labelledby="et-ordem-titulo">
+      <button type="button" class="et-modal__fechar" data-fechar aria-label="Fechar">×</button>
+      <p class="et-modal__kicker">Entre Tempos · pesquisadores</p>
+      <h2 class="et-modal__titulo" id="et-ordem-titulo">Organizar ordem</h2>
+      <p class="et-ordem-ajuda">Arraste no computador ou use as setas para definir a ordem editorial.</p>
+      <ol class="et-ordem-lista-admin" data-lista></ol>
+      <p class="et-progresso" data-msg role="status" aria-live="polite"></p>
+      <div class="et-modal__acoes">
+        <button type="button" class="et-btn et-btn--secundario" data-cancelar>Cancelar</button>
+        <button type="button" class="et-btn et-btn--principal" data-salvar>Salvar ordem</button>
+      </div>
+    </div>
+  `;
+
+  const lista = modal.querySelector('[data-lista]');
+  const mensagem = modal.querySelector('[data-msg]');
+  const salvar = modal.querySelector('[data-salvar]');
+
+  itens.forEach((item) => {
+    lista.appendChild(criarItemOrganizador(item.dataset.etOrderId, rotuloItemOrdem(item)));
+  });
+
+  if (!itens.length) {
+    lista.innerHTML = '<li class="et-estado-vazio">Não há itens para organizar.</li>';
+    salvar.disabled = true;
+  }
+
+  let arrastado = null;
+
+  lista.addEventListener('dragstart', (evento) => {
+    const item = evento.target.closest('[data-order-id]');
+    if (!item) return;
+    arrastado = item;
+    item.classList.add('is-arrastando');
+    evento.dataTransfer.effectAllowed = 'move';
+  });
+
+  lista.addEventListener('dragover', (evento) => {
+    if (!arrastado) return;
+    evento.preventDefault();
+    const destino = evento.target.closest('[data-order-id]');
+    if (!destino || destino === arrastado) return;
+    const retangulo = destino.getBoundingClientRect();
+    const depois = evento.clientY > retangulo.top + retangulo.height / 2;
+    lista.insertBefore(arrastado, depois ? destino.nextSibling : destino);
+  });
+
+  lista.addEventListener('dragend', () => {
+    arrastado?.classList.remove('is-arrastando');
+    arrastado = null;
+    atualizarBotoesOrdem(lista);
+  });
+
+  lista.addEventListener('click', (evento) => {
+    const botao = evento.target.closest('[data-mover]');
+    if (!botao) return;
+    const item = botao.closest('[data-order-id]');
+    const direcao = botao.dataset.mover;
+
+    if (direcao === 'cima' && item.previousElementSibling) {
+      lista.insertBefore(item, item.previousElementSibling);
+    } else if (direcao === 'baixo' && item.nextElementSibling) {
+      lista.insertBefore(item.nextElementSibling, item);
+    }
+
+    atualizarBotoesOrdem(lista);
+    botao.focus();
+  });
+
+  const fechar = () => {
+    modal.remove();
+    document.body.classList.remove('et-modal-aberto');
+    estado.modal = null;
+  };
+
+  modal.querySelector('[data-fechar]').addEventListener('click', fechar);
+  modal.querySelector('[data-cancelar]').addEventListener('click', fechar);
+  modal.addEventListener('click', (evento) => {
+    if (evento.target === modal) fechar();
+  });
+
+  salvar.addEventListener('click', async () => {
+    if (auth.currentUser?.uid !== PESQUISADOR_UID) {
+      mostrarErro(mensagem, 'Sua sessão de pesquisador não está ativa.');
+      return;
+    }
+
+    const ids = [...lista.querySelectorAll('[data-order-id]')]
+      .map((item) => item.dataset.orderId);
+
+    salvar.disabled = true;
+    mensagem.classList.remove('is-erro');
+    mensagem.textContent = 'Salvando ordem...';
+
+    try {
+      await setDoc(doc(
+        db,
+        'participantesAutorais',
+        RAIZ_ORDEM,
+        'conteudos',
+        secao
+      ), {
+        tipo: 'ordem-editorial',
+        secao,
+        ids,
+        atualizadoEm: serverTimestamp(),
+        atualizadoPor: auth.currentUser.uid
+      });
+
+      estado.ids = ids;
+      aplicarOrdem(estado);
+      mensagem.textContent = 'Ordem salva.';
+      setTimeout(fechar, 700);
+    } catch (erro) {
+      console.error('[autorais] Falha ao salvar a ordem editorial:', erro);
+      mostrarErro(mensagem, 'Não foi possível salvar a ordem. Confira sua conexão e as permissões do Firebase.');
+      salvar.disabled = false;
+    }
+  });
+
+  document.body.appendChild(modal);
+  document.body.classList.add('et-modal-aberto');
+  estado.modal = modal;
+  atualizarBotoesOrdem(lista);
+  requestAnimationFrame(() => modal.querySelector('[data-fechar]')?.focus());
+}
+
+function criarItemOrganizador(id, rotulo) {
+  const item = document.createElement('li');
+  item.className = 'et-ordem-item';
+  item.dataset.orderId = id;
+  item.draggable = true;
+
+  const alca = document.createElement('span');
+  alca.className = 'et-ordem-item__alca';
+  alca.setAttribute('aria-hidden', 'true');
+  alca.textContent = '⋮⋮';
+
+  const nome = document.createElement('span');
+  nome.className = 'et-ordem-item__nome';
+  nome.textContent = rotulo;
+
+  const acoes = document.createElement('span');
+  acoes.className = 'et-ordem-item__acoes';
+
+  ['cima', 'baixo'].forEach((direcao) => {
+    const botao = document.createElement('button');
+    botao.type = 'button';
+    botao.dataset.mover = direcao;
+    botao.textContent = direcao === 'cima' ? '↑' : '↓';
+    botao.setAttribute('aria-label', `Mover ${rotulo} para ${direcao}`);
+    acoes.appendChild(botao);
+  });
+
+  item.append(alca, nome, acoes);
+  return item;
+}
+
+function atualizarBotoesOrdem(lista) {
+  const itens = [...lista.querySelectorAll('[data-order-id]')];
+
+  itens.forEach((item, indice) => {
+    item.querySelector('[data-mover="cima"]').disabled = indice === 0;
+    item.querySelector('[data-mover="baixo"]').disabled = indice === itens.length - 1;
   });
 }
 
@@ -216,6 +479,7 @@ function salvarCacheParticipantes(participantes) {
         nome: item.dados.nome || '',
         descricao: item.dados.descricao || '',
         fotoUrl: item.dados.fotoUrl || '',
+        instagram: item.dados.instagram || '',
         secao,
         ativo: item.dados.ativo !== false,
         criadoEmMs: obterMillis(item.dados.criadoEm)
@@ -242,6 +506,7 @@ function adicionarPessoaAoCache(id, dados) {
         nome: dados.nome || '',
         descricao: dados.descricao || '',
         fotoUrl: dados.fotoUrl || '',
+        instagram: dados.instagram || '',
         secao,
         ativo: true,
         criadoEmMs: Date.now()
@@ -367,6 +632,7 @@ function criarLoadingParticipantes() {
 function criarCardPessoa(id, dados) {
   const link = document.createElement('a');
   link.dataset.etPessoaDinamica = 'true';
+  link.dataset.etOrderId = `dynamic:${id}`;
   link.href = `/topicos/autorais/pessoa.html?secao=${encodeURIComponent(secao)}&id=${encodeURIComponent(id)}`;
   link.setAttribute('aria-label', `Ver publicações de ${dados.nome || 'participante'}`);
 
@@ -429,6 +695,11 @@ function criarModalCadastro() {
         <div class="et-campo">
           <label for="et-pessoa-descricao">Descrição <small>(opcional)</small></label>
           <textarea id="et-pessoa-descricao" name="descricao" maxlength="1200" rows="5"></textarea>
+        </div>
+
+        <div class="et-campo">
+          <label for="et-pessoa-instagram">Instagram <small>(opcional)</small></label>
+          <input id="et-pessoa-instagram" name="instagram" type="text" maxlength="120" inputmode="url" placeholder="@usuario ou instagram.com/usuario">
         </div>
 
         <div class="et-campo et-arquivo">
@@ -517,7 +788,15 @@ function criarModalCadastro() {
 
     const nome = form.elements.nome.value.trim();
     const descricao = form.elements.descricao.value.trim();
+    const instagramResultado = normalizarInstagram(form.elements.instagram.value);
     const foto = form.elements.foto.files?.[0] || null;
+
+    if (!instagramResultado.ok) {
+      mostrarErro(mensagem, instagramResultado.mensagem);
+      return;
+    }
+
+    const instagram = instagramResultado.usuario;
 
     if (foto && !foto.type.startsWith('image/')) {
       mostrarErro(mensagem, 'Escolha um arquivo de imagem válido.');
@@ -563,6 +842,7 @@ function criarModalCadastro() {
       await setDoc(pessoaRef, {
         nome,
         descricao,
+        instagram,
         fotoUrl,
         fotoPublicId,
         fotoResourceType,
@@ -576,7 +856,8 @@ function criarModalCadastro() {
       adicionarPessoaAoCache(pessoaRef.id, {
         nome,
         descricao,
-        fotoUrl
+        fotoUrl,
+        instagram
       });
 
       window.location.href = `/topicos/autorais/pessoa.html?secao=${encodeURIComponent(secao)}&id=${encodeURIComponent(pessoaRef.id)}&novo=1`;
@@ -680,6 +961,53 @@ function obterMillis(timestamp) {
 function mostrarErro(elemento, texto) {
   elemento.textContent = texto;
   elemento.classList.add('is-erro');
+}
+
+function normalizarInstagram(valor) {
+  const entrada = String(valor || '').trim();
+  if (!entrada) return { ok: true, usuario: '' };
+
+  let usuario = entrada;
+
+  if (/^https?:\/\//i.test(entrada)) {
+    try {
+      const url = new URL(entrada);
+      const host = url.hostname.toLowerCase().replace(/^www\./, '');
+
+      if (host !== 'instagram.com') {
+        return {
+          ok: false,
+          mensagem: 'Informe um usuário ou uma URL válida do Instagram.'
+        };
+      }
+
+      const partes = url.pathname.split('/').filter(Boolean);
+      if (partes.length !== 1) {
+        return {
+          ok: false,
+          mensagem: 'Informe a URL do perfil, como instagram.com/usuario.'
+        };
+      }
+
+      usuario = partes[0];
+    } catch {
+      return {
+        ok: false,
+        mensagem: 'Informe um usuário ou uma URL válida do Instagram.'
+      };
+    }
+  } else {
+    usuario = entrada.replace(/^@/, '');
+  }
+
+  if (!/^[a-zA-Z0-9._]{1,30}$/.test(usuario)) {
+    return {
+      ok: false,
+      mensagem: 'O Instagram deve ter até 30 caracteres e usar apenas letras, números, ponto ou sublinhado.'
+    };
+  }
+
+  return { ok: true, usuario: usuario.toLowerCase() };
 }
 
 function mensagemErroUpload(erro) {
