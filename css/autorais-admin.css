@@ -492,6 +492,73 @@ body.et-modal-aberto {
   flex-basis: 100%;
 }
 
+.et-legado-card-acoes,
+.et-legado-acoes {
+  position: relative;
+  z-index: 40;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.foto-nav > .et-legado-card-acoes {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  left: 6px;
+  justify-content: center;
+  padding: 7px;
+  background: rgba(255, 253, 247, .94);
+  box-shadow: 2px 4px 12px rgba(0, 0, 0, .16);
+}
+
+[data-et-person-id],
+[data-et-content-id] {
+  position: relative;
+}
+
+.et-legado-publicacao {
+  width: min(calc(100% - 32px), 820px);
+  margin: 26px auto;
+  padding: 22px;
+  border: 1px dashed #c4a96b;
+  background: rgba(255, 253, 247, .88);
+  color: #3e3228;
+}
+
+.et-legado-publicacao__titulo {
+  margin-bottom: 12px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(26px, 5vw, 40px);
+  font-weight: normal;
+}
+
+.et-legado-publicacao__descricao {
+  margin-bottom: 16px;
+  font-family: 'IM Fell English', serif;
+  white-space: pre-wrap;
+}
+
+.et-legado-publicacao img,
+.et-legado-publicacao video,
+.et-legado-publicacao audio {
+  display: block;
+  width: min(100%, 720px);
+  max-height: 75vh;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.et-poeta-poema__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 7px;
+  margin: -4px 0 15px;
+}
+
 .et-modal__caixa--poeta {
   width: min(100%, 760px);
 }

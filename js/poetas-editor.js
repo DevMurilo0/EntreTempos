@@ -9,13 +9,24 @@ import {
 
 const PESQUISADOR_UID = 'QuiQMjtXjOWNW2LCrot86rsHh0F2';
 const RAIZ_EDICOES = '_poetas-estaticos';
+const CLOUDINARY_CLOUD_NAME = 'uaisf2vc';
+const CLOUDINARY_UPLOAD_PRESET = 'entre_tempos_upload';
+const CLOUDINARY_UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/auto/upload`;
 
 const pessoaSection = document.querySelector('.pessoa-section');
 const pessoaInfo = document.querySelector('.pessoa-info');
 const nomeEl = document.querySelector('.pessoa-nome');
+const fotoEl = document.querySelector('.foto-pessoa');
 const contadorEl = document.querySelector('.contador-poemas');
 const gradeEl = document.querySelector('.grade-envelopes');
 const areaFolha = document.querySelector('.area-folha');
+
+if (!document.querySelector('link[href="/css/autorais-admin.css"]')) {
+  const estilosAdmin = document.createElement('link');
+  estilosAdmin.rel = 'stylesheet';
+  estilosAdmin.href = '/css/autorais-admin.css';
+  document.head.appendChild(estilosAdmin);
+}
 
 if (!pessoaSection || !pessoaInfo || !nomeEl || !gradeEl || !areaFolha) {
   // Esta página não segue o layout antigo de poetas.
@@ -25,10 +36,10 @@ if (!pessoaSection || !pessoaInfo || !nomeEl || !gradeEl || !areaFolha) {
 
 function iniciarEditorPoeta() {
   const caminho = location.pathname.split('/').filter(Boolean);
-  const slug = caminho.at(-2) || 'poeta';
-  const secao = location.pathname.includes('/conhecidos/')
+  const slug = document.body.dataset.etPersonId || caminho.at(-2) || 'poeta';
+  const secao = document.body.dataset.etSecao || (location.pathname.includes('/conhecidos/')
     ? 'poemas-conhecidos'
-    : 'poemas';
+    : 'poemas');
   const editorId = `${secao}--${slug}`;
   const voltarUrl = secao === 'poemas-conhecidos'
     ? '/topicos/poemas/conhecidos/conhecidos.html'
@@ -151,7 +162,11 @@ function lerEstadoDaPagina() {
       envelope?.querySelector('.env-titulo')?.textContent.trim() ||
       `Poema ${indice + 1}`;
 
+    const id = artigo.dataset.etContentId || criarSlug(titulo);
+    artigo.dataset.etContentId = id;
+
     return {
+      id,
       titulo,
       autor: artigo.querySelector('.poema-data')?.textContent.trim() || nomeEl.textContent.trim(),
       texto: extrairTextoPoema(artigo.querySelector('.poema-texto'))
@@ -161,6 +176,8 @@ function lerEstadoDaPagina() {
   return {
     nome: nomeEl.textContent.trim(),
     descricao,
+    fotoUrl: fotoEl?.getAttribute('src') || '',
+    instagram: '',
     poemas
   };
 }
@@ -169,8 +186,13 @@ function normalizarDados(dados, fallback) {
   return {
     nome: typeof dados.nome === 'string' ? dados.nome : fallback.nome,
     descricao: typeof dados.descricao === 'string' ? dados.descricao : fallback.descricao,
-    poemas: Array.isArray(dados.poemas) && dados.poemas.length
+    fotoUrl: typeof dados.fotoUrl === 'string' ? dados.fotoUrl : fallback.fotoUrl,
+    instagram: typeof dados.instagram === 'string' ? dados.instagram : fallback.instagram,
+    poemas: Array.isArray(dados.poemas)
       ? dados.poemas.map((poema, i) => ({
+          id: typeof poema?.id === 'string'
+            ? poema.id
+            : fallback.poemas[i]?.id || criarSlug(poema?.titulo || `poema-${i + 1}`),
           titulo: typeof poema?.titulo === 'string'
             ? poema.titulo
             : fallback.poemas[i]?.titulo || `Poema ${i + 1}`,
@@ -187,6 +209,11 @@ function normalizarDados(dados, fallback) {
 
 function aplicarEstado(dados) {
   nomeEl.textContent = dados.nome || '';
+  if (fotoEl && dados.fotoUrl) {
+    fotoEl.src = dados.fotoUrl;
+    fotoEl.alt = dados.nome ? `Foto de ${dados.nome}` : fotoEl.alt;
+  }
+  aplicarInstagram(dados.instagram);
 
   [...pessoaInfo.querySelectorAll('.pessoa-bio')].forEach((p) => p.remove());
 
@@ -215,6 +242,7 @@ function aplicarEstado(dados) {
     const envNumero = envelope?.querySelector('.env-numero');
     const envTitulo = envelope?.querySelector('.env-titulo');
     const numero = romano(indice + 1);
+    artigo.dataset.etContentId = poema.id;
 
     const numeroPoema = artigo.querySelector('.poema-numero');
     if (numeroPoema) numeroPoema.textContent = `Poema ${numero}`;
@@ -225,6 +253,9 @@ function aplicarEstado(dados) {
     if (envTitulo) envTitulo.textContent = poema.titulo || `Poema ${indice + 1}`;
     if (texto) renderizarTextoPoema(texto, poema.texto || '');
   });
+
+  artigos.slice(dados.poemas.length).forEach((artigo) => artigo.remove());
+  envelopes.slice(dados.poemas.length).forEach((envelope) => envelope.remove());
 
   if (contadorEl) {
     const total = dados.poemas.length;
@@ -246,6 +277,9 @@ function garantirEstruturaPoemas(poemas) {
     if (!document.getElementById(id)) {
       areaFolha.appendChild(criarArtigoPoema(id, poema, indice));
     }
+
+    const artigo = document.getElementById(id);
+    if (artigo) artigo.dataset.etContentId = poema.id;
   });
 }
 
@@ -412,6 +446,7 @@ function abrirModalAdicionarPoema(dados, ref, secao, slug) {
     }
 
     const novoPoema = {
+      id: `${criarSlug(form.elements.titulo.value.trim() || 'poema')}-${Date.now().toString(36)}`,
       titulo: form.elements.titulo.value.trim(),
       autor: form.elements.autor.value.trim(),
       texto: form.elements.texto.value.trim()
@@ -440,6 +475,8 @@ function abrirModalAdicionarPoema(dados, ref, secao, slug) {
           removido: false,
           nome: dados.nome || '',
           descricao: dados.descricao || '',
+          fotoUrl: dados.fotoUrl || '',
+          instagram: dados.instagram || '',
           poemas,
           atualizadoEm: serverTimestamp(),
           atualizadoPor: auth.currentUser.uid
@@ -466,8 +503,14 @@ function abrirModalEdicao(dados, ref, secao, slug) {
   modal.className = 'et-modal et-modal--poeta';
 
   const poemasHtml = dados.poemas.map((poema, indice) => `
-    <fieldset class="et-poeta-poema" data-poema="${indice}">
+    <fieldset class="et-poeta-poema" data-poema="${indice}" data-poema-id="${escapeHtml(poema.id || criarSlug(poema.titulo))}">
       <legend>Poema ${indice + 1}</legend>
+
+      <div class="et-poeta-poema__acoes">
+        <button type="button" class="et-mini-btn" data-mover="cima" aria-label="Mover poema para cima">↑</button>
+        <button type="button" class="et-mini-btn" data-mover="baixo" aria-label="Mover poema para baixo">↓</button>
+        <button type="button" class="et-mini-btn et-mini-btn--perigo" data-remover-poema>Remover poema</button>
+      </div>
 
       <div class="et-campo">
         <label>Título</label>
@@ -503,6 +546,16 @@ function abrirModalEdicao(dados, ref, secao, slug) {
           <textarea id="et-poeta-descricao" name="descricao" rows="8" maxlength="5000">${escapeHtml(dados.descricao || '')}</textarea>
         </div>
 
+        <div class="et-campo">
+          <label for="et-poeta-instagram">Instagram (opcional)</label>
+          <input id="et-poeta-instagram" name="instagram" type="text" maxlength="120" value="${escapeHtml(dados.instagram || '')}" placeholder="@usuario">
+        </div>
+
+        <div class="et-campo et-arquivo">
+          <label for="et-poeta-foto">Nova foto (opcional)</label>
+          <input id="et-poeta-foto" name="foto" type="file" accept="image/*">
+        </div>
+
         <div class="et-poeta-poemas-editor">
           <h3>Poemas</h3>
           ${poemasHtml}
@@ -525,6 +578,28 @@ function abrirModalEdicao(dados, ref, secao, slug) {
   const msg = modal.querySelector('[data-msg]');
   const salvar = modal.querySelector('[data-salvar]');
   let salvando = false;
+
+  atualizarBotoesPoemas(modal);
+  modal.querySelector('.et-poeta-poemas-editor').addEventListener('click', (event) => {
+    const fieldset = event.target.closest('[data-poema-id]');
+    if (!fieldset) return;
+
+    if (event.target.closest('[data-remover-poema]')) {
+      if (confirm('Remover este poema? O HTML original continuará preservado como fallback.')) {
+        fieldset.remove();
+        atualizarBotoesPoemas(modal);
+      }
+      return;
+    }
+
+    const mover = event.target.closest('[data-mover]')?.dataset.mover;
+    if (mover === 'cima' && fieldset.previousElementSibling?.matches('fieldset')) {
+      fieldset.parentNode.insertBefore(fieldset, fieldset.previousElementSibling);
+    } else if (mover === 'baixo' && fieldset.nextElementSibling) {
+      fieldset.parentNode.insertBefore(fieldset.nextElementSibling, fieldset);
+    }
+    atualizarBotoesPoemas(modal);
+  });
 
   const fechar = () => {
     if (salvando) return;
@@ -549,12 +624,21 @@ function abrirModalEdicao(dados, ref, secao, slug) {
 
     const nome = form.elements.nome.value.trim();
     const descricao = form.elements.descricao.value.trim();
+    const instagramResultado = normalizarInstagram(form.elements.instagram.value);
+    if (!instagramResultado.ok) {
+      mostrarErro(msg, instagramResultado.mensagem);
+      return;
+    }
 
-    const poemas = dados.poemas.map((_, indice) => ({
-      titulo: form.elements[`titulo-${indice}`].value.trim(),
-      autor: form.elements[`autor-${indice}`].value.trim(),
-      texto: form.elements[`texto-${indice}`].value.trim()
-    }));
+    const poemas = [...form.querySelectorAll('[data-poema-id]')].map((fieldset) => {
+      const indice = fieldset.dataset.poema;
+      return {
+        id: fieldset.dataset.poemaId,
+        titulo: form.elements[`titulo-${indice}`].value.trim(),
+        autor: form.elements[`autor-${indice}`].value.trim(),
+        texto: form.elements[`texto-${indice}`].value.trim()
+      };
+    });
 
     salvando = true;
     salvar.disabled = true;
@@ -563,6 +647,13 @@ function abrirModalEdicao(dados, ref, secao, slug) {
     msg.textContent = 'Salvando alterações...';
 
     try {
+      let fotoUrl = dados.fotoUrl || '';
+      const foto = form.elements.foto.files?.[0];
+      if (foto) {
+        msg.textContent = 'Enviando foto...';
+        fotoUrl = (await enviarArquivo(foto)).url;
+      }
+
       await setDoc(
         ref,
         {
@@ -572,6 +663,8 @@ function abrirModalEdicao(dados, ref, secao, slug) {
           removido: false,
           nome,
           descricao,
+          fotoUrl,
+          instagram: instagramResultado.usuario,
           poemas,
           atualizadoEm: serverTimestamp(),
           atualizadoPor: auth.currentUser.uid
@@ -668,6 +761,79 @@ function romano(numero) {
 function mostrarErro(elemento, mensagem) {
   elemento.textContent = mensagem;
   elemento.classList.add('is-erro');
+}
+
+function aplicarInstagram(usuario) {
+  let link = pessoaInfo.querySelector('[data-et-instagram]');
+  if (!usuario) {
+    link?.remove();
+    return;
+  }
+  if (!link) {
+    link = document.createElement('a');
+    link.dataset.etInstagram = 'true';
+    link.className = 'et-perfil__instagram';
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    pessoaInfo.appendChild(link);
+  }
+  link.href = `https://www.instagram.com/${encodeURIComponent(usuario)}/`;
+  link.textContent = `@${usuario}`;
+}
+
+function atualizarBotoesPoemas(modal) {
+  const itens = [...modal.querySelectorAll('[data-poema-id]')];
+  itens.forEach((item, indice) => {
+    item.querySelector('[data-mover="cima"]').disabled = indice === 0;
+    item.querySelector('[data-mover="baixo"]').disabled = indice === itens.length - 1;
+    const legenda = item.querySelector('legend');
+    if (legenda) legenda.textContent = `Poema ${indice + 1}`;
+  });
+}
+
+function normalizarInstagram(valor) {
+  let usuario = String(valor || '').trim();
+  if (!usuario) return { ok: true, usuario: '' };
+  if (/^https?:\/\//i.test(usuario)) {
+    try {
+      const url = new URL(usuario);
+      if (url.hostname.toLowerCase().replace(/^www\./, '') !== 'instagram.com') throw new Error();
+      usuario = url.pathname.split('/').filter(Boolean)[0] || '';
+    } catch {
+      return { ok: false, mensagem: 'Informe um usuário ou URL válida do Instagram.' };
+    }
+  }
+  usuario = usuario.replace(/^@/, '');
+  if (!/^[a-zA-Z0-9._]{1,30}$/.test(usuario)) {
+    return { ok: false, mensagem: 'Instagram inválido.' };
+  }
+  return { ok: true, usuario: usuario.toLowerCase() };
+}
+
+function enviarArquivo(arquivo) {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    const dados = new FormData();
+    dados.append('file', arquivo);
+    dados.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+    xhr.open('POST', CLOUDINARY_UPLOAD_URL, true);
+    xhr.responseType = 'json';
+    xhr.timeout = 10 * 60 * 1000;
+    xhr.addEventListener('load', () => {
+      if (xhr.status >= 200 && xhr.status < 300 && xhr.response?.secure_url) {
+        resolve({ url: xhr.response.secure_url });
+      } else reject(new Error(xhr.response?.error?.message || 'O Cloudinary recusou a imagem.'));
+    });
+    xhr.addEventListener('error', () => reject(new Error('Falha de rede durante o upload.')));
+    xhr.addEventListener('timeout', () => reject(new Error('O upload demorou tempo demais.')));
+    xhr.send(dados);
+  });
+}
+
+function criarSlug(valor) {
+  return String(valor || '')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || `poema-${Date.now().toString(36)}`;
 }
 
 function escapeHtml(valor) {

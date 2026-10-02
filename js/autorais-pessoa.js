@@ -129,6 +129,7 @@ const el = {
   admin: document.getElementById('et-admin-acoes'),
   btnAdicionar: document.getElementById('et-btn-adicionar-conteudo'),
   btnEditar: document.getElementById('et-btn-editar-pessoa'),
+  btnOrganizar: document.getElementById('et-btn-organizar-conteudos'),
   btnExcluir: document.getElementById('et-btn-excluir-pessoa')
 };
 
@@ -212,9 +213,11 @@ function iniciar() {
   const pararConteudos = onSnapshot(
     conteudosRef,
     (snapshot) => {
-      documentosConteudo = snapshot.docs.sort(
-        (a, b) => obterMillis(a.data().criadoEm) - obterMillis(b.data().criadoEm)
-      );
+      documentosConteudo = snapshot.docs.sort((a, b) => {
+        const ordemA = Number.isFinite(a.data().ordem) ? a.data().ordem : obterMillis(a.data().criadoEm);
+        const ordemB = Number.isFinite(b.data().ordem) ? b.data().ordem : obterMillis(b.data().criadoEm);
+        return ordemA - ordemB;
+      });
 
       renderizarConteudos(documentosConteudo, pesquisador);
       conteudosCarregados = true;
@@ -245,6 +248,11 @@ function iniciar() {
     }
 
     abrirModalEditarPessoa(dadosPessoa, pessoaRef);
+  });
+
+  el.btnOrganizar.addEventListener('click', () => {
+    if (!pesquisador) return;
+    abrirOrganizadorConteudos(documentosConteudo);
   });
 
   el.btnExcluir.addEventListener('click', async () => {
@@ -340,6 +348,14 @@ function criarConteudo(id, dados, pesquisador) {
     const acoes = document.createElement('div');
     acoes.className = 'et-conteudo__acoes';
 
+    const editar = document.createElement('button');
+    editar.type = 'button';
+    editar.className = 'et-mini-btn';
+    editar.textContent = tipoSecao === 'desenhos' ? 'Editar obra' : 'Editar';
+    editar.addEventListener('click', () => {
+      abrirModalConteudo({ nome: dados.autor || '' }, { id, dados });
+    });
+
     const excluir = document.createElement('button');
     excluir.type = 'button';
     excluir.className = 'et-mini-btn et-mini-btn--perigo';
@@ -361,7 +377,7 @@ function criarConteudo(id, dados, pesquisador) {
       }
     });
 
-    acoes.appendChild(excluir);
+    acoes.append(editar, excluir);
     cabecalho.appendChild(acoes);
   }
 
@@ -473,7 +489,7 @@ function criarConteudo(id, dados, pesquisador) {
   return artigo;
 }
 
-function abrirModalConteudo(dadosPessoa) {
+function abrirModalConteudo(dadosPessoa, edicao = null) {
   const modal = document.createElement('div');
   modal.className = 'et-modal';
 
@@ -481,17 +497,17 @@ function abrirModalConteudo(dadosPessoa) {
     <div class="et-modal__caixa" role="dialog" aria-modal="true" aria-labelledby="et-conteudo-modal-titulo">
       <button type="button" class="et-modal__fechar" data-fechar aria-label="Fechar">×</button>
       <p class="et-modal__kicker">${escapeHtml(config.rotulo)}</p>
-      <h2 class="et-modal__titulo" id="et-conteudo-modal-titulo">${escapeHtml(config.adicionar)}</h2>
+      <h2 class="et-modal__titulo" id="et-conteudo-modal-titulo">${escapeHtml(edicao ? 'Editar publicação' : config.adicionar)}</h2>
 
       <form data-form novalidate>
-        ${camposConteudoHtml(dadosPessoa)}
+        ${camposConteudoHtml(dadosPessoa, edicao?.dados)}
 
         <p class="et-progresso" data-msg role="status" aria-live="polite"></p>
         <div class="et-progress-bar" data-barra><span></span></div>
 
         <div class="et-modal__acoes">
           <button type="button" class="et-btn et-btn--secundario" data-cancelar>Cancelar</button>
-          <button type="submit" class="et-btn et-btn--principal" data-salvar>Publicar</button>
+          <button type="submit" class="et-btn et-btn--principal" data-salvar>${edicao ? 'Salvar alterações' : 'Publicar'}</button>
         </div>
       </form>
     </div>
@@ -540,12 +556,12 @@ function abrirModalConteudo(dadosPessoa) {
 
     salvando = true;
     salvar.disabled = true;
-    salvar.textContent = 'Publicando...';
+    salvar.textContent = edicao ? 'Salvando...' : 'Publicando...';
     msg.classList.remove('is-erro');
 
-    const conteudoRef = doc(
-      collection(db, 'participantesAutorais', pessoaId, 'conteudos')
-    );
+    const conteudoRef = edicao
+      ? doc(db, 'participantesAutorais', pessoaId, 'conteudos', edicao.id)
+      : doc(collection(db, 'participantesAutorais', pessoaId, 'conteudos'));
 
     const dados = {
       tipo:
@@ -555,10 +571,14 @@ function abrirModalConteudo(dadosPessoa) {
         'curiosidade',
       titulo: form.elements.titulo?.value.trim() || '',
       autor: form.elements.autor?.value.trim() || '',
-      criadoEm: serverTimestamp(),
       atualizadoEm: serverTimestamp(),
-      criadoPor: auth.currentUser.uid
+      atualizadoPor: auth.currentUser.uid
     };
+    if (!edicao) {
+      dados.criadoEm = serverTimestamp();
+      dados.criadoPor = auth.currentUser.uid;
+      dados.ordem = Date.now();
+    }
 
     try {
       if (tipoSecao === 'poemas') {
@@ -574,6 +594,7 @@ function abrirModalConteudo(dadosPessoa) {
         }
 
         const arquivo = form.elements.imagem.files?.[0] || null;
+        dados.imagemUrl = edicao?.dados.imagemUrl || '';
 
         if (arquivo) {
           barra.classList.add('is-visible');
@@ -597,6 +618,7 @@ function abrirModalConteudo(dadosPessoa) {
         dados.descricao = form.elements.descricao.value.trim();
 
         const arquivo = form.elements.video.files?.[0] || null;
+        dados.videoUrl = edicao?.dados.videoUrl || '';
 
         if (arquivo) {
           barra.classList.add('is-visible');
@@ -623,6 +645,8 @@ function abrirModalConteudo(dadosPessoa) {
 
         const imagem = form.elements.imagem.files?.[0] || null;
         const video = form.elements.video.files?.[0] || null;
+        dados.imagemUrl = edicao?.dados.imagemUrl || '';
+        dados.videoUrl = edicao?.dados.videoUrl || '';
 
         if (imagem) {
           barra.classList.add('is-visible');
@@ -658,7 +682,7 @@ function abrirModalConteudo(dadosPessoa) {
       }
 
       msg.textContent = 'Salvando publicação...';
-      await setDoc(conteudoRef, dados);
+      await setDoc(conteudoRef, dados, { merge: Boolean(edicao) });
 
       salvando = false;
       fechar();
@@ -671,13 +695,71 @@ function abrirModalConteudo(dadosPessoa) {
 
       salvando = false;
       salvar.disabled = false;
-      salvar.textContent = 'Publicar';
+      salvar.textContent = edicao ? 'Salvar alterações' : 'Publicar';
     }
   });
 
   requestAnimationFrame(() => {
     form.querySelector('input, textarea')?.focus();
   });
+}
+
+function abrirOrganizadorConteudos(documentos) {
+  const modal = document.createElement('div');
+  modal.className = 'et-modal';
+  modal.innerHTML = `
+    <div class="et-modal__caixa et-modal__caixa--ordem" role="dialog" aria-modal="true">
+      <button type="button" class="et-modal__fechar" data-fechar aria-label="Fechar">×</button>
+      <p class="et-modal__kicker">Entre Tempos · pesquisadores</p>
+      <h2 class="et-modal__titulo">Organizar publicações</h2>
+      <ol class="et-ordem-lista-admin" data-lista></ol>
+      <p class="et-progresso" data-msg></p>
+      <div class="et-modal__acoes"><button type="button" class="et-btn et-btn--secundario" data-cancelar>Cancelar</button><button type="button" class="et-btn et-btn--principal" data-salvar>Salvar ordem</button></div>
+    </div>`;
+  const lista = modal.querySelector('[data-lista]');
+  documentos.forEach((item, indice) => {
+    const li = document.createElement('li');
+    li.className = 'et-ordem-item';
+    li.dataset.id = item.id;
+    li.innerHTML = `<span class="et-ordem-item__nome"></span><span class="et-ordem-item__acoes"><button type="button" data-mover="cima"${indice === 0 ? ' disabled' : ''}>↑</button><button type="button" data-mover="baixo"${indice === documentos.length - 1 ? ' disabled' : ''}>↓</button></span>`;
+    li.querySelector('.et-ordem-item__nome').textContent = item.data().titulo || tituloPadrao();
+    lista.appendChild(li);
+  });
+  const atualizar = () => [...lista.children].forEach((item, indice, itens) => {
+    item.querySelector('[data-mover="cima"]').disabled = indice === 0;
+    item.querySelector('[data-mover="baixo"]').disabled = indice === itens.length - 1;
+  });
+  lista.addEventListener('click', (evento) => {
+    const botao = evento.target.closest('[data-mover]');
+    if (!botao) return;
+    const item = botao.closest('[data-id]');
+    if (botao.dataset.mover === 'cima' && item.previousElementSibling) lista.insertBefore(item, item.previousElementSibling);
+    if (botao.dataset.mover === 'baixo' && item.nextElementSibling) lista.insertBefore(item.nextElementSibling, item);
+    atualizar();
+  });
+  const fechar = () => { modal.remove(); document.body.classList.remove('et-modal-aberto'); };
+  modal.querySelector('[data-fechar]').addEventListener('click', fechar);
+  modal.querySelector('[data-cancelar]').addEventListener('click', fechar);
+  modal.querySelector('[data-salvar]').addEventListener('click', async (evento) => {
+    const botao = evento.currentTarget;
+    const msg = modal.querySelector('[data-msg]');
+    botao.disabled = true;
+    msg.textContent = 'Salvando ordem...';
+    try {
+      const itens = [...lista.querySelectorAll('[data-id]')];
+      await Promise.all(itens.map((item, indice) => updateDoc(
+        doc(db, 'participantesAutorais', pessoaId, 'conteudos', item.dataset.id),
+        { ordem: indice, atualizadoEm: serverTimestamp(), atualizadoPor: auth.currentUser.uid }
+      )));
+      fechar();
+    } catch (erro) {
+      console.error('[autorais] Falha ao organizar publicações:', erro);
+      erroMsg(msg, 'Não foi possível salvar a ordem.');
+      botao.disabled = false;
+    }
+  });
+  document.body.appendChild(modal);
+  document.body.classList.add('et-modal-aberto');
 }
 
 function abrirModalEditarPoetaCompleto(dadosPessoa, pessoaRef, documentosConteudo) {
@@ -1132,18 +1214,21 @@ function criarLoadingPagina() {
   };
 }
 
-function camposConteudoHtml(dadosPessoa) {
+function camposConteudoHtml(dadosPessoa, dados = {}) {
   const nome = escapeHtml(dadosPessoa.nome || '');
+  const titulo = escapeHtml(dados.titulo || '');
+  const autor = escapeHtml(dados.autor || dadosPessoa.nome || '');
+  const descricao = escapeHtml(dados.descricao || '');
 
   const comuns = `
     <div class="et-campo">
       <label for="et-conteudo-titulo">Nome / título <small>(opcional)</small></label>
-      <input id="et-conteudo-titulo" name="titulo" type="text" maxlength="160">
+      <input id="et-conteudo-titulo" name="titulo" type="text" maxlength="160" value="${titulo}">
     </div>
 
     <div class="et-campo">
       <label for="et-conteudo-autor">Quem criou / escreveu <small>(opcional)</small></label>
-      <input id="et-conteudo-autor" name="autor" type="text" maxlength="160" value="${nome}">
+      <input id="et-conteudo-autor" name="autor" type="text" maxlength="160" value="${autor || nome}">
     </div>
   `;
 
@@ -1151,7 +1236,7 @@ function camposConteudoHtml(dadosPessoa) {
     return `${comuns}
       <div class="et-campo">
         <label for="et-conteudo-texto">Poema <small>(opcional)</small></label>
-        <textarea id="et-conteudo-texto" name="texto" rows="12" maxlength="20000"></textarea>
+        <textarea id="et-conteudo-texto" name="texto" rows="12" maxlength="20000">${escapeHtml(dados.texto || '')}</textarea>
       </div>`;
   }
 
@@ -1160,7 +1245,7 @@ function camposConteudoHtml(dadosPessoa) {
       ? `
         <div class="et-campo">
           <label for="et-conteudo-descricao">Descrição da obra <small>(opcional)</small></label>
-          <textarea id="et-conteudo-descricao" name="descricao" rows="5" maxlength="4000"></textarea>
+          <textarea id="et-conteudo-descricao" name="descricao" rows="5" maxlength="4000">${descricao}</textarea>
         </div>
       `
       : '';
@@ -1177,12 +1262,12 @@ function camposConteudoHtml(dadosPessoa) {
     return `
       <div class="et-campo">
         <label for="et-conteudo-titulo">Título da música <small>(opcional)</small></label>
-        <input id="et-conteudo-titulo" name="titulo" type="text" maxlength="160">
+        <input id="et-conteudo-titulo" name="titulo" type="text" maxlength="160" value="${titulo}">
       </div>
 
       <div class="et-campo">
         <label for="et-conteudo-descricao">Descrição da música <small>(opcional)</small></label>
-        <textarea id="et-conteudo-descricao" name="descricao" rows="6" maxlength="3500"></textarea>
+        <textarea id="et-conteudo-descricao" name="descricao" rows="6" maxlength="3500">${descricao}</textarea>
       </div>
 
       <div class="et-campo et-arquivo">
@@ -1194,7 +1279,7 @@ function camposConteudoHtml(dadosPessoa) {
   return `${comuns}
     <div class="et-campo">
       <label for="et-conteudo-descricao">Texto / descrição da curiosidade <small>(opcional)</small></label>
-      <textarea id="et-conteudo-descricao" name="descricao" rows="7" maxlength="12000"></textarea>
+      <textarea id="et-conteudo-descricao" name="descricao" rows="7" maxlength="12000">${descricao}</textarea>
     </div>
 
     <div class="et-campo et-arquivo">
@@ -1202,7 +1287,7 @@ function camposConteudoHtml(dadosPessoa) {
       <input id="et-conteudo-imagem" name="imagem" type="file" accept="image/*">
 
       <label class="et-opcao-retrato">
-        <input name="imagemRetratoMenor" type="checkbox">
+        <input name="imagemRetratoMenor" type="checkbox"${dados.imagemRetratoMenor === true ? ' checked' : ''}>
         <span>
           <strong>Retrato menor</strong>
           <small>Exibir esta imagem em um quadro compacto.</small>
@@ -1215,7 +1300,7 @@ function camposConteudoHtml(dadosPessoa) {
       <input id="et-conteudo-video" name="video" type="file" accept="video/*">
 
       <label class="et-opcao-retrato">
-        <input name="videoRetratoMenor" type="checkbox">
+        <input name="videoRetratoMenor" type="checkbox"${dados.videoRetratoMenor === true ? ' checked' : ''}>
         <span>
           <strong>Retrato menor</strong>
           <small>Exibir este vídeo em tamanho compacto.</small>

@@ -26,6 +26,8 @@ const CACHE_PREFIX = 'entretempos:participantes:';
 const CACHE_MAX_AGE = 1000 * 60 * 60 * 24 * 7;
 const SECOES_COM_LOADING = new Set(SECOES);
 const RAIZ_ORDEM = '_ordem-secoes';
+const RAIZ_LEGADOS = '_legados';
+const RAIZ_POETAS_ESTATICOS = '_poetas-estaticos';
 
 function otimizarImagemCloudinary(url, largura = 640, altura = 800) {
   if (!url || !url.includes('res.cloudinary.com') || !url.includes('/upload/')) {
@@ -37,6 +39,14 @@ function otimizarImagemCloudinary(url, largura = 640, altura = 800) {
 }
 
 const secao = document.body.dataset.autoraisSecao;
+const SECAO_CONTEUDOS = secao === 'curiosidades-gerais';
+
+if (!document.querySelector('link[href="/css/autorais-admin.css"]')) {
+  const estilosAdmin = document.createElement('link');
+  estilosAdmin.rel = 'stylesheet';
+  estilosAdmin.href = '/css/autorais-admin.css';
+  document.head.appendChild(estilosAdmin);
+}
 
 if (!SECOES.has(secao)) {
   console.warn('[autorais] seção não reconhecida:', secao);
@@ -55,6 +65,11 @@ function iniciarGaleria() {
     alvo,
     modal: null
   };
+  const estadoLegados = {
+    alvo,
+    pesquisador: false,
+    documentos: new Map()
+  };
 
   document.body.appendChild(modal);
 
@@ -62,11 +77,17 @@ function iniciarGaleria() {
 
   onAuthStateChanged(auth, (usuario) => {
     pesquisadorLogado = usuario?.uid === PESQUISADOR_UID;
+    estadoLegados.pesquisador = pesquisadorLogado;
     barra.classList.toggle('is-pesquisador', pesquisadorLogado);
+    aplicarLegados(estadoLegados);
   });
 
   botaoAdicionar.addEventListener('click', () => {
     if (!pesquisadorLogado) return;
+    if (SECAO_CONTEUDOS) {
+      abrirEditorConteudoLegado(estadoLegados, null, true);
+      return;
+    }
     abrirModal(modal);
   });
 
@@ -86,47 +107,273 @@ function iniciarGaleria() {
 
   observarOrdem(estadoOrdem);
   observarParticipantes(alvo, loading, estadoOrdem);
-
-  if (secao === 'poemas' || secao === 'poemas-conhecidos') {
-    observarPoetasEstaticosRemovidos(alvo);
-  }
+  observarLegados(estadoLegados, estadoOrdem);
 }
 
-function observarPoetasEstaticosRemovidos(alvo) {
-  const ref = collection(
-    db,
-    'participantesAutorais',
-    '_poetas-estaticos',
-    'conteudos'
-  );
+function observarLegados(estado, estadoOrdem) {
+  const raizes = [RAIZ_LEGADOS];
+  if (secao === 'poemas' || secao === 'poemas-conhecidos') {
+    raizes.push(RAIZ_POETAS_ESTATICOS);
+  }
 
-  onSnapshot(
-    ref,
-    (snapshot) => {
+  raizes.forEach((raiz) => {
+    onSnapshot(collection(db, 'participantesAutorais', raiz, 'conteudos'), (snapshot) => {
       const prefixo = `${secao}--`;
-      const removidos = new Set();
+
+      [...estado.documentos.keys()]
+        .filter((chave) => chave.startsWith(`${raiz}:`))
+        .forEach((chave) => estado.documentos.delete(chave));
 
       snapshot.docs.forEach((item) => {
         if (!item.id.startsWith(prefixo)) return;
-        if (item.data().removido !== true) return;
-        removidos.add(item.id.slice(prefixo.length));
+        estado.documentos.set(`${raiz}:${item.id.slice(prefixo.length)}`, {
+          id: item.id.slice(prefixo.length),
+          raiz,
+          dados: item.data()
+        });
       });
 
-      alvo
-        .querySelectorAll('a.foto-nav:not([data-et-pessoa-dinamica])')
-        .forEach((link) => {
-          const href = link.getAttribute('href') || '';
-          const slug = [...removidos].find((item) =>
-            href.includes(`${item}/index.html`)
-          );
+      aplicarLegados(estado);
+      aplicarOrdem(estadoOrdem);
+    }, (erro) => {
+      console.error('[autorais] Falha ao carregar conteúdos legados:', erro);
+    });
+  });
+}
 
-          link.hidden = Boolean(slug);
-        });
-    },
-    (erro) => {
-      console.error('[autorais] Erro ao verificar poetas removidos:', erro);
+function itensLegados(alvo) {
+  return [...alvo.querySelectorAll('[data-et-person-id], [data-et-content-id]')]
+    .filter((item) => !item.dataset.etPessoaDinamica);
+}
+
+function aplicarLegados(estado) {
+  estado.alvo.querySelectorAll('[data-et-legado-novo]').forEach((item) => item.remove());
+  estado.alvo.querySelectorAll('[data-et-legado-acoes]').forEach((item) => item.remove());
+
+  const encontrados = new Set();
+
+  itensLegados(estado.alvo).forEach((item) => {
+    const id = item.dataset.etLegacyKey || item.dataset.etPersonId || item.dataset.etContentId;
+    const registro = [...estado.documentos.values()].find((documento) => documento.id === id);
+    encontrados.add(id);
+    aplicarOverrideNoItem(item, registro?.dados || null);
+
+    if (estado.pesquisador) adicionarAcoesLegado(item, registro, estado);
+  });
+
+  if (SECAO_CONTEUDOS) {
+    [...estado.documentos.values()].forEach((registro) => {
+      if (encontrados.has(registro.id) || !registro.dados.criadoPeloPainel) return;
+      if (registro.dados.removido === true || registro.dados.ativo === false) return;
+      const item = criarCardCuriosidadeLegado(registro.id, registro.dados);
+      estado.alvo.appendChild(item);
+      if (estado.pesquisador) adicionarAcoesLegado(item, registro, estado);
+    });
+  }
+}
+
+function aplicarOverrideNoItem(item, dados) {
+  item.hidden = dados?.removido === true || dados?.ativo === false;
+  if (!dados || item.hidden) return;
+
+  const nome = item.querySelector('.foto-nav-nome, .curiosidade-conteudo > h1');
+  const foto = item.querySelector('.foto-nav > img, :scope.foto-nav > img, .quadro img');
+  const titulo = item.querySelector('.curiosidade-titulo');
+  const descricao = item.querySelector('.curiosidade-texto');
+  const link = item.querySelector('.btn-ler-curiosidade');
+  const conteudo = Array.isArray(dados.conteudos)
+    ? dados.conteudos.find((publicacao) => publicacao.ativo !== false) || {}
+    : {};
+
+  if (nome && typeof (item.dataset.etContentId ? dados.titulo : dados.nome) === 'string') {
+    nome.textContent = item.dataset.etContentId ? dados.titulo : dados.nome;
+  }
+  if (foto && dados.fotoUrl) foto.src = dados.fotoUrl;
+  if (titulo && typeof (dados.titulo ?? conteudo.titulo) === 'string') {
+    titulo.textContent = dados.titulo ?? conteudo.titulo;
+  }
+  if (descricao && typeof (dados.descricaoConteudo ?? conteudo.descricao ?? dados.descricao) === 'string') {
+    descricao.textContent = dados.descricaoConteudo ?? conteudo.descricao ?? dados.descricao;
+  }
+  if (foto && (dados.imagemUrl || conteudo.midiaUrl)) foto.src = dados.imagemUrl || conteudo.midiaUrl;
+  if (link && typeof dados.link === 'string') link.href = dados.link || '#';
+}
+
+function adicionarAcoesLegado(item, registro, estado) {
+  const acoes = document.createElement('div');
+  acoes.className = 'et-legado-card-acoes';
+  acoes.dataset.etLegadoAcoes = 'true';
+
+  const editar = document.createElement('button');
+  editar.type = 'button';
+  editar.className = 'et-mini-btn';
+  editar.textContent = item.dataset.etContentId ? 'Editar curiosidade' : 'Editar pessoa';
+  editar.addEventListener('click', (evento) => {
+    evento.preventDefault();
+    evento.stopPropagation();
+
+    if (item.matches('a.foto-nav')) {
+      location.href = item.href;
+      return;
     }
-  );
+
+    abrirEditorConteudoLegado(estado, { item, registro }, false);
+  });
+
+  const remover = document.createElement('button');
+  remover.type = 'button';
+  remover.className = 'et-mini-btn et-mini-btn--perigo';
+  remover.textContent = 'Remover';
+  remover.addEventListener('click', async (evento) => {
+    evento.preventDefault();
+    evento.stopPropagation();
+    const titulo = item.querySelector('h1, h2, h3, .foto-nav-nome')?.textContent.trim() || 'este item';
+    if (!confirm(`Remover “${titulo}” da revista?`)) return;
+    remover.disabled = true;
+    try {
+      const id = item.dataset.etLegacyKey || item.dataset.etPersonId || item.dataset.etContentId;
+      const raiz = registro?.raiz || raizLegadoDaSecao();
+      await setDoc(doc(db, 'participantesAutorais', raiz, 'conteudos', `${secao}--${id}`), {
+        tipo: item.dataset.etContentId ? 'conteudo' : 'pessoa',
+        secao,
+        legadoId: id,
+        removido: true,
+        atualizadoEm: serverTimestamp(),
+        atualizadoPor: auth.currentUser.uid
+      }, { merge: true });
+    } catch (erro) {
+      console.error('[autorais] Falha ao remover legado:', erro);
+      alert('Não foi possível remover agora.');
+      remover.disabled = false;
+    }
+  });
+
+  acoes.append(editar, remover);
+  item.appendChild(acoes);
+}
+
+function abrirEditorConteudoLegado(estado, contexto, novo) {
+  const item = contexto?.item || null;
+  const dados = contexto?.registro?.dados || {};
+  const id = item?.dataset.etLegacyKey || item?.dataset.etContentId || criarIdConteudo(dados.titulo || 'curiosidade');
+  const nomeFallback = item?.querySelector('.curiosidade-conteudo > h1')?.textContent.trim() || '';
+  const tituloFallback = item?.querySelector('.curiosidade-titulo')?.textContent.trim() || nomeFallback;
+  const descricaoFallback = item?.querySelector('.curiosidade-texto')?.textContent.trim() || '';
+  const imagemFallback = item?.querySelector('.quadro img')?.getAttribute('src') || '';
+  const linkFallback = item?.querySelector('.btn-ler-curiosidade')?.getAttribute('href') || '';
+  const ehPessoa = Boolean(item?.dataset.etPersonId);
+
+  const modal = document.createElement('div');
+  modal.className = 'et-modal';
+  modal.innerHTML = `
+    <div class="et-modal__caixa" role="dialog" aria-modal="true">
+      <button type="button" class="et-modal__fechar" data-fechar aria-label="Fechar">×</button>
+      <p class="et-modal__kicker">Entre Tempos · pesquisadores</p>
+      <h2 class="et-modal__titulo">${novo ? 'Adicionar curiosidade' : 'Editar curiosidade'}</h2>
+      <form data-form>
+        ${ehPessoa ? `<div class="et-campo"><label>Nome da pessoa</label><input name="nome" maxlength="160" value="${escapeHtmlGaleria(dados.nome ?? nomeFallback)}"></div><div class="et-campo"><label>Instagram (opcional)</label><input name="instagram" maxlength="120" value="${escapeHtmlGaleria(dados.instagram || '')}"></div>` : ''}
+        <div class="et-campo"><label>Título</label><input name="titulo" maxlength="220" value="${escapeHtmlGaleria(dados.titulo ?? tituloFallback)}"></div>
+        <div class="et-campo"><label>Descrição</label><textarea name="descricao" rows="7" maxlength="10000">${escapeHtmlGaleria(dados.descricaoConteudo ?? descricaoFallback)}</textarea></div>
+        <div class="et-campo"><label>Link / página de leitura (opcional)</label><input name="link" type="text" maxlength="1000" value="${escapeHtmlGaleria(dados.link ?? linkFallback)}"></div>
+        <div class="et-campo et-arquivo"><label>Nova imagem (opcional)</label><input name="imagem" type="file" accept="image/*"></div>
+        <p class="et-progresso" data-msg></p>
+        <div class="et-modal__acoes"><button type="button" class="et-btn et-btn--secundario" data-cancelar>Cancelar</button><button type="submit" class="et-btn et-btn--principal" data-salvar>Salvar</button></div>
+      </form>
+    </div>`;
+
+  const fechar = () => { modal.remove(); document.body.classList.remove('et-modal-aberto'); };
+  modal.querySelector('[data-fechar]').addEventListener('click', fechar);
+  modal.querySelector('[data-cancelar]').addEventListener('click', fechar);
+  modal.querySelector('[data-form]').addEventListener('submit', async (evento) => {
+    evento.preventDefault();
+    const form = evento.currentTarget;
+    const salvar = form.querySelector('[data-salvar]');
+    const msg = form.querySelector('[data-msg]');
+    salvar.disabled = true;
+    msg.textContent = 'Salvando...';
+
+    try {
+      let imagemUrl = dados.imagemUrl || imagemFallback;
+      const arquivo = form.elements.imagem.files?.[0];
+      if (arquivo) {
+        msg.textContent = 'Enviando imagem...';
+        imagemUrl = (await enviarArquivo(arquivo)).url;
+      }
+
+      const documentoId = novo ? criarIdConteudo(form.elements.titulo.value) : id;
+      const payload = {
+        tipo: ehPessoa ? 'pessoa' : 'conteudo',
+        secao,
+        legadoId: documentoId,
+        criadoPeloPainel: novo || dados.criadoPeloPainel === true,
+        removido: false,
+        ativo: true,
+        titulo: form.elements.titulo.value.trim(),
+        descricaoConteudo: form.elements.descricao.value.trim(),
+        imagemUrl,
+        link: form.elements.link.value.trim(),
+        atualizadoEm: serverTimestamp(),
+        atualizadoPor: auth.currentUser.uid
+      };
+      if (ehPessoa) {
+        const instagram = normalizarInstagram(form.elements.instagram.value);
+        if (!instagram.ok) throw new Error(instagram.mensagem);
+        payload.nome = form.elements.nome.value.trim();
+        payload.instagram = instagram.usuario;
+      }
+      if (novo) payload.criadoEm = serverTimestamp();
+
+      await setDoc(doc(db, 'participantesAutorais', RAIZ_LEGADOS, 'conteudos', `${secao}--${documentoId}`), payload, { merge: true });
+      fechar();
+    } catch (erro) {
+      console.error('[autorais] Falha ao salvar legado:', erro);
+      msg.textContent = erro.message || 'Não foi possível salvar agora.';
+      msg.classList.add('is-erro');
+      salvar.disabled = false;
+    }
+  });
+
+  document.body.appendChild(modal);
+  document.body.classList.add('et-modal-aberto');
+}
+
+function criarCardCuriosidadeLegado(id, dados) {
+  const secaoEl = document.createElement('section');
+  secaoEl.className = 'autor-bloco';
+  secaoEl.dataset.etContentId = id;
+  secaoEl.dataset.etOrderId = `legacy:${id}`;
+  secaoEl.dataset.etLegadoNovo = 'true';
+  secaoEl.innerHTML = `<div class="lista-curiosidades"><article class="card-curiosidade"><div class="quadro"><img loading="lazy" decoding="async" alt=""></div><div class="curiosidade-conteudo"><h1></h1><p class="curiosidade-texto"></p><a class="btn-ler-curiosidade">Ler curiosidade →</a></div></article></div>`;
+  const titulo = secaoEl.querySelector('h1');
+  const descricao = secaoEl.querySelector('.curiosidade-texto');
+  const imagem = secaoEl.querySelector('img');
+  const link = secaoEl.querySelector('a');
+  titulo.textContent = dados.titulo || 'Sem título';
+  descricao.textContent = dados.descricaoConteudo || '';
+  imagem.src = dados.imagemUrl || 'img/placeholder-retrato.svg';
+  imagem.alt = dados.titulo || '';
+  link.href = dados.link || '#';
+  if (!dados.link) link.hidden = true;
+  return secaoEl;
+}
+
+function raizLegadoDaSecao() {
+  return secao === 'poemas' || secao === 'poemas-conhecidos'
+    ? RAIZ_POETAS_ESTATICOS
+    : RAIZ_LEGADOS;
+}
+
+function criarIdConteudo(titulo) {
+  const slug = String(titulo || 'conteudo')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'conteudo';
+  return `${slug}-${Date.now().toString(36)}`;
+}
+
+function escapeHtmlGaleria(valor) {
+  return String(valor || '').replace(/[&<>'"]/g, (char) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+  })[char]);
 }
 
 function obterAlvoGaleria() {
@@ -164,7 +411,7 @@ function criarBarraAdmin(alvo) {
   barra.innerHTML = `
     <button type="button" class="et-admin-adicionar" data-et-adicionar>
       <span class="et-admin-adicionar__mais" aria-hidden="true">+</span>
-      <span>Adicionar pessoa</span>
+      <span>${SECAO_CONTEUDOS ? 'Adicionar curiosidade' : 'Adicionar pessoa'}</span>
     </button>
     <button type="button" class="et-admin-adicionar et-admin-organizar" data-et-organizar>
       <span aria-hidden="true">↕</span>
