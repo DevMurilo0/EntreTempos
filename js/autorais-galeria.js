@@ -28,6 +28,8 @@ const SECOES_COM_LOADING = new Set(SECOES);
 const RAIZ_ORDEM = '_ordem-secoes';
 const RAIZ_LEGADOS = '_legados';
 const RAIZ_POETAS_ESTATICOS = '_poetas-estaticos';
+const observadoresCuriosidades = new Map();
+let pesquisadorAtivo = false;
 
 function otimizarImagemCloudinary(url, largura = 640, altura = 800) {
   if (!url || !url.includes('res.cloudinary.com') || !url.includes('/upload/')) {
@@ -77,8 +79,13 @@ function iniciarGaleria() {
 
   onAuthStateChanged(auth, (usuario) => {
     pesquisadorLogado = usuario?.uid === PESQUISADOR_UID;
+    pesquisadorAtivo = pesquisadorLogado;
     estadoLegados.pesquisador = pesquisadorLogado;
     barra.classList.toggle('is-pesquisador', pesquisadorLogado);
+    document.querySelectorAll('[data-et-acoes-curiosidade]').forEach((acoes) => {
+      acoes.hidden = !pesquisadorLogado;
+      acoes.style.display = pesquisadorLogado ? '' : 'none';
+    });
     aplicarLegados(estadoLegados);
   });
 
@@ -196,7 +203,7 @@ function aplicarOverrideNoItem(item, dados) {
     descricao.textContent = dados.descricaoConteudo ?? conteudo.descricao ?? dados.descricao;
   }
   if (foto && (dados.imagemUrl || conteudo.midiaUrl)) foto.src = dados.imagemUrl || conteudo.midiaUrl;
-  if (link && typeof dados.link === 'string') link.href = dados.link || '#';
+  if (link && typeof dados.link === 'string' && dados.link.trim()) link.href = dados.link.trim();
 }
 
 function adicionarAcoesLegado(item, registro, estado) {
@@ -343,18 +350,48 @@ function criarCardCuriosidadeLegado(id, dados) {
   secaoEl.dataset.etContentId = id;
   secaoEl.dataset.etOrderId = `legacy:${id}`;
   secaoEl.dataset.etLegadoNovo = 'true';
-  secaoEl.innerHTML = `<div class="lista-curiosidades"><article class="card-curiosidade"><div class="quadro"><img loading="lazy" decoding="async" alt=""></div><div class="curiosidade-conteudo"><h1></h1><p class="curiosidade-texto"></p><a class="btn-ler-curiosidade">Ler curiosidade →</a></div></article></div>`;
-  const titulo = secaoEl.querySelector('h1');
-  const descricao = secaoEl.querySelector('.curiosidade-texto');
-  const imagem = secaoEl.querySelector('img');
-  const link = secaoEl.querySelector('a');
-  titulo.textContent = dados.titulo || 'Sem título';
-  descricao.textContent = dados.descricaoConteudo || '';
-  imagem.src = dados.imagemUrl || 'img/placeholder-retrato.svg';
-  imagem.alt = dados.titulo || '';
-  link.href = dados.link || '#';
-  if (!dados.link) link.hidden = true;
+  const lista = document.createElement('div');
+  lista.className = 'lista-curiosidades';
+  lista.appendChild(criarCardCuriosidade({
+    titulo: dados.titulo,
+    descricao: dados.descricaoConteudo,
+    imagemUrl: dados.imagemUrl,
+    link: dados.link || linkLeituraCuriosidade({ legadoId: id })
+  }));
+  secaoEl.appendChild(lista);
   return secaoEl;
+}
+
+function criarCardCuriosidade({ pessoaNome = '', titulo, descricao, imagemUrl, link }) {
+  const artigo = document.createElement('article');
+  artigo.className = 'card-curiosidade';
+  artigo.innerHTML = '<div class="quadro"><img loading="lazy" decoding="async" alt=""></div><div class="curiosidade-conteudo"><h1></h1><p class="curiosidade-texto"></p><a class="btn-ler-curiosidade">LER CURIOSIDADE →</a></div>';
+
+  const conteudo = artigo.querySelector('.curiosidade-conteudo');
+  const tituloPrincipal = artigo.querySelector('h1');
+  tituloPrincipal.textContent = pessoaNome || titulo || 'Sem título';
+
+  if (pessoaNome && titulo) {
+    const subtitulo = document.createElement('h3');
+    subtitulo.className = 'curiosidade-titulo';
+    subtitulo.textContent = titulo;
+    tituloPrincipal.after(subtitulo);
+  }
+
+  const imagem = artigo.querySelector('img');
+  imagem.src = otimizarImagemCloudinary(imagemUrl || 'img/placeholder-retrato.svg', 900, 900);
+  imagem.alt = titulo || pessoaNome || 'Curiosidade';
+  artigo.querySelector('.curiosidade-texto').textContent = descricao || '';
+  conteudo.querySelector('.btn-ler-curiosidade').href = link;
+  return artigo;
+}
+
+function linkLeituraCuriosidade({ legadoId = '', pessoaId = '', conteudoId = '' }) {
+  const parametros = new URLSearchParams({ secao });
+  if (legadoId) parametros.set('id', legadoId);
+  if (pessoaId) parametros.set('pessoa', pessoaId);
+  if (conteudoId) parametros.set('conteudo', conteudoId);
+  return `/topicos/curiosidades/leitura.html?${parametros.toString()}`;
 }
 
 function raizLegadoDaSecao() {
@@ -448,10 +485,14 @@ function observarParticipantes(alvo, loading, estadoOrdem) {
 }
 
 function renderizarParticipantes(alvo, participantes, estadoOrdem = null) {
+  observadoresCuriosidades.forEach((cancelar) => cancelar());
+  observadoresCuriosidades.clear();
   alvo.querySelectorAll('[data-et-pessoa-dinamica]').forEach((el) => el.remove());
 
   participantes.forEach((item) => {
-    const card = criarCardPessoa(item.id, item.dados);
+    const card = (secao === 'curiosidades' || secao === 'curiosidades-gerais')
+      ? criarBlocoCuriosidadesPessoa(item.id, item.dados, estadoOrdem)
+      : criarCardPessoa(item.id, item.dados);
 
     if (alvo.classList.contains('et-ordem-lista--blocos') && estadoOrdem?.ids === null) {
       const primeiroEstatico = alvo.querySelector('[data-et-order-id^="static:"]');
@@ -462,6 +503,59 @@ function renderizarParticipantes(alvo, participantes, estadoOrdem = null) {
   });
 
   aplicarOrdem(estadoOrdem);
+}
+
+function criarBlocoCuriosidadesPessoa(pessoaId, pessoa, estadoOrdem) {
+  const bloco = document.createElement('section');
+  bloco.className = 'autor-bloco';
+  bloco.dataset.etPessoaDinamica = 'true';
+  bloco.dataset.etOrderId = `dynamic:${pessoaId}`;
+
+  const lista = document.createElement('div');
+  lista.className = 'lista-curiosidades';
+  bloco.appendChild(lista);
+
+  const acoes = document.createElement('div');
+  acoes.className = 'et-legado-card-acoes';
+  acoes.dataset.etAcoesCuriosidade = 'true';
+  acoes.hidden = !pesquisadorAtivo;
+  acoes.style.display = pesquisadorAtivo ? '' : 'none';
+  const editar = document.createElement('a');
+  editar.className = 'et-mini-btn';
+  editar.textContent = 'Editar curiosidade';
+  editar.href = `/topicos/autorais/pessoa.html?secao=${encodeURIComponent(secao)}&id=${encodeURIComponent(pessoaId)}`;
+  acoes.appendChild(editar);
+  bloco.appendChild(acoes);
+
+  const consulta = collection(db, 'participantesAutorais', pessoaId, 'conteudos');
+  const cancelar = onSnapshot(consulta, (snapshot) => {
+    const itens = snapshot.docs
+      .filter((item) => item.data().ativo !== false)
+      .sort((a, b) => {
+        const ordemA = Number.isFinite(a.data().ordem) ? a.data().ordem : Number.MAX_SAFE_INTEGER;
+        const ordemB = Number.isFinite(b.data().ordem) ? b.data().ordem : Number.MAX_SAFE_INTEGER;
+        return ordemA - ordemB || obterMillis(a.data().criadoEm) - obterMillis(b.data().criadoEm);
+      });
+
+    lista.replaceChildren(...itens.map((item) => {
+      const dados = item.data();
+      return criarCardCuriosidade({
+        pessoaNome: secao === 'curiosidades' ? pessoa.nome : '',
+        titulo: dados.titulo || pessoa.nome,
+        descricao: dados.descricao || pessoa.descricao,
+        imagemUrl: dados.imagemUrl || pessoa.fotoUrl,
+        link: dados.link || linkLeituraCuriosidade({ pessoaId, conteudoId: item.id })
+      });
+    }));
+
+    bloco.hidden = itens.length === 0;
+    aplicarOrdem(estadoOrdem);
+  }, (erro) => {
+    console.error('[autorais] Falha ao carregar curiosidades da pessoa:', erro);
+  });
+
+  observadoresCuriosidades.set(pessoaId, cancelar);
+  return bloco;
 }
 
 function observarOrdem(estado) {

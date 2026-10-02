@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Leitura de curiosidade da revista Entre Tempos.">
+  <title>Curiosidade | Entre Tempos</title>
+  <link rel="stylesheet" href="/topicos/curiosidades/gerais/leituras/leitura.css">
+  <link rel="stylesheet" href="/css/tablet.css">
+</head>
+<body>
+  <header>
+    <a data-voltar href="/topicos/curiosidades/gerais/gerais.html">← voltar</a>
+  </header>
+
+  <main data-leitura hidden>
+    <section class="curiosidade-abertura">
+      <img data-imagem class="foto-curiosidade" loading="eager" decoding="async" alt="">
+      <div class="curiosidade-abertura-info">
+        <h1 class="curiosidade-abertura-titulo" data-titulo></h1>
+        <p class="curiosidade-abertura-resumo" data-resumo></p>
+      </div>
+    </section>
+    <div class="divisor"></div>
+    <section class="curiosidade-corpo">
+      <div class="bloco-texto" data-texto></div>
+      <div class="bloco-midia" data-video-wrap hidden>
+        <video data-video controls playsinline preload="metadata"></video>
+      </div>
+    </section>
+  </main>
+
+  <section class="curiosidade-corpo" data-estado>
+    <div class="bloco-texto"><p>Carregando curiosidade...</p></div>
+  </section>
+
+  <script type="module" src="/js/curiosidade-leitura.js"></script>
+</body>
+</html>
