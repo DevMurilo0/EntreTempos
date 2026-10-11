@@ -1735,3 +1735,234 @@ header .podcast-header-redes a:focus-visible {
     width: 50px;
   }
 }
+
+
+/* AJUSTE DE RESPIRO DAS COLAGENS
+   Separa elementos repetidos e distribui tipos diferentes pelas margens. */
+.podcast-decor--nav-wifi {
+  width: 54px;
+  left: max(34px, calc(50% - 300px));
+  top: 44px;
+  transform: rotate(12deg);
+  opacity: .34;
+  filter: sepia(.2) saturate(.72) drop-shadow(2px 4px 7px rgba(0,0,0,.14));
+}
+
+.podcast-decor--rodape-camera-real {
+  width: 92px;
+  left: max(26px, calc(50% - 470px));
+  bottom: 18px;
+  transform: rotate(-9deg);
+  opacity: .42;
+  filter: sepia(.18) saturate(.78) drop-shadow(3px 5px 8px rgba(0,0,0,.16));
+}
+
+/* O fone da navegação dos Bastidores fica bem abaixo do microfone do título,
+   evitando a sensação de dois ícones iguais empilhados. */
+.podcast-decor--bastidores-nav-mic {
+  width: 70px;
+  left: max(24px, calc(50% - 455px));
+  top: 16px;
+  transform: rotate(-10deg);
+  opacity: .34;
+}
+
+/* A onda e o telefone passam a ocupar alturas bem diferentes. */
+.podcast-decor--bastidores-onda {
+  width: 165px;
+  right: -190px;
+  top: 215px;
+  transform: rotate(3deg);
+  opacity: .18;
+}
+
+.bastidores-conteudo .img-deco-telefone {
+  width: 70px;
+  right: -108px;
+  bottom: -48px;
+  transform: rotate(12deg);
+  opacity: .62;
+}
+
+/* Espalha os demais elementos para não formar "duplas" no mesmo canto. */
+.podcast-decor--bastidores-fones {
+  width: 86px;
+  left: -125px;
+  top: 370px;
+  transform: rotate(-10deg);
+  opacity: .32;
+}
+
+.podcast-decor--bastidores-camera {
+  width: 90px;
+  left: -105px;
+  bottom: 120px;
+  transform: rotate(8deg);
+  opacity: .34;
+}
+
+.podcast-decor--citacao-fita {
+  left: -108px;
+  top: -36px;
+}
+
+.podcast-decor--citacao-onda {
+  right: -150px;
+  bottom: -34px;
+}
+
+.podcast-decor--assinatura-fones {
+  left: -118px;
+  top: 12px;
+}
+
+.podcast-decor--assinatura-camera {
+  right: -110px;
+  top: 76px;
+}
+
+.podcast-decor--equipe-mic {
+  left: -120px;
+  top: 24px;
+}
+
+.podcast-decor--equipe-fita {
+  right: -124px;
+  top: 210px;
+}
+
+.podcast-decor--equipe-fones {
+  right: -92px;
+  bottom: 42px;
+}
+
+.podcast-decor--equipe-camera {
+  left: -94px;
+  bottom: 190px;
+}
+
+.podcast-decor--equipe-wifi {
+  width: 58px;
+  right: -28px;
+  top: 18px;
+  transform: rotate(13deg);
+  opacity: .28;
+  filter: sepia(.2) saturate(.72) drop-shadow(2px 4px 7px rgba(0,0,0,.14));
+}
+
+/* Na página principal, os elementos da busca também ficam em alturas distintas. */
+.podcast-decor--busca-mic {
+  left: -142px;
+  top: -34px;
+}
+
+.podcast-decor--busca-fones {
+  right: -132px;
+  top: 38px;
+}
+
+.podcast-decor--busca-ouvindo {
+  left: -205px;
+  top: 132px;
+}
+
+.podcast-decor--busca-telefone {
+  right: -185px;
+  top: 176px;
+}
+
+@media (max-width: 900px) and (min-width: 601px) {
+  .podcast-decor--bastidores-onda {
+    right: -115px;
+  }
+
+  .bastidores-conteudo .img-deco-telefone {
+    right: -70px;
+  }
+
+  .podcast-decor--bastidores-fones {
+    left: -78px;
+  }
+
+  .podcast-decor--equipe-mic,
+  .podcast-decor--assinatura-fones {
+    left: -72px;
+  }
+
+  .podcast-decor--equipe-fita,
+  .podcast-decor--assinatura-camera {
+    right: -72px;
+  }
+}
+
+@media (max-width: 600px) {
+  /* No celular ficam menos elementos simultâneos e mais afastados. */
+  .podcast-decor--nav-wifi {
+    width: 38px;
+    left: 18%;
+    top: 42px;
+    opacity: .18;
+  }
+
+  .podcast-decor--rodape-camera-real {
+    width: 54px;
+    left: 8px;
+    bottom: 12px;
+    opacity: .24;
+  }
+
+  .podcast-decor--bastidores-nav-mic {
+    width: 43px;
+    left: 5px;
+    top: 19px;
+    opacity: .20;
+  }
+
+  .podcast-decor--bastidores-onda {
+    width: 90px;
+    right: -26px;
+    top: 250px;
+    opacity: .10;
+  }
+
+  .bastidores-conteudo .img-deco-telefone {
+    width: 45px;
+    right: -6px;
+    bottom: -28px;
+    opacity: .30;
+  }
+
+  .podcast-decor--bastidores-fones {
+    width: 48px;
+    left: -7px;
+    top: 430px;
+    opacity: .18;
+  }
+
+  .podcast-decor--equipe-wifi {
+    width: 39px;
+    right: 7px;
+    top: 4px;
+    opacity: .16;
+  }
+
+  .podcast-decor--busca-mic {
+    left: -8px;
+    top: -28px;
+  }
+
+  .podcast-decor--busca-fones {
+    right: -5px;
+    top: 46px;
+  }
+
+  .podcast-decor--busca-ouvindo {
+    left: -10px;
+    top: 130px;
+  }
+
+  .podcast-decor--busca-telefone {
+    right: -5px;
+    top: 185px;
+  }
+}
