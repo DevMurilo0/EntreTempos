@@ -340,7 +340,25 @@ header a:hover::after {
 }
 
 .youtube-cta-play {
-  font-size: 12px;
+  display: grid;
+  width: 25px;
+  height: 25px;
+  place-items: center;
+}
+
+.youtube-cta-play svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.youtube-cta-play__triangulo {
+  fill: currentColor;
+  stroke: none;
 }
 
 .youtube-cta-seta {
