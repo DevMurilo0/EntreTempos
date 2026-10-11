@@ -1247,3 +1247,255 @@ img.deco-maos {
     left: -8px;
   }
 }
+
+
+/* =====================
+   REDES OFICIAIS — HOME
+   Fica perto do final da página para não interromper o fluxo da revista.
+===================== */
+.redes-home {
+  position: relative;
+  z-index: 6;
+  width: min(calc(100% - 40px), 980px);
+  margin: 22px auto 54px;
+  padding: clamp(28px, 4.2vw, 46px);
+  background: #f4ead6;
+  border: 1px solid rgba(140, 59, 59, 0.22);
+  border-left: 6px solid #8c3b3b;
+  box-shadow: 8px 10px 0 rgba(85, 58, 36, 0.10), 0 18px 38px rgba(61, 42, 27, 0.12);
+  transform: rotate(-0.2deg);
+}
+
+.redes-home::before,
+.redes-home::after {
+  content: "";
+  position: absolute;
+  width: 76px;
+  height: 18px;
+  background: rgba(196, 169, 107, 0.34);
+  pointer-events: none;
+}
+
+.redes-home::before {
+  top: -9px;
+  left: 9%;
+  transform: rotate(-4deg);
+}
+
+.redes-home::after {
+  right: 10%;
+  bottom: -9px;
+  transform: rotate(3deg);
+}
+
+.redes-home__cabecalho {
+  max-width: 660px;
+  margin: 0 auto 26px;
+  text-align: center;
+}
+
+.redes-home__kicker {
+  margin-bottom: 8px;
+  color: #8c3b3b;
+  font-family: 'Special Elite', serif;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+}
+
+.redes-home__cabecalho h2 {
+  margin-bottom: 10px;
+  color: #24180f;
+  font-family: Georgia, serif;
+  font-size: clamp(29px, 4vw, 46px);
+  line-height: 1;
+}
+
+.redes-home__cabecalho > p:last-child {
+  color: #675241;
+  font-family: 'IM Fell English', serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.redes-home__grade {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.rede-home {
+  position: relative;
+  display: grid;
+  grid-template-columns: 54px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  min-height: 116px;
+  padding: 20px;
+  color: #35261b;
+  background: #fffdf7;
+  border: 2px solid #3a2010;
+  box-shadow: 5px 6px 0 rgba(58, 32, 16, 0.12);
+  text-decoration: none;
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+
+.rede-home:first-child {
+  transform: rotate(-.65deg);
+}
+
+.rede-home:last-child {
+  transform: rotate(.65deg);
+}
+
+.rede-home:hover,
+.rede-home:focus-visible {
+  border-color: #8c3b3b;
+  box-shadow: 8px 9px 0 rgba(140, 59, 59, 0.16);
+  transform: translateY(-3px) rotate(0deg);
+  outline: none;
+}
+
+.rede-home__icone {
+  display: grid;
+  width: 54px;
+  height: 54px;
+  place-items: center;
+  color: #8c3b3b;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+}
+
+.rede-home__icone svg {
+  width: 28px;
+  height: 28px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.rede-home__icone-preenchido {
+  fill: currentColor;
+  stroke: none;
+}
+
+.rede-home__texto {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.rede-home__texto strong {
+  color: #1f150e;
+  font-size: 18px;
+  letter-spacing: .03em;
+}
+
+.rede-home__texto > span {
+  color: #8c3b3b;
+  font-family: 'Special Elite', serif;
+  font-size: 13px;
+  font-weight: bold;
+  overflow-wrap: anywhere;
+}
+
+.rede-home__texto small {
+  color: #705c4a;
+  font-family: 'IM Fell English', serif;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.rede-home__seta {
+  color: #8c3b3b;
+  font-size: 22px;
+}
+
+.redes-home__decor {
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(3px 5px 8px rgba(0, 0, 0, .16));
+  opacity: .52;
+}
+
+.redes-home__decor--coracao {
+  width: 92px;
+  left: -42px;
+  bottom: -28px;
+  transform: rotate(-13deg);
+}
+
+.redes-home__decor--claquete {
+  width: 105px;
+  right: -48px;
+  top: -35px;
+  transform: rotate(10deg);
+}
+
+@media (max-width: 700px) {
+  .redes-home {
+    width: min(calc(100% - 24px), 560px);
+    margin: 18px auto 38px;
+    padding: 30px 18px;
+  }
+
+  .redes-home__grade {
+    grid-template-columns: 1fr;
+  }
+
+  .rede-home {
+    grid-template-columns: 48px 1fr auto;
+    min-height: 104px;
+    padding: 17px;
+  }
+
+  .rede-home__icone {
+    width: 48px;
+    height: 48px;
+  }
+
+  .redes-home__decor--coracao {
+    width: 60px;
+    left: -16px;
+    bottom: -22px;
+  }
+
+  .redes-home__decor--claquete {
+    width: 66px;
+    right: -16px;
+    top: -24px;
+  }
+}
+
+@media (max-width: 430px) {
+  .redes-home__cabecalho h2 {
+    font-size: 31px;
+  }
+
+  .rede-home {
+    grid-template-columns: 44px 1fr auto;
+    gap: 11px;
+    padding: 15px 13px;
+  }
+
+  .rede-home__icone {
+    width: 44px;
+    height: 44px;
+  }
+
+  .rede-home__texto small {
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rede-home {
+    transition: none;
+  }
+}
