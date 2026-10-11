@@ -698,6 +698,117 @@ img.foto-pessoa,
     margin: 0;
 }
 
+
+
+/* ── REDES OFICIAIS DA REVISTA ── */
+.redes-oficiais {
+    position: relative;
+    z-index: 5;
+    width: min(calc(100% - 40px), 920px);
+    margin: 1rem auto 3rem;
+    padding: 32px clamp(18px, 4vw, 38px);
+    background: #fffaf0;
+    border: 1px solid rgba(140, 59, 59, 0.2);
+    border-left: 5px solid #8c3b3b;
+    box-shadow: 7px 9px 0 rgba(62, 50, 40, 0.08);
+    transform: rotate(-0.2deg);
+}
+
+.redes-oficiais-grade {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 18px;
+    margin-top: 1.4rem;
+}
+
+.rede-oficial {
+    display: grid;
+    grid-template-columns: 48px 1fr auto;
+    align-items: center;
+    gap: 13px;
+    padding: 18px;
+    color: #3e3228;
+    background: #f2e8d5;
+    border: 2px solid #3e3228;
+    box-shadow: 4px 5px 0 rgba(62, 50, 40, 0.1);
+    text-decoration: none;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+.rede-oficial:first-child {
+    transform: rotate(-.6deg);
+}
+
+.rede-oficial:last-child {
+    transform: rotate(.6deg);
+}
+
+.rede-oficial:hover,
+.rede-oficial:focus-visible {
+    border-color: #c0392b;
+    box-shadow: 7px 8px 0 rgba(192, 57, 43, 0.14);
+    transform: translateY(-3px) rotate(0);
+    outline: none;
+}
+
+.rede-oficial-icone {
+    display: grid;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+    color: #c0392b;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+}
+
+.rede-oficial-icone svg {
+    width: 25px;
+    height: 25px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.rede-oficial-icone-preenchido {
+    fill: currentColor;
+    stroke: none;
+}
+
+.rede-oficial-texto {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+}
+
+.rede-oficial-texto strong {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 21px;
+    letter-spacing: 1px;
+    color: #1a1a1a;
+}
+
+.rede-oficial-texto > span {
+    color: #c0392b;
+    font-family: 'Special Elite', serif;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+.rede-oficial-texto small {
+    color: #6f5e4c;
+    font-family: 'IM Fell English', serif;
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.rede-oficial-seta {
+    color: #c0392b;
+    font-size: 22px;
+}
+
 /* ── 9. RODAPÉ ──
    assinatura + carimbo vermelho inclinado
    bonito e discreto, como deve ser */
