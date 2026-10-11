@@ -1225,8 +1225,294 @@ header .podcast-header-redes a:focus-visible {
   width: 75px;
 }
 
+
+
+/* ── DECORAÇÕES EXTRAS PARA PREENCHER AS MARGENS ──
+   Mantêm a área dos episódios limpa; ficam no título, navegação,
+   apresentação, busca, bastidores e rodapé. */
+.podcast-decor--titulo-onda {
+  width: clamp(150px, 18vw, 230px);
+  left: 50%;
+  bottom: -18px;
+  transform: translateX(-50%) rotate(-2deg);
+  opacity: .18;
+}
+
+.podcast-decor--nav-fita {
+  width: 76px;
+  left: max(18px, calc(50% - 410px));
+  top: -34px;
+  transform: rotate(-12deg);
+  opacity: .46;
+}
+
+.podcast-decor--nav-camera {
+  width: 72px;
+  right: max(18px, calc(50% - 410px));
+  top: -38px;
+  transform: rotate(11deg);
+  opacity: .42;
+}
+
+.busca-podcast {
+  overflow: visible;
+}
+
+.podcast-decor--busca-mic {
+  width: 92px;
+  left: -118px;
+  top: -24px;
+  transform: rotate(-14deg);
+  opacity: .46;
+}
+
+.podcast-decor--busca-fones {
+  width: 82px;
+  right: -108px;
+  top: -12px;
+  transform: rotate(12deg);
+  opacity: .40;
+}
+
+.podcast-decor--busca-ouvindo {
+  width: 118px;
+  left: -190px;
+  top: 95px;
+  transform: rotate(-7deg);
+  opacity: .62;
+  filter: sepia(.15) saturate(.8) drop-shadow(3px 5px 8px rgba(0,0,0,.18));
+}
+
+.podcast-decor--busca-telefone {
+  width: 74px;
+  right: -155px;
+  top: 92px;
+  transform: rotate(8deg);
+  opacity: .52;
+  filter: sepia(.18) saturate(.8) drop-shadow(3px 5px 8px rgba(0,0,0,.16));
+}
+
+.rodape-podcast {
+  overflow: visible;
+}
+
+.podcast-decor--rodape-fita {
+  width: 72px;
+  left: max(20px, calc(50% - 380px));
+  top: -34px;
+  transform: rotate(-10deg);
+  opacity: .32;
+}
+
+.podcast-decor--rodape-onda {
+  width: 150px;
+  right: max(16px, calc(50% - 390px));
+  top: -18px;
+  transform: rotate(2deg);
+  opacity: .16;
+}
+
+/* Bastidores: colagens próximas aos blocos de texto, sem cobrir leitura */
+.podcast-decor--bastidores-titulo-onda {
+  width: clamp(150px, 18vw, 230px);
+  left: 50%;
+  bottom: -18px;
+  transform: translateX(-50%) rotate(2deg);
+  opacity: .18;
+}
+
+.podcast-decor--bastidores-nav-mic {
+  width: 76px;
+  left: max(18px, calc(50% - 405px));
+  top: -37px;
+  transform: rotate(-14deg);
+  opacity: .42;
+}
+
+.podcast-decor--bastidores-nav-camera {
+  width: 72px;
+  right: max(18px, calc(50% - 405px));
+  top: -38px;
+  transform: rotate(10deg);
+  opacity: .40;
+}
+
+.bastidores-citacao {
+  overflow: visible;
+}
+
+.podcast-decor--citacao-fita {
+  width: 70px;
+  left: -78px;
+  top: -20px;
+  transform: rotate(-12deg);
+  opacity: .40;
+}
+
+.podcast-decor--citacao-onda {
+  width: 128px;
+  right: -125px;
+  bottom: -10px;
+  transform: rotate(5deg);
+  opacity: .19;
+}
+
+.bastidores-assinatura {
+  overflow: visible;
+}
+
+.podcast-decor--assinatura-fones {
+  width: 86px;
+  left: -82px;
+  top: 26px;
+  transform: rotate(-12deg);
+  opacity: .34;
+}
+
+.podcast-decor--assinatura-camera {
+  width: 76px;
+  right: -70px;
+  top: 46px;
+  transform: rotate(10deg);
+  opacity: .34;
+}
+
+.podcast-decor--equipe-fones {
+  width: 78px;
+  right: -74px;
+  bottom: 130px;
+  transform: rotate(12deg);
+  opacity: .30;
+}
+
+.podcast-decor--equipe-camera {
+  width: 72px;
+  left: -70px;
+  bottom: 90px;
+  transform: rotate(-9deg);
+  opacity: .30;
+}
+
+/* deixa as colagens novas um pouco mais presentes sem competir com o texto */
+.podcast-decor--titulo-mic,
+.podcast-decor--titulo-fones,
+.podcast-decor--cassete,
+.podcast-decor--camera-vintage,
+.podcast-decor--bastidores-mic,
+.podcast-decor--bastidores-fita,
+.podcast-decor--bastidores-fones,
+.podcast-decor--bastidores-camera,
+.podcast-decor--equipe-mic,
+.podcast-decor--equipe-fita {
+  opacity: .46;
+}
+
 /* ── MOBILE ── */
 @media (max-width: 600px) {
+
+  /* extras das colagens no mobile */
+  .podcast-decor--titulo-onda,
+  .podcast-decor--bastidores-titulo-onda {
+    width: 120px;
+    bottom: -10px;
+    opacity: .12;
+  }
+
+  .podcast-decor--nav-fita,
+  .podcast-decor--bastidores-nav-mic {
+    width: 48px;
+    left: 4px;
+    top: -26px;
+    opacity: .24;
+  }
+
+  .podcast-decor--nav-camera,
+  .podcast-decor--bastidores-nav-camera {
+    width: 46px;
+    right: 4px;
+    top: -25px;
+    opacity: .22;
+  }
+
+  .podcast-decor--busca-mic {
+    width: 48px;
+    left: -10px;
+    top: -22px;
+    opacity: .22;
+  }
+
+  .podcast-decor--busca-fones {
+    width: 46px;
+    right: -8px;
+    top: -18px;
+    opacity: .2;
+  }
+
+  .podcast-decor--busca-ouvindo {
+    width: 68px;
+    left: -16px;
+    top: 92px;
+    opacity: .30;
+  }
+
+  .podcast-decor--busca-telefone {
+    width: 44px;
+    right: -10px;
+    top: 98px;
+    opacity: .26;
+  }
+
+  .podcast-decor--rodape-fita {
+    width: 45px;
+    left: 10px;
+    top: -24px;
+    opacity: .20;
+  }
+
+  .podcast-decor--rodape-onda {
+    width: 92px;
+    right: 8px;
+    top: -15px;
+    opacity: .10;
+  }
+
+  .podcast-decor--citacao-fita {
+    width: 46px;
+    left: -10px;
+    top: -19px;
+    opacity: .22;
+  }
+
+  .podcast-decor--citacao-onda {
+    width: 78px;
+    right: -14px;
+    bottom: -8px;
+    opacity: .11;
+  }
+
+  .podcast-decor--assinatura-fones,
+  .podcast-decor--assinatura-camera,
+  .podcast-decor--equipe-fones,
+  .podcast-decor--equipe-camera {
+    width: 48px;
+    opacity: .18;
+  }
+
+  .podcast-decor--assinatura-fones {
+    left: -6px;
+  }
+
+  .podcast-decor--assinatura-camera {
+    right: -5px;
+  }
+
+  .podcast-decor--equipe-fones {
+    right: -4px;
+  }
+
+  .podcast-decor--equipe-camera {
+    left: -4px;
+  }
 
   /* redes e colagens do topo no mobile */
   .podcast-header {
