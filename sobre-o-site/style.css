@@ -63,6 +63,56 @@ header a:hover {
     color: #c0392b;
 }
 
+
+
+.sobre-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.sobre-header-redes {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sobre-header .sobre-header-redes a {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 10px;
+    color: #8c3b3b;
+    background: #fffaf0;
+    border: 1px solid rgba(140, 59, 59, .34);
+    box-shadow: 2px 3px 0 rgba(62, 50, 40, .08);
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.sobre-header-redes svg {
+    width: 19px;
+    height: 19px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.sobre-header-redes__play {
+    fill: currentColor;
+    stroke: none;
+}
+
+.sobre-header .sobre-header-redes a:hover,
+.sobre-header .sobre-header-redes a:focus-visible {
+    color: #fffdf7;
+    background: #8c3b3b;
+    outline: none;
+}
+
 /* ── 2. MARCA (LOGO) + LINHAS VERMELHAS ──
    gradiente vermelho-dourado, o mesmo de todas as paginas */
 .linha-vermelha,
@@ -895,6 +945,34 @@ img.foto-pessoa,
 }
 
 @media (max-width: 700px) {
+    /* redes oficiais do topo no mobile */
+    .sobre-header {
+        padding: 14px 14px;
+    }
+
+    .sobre-header-redes {
+        gap: 5px;
+    }
+
+    .sobre-header .sobre-header-redes a {
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        justify-content: center;
+    }
+
+    .sobre-header-redes__texto {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
     .lista-pessoas {
         padding: 0 20px 2.5rem;
     }
