@@ -154,6 +154,58 @@ body {
   animation: faca-parte-bater 0.4s ease;
 }
 
+
+
+/* Redes oficiais sempre visíveis no cabeçalho da folha */
+.redes-header-folha {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-voltar .redes-header-folha a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 36px;
+  padding: 7px 10px;
+  color: #8c3b3b;
+  background: #f4ead6;
+  border: 1px solid rgba(140, 59, 59, 0.38);
+  box-shadow: 2px 3px 0 rgba(58, 32, 16, 0.1);
+  font-size: 11px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.header-voltar .redes-header-folha a:hover,
+.header-voltar .redes-header-folha a:focus-visible {
+  color: #fffdf7;
+  background: #8c3b3b;
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.redes-header-folha svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex: 0 0 auto;
+}
+
+.redes-header-folha__play {
+  fill: currentColor;
+  stroke: none;
+}
+
+.redes-header-folha__texto {
+  white-space: nowrap;
+}
+
 .botoes {
   display: flex;
   flex-direction: row;
@@ -937,6 +989,46 @@ body.folha-convite-aberto {
 /* ║  senao eu juro que vou chorar                    ║ */
 /* ╚════════════════════════════════════════════════╝ */
 @media (max-width: 768px) {
+
+  /* redes no cabeçalho: no celular ficam só os ícones */
+  .header-voltar {
+    padding: 14px 12px;
+    gap: 10px;
+  }
+
+  .botoes {
+    gap: 7px;
+    align-items: center;
+  }
+
+  .redes-header-folha {
+    gap: 5px;
+  }
+
+  .header-voltar .redes-header-folha a {
+    width: 36px;
+    min-height: 36px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .redes-header-folha__texto {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .btn-faca-parte,
+  .btn-enquetes {
+    padding: 8px 10px;
+    font-size: 10px;
+  }
 
   body {
     overflow-x: hidden;
