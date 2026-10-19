@@ -3,6 +3,8 @@ const STYLE_ID = 'et-loading-tempo-style';
 let overlayAtual = null;
 let referenciasAtivas = 0;
 let encerrando = false;
+let timerAparicao = null;
+let timerSaida = null;
 
 function garantirEstilo() {
   if (document.getElementById(STYLE_ID)) return;
@@ -12,17 +14,18 @@ function garantirEstilo() {
   style.textContent = `
     .et-loading-tempo {
       position: fixed;
-      inset: 0;
+      right: 18px;
+      bottom: 18px;
       z-index: 10000;
-      display: grid;
-      place-items: center;
-      padding: 24px;
-      background: #f2e8d5;
-      background-image: radial-gradient(rgba(104,75,45,.05) 1px, transparent 1px);
-      background-size: 5px 5px;
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .2s ease, visibility .2s ease;
+    }
+
+    .et-loading-tempo.is-visivel {
       opacity: 1;
       visibility: visible;
-      transition: opacity .28s ease, visibility .28s ease;
     }
 
     .et-loading-tempo.is-saindo {
@@ -32,9 +35,12 @@ function garantirEstilo() {
     }
 
     .et-loading-tempo__papel {
-      min-width: min(88vw, 320px);
-      padding: 30px 28px;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      max-width: calc(100vw - 36px);
+      text-align: left;
       color: #3e3228;
       background: #fffaf0;
       border-left: 5px solid #9b3e3e;
@@ -44,9 +50,10 @@ function garantirEstilo() {
 
     .et-loading-tempo__papel img {
       display: block;
-      width: clamp(58px, 12vw, 82px);
-      height: auto;
-      margin: 0 auto 16px;
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      margin: 0;
       object-fit: contain;
       filter: drop-shadow(0 7px 8px rgba(61,42,27,.16));
       transform-origin: center;
@@ -59,15 +66,15 @@ function garantirEstilo() {
     }
 
     .et-loading-tempo__papel strong {
-      margin-bottom: 8px;
-      font-size: 22px;
+      margin-bottom: 0;
+      font-size: 14px;
       letter-spacing: 2px;
     }
 
     .et-loading-tempo__papel span {
       color: #7a6a50;
-      font-size: 13px;
-      letter-spacing: 1px;
+      font-size: 11px;
+      letter-spacing: .3px;
     }
 
     @keyframes etLoadingTempoAmp {
@@ -75,7 +82,8 @@ function garantirEstilo() {
       to { transform: translateY(-5px) rotate(2deg); }
     }
 
-    @media (prefers-reduced-motion: reduce) {
+    @media (prefers-reduced-motion: reduce) {      /* A transição nunca deve bloquear interação. */
+
       .et-loading-tempo__papel img {
         animation: none;
       }
@@ -101,6 +109,18 @@ function garantirOverlay(texto) {
     document.body.appendChild(overlayAtual);
     encerrando = false;
   }
+  if (timerSaida !== null) {
+    clearTimeout(timerSaida);
+    timerSaida = null;
+    encerrando = false;
+    overlayAtual.classList.remove('is-saindo');
+  }
+  clearTimeout(timerAparicao);
+  timerAparicao = setTimeout(() => {
+    if (overlayAtual && referenciasAtivas > 0) {
+      overlayAtual.classList.add('is-visivel');
+    }
+  }, 240);
 
   const span = overlayAtual.querySelector('.et-loading-tempo__papel span');
   if (span) span.textContent = texto;
@@ -111,15 +131,21 @@ function garantirOverlay(texto) {
 function encerrarOverlay() {
   if (!overlayAtual || encerrando) return;
   encerrando = true;
+  clearTimeout(timerAparicao);
+  timerAparicao = null;
 
   const alvo = overlayAtual;
+  alvo.classList.remove('is-visivel');
   alvo.classList.add('is-saindo');
 
-  setTimeout(() => {
-    alvo.remove();
-    if (overlayAtual === alvo) overlayAtual = null;
+  timerSaida = setTimeout(() => {
+    if (referenciasAtivas === 0) {
+      alvo.remove();
+      if (overlayAtual === alvo) overlayAtual = null;
+    }
+    timerSaida = null;
     encerrando = false;
-  }, 320);
+  }, 220);
 }
 
 export function criarLoadingEntreTempos(texto = 'carregando o tempo...') {

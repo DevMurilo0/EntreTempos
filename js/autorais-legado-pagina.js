@@ -6,6 +6,7 @@ import {
   serverTimestamp,
   setDoc
 } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { criarBotaoCurtida, ativarCurtidas } from './likes-ui.js';
 
 const PESQUISADOR_UID = 'QuiQMjtXjOWNW2LCrot86rsHh0F2';
 const CLOUDINARY_CLOUD_NAME = 'uaisf2vc';
@@ -258,8 +259,15 @@ function aplicarConteudos(galeria, conteudos) {
 
     elemento.hidden = conteudo.ativo === false;
     atualizarElementoConteudo(elemento, conteudo);
+    if (conteudo.ativo !== false && !elemento.querySelector('.btn-like')) {
+      elemento.appendChild(criarBotaoCurtida(
+        `legado-${secao}-${pessoaId}-${conteudo.id}`,
+        'publicação'
+      ));
+    }
     galeria.appendChild(elemento);
   });
+  ativarCurtidas();
 }
 
 function atualizarElementoConteudo(elemento, conteudo) {

@@ -6,6 +6,7 @@ import {
   serverTimestamp,
   setDoc
 } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { criarBotaoCurtida, ativarCurtidas } from './likes-ui.js';
 
 const PESQUISADOR_UID = 'QuiQMjtXjOWNW2LCrot86rsHh0F2';
 const RAIZ_EDICOES = '_poetas-estaticos';
@@ -244,6 +245,18 @@ function aplicarEstado(dados) {
     const numero = romano(indice + 1);
     artigo.dataset.etContentId = poema.id;
 
+    const idCurtida = `poema-editado-${secao}-${slug}-${poema.id}`;
+    const botaoExistente = artigo.querySelector(':scope > .btn-like');
+    // Curtidas dos poemas originais continuam com os IDs anteriores.
+    // Publicações criadas no painel usam o ID persistente do poema.
+    if (!botaoExistente || (
+      botaoExistente.classList.contains('et-like-dinamico') &&
+      botaoExistente.dataset.likeId !== idCurtida
+    )) {
+      botaoExistente?.remove();
+      artigo.appendChild(criarBotaoCurtida(idCurtida, 'poema'));
+    }
+
     const numeroPoema = artigo.querySelector('.poema-numero');
     if (numeroPoema) numeroPoema.textContent = `Poema ${numero}`;
     if (titulo) titulo.textContent = poema.titulo || `Poema ${indice + 1}`;
@@ -263,6 +276,7 @@ function aplicarEstado(dados) {
   }
 
   reativarEnvelopes();
+  ativarCurtidas();
   document.title = `${dados.nome || 'Poeta'} — Poemas | Entre Tempos`;
 }
 

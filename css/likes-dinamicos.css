@@ -1,0 +1,54 @@
+/* Curtidas das publicações criadas/gerenciadas na revista.
+   Mantém o mesmo papel, tinta e vermelho dos botões existentes. */
+button.btn-like.et-like-dinamico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: fit-content;
+  min-height: 42px;
+  margin: 24px 0 10px;
+  padding: 9px 19px;
+  border: 2px solid rgba(140, 59, 59, .52);
+  border-radius: 999px;
+  background: rgba(255, 250, 240, .5);
+  color: #6e4a28;
+  font-family: 'Special Elite', serif;
+  font-size: 15px;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background-color .18s ease, border-color .18s ease, transform .18s ease;
+}
+button.btn-like.et-like-dinamico .like-icon {
+  color: #a83e35;
+  font-size: 22px;
+  line-height: 1;
+}
+button.btn-like.et-like-dinamico .like-count {
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+button.btn-like.et-like-dinamico:hover {
+  background: rgba(255, 250, 240, .85);
+  transform: translateY(-1px);
+}
+button.btn-like.et-like-dinamico:active { transform: scale(.97); }
+button.btn-like.et-like-dinamico.liked {
+  background: rgba(192, 57, 43, .12);
+  border-color: #c0392b;
+}
+button.btn-like.et-like-dinamico:focus-visible {
+  outline: 3px solid #9b3e3e;
+  outline-offset: 3px;
+}
+button.btn-like.et-like-dinamico:disabled { cursor: wait; opacity: .7; }
+.et-conteudo.poema > .et-like-dinamico,
+.poema > .et-like-dinamico { margin-left: clamp(0px, 2vw, 4px); }
+.card-curiosidade > .et-like-dinamico { margin: 8px 18px 16px; }
+.et-legado-publicacao > .et-like-dinamico { margin: 18px 0 8px; }
+@media (max-width: 600px) {
+  button.btn-like.et-like-dinamico { min-height: 44px; padding: 9px 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  button.btn-like.et-like-dinamico { transition: none; }
+}

@@ -9,6 +9,7 @@ import {
   setDoc,
   where
 } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { criarBotaoCurtida, ativarCurtidas } from './likes-ui.js';
 const PESQUISADOR_UID = 'QuiQMjtXjOWNW2LCrot86rsHh0F2';
 const SECOES = new Set([
   'poemas',
@@ -169,6 +170,17 @@ function aplicarLegados(estado) {
       estado.alvo.appendChild(item);
       if (estado.pesquisador) adicionarAcoesLegado(item, registro, estado);
     });
+
+    // Curiosidades publicadas pelo painel e cards antigos da seção geral.
+    estado.alvo.querySelectorAll('[data-et-content-id]').forEach((item) => {
+      if (item.hidden || item.querySelector('.btn-like')) return;
+      const alvo = item.querySelector('.card-curiosidade') || item;
+      alvo.appendChild(criarBotaoCurtida(
+        `curiosidade-geral-${item.dataset.etContentId}`,
+        'curiosidade'
+      ));
+    });
+    ativarCurtidas();
   }
 }
 
@@ -791,16 +803,12 @@ function criarLoadingParticipantes() {
   style.textContent = `
     .et-loading-participantes {
       position: fixed;
-      inset: 0;
+      right: 16px;
+      bottom: 16px;
       z-index: 9998;
-      display: grid;
-      place-items: center;
-      padding: 24px;
-      background: #f2e8d5;
-      background-image: radial-gradient(rgba(104,75,45,.05) 1px, transparent 1px);
-      background-size: 5px 5px;
+      pointer-events: none;
       opacity: 1;
-      transition: opacity .28s ease, visibility .28s ease;
+      transition: opacity .2s ease, visibility .2s ease;
     }
 
     .et-loading-participantes.is-saindo {
@@ -809,9 +817,12 @@ function criarLoadingParticipantes() {
     }
 
     .et-loading-participantes__papel {
-      min-width: min(88vw, 320px);
-      padding: 30px 28px;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      max-width: calc(100vw - 32px);
+      padding: 12px 14px;
+      text-align: left;
       color: #3e3228;
       background: #fffaf0;
       border-left: 5px solid #9b3e3e;
@@ -825,22 +836,23 @@ function criarLoadingParticipantes() {
     }
 
     .et-loading-participantes__papel strong {
-      margin-bottom: 8px;
-      font-size: 22px;
+      margin-bottom: 0;
+      font-size: 14px;
       letter-spacing: 2px;
     }
 
     .et-loading-participantes__papel span {
       color: #7a6a50;
-      font-size: 13px;
-      letter-spacing: 1px;
+      font-size: 11px;
+      letter-spacing: .3px;
     }
 
     .et-loading-participantes__ampulheta {
       display: block;
-      width: clamp(58px, 12vw, 82px);
-      height: auto;
-      margin: 0 auto 16px;
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      margin: 0;
       object-fit: contain;
       filter: drop-shadow(0 7px 8px rgba(61, 42, 27, .16));
       transform-origin: center;
@@ -853,15 +865,21 @@ function criarLoadingParticipantes() {
     }
   `;
 
-  document.head.appendChild(style);
-  document.body.appendChild(overlay);
-
   let removido = false;
+  document.head.appendChild(style);
+  const inicio = setTimeout(() => {
+    if (!removido) document.body.appendChild(overlay);
+  }, 240);
 
   return {
     remover() {
       if (removido) return;
       removido = true;
+      clearTimeout(inicio);
+      if (!overlay.isConnected) {
+        style.remove();
+        return;
+      }
       overlay.classList.add('is-saindo');
       setTimeout(() => {
         overlay.remove();

@@ -10,6 +10,7 @@ import {
   setDoc,
   updateDoc
 } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { criarBotaoCurtida, ativarCurtidas } from './likes-ui.js';
 const PESQUISADOR_UID = 'QuiQMjtXjOWNW2LCrot86rsHh0F2';
 const CLOUDINARY_CLOUD_NAME = 'uaisf2vc';
 const CLOUDINARY_UPLOAD_PRESET = 'entre_tempos_upload';
@@ -145,7 +146,7 @@ function iniciar() {
   let conteudosCarregados = false;
 
   const tentarFecharLoading = () => {
-    if (pessoaCarregada && conteudosCarregados) {
+    if (pessoaCarregada) {
       loadingPagina?.remover();
     }
   };
@@ -165,11 +166,12 @@ function iniciar() {
   let pesquisador = false;
   let abriuNovo = false;
   let documentosConteudo = [];
+  el.conteudos.replaceChildren(criarAviso('Carregando publicações...'));
 
   onAuthStateChanged(auth, (usuario) => {
     pesquisador = usuario?.uid === PESQUISADOR_UID;
     el.admin.hidden = !pesquisador;
-    renderizarConteudos(documentosConteudo, pesquisador);
+    if (conteudosCarregados) renderizarConteudos(documentosConteudo, pesquisador);
     tentarAbrirNovo();
   });
 
@@ -322,6 +324,7 @@ function renderizarConteudos(docs, pesquisador) {
   });
 
   el.conteudos.replaceChildren(fragmento);
+  ativarCurtidas();
 }
 
 function criarConteudo(id, dados, pesquisador) {
@@ -484,6 +487,16 @@ function criarConteudo(id, dados, pesquisador) {
     if (midias.childElementCount) {
       artigo.appendChild(midias);
     }
+  }
+
+  // O ID da curtida usa os IDs persistentes dos documentos, nunca a posição.
+  // Desenhos e Música já recebem seus botões nos layouts específicos da página.
+  if (tipoSecao === 'poemas' || tipoSecao === 'curiosidades') {
+    const nomeTipo = tipoSecao === 'poemas' ? 'poema' : 'publicação';
+    artigo.appendChild(criarBotaoCurtida(
+      `autoral-${secao}-${pessoaId}-${id}`,
+      nomeTipo
+    ));
   }
 
   return artigo;
@@ -1196,15 +1209,22 @@ function criarLoadingPagina() {
     }
   `;
 
-  document.head.appendChild(style);
-  document.body.appendChild(overlay);
-
   let removido = false;
+  document.head.appendChild(style);
+  // Páginas rápidas não precisam piscar uma tela inteira de carregamento.
+  const inicio = setTimeout(() => {
+    if (!removido) document.body.appendChild(overlay);
+  }, 220);
 
   return {
     remover() {
       if (removido) return;
       removido = true;
+      clearTimeout(inicio);
+      if (!overlay.isConnected) {
+        style.remove();
+        return;
+      }
       overlay.classList.add('is-saindo');
       setTimeout(() => {
         overlay.remove();

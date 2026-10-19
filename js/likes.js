@@ -198,3 +198,36 @@ onAuthStateChanged(auth, (user) => {
 
 // Expõe globalmente, igual antes
 window.initLikes = initLikes;
+export { initLikes };
+
+// As páginas antigas e as publicações novas usam o mesmo motor de curtidas.
+// Captura também cards renderizados depois de uma consulta ao Firestore.
+let inicializacaoAgendada = false;
+function agendarInicializacao() {
+  if (inicializacaoAgendada) return;
+  inicializacaoAgendada = true;
+  queueMicrotask(() => {
+    inicializacaoAgendada = false;
+    initLikes();
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', agendarInicializacao, { once: true });
+} else {
+  agendarInicializacao();
+}
+
+const observadorCurtidas = new MutationObserver((mutacoes) => {
+  const apareceuBotao = mutacoes.some((mutacao) =>
+    [...mutacao.addedNodes].some((node) =>
+      node.nodeType === 1 && (
+        node.matches?.('.btn-like[data-like-id]') ||
+        node.querySelector?.('.btn-like[data-like-id]')
+      )
+    )
+  );
+  if (apareceuBotao) agendarInicializacao();
+});
+observadorCurtidas.observe(document.documentElement, { childList: true, subtree: true });
+
