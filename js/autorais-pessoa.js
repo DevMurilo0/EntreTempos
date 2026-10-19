@@ -489,15 +489,17 @@ function criarConteudo(id, dados, pesquisador) {
     }
   }
 
-  // O ID da curtida usa os IDs persistentes dos documentos, nunca a posição.
-  // Desenhos e Música já recebem seus botões nos layouts específicos da página.
-  if (tipoSecao === 'poemas' || tipoSecao === 'curiosidades') {
-    const nomeTipo = tipoSecao === 'poemas' ? 'poema' : 'publicação';
-    artigo.appendChild(criarBotaoCurtida(
-      `autoral-${secao}-${pessoaId}-${id}`,
-      nomeTipo
-    ));
-  }
+  // Toda publicação, independente da seção, recebe o mesmo sistema.
+  // Os layouts de desenhos e música reaproveitam o botão ao adaptar os cards.
+  const nomeTipo = tipoSecao === 'poemas' ? 'poema'
+    : tipoSecao === 'desenhos' ? 'desenho'
+    : tipoSecao === 'musica' ? 'música' : 'publicação';
+  const idCurtida = tipoSecao === 'desenhos'
+    ? `desenho-dinamico-${pessoaId}-${id}`
+    : tipoSecao === 'musica'
+      ? `musica-dinamica-${pessoaId}-${id}`
+      : `autoral-${secao}-${pessoaId}-${id}`;
+  artigo.appendChild(criarBotaoCurtida(idCurtida, nomeTipo));
 
   return artigo;
 }

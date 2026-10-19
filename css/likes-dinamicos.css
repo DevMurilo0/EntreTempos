@@ -43,7 +43,14 @@ button.btn-like.et-like-dinamico:focus-visible {
 }
 button.btn-like.et-like-dinamico:disabled { cursor: wait; opacity: .7; }
 .et-conteudo.poema > .et-like-dinamico,
-.poema > .et-like-dinamico { margin-left: clamp(0px, 2vw, 4px); }
+.poema > .et-like-dinamico {
+  display: inline-flex;
+  position: relative;
+  z-index: 2;
+  margin-top: 22px;
+  margin-left: clamp(0px, 2vw, 4px);
+  margin-bottom: 6px;
+}
 .card-curiosidade > .et-like-dinamico { margin: 8px 18px 16px; }
 .et-legado-publicacao > .et-like-dinamico { margin: 18px 0 8px; }
 @media (max-width: 600px) {

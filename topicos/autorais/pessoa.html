@@ -727,6 +727,8 @@
     (function () {
       const params = new URLSearchParams(window.location.search);
       if (!['poemas', 'poemas-conhecidos'].includes(params.get('secao'))) return;
+      const secaoPoemas = params.get('secao');
+      const pessoaId = params.get('id') || 'pessoa';
 
       const root = document.getElementById('et-conteudos');
       const publicacoes = document.querySelector('.et-publicacoes');
@@ -826,6 +828,42 @@
         root?.classList.add('aberta');
       }
 
+
+      // A adaptação visual não pode eliminar a curtida. Este método também
+      // cobre publicações antigas criadas antes de o recurso existir.
+      function garantirCurtidaPoema(artigo) {
+        const conteudoId = artigo.dataset.conteudoId;
+        if (!conteudoId) return false;
+
+        const likeId = `autoral-${secaoPoemas}-${pessoaId}-${conteudoId}`;
+        let botao = artigo.querySelector(':scope > .btn-like[data-like-id]');
+        let alterou = false;
+
+        if (!botao) {
+          botao = document.createElement('button');
+          botao.type = 'button';
+          botao.className = 'btn-like et-like-dinamico';
+          botao.dataset.likeId = likeId;
+          botao.dataset.likeLabel = 'Curtir poema';
+          botao.dataset.unlikeLabel = 'Remover curtida do poema';
+          botao.setAttribute('aria-label', 'Curtir poema');
+          botao.setAttribute('aria-pressed', 'false');
+          botao.innerHTML = '<span class="like-icon" aria-hidden="true">♡</span><span class="like-count">0</span>';
+          alterou = true;
+        }
+
+        const assinatura = artigo.querySelector(':scope > .poema-assinatura');
+        // O coração deve ficar após a assinatura, antes de Editar/Remover.
+        if (assinatura && assinatura.nextElementSibling !== botao) {
+          assinatura.after(botao);
+          alterou = true;
+        } else if (!botao.isConnected) {
+          artigo.appendChild(botao);
+          alterou = true;
+        }
+        return alterou;
+      }
+
       function adaptarPoemas() {
         if (!root || !grade) return;
 
@@ -846,6 +884,7 @@
         grade.replaceChildren();
         fecharPoemas();
 
+        let alterouCurtidas = false;
         artigos.forEach((artigo, indice) => {
           const numero = indice + 1;
           const id = `poema-${numero}`;
@@ -909,7 +948,9 @@
           envelope.querySelector('.env-titulo').textContent = tituloTexto;
           envelope.addEventListener('click', () => abrirPoema(envelope, artigo));
           grade.appendChild(envelope);
+          if (garantirCurtidaPoema(artigo)) alterouCurtidas = true;
         });
+        if (alterouCurtidas) queueMicrotask(() => window.initLikes?.());
       }
 
       document.addEventListener('DOMContentLoaded', () => {
@@ -1096,15 +1137,17 @@
           num.className = 'card-num';
           num.textContent = romano(numero);
 
-          const like = document.createElement('button');
+          const like = artigo.querySelector(':scope > .btn-like') || document.createElement('button');
           like.type = 'button';
-          like.className = 'btn-like';
+          like.classList.add('btn-like', 'et-like-dinamico');
           like.dataset.likeId = `desenho-dinamico-${pessoaId}-${conteudoId}`;
           like.dataset.likeLabel = `Curtir ${tituloTexto}`;
           like.dataset.unlikeLabel = `Descurtir ${tituloTexto}`;
           like.setAttribute('aria-label', `Curtir ${tituloTexto}`);
           like.setAttribute('aria-pressed', 'false');
-          like.innerHTML = '<span class="like-icon">♡</span><span class="like-count">0</span>';
+          if (!like.querySelector('.like-icon')) {
+            like.innerHTML = '<span class="like-icon" aria-hidden="true">♡</span><span class="like-count">0</span>';
+          }
 
           artigo.replaceChildren(quadro, titulo, num, like);
 
@@ -1116,7 +1159,8 @@
             artigo.appendChild(admin);
           }
 
-          artigo.addEventListener('click', () => {
+          artigo.addEventListener('click', (evento) => {
+            if (evento.target.closest('.btn-like, .et-desenho-admin')) return;
             if (imagem?.src) abrirLightbox(imagem.src, tituloTexto);
           });
         });
@@ -1234,15 +1278,17 @@
           legenda.textContent = tituloTexto;
           blocoMidia.appendChild(legenda);
 
-          const like = document.createElement('button');
+          const like = artigo.querySelector(':scope > .btn-like') || document.createElement('button');
           like.type = 'button';
-          like.className = 'btn-like';
+          like.classList.add('btn-like', 'et-like-dinamico');
           like.dataset.likeId = `musica-dinamica-${pessoaId}-${conteudoId}`;
           like.dataset.likeLabel = `Curtir ${tituloTexto}`;
           like.dataset.unlikeLabel = `Descurtir ${tituloTexto}`;
           like.setAttribute('aria-label', `Curtir ${tituloTexto}`);
           like.setAttribute('aria-pressed', 'false');
-          like.innerHTML = '<span class="like-icon">♡</span><span class="like-count">0</span>';
+          if (!like.querySelector('.like-icon')) {
+            like.innerHTML = '<span class="like-icon" aria-hidden="true">♡</span><span class="like-count">0</span>';
+          }
 
           blocoMidia.appendChild(like);
           fragmento.appendChild(blocoMidia);
